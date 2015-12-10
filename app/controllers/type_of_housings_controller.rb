@@ -13,7 +13,7 @@ class TypeOfHousingsController < ApplicationController
   end
 
   def create
-    @type_of_housing = TypeOfHousing.new(type_of_housings_params)
+    @type_of_housing = TypeOfHousing.new(type_of_housing_params)
 
     if @type_of_housing.save
       redirect_to type_of_housings_path, notice: 'Boendeformen skapades'
@@ -23,7 +23,7 @@ class TypeOfHousingsController < ApplicationController
   end
 
   def update
-    if @type_of_housing.update(type_of_housingsparams)
+    if @type_of_housing.update(type_of_housing_params)
       redirect_to type_of_housings_path, notice: 'Boendeformen uppdaterades'
     else
       render :edit
@@ -37,7 +37,7 @@ class TypeOfHousingsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def type_of_housing
+    def set_type_of_housing
       @type_of_housing = TypeOfHousing.find(params[:id])
     end
 
