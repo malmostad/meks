@@ -16,6 +16,7 @@ gem 'elasticsearch-rails', '0.1.8'
 gem 'whenever', '0.9.4', require: false
 gem 'highline'
 gem 'execjs'
+gem 'faker'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.3.2'
@@ -42,7 +43,6 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'thin'
   gem 'rb-readline'
-  gem 'faker'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 end

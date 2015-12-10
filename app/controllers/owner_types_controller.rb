@@ -2,18 +2,18 @@ class OwnerTypesController < ApplicationController
   before_action :set_owner_type, only: [:show, :edit, :update, :destroy]
 
   def index
-    @owner_types = HomeOwnerType.all
+    @owner_types = OwnerType.all
   end
 
   def new
-    @owner_type = HomeOwnerType.new
+    @owner_type = OwnerType.new
   end
 
   def edit
   end
 
   def create
-    @owner_type = HomeOwnerType.new(owner_type_params)
+    @owner_type = OwnerType.new(owner_type_params)
 
     if @owner_type.save
       redirect_to owner_types_path, notice: 'Ägarformen skapades'
@@ -38,7 +38,7 @@ class OwnerTypesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_owner_type
-      @owner_type = HomeOwnerType.find(params[:id])
+      @owner_type = OwnerType.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
