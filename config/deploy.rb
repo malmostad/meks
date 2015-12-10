@@ -49,8 +49,6 @@ namespace :deploy do
       execute "mkdir -p #{shared_path}/tmp"
       execute "mkdir -p #{shared_path}/log"
       execute "mkdir -p #{shared_path}/public/uploads"
-      upload! "config/app_config.example.yml", "#{shared_path}/config/app_config.yml"
-      puts "Copy and edit config/app_config.example.yml on server"
     end
   end
 
