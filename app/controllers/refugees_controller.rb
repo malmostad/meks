@@ -10,6 +10,8 @@ class RefugeesController < ApplicationController
 
   def new
     @refugee = Refugee.new
+    @refugee.dossier_numbers << DossierNumber.new
+    @refugee.ssns << Ssn.new
   end
 
   def edit
@@ -42,6 +44,8 @@ class RefugeesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_refugee
       @refugee = Refugee.find(params[:id])
+      @refugee.dossier_numbers << DossierNumber.new
+      @refugee.ssns << Ssn.new
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
