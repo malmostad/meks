@@ -1,4 +1,5 @@
 class Home < ActiveRecord::Base
+  has_and_belongs_to_many :refugees
   has_and_belongs_to_many :type_of_housings
   has_and_belongs_to_many :owner_types
   has_and_belongs_to_many :target_groups
