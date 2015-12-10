@@ -1,0 +1,19 @@
+%nav.app.basic
+  %h1 MEKS
+  %ul
+    %li= link_to "Ensamkommande flyktingbarn", refugees_path
+    %li= link_to "Boenden", homes_path
+    %li= link_to "Rapporter", nope_path
+
+  %h1 Systemadministration
+  %ul
+    %li= link_to "Boendeformer", type_of_housings_path
+    %li= link_to "Boenden, målgrupper", target_groups_path
+    %li= link_to "Boenden, ägarformer", owner_types_path
+    %li= link_to "Länder", countries_path
+    %li= link_to "Språk", languages_path
+
+  %h1 Handläggare
+  %ul
+    %li= link_to "Handläggare", nope_path
+    %li= link_to "Logga ut", root_path

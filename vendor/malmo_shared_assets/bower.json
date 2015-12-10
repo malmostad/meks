@@ -1,0 +1,29 @@
+{
+  "name": "malmo_shared_assets",
+  "version": "1.0.6",
+  "authors": [
+    "The City of Malmo"
+  ],
+  "description": "Asset utilities shared between projects at The City of Malmo",
+  "main": [
+    "stylesheets/external.css.scss"
+  ],
+  "license": "AGPL-3.0",
+  "homepage": "https://github.com/malmostad/shared_assets",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/malmostad/shared_assets.git"
+  },
+  "ignore": [
+    "**/.*",
+    ".*",
+    "README.md",
+    "bower.json",
+    "package.json",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

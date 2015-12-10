@@ -1,0 +1,60 @@
+sv:
+  simple_form:
+    "yes": 'Ja'
+    "no": 'Nej'
+    required:
+      text: 'obligatorisk'
+      mark: '*'
+
+    error_notification:
+      default_message: "Vänligen korrigera nedanstående markerade uppgifter."
+
+    labels:
+      defaults: &defaults
+        name: Namn
+        comment: Kommentar
+      home:
+        <<: *defaults
+        phone: Telefonnummer
+        fax: Faxnummer
+        address: Adress
+        post_code: Postnummer
+        postal_town: Postort
+        type_of_housings: Boendeformer
+        owner_types: Ägarformer
+        target_groups: Målgrupper
+        seats: Platser
+        guaranteed_seats: Garanterade platser
+        movable_seats: Rörliga platser
+        languages: Språk
+      refugee:
+        <<: *defaults
+        registered: Registrerad
+        special_needs: Insatsbild
+        gender: Kön
+        languages: Språk
+        countries: Land
+        ssns: Personnummer
+        dossier_numbers: Dossiernummer
+        homes: Boenden
+        deregistered: Avregisterad
+        deregistered_reason: Avslutsorsak
+
+
+    placeholders:
+      home:
+        name: Ange namnet på boendet
+      home_type:
+        name: Ange namnet på boendeformen
+      owner_type:
+        name: Ange namnet på ägarformen
+      target_group:
+        name: Ange namnet på målgruppen
+      language:
+        name: Ange språknamn
+      country:
+        name: Ange landets namn
+
+    # hints:
+    #   user:
+    #     displayname: "<p>Ditt namn hämtas från HR-systemet. Ditt namn kan du ändra genom att kontakta din egen förvaltnings lokala HR-funktion. Det vanligaste är att du vill ändra för att ditt namn är felstavat eller för att du byter efternamn.</p><p>Kontaktuppgift till din lokala HR-finktion hittar du på Komin > Min förvaltning > Vår organisation.</p>"

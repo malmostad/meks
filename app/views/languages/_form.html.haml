@@ -1,0 +1,11 @@
+.box-content
+  = simple_form_for @language, html: { class: "basic" } do |f|
+    = f.error_notification class: "warning"
+
+    = f.input :name
+
+    .form-group
+      %span.no-control-label
+      .controls
+        = f.submit t('actions.save'), class: "btn btn-primary"
+        = link_to t('actions.cancel'), languages_path(@language.name), class: "btn btn-default"

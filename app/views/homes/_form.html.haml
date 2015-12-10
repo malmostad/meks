@@ -1,0 +1,31 @@
+.box-content
+  = simple_form_for @home, html: { class: "basic" } do |f|
+    = f.error_notification class: "warning"
+
+    %h2.group-title Kontaktuppgifter
+    = f.input :name
+    = f.input :phone
+    = f.input :fax
+    = f.input :address
+    = f.input :post_code
+    = f.input :postal_town
+
+    %h2.group-title Boendefakta
+    = f.association :type_of_housings, input_html: { class: 'chosen' }
+    = f.association :owner_types, input_html: { class: 'chosen' }
+    = f.association :target_groups, input_html: { class: 'chosen' }
+    = f.association :languages, input_html: { class: 'chosen' }
+
+    %h2.group-title Tillgänglighet
+    = f.input :seats
+    = f.input :guaranteed_seats
+    = f.input :movable_seats
+
+    %h2.group-title Övrigt
+    = f.input :comment
+
+    .form-group
+      %span.no-control-label
+      .controls
+        = f.submit t('actions.save'), class: "btn btn-primary"
+        = link_to t('actions.cancel'), homes_path(@home.name), class: "btn btn-default"

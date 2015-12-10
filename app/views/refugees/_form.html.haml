@@ -1,0 +1,46 @@
+.box-content
+  = simple_form_for @refugee, html: { class: "basic refugee" } do |f|
+    = f.error_notification class: "warning"
+
+    %h2.group-title Basuppgifter
+    = f.input :name
+
+    .terms
+      = f.simple_fields_for :dossier_numbers do |s|
+        = render "fields_for_dossier_numbers", s: s
+      .form-group
+        %span.control-label
+        .controls
+          = add_dossier_numbers_button "Lägg till", f
+
+    .terms
+      = f.simple_fields_for :ssns do |s|
+        = render "fields_for_ssns", s: s
+      .form-group
+        %span.control-label
+        .controls
+          = add_ssns_button "Lägg till", f
+
+    = f.association :gender
+    = f.input :registered, as: :string, wrapper: :datepicker
+
+    %h2.group-title Egenskaper
+    = f.association :languages, input_html: { class: 'chosen' }
+    = f.association :countries, input_html: { class: 'chosen' }
+    = f.input :special_needs, as: :select
+
+    %h2.group-title Boenden
+    = f.association :homes, input_html: { class: 'chosen' }
+
+    %h2.group-title Avregistrering
+    = f.input :deregistered, as: :string, wrapper: :datepicker
+    = f.input :deregistered_reason
+
+    %h2.group-title Övrigt
+    = f.input :comment
+
+    .form-group
+      %span.no-control-label
+      .controls
+        = f.submit t('actions.save'), class: "btn btn-primary"
+        = link_to t('actions.cancel'), refugees_path(@refugee), class: "btn btn-default"

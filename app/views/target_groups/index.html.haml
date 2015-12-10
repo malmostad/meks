@@ -1,0 +1,18 @@
+- title "Boenden, målgrupper"
+%section.box.index
+  %h1.box-title= h1
+  %table.full.wrap
+    %thead
+      %tr
+        %th Namn
+        %th
+
+    %tbody
+      - @target_groups.each do |target_group|
+        %tr
+          %td= link_to target_group.name, edit_target_group_path(target_group)
+          %td.delete= link_to t('actions.delete'), target_group, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_target_group_path, class: "btn btn-primary"

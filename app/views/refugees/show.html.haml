@@ -1,0 +1,28 @@
+- title 'Ensamkommande flyktingbarn'
+%section.box.show
+  %h1.box-title= h1
+  .box-content.basic.form-data
+    = form_for @refugee, html: { class: 'basic' } do |f|
+
+      %h2.group-title Grunduppgifter
+      = show_attribute('Namn', @refugee.name)
+      = show_attribute('Dossiernummer', @refugee.dossier_numbers.map(&:name).join(', '))
+      = show_attribute('Personnummer', @refugee.ssns.map(&:name).join(', '))
+      = show_attribute('Kön', @refugee.gender.name)
+
+      %h2.group-title Egenskaper
+      = show_attribute('Språk', @refugee.languages.map(&:name).join(', '))
+      = show_attribute('Länder', @refugee.countries.map(&:name).join(', '))
+      = show_attribute('Insatsbild', @refugee.special_needs ? 'Ja' : 'Nej')
+
+      %h2.group-title Händelser
+      = show_attribute('Registrerad', @refugee.registered.to_s[0..19])
+      = show_attribute('Boenden', @refugee.homes.map(&:name).join(', '))
+      = show_attribute('Avregistrerad', @refugee.deregistered.to_s[0..19])
+      = show_attribute('Anledning til avregistrerad', @refugee.deregistered_reason)
+
+      %h2.group-title Övrigt
+      = show_attribute('Kommentar', @refugee.comment)
+
+      .form-group
+        = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'

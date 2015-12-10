@@ -1,0 +1,29 @@
+defaults: &defaults
+  base_url: "https://komin.malmo.se/"
+  assets_url_base: "//assets.malmo.se/internal/v4-staging/"
+
+development:
+  <<: *defaults
+  assets_url_base: "//assets.malmo.se/internal/v4/"
+  cache_ttl: 1
+  max_age: 0
+  title_suffix: "MEKS (utveckling)"
+
+test:
+  <<: *defaults
+  assets_url_base: "//assets.malmo.se/internal/v4-staging/"
+  cache_ttl: 43200
+  max_age: 14400
+  title_suffix: "MEKS (test)"
+
+production: &production
+  <<: *defaults
+  assets_url_base: "//assets.malmo.se/internal/v4/"
+  cache_ttl: 43200
+  max_age: 14400
+  title_suffix: "MEKS"
+
+staging:
+  <<: *production
+  title_suffix: "MEKS (staging)"
+  assets_url_base: "//assets.malmo.se/internal/v4-staging/"

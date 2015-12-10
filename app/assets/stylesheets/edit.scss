@@ -1,0 +1,71 @@
+.mf-v4 {
+  textarea.form-control {
+    height: 10em;
+  }
+  .input-group.date .m-icon-calendar {
+    height: 1.2em;
+  }
+}
+
+form.basic h2.group-title {
+  margin-top: 2em;
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+table {
+  margin-bottom: 0;
+  td,
+  th {
+    vertical-align: top;
+    &.url,
+    &.title {
+      max-width: 16em;
+      span {
+        display: block;
+        max-width: 15em;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  td.delete {
+    text-align: right;
+  }
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+
+div.terms {
+  border-bottom: $border;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  input.term {
+    max-width: 10em;
+  }
+  .remove {
+    .m-icon-close-0 {
+      display: inline-block;
+      background-position: 50%;
+      width: 1em;
+      height: 1em;
+    }
+  }
+}
+button.btn {
+  margin-left: 0;
+}
+.delete .m-icon-remove-0 {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  background-size: 12px;
+  background-position: bottom;
+}
+.duplicate {
+  color: #c00;
+}

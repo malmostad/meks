@@ -1,0 +1,33 @@
+@mixin chosen-text() {
+  font-family: $sans-serif;
+  font-size: 14px;
+}
+
+.chosen-container, .chosen-container-multi {
+  .chosen-choices {
+    li.search-field input[type=text] {
+      @include chosen-text();
+      &.default {
+        @include chosen-text();
+      }
+    }
+    .search-field input.default {
+      @include chosen-text();
+    }
+    .search-choice {
+      @include chosen-text();
+    }
+  }
+  .chosen-results {
+    li.active-result {
+      @include chosen-text();
+      &.highlighted {
+        background: $background-dark;
+      }
+    }
+    li.no-results {
+      @include chosen-text();
+      color: #000;
+    }
+  }
+}

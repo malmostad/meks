@@ -1,0 +1,30 @@
+.wrapper {
+  @include clearfix();
+  margin: 0 auto 2em;
+  max-width: 100%;
+  padding: 0 1em;
+}
+
+main {
+  @include columns(9, false);
+  overflow-x: auto;
+  @media (max-width: 48em) {
+    @include columns(12);
+  }
+}
+
+nav.app {
+  @include columns(3, true);
+  // ul {
+  //   margin-bottom: 2em;
+  // }
+  @media (max-width: 48em) {
+    @include columns(12);
+    li {
+      margin-bottom: .5em;
+    }
+    li.group {
+      margin-top: 2em;
+    }
+  }
+}

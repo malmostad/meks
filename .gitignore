@@ -1,0 +1,14 @@
+/config/secrets.yml
+/config/database.yml
+/config/deploy/staging.rb
+/config/deploy/production.rb
+
+.DS_Store
+/.bundle
+/.vagrant
+
+
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+/tmp

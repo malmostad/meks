@@ -1,0 +1,30 @@
+- title 'Boende'
+%section.box.show
+  %h1.box-title= h1
+  .box-content.basic.form-data
+    = form_for @home, html: { class: 'basic' } do |f|
+
+      %h2.group-title Kontaktuppgifter
+      = show_attribute('Namn', @home.name)
+      = show_attribute('Telefon', @home.phone)
+      = show_attribute('Fax', @home.fax)
+      = show_attribute('Adress', @home.address)
+      = show_attribute('Postnummer', @home.post_code)
+      = show_attribute('Postort', @home.postal_town)
+
+      %h2.group-title Boendefakta
+      = show_attribute('Boendeform', @home.type_of_housings.map(&:name).join(', '))
+      = show_attribute('Ägarform', @home.owner_types.map(&:name).join(', '))
+      = show_attribute('Målgrupp', @home.target_groups.map(&:name).join(', '))
+      = show_attribute('Språk', @home.languages.map(&:name).join(', '))
+
+      %h2.group-title Tillgänglighet
+      = show_attribute('Platser', @home.seats)
+      = show_attribute('Garanterade platser', @home.guaranteed_seats)
+      = show_attribute('Rörliga platser', @home.movable_seats)
+
+      %h2.group-title Övrigt
+      = show_attribute('Kommentar', @home.comment)
+
+      .form-group
+        = link_to 'Redigera', edit_home_path(@home), class: 'btn btn-default'
