@@ -7,7 +7,8 @@
 
     .terms
       = f.simple_fields_for :dossier_numbers do |s|
-        = render "fields_for_dossier_numbers", s: s
+        - @label = 'Dossiernummer'
+        = render "fields_for_terms", s: s
       .form-group
         %span.control-label
         .controls
@@ -15,7 +16,8 @@
 
     .terms
       = f.simple_fields_for :ssns do |s|
-        = render "fields_for_ssns", s: s
+        - @label = 'Personnummer'
+        = render "fields_for_terms", s: s
       .form-group
         %span.control-label
         .controls
