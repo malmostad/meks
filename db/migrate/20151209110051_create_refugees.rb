@@ -12,13 +12,6 @@ class CreateRefugees < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    create_table :homes_refugees, id: false do |t|
-      t.belongs_to :home, index: true
-      t.belongs_to :refugee, index: true
-
-      t.timestamps null: false
-    end
-
     create_table :countries_refugees, id: false do |t|
       t.belongs_to :country, index: true
       t.belongs_to :refugee, index: true

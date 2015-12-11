@@ -1,5 +1,5 @@
-class Country < ActiveRecord::Base
-  has_and_belongs_to_many :refugees
+class DeassignmentReason < ActiveRecord::Base
+  has_and_belongs_to_many :deassignments
 
   default_scope { order('name') }
 

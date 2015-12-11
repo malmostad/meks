@@ -1,7 +1,12 @@
 class Refugee < ActiveRecord::Base
   belongs_to :gender
 
-  has_and_belongs_to_many :homes
+  has_many :assignments
+  has_many :homes, through: :assignments
+
+  has_many :deassignments
+  has_many :homes, through: :deassignments
+
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
 
@@ -18,5 +23,5 @@ class Refugee < ActiveRecord::Base
   validates_associated :dossier_numbers
 
   validates_presence_of :name
-  validates_length_of :name, maximum: 255
+  validates_length_of :name, maximum: 191
 end

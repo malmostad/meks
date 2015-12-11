@@ -1,6 +1,5 @@
 module RefugeesHelper
   # TODO: refactor
-
   def add_dossier_numbers_button(name, form)
     new_dossier_number = DossierNumber.new
     id = new_dossier_number.object_id

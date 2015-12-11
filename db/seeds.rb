@@ -33,16 +33,47 @@ end
   Gender.create(name: s)
 end
 
+['Avskriven', 'Avvek', 'Avisad', '18 år'].each do |name|
+  DeassignmentReason.create(name: name)
+end
+
+
 (0...100).each do
   r = Refugee.create(
     name: Faker::Name.name,
     gender_id: rand(Gender.count) + 1,
     country_ids: [rand(Country.count) + 1],
     language_ids: [rand(Language.count) + 1],
-    home_ids: [rand(Home.count) + 1],
     registered: Faker::Date.between(1.year.ago, Date.today),
-    special_needs: rand(2)
+    special_needs: rand(2),
+    comment: Faker::Lorem.paragraph
   )
+
+  home_id = rand(Home.count) + 1
+  first_assignment_at = rand(100..200).days.ago
+
+  r.assignments.new(
+    home_id: home_id,
+    moved_in_at: first_assignment_at.to_date
+  )
+
+  first_deassignment_at = first_assignment_at + rand(50)
+  r.deassignments.new(
+    home_id: home_id,
+    moved_out_at: first_deassignment_at.to_date,
+    deassignment_reason_id: rand(DeassignmentReason.count) + 1,
+    comment: Faker::Lorem.paragraph
+  )
+
+  (rand(2)).times do
+    r.assignments.new(
+      home_id: rand(Home.count) + 1,
+      moved_in_at: (first_deassignment_at + 1.day).to_date
+    )
+  end
+
+  r.save
+
   (rand(0..2)).times do
     DossierNumber.create(refugee_id: r.id, name: Faker::Number.number(10))
   end

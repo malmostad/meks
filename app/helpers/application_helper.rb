@@ -19,7 +19,7 @@ module ApplicationHelper
   def show_attribute(name, value)
     content_tag(:div,
       content_tag(:div, "#{name}:", class: 'control-label') +
-      content_tag(:div, value, class: 'controls'),
+      content_tag(:div, raw(value), class: 'controls'),
       class: 'form-group')
   end
 end
