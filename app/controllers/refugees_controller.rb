@@ -2,7 +2,8 @@ class RefugeesController < ApplicationController
   before_action :set_refugee, only: [:show, :edit, :update, :destroy]
 
   def index
-    @refugees = Refugee.includes(:countries, :languages, :ssns, :gender, :dossier_numbers)
+    @refugees = Refugee.order('name').includes(
+      :countries, :languages, :ssns, :gender, :dossier_numbers)
   end
 
   def show
@@ -21,7 +22,7 @@ class RefugeesController < ApplicationController
     @refugee = Refugee.new(refugee_params)
 
     if @refugee.save
-      redirect_to @refugee, notice: 'Ensamkommande flyktingbarn registrerat'
+      redirect_to @refugee, notice: 'Ensamkommande flyktingbarnet registrerat'
     else
       render :new
     end
@@ -29,7 +30,7 @@ class RefugeesController < ApplicationController
 
   def update
     if @refugee.update(refugee_params)
-      redirect_to @refugee, notice: 'Ensamkommande flyktingbarn uppdaterades'
+      redirect_to @refugee, notice: 'Ensamkommande flyktingbarnet uppdaterades'
     else
       render :edit
     end
@@ -37,15 +38,13 @@ class RefugeesController < ApplicationController
 
   def destroy
     @refugee.destroy
-    redirect_to refugees_url, notice: 'Ensamkommande flyktingbarn togs bort'
+    redirect_to refugees_url, notice: 'Ensamkommande flyktingbarnet togs bort'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_refugee
       @refugee = Refugee.find(params[:id])
-      @refugee.dossier_numbers << DossierNumber.new
-      @refugee.ssns << Ssn.new
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -57,7 +56,8 @@ class RefugeesController < ApplicationController
         home_ids: [],
         country_ids: [],
         language_ids: [],
-        ssn_ids: [],
-        dossier_number_ids: [])
+        ssns_attributes: [:id, :_destroy, :name],
+        dossier_numbers_attributes: [:id, :_destroy, :name]
+      )
     end
 end

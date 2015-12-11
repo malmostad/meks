@@ -11,7 +11,7 @@
       .form-group
         %span.control-label
         .controls
-          = add_dossier_numbers_button "Lägg till", f
+          = add_dossier_numbers_button "Nytt dossiernummer", f
 
     .terms
       = f.simple_fields_for :ssns do |s|
@@ -19,7 +19,7 @@
       .form-group
         %span.control-label
         .controls
-          = add_ssns_button "Lägg till", f
+          = add_ssns_button "Nytt personnummer", f
 
     = f.association :gender
     = f.input :registered, as: :string, wrapper: :datepicker

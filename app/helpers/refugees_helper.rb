@@ -8,7 +8,7 @@ module RefugeesHelper
       render("fields_for_dossier_numbers", s: s)
     end
     form.button :button, type: :button, name: nil, class: "btn btn-default add-term", data: {id: id, fields: fields.gsub("\n", "")} do
-      "Lägg till"
+      name
     end
   end
 
@@ -19,7 +19,7 @@ module RefugeesHelper
       render("fields_for_ssns", s: s)
     end
     form.button :button, type: :button, name: nil, class: "btn btn-default add-term", data: {id: id, fields: fields.gsub("\n", "")} do
-      "Lägg till"
+      name
     end
   end
 end

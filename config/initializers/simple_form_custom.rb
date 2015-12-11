@@ -17,7 +17,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :addon, tag: 'div', class: 'form-group', error_class: 'warning' do |b|
+  config.wrappers :addon, tag: 'div', class: 'form-group addon', error_class: 'warning has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.wrapper tag: 'span', class: 'control-label' do |label|

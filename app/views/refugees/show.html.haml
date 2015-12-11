@@ -8,7 +8,7 @@
       = show_attribute('Namn', @refugee.name)
       = show_attribute('Dossiernummer', @refugee.dossier_numbers.map(&:name).join(', '))
       = show_attribute('Personnummer', @refugee.ssns.map(&:name).join(', '))
-      = show_attribute('Kön', @refugee.gender.name)
+      = show_attribute('Kön', @refugee.gender)
 
       %h2.group-title Egenskaper
       = show_attribute('Språk', @refugee.languages.map(&:name).join(', '))

@@ -15,9 +15,9 @@
 
     .wrapper
       = render "layouts/breadcrumbs"
-      - flash.each do |key, value|
-        %p{ class: "flash #{key}" }= value
       %main
+        - flash.each do |key, value|
+          %p{ class: "flash #{key}" }= value
         = yield
       - if true || current_user
         = render "layouts/nav"

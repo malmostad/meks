@@ -69,3 +69,12 @@ button.btn {
 .duplicate {
   color: #c00;
 }
+
+.form-group.addon.warning {
+  input.string {
+    max-width: 80%;
+  }
+  .input-group-btn {
+    display: inline;
+  }
+}

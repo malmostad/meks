@@ -6,10 +6,17 @@ class Refugee < ActiveRecord::Base
   has_and_belongs_to_many :languages
 
   has_many :ssns, dependent: :destroy
-  accepts_nested_attributes_for :ssns, allow_destroy: true
+  accepts_nested_attributes_for :ssns,
+    allow_destroy: true,
+    reject_if: proc { |attr| attr[:name].blank? }
+  validates_associated :ssns
 
   has_many :dossier_numbers, dependent: :destroy
-  accepts_nested_attributes_for :dossier_numbers, allow_destroy: true
+  accepts_nested_attributes_for :dossier_numbers,
+    allow_destroy: true,
+    reject_if: proc { |attr| attr[:name].blank? }
+  validates_associated :dossier_numbers
 
-  default_scope { order('name') }
+  validates_presence_of :name
+  validates_length_of :name, maximum: 255
 end
