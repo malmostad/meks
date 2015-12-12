@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :refugees
   resources :homes
+  resources :moved_out_reasons
   resources :target_groups
   resources :owner_types
   resources :type_of_housings

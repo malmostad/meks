@@ -1,0 +1,11 @@
+.box-content
+  = simple_form_for @moved_out_reason, html: { class: "basic" } do |f|
+    = f.error_notification class: "warning"
+
+    = f.input :name
+
+    .form-group
+      %span.no-control-label
+      .controls
+        = f.submit t('actions.save'), class: "btn btn-primary"
+        = link_to t('actions.cancel'), moved_out_reasons_path(@moved_out_reason.name), class: "btn btn-default"

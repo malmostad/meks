@@ -14,18 +14,18 @@
 ActiveRecord::Schema.define(version: 20151209110051) do
 
   create_table "assignments", force: :cascade do |t|
-    t.integer  "home_id",                limit: 4
-    t.integer  "refugee_id",             limit: 4
+    t.integer  "home_id",             limit: 4
+    t.integer  "refugee_id",          limit: 4
     t.date     "moved_in_at"
     t.date     "moved_out_at"
     t.integer  "moved_out_reason_id", limit: 4
-    t.text     "comment",                limit: 65535
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.text     "comment",             limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
-  add_index "assignments", ["moved_out_reason_id"], name: "index_assignments_on_moved_out_reason_id", using: :btree
   add_index "assignments", ["home_id"], name: "index_assignments_on_home_id", using: :btree
+  add_index "assignments", ["moved_out_reason_id"], name: "index_assignments_on_moved_out_reason_id", using: :btree
   add_index "assignments", ["refugee_id"], name: "index_assignments_on_refugee_id", using: :btree
 
   create_table "countries", force: :cascade do |t|
@@ -53,12 +53,6 @@ ActiveRecord::Schema.define(version: 20151209110051) do
 
   add_index "countries_refugees", ["country_id"], name: "index_countries_refugees_on_country_id", using: :btree
   add_index "countries_refugees", ["refugee_id"], name: "index_countries_refugees_on_refugee_id", using: :btree
-
-  create_table "moved_out_reasons", force: :cascade do |t|
-    t.string   "name",       limit: 191
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
 
   create_table "dossier_numbers", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -142,6 +136,12 @@ ActiveRecord::Schema.define(version: 20151209110051) do
 
   add_index "languages_refugees", ["language_id"], name: "index_languages_refugees_on_language_id", using: :btree
   add_index "languages_refugees", ["refugee_id"], name: "index_languages_refugees_on_refugee_id", using: :btree
+
+  create_table "moved_out_reasons", force: :cascade do |t|
+    t.string   "name",       limit: 191
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "owner_types", force: :cascade do |t|
     t.string   "name",       limit: 191

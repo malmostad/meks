@@ -12,7 +12,7 @@
         %th Personnummer
         %th Kön
         %th Land
-        %th Boenden
+        %th Aktuellt boenden
 
     %tbody
       - @refugees.each do |refugee|
@@ -24,7 +24,11 @@
             - if refugee.gender.present?
               = refugee.gender.name
           %td= refugee.countries.map(&:name).join(', ')
-          %td= refugee.homes.map(&:name).join(', ')
+          %td
+            - if refugee.assignments.empty? || refugee.assignments.last.moved_out_at.present?
+              = "Ej placerad"
+            - else
+              = link_to refugee.homes.last.name, home_path(refugee.homes.last)
 
       %tr
         %td{ colspan: 9 }

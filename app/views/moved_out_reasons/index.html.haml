@@ -1,0 +1,18 @@
+- title "Utflyttningsorsaker"
+%section.box.index
+  %h1.box-title= h1
+  %table.full.wrap
+    %thead
+      %tr
+        %th Namn
+        %th
+
+    %tbody
+      - @moved_out_reasons.each do |moved_out_reason|
+        %tr
+          %td= link_to moved_out_reason.name, edit_moved_out_reason_path(moved_out_reason)
+          %td.delete= link_to t('actions.delete'), moved_out_reason, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_moved_out_reason_path, class: "btn btn-primary"
