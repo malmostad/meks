@@ -34,7 +34,7 @@ end
 end
 
 ['Avskriven', 'Avvek', 'Avisad', '18 år'].each do |name|
-  DeassignmentReason.create(name: name)
+  MovedOutReason.create(name: name)
 end
 
 
@@ -49,35 +49,38 @@ end
     comment: Faker::Lorem.paragraph
   )
 
-  home_id = rand(Home.count) + 1
-  first_assignment_at = rand(100..200).days.ago
-
-  r.assignments.new(
-    home_id: home_id,
-    moved_in_at: first_assignment_at.to_date
-  )
-
-  first_deassignment_at = first_assignment_at + rand(50)
-  r.deassignments.new(
-    home_id: home_id,
-    moved_out_at: first_deassignment_at.to_date,
-    deassignment_reason_id: rand(DeassignmentReason.count) + 1,
-    comment: Faker::Lorem.paragraph
-  )
+  (rand(2)).times do
+    DossierNumber.create(refugee_id: r.id, name: Faker::Number.number(10))
+  end
 
   (rand(2)).times do
-    r.assignments.new(
+    Ssn.create(refugee_id: r.id, name: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s.gsub('-', '')[0..7])
+  end
+
+  # Assign and deassing refugees to homes
+  moved_out_at = DateTime.now
+  rand(1..7).downto(1).each do |t|
+    if r.assignments.present?
+      moved_in_at = r.assignments.last.moved_out_at + 1.days
+    else
+      moved_in_at = (rand(100*t-50..100*t)).days.ago
+    end
+    moved_out_at = moved_in_at + (rand(2..100)).days
+
+    r.assignments.create(
       home_id: rand(Home.count) + 1,
-      moved_in_at: (first_deassignment_at + 1.day).to_date
+      moved_in_at: moved_in_at,
+      moved_out_at: moved_out_at,
+      moved_out_reason_id: rand(MovedOutReason.count) + 1,
+      comment: Faker::Lorem.paragraph
     )
   end
 
-  r.save
-
-  (rand(0..2)).times do
-    DossierNumber.create(refugee_id: r.id, name: Faker::Number.number(10))
-  end
-  (rand(0..2)).times do
-    Ssn.create(refugee_id: r.id, name: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s.gsub('-', '')[0..7])
+  # Make most refugees still assigned to a home
+  if r.id % 4 > 0
+    r.assignments.create(
+      home_id: rand(Home.count) + 1,
+      moved_in_at: moved_out_at + 1.days
+    )
   end
 end

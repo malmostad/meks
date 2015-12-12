@@ -19,14 +19,13 @@
       %h2.group-title Händelser
       = show_attribute('Registrerad', @refugee.registered.to_s[0..19])
       = show_attribute('Avregistrerad', @refugee.deregistered.to_s[0..19])
-      = show_attribute('Anledning til avregistrerad', @refugee.deregistered_reason)
+      = show_attribute('Anledning till avregistrering', @refugee.deregistered_reason)
 
-      %h2.group-title Boendehistorik
+      %h2.group-title Boendeplaceringar
       - @refugee.assignments.each do |a|
         = show_attribute('Inskriven', "På #{link_to a.home.name, home_path(a.home)} #{a.moved_in_at}")
-
-      - @refugee.deassignments.each do |a|
-        = show_attribute('Utskriven', "På #{link_to a.home.name, home_path(a.home)} #{a.moved_out_at}")
+        - if a.moved_out_at
+          = show_attribute('Utskriven', a.moved_out_at)
 
       %h2.group-title Övrigt
       = show_attribute('Kommentar', @refugee.comment)

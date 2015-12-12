@@ -3,9 +3,6 @@ class Home < ActiveRecord::Base
   has_many :assignments
   has_many :refugees, through: :assignments
 
-  has_many :deassignments
-  has_many :refugees, through: :deassignments
-
   has_and_belongs_to_many :type_of_housings
   has_and_belongs_to_many :owner_types
   has_and_belongs_to_many :target_groups

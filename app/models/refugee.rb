@@ -4,9 +4,6 @@ class Refugee < ActiveRecord::Base
   has_many :assignments
   has_many :homes, through: :assignments
 
-  has_many :deassignments
-  has_many :homes, through: :deassignments
-
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
 
