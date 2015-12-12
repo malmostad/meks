@@ -1,11 +1,11 @@
-- title "Ensamkommande flyktingbarn"
+- title 'Ensamkommande flyktingbarn'
 %section.box.index
   %h1.box-title= h1
   %table.full.wrap
     %thead
       %tr
         %td{ colspan: 9 }
-          .actions= link_to 'Registrera ny', new_refugee_path, class: "btn btn-primary"
+          .actions= link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'
       %tr
         %th Namn
         %th Dossiernummer
@@ -25,11 +25,13 @@
               = refugee.gender.name
           %td= refugee.countries.map(&:name).join(', ')
           %td
-            - if refugee.assignments.empty? || refugee.assignments.last.moved_out_at.present?
-              = "Ej placerad"
+            - if refugee.assignments.empty?
+              = 'Ej ännu placerad'
+            - elsif refugee.assignments.last.moved_out_at.present?
+              = 'Utskriven'
             - else
               = link_to refugee.homes.last.name, home_path(refugee.homes.last)
 
       %tr
         %td{ colspan: 9 }
-          .actions= link_to 'Registrera ny', new_refugee_path, class: "btn btn-primary"
+          .actions= link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'

@@ -38,7 +38,7 @@ end
 end
 
 
-(0...100).each do
+(0...250).each do
   r = Refugee.create(
     name: Faker::Name.name,
     gender_id: rand(Gender.count) + 1,
@@ -59,7 +59,7 @@ end
 
   # Assign and deassing refugees to homes
   moved_out_at = DateTime.now
-  rand(1..7).downto(1).each do |t|
+  rand(0..5).downto(1).each do |t|
     if r.assignments.present?
       moved_in_at = r.assignments.last.moved_out_at + 1.days
     else
