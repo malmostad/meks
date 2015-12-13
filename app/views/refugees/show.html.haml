@@ -1,5 +1,5 @@
 - title 'Ensamkommande flyktingbarn'
-%section.box.show
+%section.box.show.refugee
   %h1.box-title= h1
   .box-content.basic.form-data
     = form_for @refugee, html: { class: 'basic' } do |f|
@@ -21,11 +21,7 @@
       = show_attribute('Avregistrerad', @refugee.deregistered.to_s[0..19])
       = show_attribute('Anledning till avregistrering', @refugee.deregistered_reason)
 
-      %h2.group-title Boendeplaceringar
-      - @refugee.assignments.each do |a|
-        = show_attribute('Inskriven', "På #{link_to a.home.name, home_path(a.home)} #{a.moved_in_at}")
-        - if a.moved_out_at
-          = show_attribute('Utskriven', a.moved_out_at)
+      = render 'assignments'
 
       %h2.group-title Övrigt
       = show_attribute('Kommentar', @refugee.comment)

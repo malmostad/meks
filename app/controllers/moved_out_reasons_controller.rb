@@ -2,7 +2,7 @@ class MovedOutReasonsController < ApplicationController
   before_action :set_moved_out_reason, only: [:show, :edit, :update, :destroy]
 
   def index
-    @moved_out_reasons = MovedOutReason.all
+    @moved_out_reasons = MovedOutReason.order(:name)
   end
 
   def new

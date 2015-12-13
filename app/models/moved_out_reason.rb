@@ -1,7 +1,5 @@
 class MovedOutReason < ActiveRecord::Base
-  has_and_belongs_to_many :assignments
-
-  default_scope { order('name') }
+  has_many :assignments
 
   validates_uniqueness_of :name, case_sensitive: false
   validates_presence_of :name
