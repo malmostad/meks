@@ -1,4 +1,4 @@
-class Assignment < ActiveRecord::Base
+class Placement < ActiveRecord::Base
   belongs_to :refugee
   belongs_to :home
   belongs_to :moved_out_reason

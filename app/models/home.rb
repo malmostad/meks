@@ -1,7 +1,7 @@
 class Home < ActiveRecord::Base
 
-  has_many :assignments
-  has_many :refugees, through: :assignments
+  has_many :placements
+  has_many :refugees, through: :placements
 
   has_and_belongs_to_many :type_of_housings
   has_and_belongs_to_many :owner_types

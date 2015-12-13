@@ -11,22 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209110051) do
-
-  create_table "assignments", force: :cascade do |t|
-    t.integer  "home_id",             limit: 4
-    t.integer  "refugee_id",          limit: 4
-    t.date     "moved_in_at"
-    t.date     "moved_out_at"
-    t.integer  "moved_out_reason_id", limit: 4
-    t.text     "comment",             limit: 65535
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-  end
-
-  add_index "assignments", ["home_id"], name: "index_assignments_on_home_id", using: :btree
-  add_index "assignments", ["moved_out_reason_id"], name: "index_assignments_on_moved_out_reason_id", using: :btree
-  add_index "assignments", ["refugee_id"], name: "index_assignments_on_refugee_id", using: :btree
+ActiveRecord::Schema.define(version: 20151209110052) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -151,6 +136,21 @@ ActiveRecord::Schema.define(version: 20151209110051) do
 
   add_index "owner_types", ["name"], name: "index_owner_types_on_name", unique: true, using: :btree
 
+  create_table "placements", force: :cascade do |t|
+    t.integer  "home_id",             limit: 4
+    t.integer  "refugee_id",          limit: 4
+    t.date     "moved_in_at"
+    t.date     "moved_out_at"
+    t.integer  "moved_out_reason_id", limit: 4
+    t.text     "comment",             limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "placements", ["home_id"], name: "index_placements_on_home_id", using: :btree
+  add_index "placements", ["moved_out_reason_id"], name: "index_placements_on_moved_out_reason_id", using: :btree
+  add_index "placements", ["refugee_id"], name: "index_placements_on_refugee_id", using: :btree
+
   create_table "refugees", force: :cascade do |t|
     t.string   "name",                limit: 191
     t.date     "registered"
@@ -190,6 +190,6 @@ ActiveRecord::Schema.define(version: 20151209110051) do
 
   add_index "type_of_housings", ["name"], name: "index_type_of_housings_on_name", unique: true, using: :btree
 
-  add_foreign_key "assignments", "moved_out_reasons"
+  add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "refugees", "genders"
 end

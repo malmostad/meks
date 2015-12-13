@@ -25,9 +25,9 @@
               = refugee.gender.name
           %td= refugee.countries.map(&:name).join(', ')
           %td
-            - if refugee.assignments.empty?
+            - if refugee.placements.empty?
               = 'Ej ännu placerad'
-            - elsif refugee.assignments.last.moved_out_at.present?
+            - elsif refugee.placements.last.moved_out_at.present?
               = 'Utskriven'
             - else
               = link_to refugee.homes.last.name, home_path(refugee.homes.last)

@@ -1,8 +1,8 @@
 class Refugee < ActiveRecord::Base
   belongs_to :gender
 
-  has_many :assignments
-  has_many :homes, through: :assignments
+  has_many :placements
+  has_many :homes, through: :placements
 
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages

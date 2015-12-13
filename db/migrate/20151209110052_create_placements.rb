@@ -1,6 +1,6 @@
-class CreateAssignments < ActiveRecord::Migration
+class CreatePlacements < ActiveRecord::Migration
   def change
-    create_table :assignments do |t|
+    create_table :placements do |t|
       t.belongs_to :home, index: true
       t.belongs_to :refugee, index: true
       t.date :moved_in_at

@@ -60,14 +60,14 @@ end
   # Assign and deassing refugees to homes
   moved_out_at = DateTime.now
   rand(0..5).downto(1).each do |t|
-    if r.assignments.present?
-      moved_in_at = r.assignments.last.moved_out_at + 1.days
+    if r.placements.present?
+      moved_in_at = r.placements.last.moved_out_at + 1.days
     else
       moved_in_at = (rand(100*t-50..100*t)).days.ago
     end
     moved_out_at = moved_in_at + (rand(2..100)).days
 
-    r.assignments.create(
+    r.placements.create(
       home_id: rand(Home.count) + 1,
       moved_in_at: moved_in_at,
       moved_out_at: moved_out_at,
@@ -78,7 +78,7 @@ end
 
   # Make most refugees still assigned to a home
   if r.id % 4 > 0
-    r.assignments.create(
+    r.placements.create(
       home_id: rand(Home.count) + 1,
       moved_in_at: moved_out_at + 1.days
     )

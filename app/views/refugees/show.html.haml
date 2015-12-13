@@ -21,7 +21,7 @@
       = show_attribute('Avregistrerad', @refugee.deregistered.to_s[0..19])
       = show_attribute('Anledning till avregistrering', @refugee.deregistered_reason)
 
-      = render 'assignments'
+      = render 'placements'
 
       %h2.group-title Övrigt
       = show_attribute('Kommentar', @refugee.comment)

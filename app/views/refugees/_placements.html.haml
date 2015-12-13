@@ -1,10 +1,10 @@
-.assignments
+.placements
   %h2.group-title Boendeplaceringar
-  - if @refugee.assignments.empty?
+  - if @refugee.placements.empty?
     Har ännu inte placerats.
 
-  - @refugee.assignments.each do |a|
-    .assignment
+  - @refugee.placements.each do |a|
+    .placement
       = show_attribute('Boende', (link_to a.home.name, home_path(a.home)))
       = show_attribute('Inskriven', a.moved_in_at)
       - if a.moved_out_at.present?
