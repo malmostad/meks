@@ -12,6 +12,8 @@ sv:
     labels:
       defaults: &defaults
         name: Namn
+        home: Boende
+        refugee: Ensamkommande flyktingbarn
         comment: Kommentar
       home:
         <<: *defaults
@@ -39,6 +41,10 @@ sv:
         homes: Boenden
         deregistered: Avregisterad
         deregistered_reason: Avslutsorsak
+      placement:
+        <<: *defaults
+        moved_in_at: Inskrivningsdatum
+        moved_out_at: Utskrivningsdatum
 
 
     placeholders:

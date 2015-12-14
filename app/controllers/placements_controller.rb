@@ -5,7 +5,7 @@ class PlacementsController < ApplicationController
 
   def new
     @refugee = Refugee.find(params[:refugee_id])
-    @refugee.placement = Placement.new
+    @placement = @refugee.placements.new
   end
 
   def edit
@@ -15,9 +15,9 @@ class PlacementsController < ApplicationController
 
   def create
     @refugee = Refugee.find(params[:refugee_id])
-    @refugee.placement = @refugee.placements.new(placement_params)
+    @placement = @refugee.placements.new(placement_params)
 
-    if @refugee.placement.save
+    if @placement.save
       redirect_to @refugee, notice: 'Placeringen registrerades'
     else
       render :new

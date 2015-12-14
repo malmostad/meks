@@ -1,0 +1,18 @@
+- title "Ny boendeplacering"
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    = simple_form_for @placement, url: refugee_placements_path(@refugee), html: { class: "basic" } do |f|
+      = f.error_notification class: "warning"
+
+      = show_attribute('Namn', @refugee.name)
+      = f.association :home, input_html: { class: 'chosen' }
+      = f.input :moved_in_at, as: :string, wrapper: :datepicker
+      = f.input :moved_out_at, as: :string, wrapper: :datepicker
+      = f.input :comment
+
+      .form-group
+        %span.no-control-label
+        .controls
+          = f.submit t('actions.save'), class: "btn btn-primary"
+          = link_to t('actions.cancel'), refugee_path(@refugee), class: "btn btn-default"

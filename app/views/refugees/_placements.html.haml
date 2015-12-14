@@ -9,5 +9,8 @@
       = show_attribute('Inskriven', a.moved_in_at)
       - if a.moved_out_at.present?
         = show_attribute('Utskriven', a.moved_out_at)
-        = show_attribute('Orsak', a.moved_out_reason.name)
+        - if a.moved_out_reason.present?
+          = show_attribute('Orsak', a.moved_out_reason.name)
         = show_attribute('Utskrivningskommentar', a.comment)
+
+  .placement= link_to "Ny placering", new_refugee_placement_path(@refugee)
