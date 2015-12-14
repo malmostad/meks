@@ -2,8 +2,8 @@ class RefugeesController < ApplicationController
   before_action :set_refugee, only: [:show, :edit, :update, :destroy]
 
   def index
-    @refugees = Refugee.order('name').includes(
-      :countries, :languages, :ssns, :gender, :dossier_numbers)
+    @refugees = Refugee.order(:name).includes(
+      :countries, :ssns, :dossier_numbers, :gender, :placements, :homes)
   end
 
   def show
