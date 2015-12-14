@@ -1,4 +1,6 @@
 class Refugee < ActiveRecord::Base
+  attr_reader :total_placement_time
+
   belongs_to :gender
 
   has_many :placements
@@ -22,4 +24,8 @@ class Refugee < ActiveRecord::Base
 
   validates_presence_of :name
   validates_length_of :name, maximum: 191
+
+  def total_placement_time
+    placements.map(&:placement_time).inject(&:+)
+  end
 end

@@ -30,7 +30,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :datepicker, tag: 'div', class: 'form-group', error_class: 'warning' do |b|
+  config.wrappers :datepicker, tag: 'div', class: 'form-group datepicker', error_class: 'warning' do |b|
     b.use :html5
     b.wrapper tag: 'span', class: 'control-label' do |label|
       label.use :label
@@ -41,8 +41,12 @@ SimpleForm.setup do |config|
         x.wrapper tag: 'span', class: 'm-icon-calendar' do |y|
         end
       end
-      ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
-      ba.use :hint, wrap_with: { tag: 'p', class: 'help-block' }
+    end
+    b.wrapper tag: 'span', class: 'no-control-label' do |label|
+    end
+    b.wrapper tag: 'div', class: 'input-group' do |ba|
+      b.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+      b.use :hint, wrap_with: { tag: 'p', class: 'help-block' }
     end
   end
 end

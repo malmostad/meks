@@ -4,5 +4,8 @@ section.refugee .placements {
   }
   .placement {
     margin-bottom: 2em;
+    .form-group.action {
+      margin-top: .5em;
+    }
   }
 }

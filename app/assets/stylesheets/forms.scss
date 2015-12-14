@@ -1,4 +1,10 @@
 .mf-v4 {
+  // main {
+  //   overflow: visible;
+  // }
+  // section.box .box-content {
+  //   overflow: visible;
+  // }
   textarea.form-control {
     height: 10em;
   }
@@ -51,6 +57,12 @@
     }
     .input-group-btn {
       display: inline;
+    }
+  }
+
+  .form-group.datepicker.warning {
+    .input-group.date {
+      font-size: 14px;
     }
   }
 }

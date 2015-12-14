@@ -1,19 +1,24 @@
 .placements
   %h2.group-title Boendeplaceringar
-  - if @refugee.placements.empty?
-    Har ännu inte placerats.
+  .placement
+    = show_attribute('Total boendetid', "#{@refugee.total_placement_time} dagar")
 
   - @refugee.placements.each do |placement|
     .placement
       = show_attribute('Boende', (link_to placement.home.name, home_path(placement.home)))
+      = show_attribute('Boendetid', "#{placement.placement_time} dagar")
       = show_attribute('Inskriven', placement.moved_in_at)
       - if placement.moved_out_at.present?
         = show_attribute('Utskriven', placement.moved_out_at)
         - if placement.moved_out_reason.present?
-          = show_attribute('Orsak', placement.moved_out_reason.name)
-        = show_attribute('Utskrivningskommentar', placement.comment)
+          = show_attribute('Utskrivningsorsak', placement.moved_out_reason.name)
+          = show_attribute('Utskrivningskommentar', placement.comment)
 
-      %p= link_to "Redigera", edit_refugee_placement_path(@refugee, placement)
-      %p= link_to "Skriv ut", refugee_placement_move_out_path(@refugee, placement)
+      .form-group.action
+        %span.no-control-label
+        .controls
+          = link_to "Redigera placeringen", edit_refugee_placement_path(@refugee, placement), class: "btn btn-default btn-sm"
+          - if placement.moved_out_at.blank?
+            = link_to "Utskrivning", refugee_placement_move_out_path(@refugee, placement), class: "btn btn-default btn-sm"
 
-  .placement= link_to "Ny placering", new_refugee_placement_path(@refugee)
+  .placement= link_to "Ny placering", new_refugee_placement_path(@refugee), class: "btn btn-default btn-sm"

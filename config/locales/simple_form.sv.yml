@@ -45,6 +45,7 @@ sv:
         <<: *defaults
         moved_in_at: Inskrivningsdatum
         moved_out_at: Utskrivningsdatum
+        moved_out_reason: Anledning till utskrivning
 
 
     placeholders:

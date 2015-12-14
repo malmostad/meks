@@ -7,7 +7,9 @@
 
       = show_attribute('Namn', @refugee.name)
       = show_attribute('Boende', @placement.home.name)
+      = show_attribute('Inflyttning', @placement.moved_in_at)
       = f.input :moved_out_at, as: :string, wrapper: :datepicker
+      = f.association :moved_out_reason
       = f.input :comment
 
       .form-group
