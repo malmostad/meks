@@ -2,7 +2,7 @@ class LanguagesController < ApplicationController
   before_action :set_language, only: [:show, :edit, :update, :destroy]
 
   def index
-    @languages = Language.all
+    @languages = Language.order(:name)
   end
 
   def new

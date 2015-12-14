@@ -2,7 +2,7 @@ class OwnerTypesController < ApplicationController
   before_action :set_owner_type, only: [:show, :edit, :update, :destroy]
 
   def index
-    @owner_types = OwnerType.all
+    @owner_types = OwnerType.order(:name)
   end
 
   def new

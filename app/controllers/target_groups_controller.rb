@@ -2,7 +2,7 @@ class TargetGroupsController < ApplicationController
   before_action :set_target_group, only: [:show, :edit, :update, :destroy]
 
   def index
-    @target_groups = TargetGroup.all
+    @target_groups = TargetGroup.order(:name)
   end
 
   def new

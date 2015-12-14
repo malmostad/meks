@@ -2,7 +2,7 @@ class TypeOfHousingsController < ApplicationController
   before_action :set_type_of_housing, only: [:show, :edit, :update, :destroy]
 
   def index
-    @type_of_housings = TypeOfHousing.all
+    @type_of_housings = TypeOfHousing.order(:name)
   end
 
   def new
