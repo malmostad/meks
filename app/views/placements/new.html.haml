@@ -9,8 +9,4 @@
       = f.association :home, input_html: { class: 'chosen' }
       = f.input :moved_in_at, as: :string, wrapper: :datepicker
 
-      .form-group
-        %span.no-control-label
-        .controls
-          = f.submit t('actions.save'), class: "btn btn-primary"
-          = link_to t('actions.cancel'), refugee_path(@refugee), class: "btn btn-default"
+      = render 'submit', form: f, cancel_path: refugees_path

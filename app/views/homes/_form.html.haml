@@ -24,8 +24,4 @@
     %h2.group-title Övrigt
     = f.input :comment
 
-    .form-group
-      %span.no-control-label
-      .controls
-        = f.submit t('actions.save'), class: "btn btn-primary"
-        = link_to t('actions.cancel'), homes_path(@home.name), class: "btn btn-default"
+    = render 'submit', form: f, cancel_path: home_path(@home)

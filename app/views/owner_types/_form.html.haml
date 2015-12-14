@@ -4,8 +4,4 @@
 
     = f.input :name
 
-    .form-group
-      %span.no-control-label
-      .controls
-        = f.submit t('actions.save'), class: "btn btn-primary"
-        = link_to t('actions.cancel'), owner_types_path(@owner_type.name), class: "btn btn-default"
+    = render 'submit', form: f, cancel_path: owner_types_path

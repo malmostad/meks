@@ -13,8 +13,4 @@
         = f.association :moved_out_reason
         = f.input :comment
 
-      .form-group
-        %span.no-control-label
-        .controls
-          = f.submit t('actions.save'), class: "btn btn-primary"
-          = link_to t('actions.cancel'), refugee_path(@refugee), class: "btn btn-default"
+      = render 'submit', form: f, cancel_path: refugee_path(@refugee)
