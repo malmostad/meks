@@ -16,12 +16,14 @@
   section.box.show form.basic .control-label {
     padding-top: 0;
   }
+
   form.basic h2.group-title {
     margin-top: 2em;
-    &:first-of-type {
-      margin-top: 0;
-    }
   }
+  form.basic > h2.group-title:first-of-type {
+    margin-top: 0;
+  }
+
   div.terms {
     border-bottom: $border;
     padding-bottom: 1em;

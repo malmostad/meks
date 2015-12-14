@@ -13,7 +13,6 @@
       - if @refugee.gender.present?
         = show_attribute('Kön', @refugee.gender.name)
 
-      %h2.group-title Egenskaper
       = show_attribute('Språk', @refugee.languages.map(&:name).join(', '))
       = show_attribute('Länder', @refugee.countries.map(&:name).join(', '))
       = show_attribute('Insatsbild', @refugee.special_needs ? 'Ja' : 'Nej')
