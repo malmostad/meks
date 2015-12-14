@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action { add_body_class("#{controller_name}-controller #{action_name}-action") }
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
@@ -25,5 +27,21 @@ class ApplicationController < ActionController::Base
     else
       redirect_to root_path
     end
+  end
+
+  def init_body_class
+    add_body_class(Rails.env)
+    add_body_class('user') if current_user.present?
+  end
+
+  # Adds classnames to the body tag
+  def add_body_class(name)
+    @body_classes ||= ''
+    @body_classes << "#{name} "
+  end
+
+  def reset_body_classes
+    @body_classes = nil
+    init_body_class
   end
 end

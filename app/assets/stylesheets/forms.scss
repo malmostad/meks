@@ -1,10 +1,11 @@
 .mf-v4 {
-  // main {
-  //   overflow: visible;
-  // }
-  // section.box .box-content {
-  //   overflow: visible;
-  // }
+  &.placements-controller {
+    main,
+    section.box .box-content {
+      overflow: visible;
+    }
+  }
+
   textarea.form-control {
     height: 10em;
   }
