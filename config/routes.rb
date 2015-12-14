@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   get '/nope' => 'login#nope'
 
   resources :refugees do
-    resources :placements
+    resources :placements do
+      get :move_out
+      patch :move_out_update
+    end
   end
 
   resources :homes

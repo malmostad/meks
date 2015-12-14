@@ -3,14 +3,17 @@
   - if @refugee.placements.empty?
     Har ännu inte placerats.
 
-  - @refugee.placements.each do |a|
+  - @refugee.placements.each do |placement|
     .placement
-      = show_attribute('Boende', (link_to a.home.name, home_path(a.home)))
-      = show_attribute('Inskriven', a.moved_in_at)
-      - if a.moved_out_at.present?
-        = show_attribute('Utskriven', a.moved_out_at)
-        - if a.moved_out_reason.present?
-          = show_attribute('Orsak', a.moved_out_reason.name)
-        = show_attribute('Utskrivningskommentar', a.comment)
+      = show_attribute('Boende', (link_to placement.home.name, home_path(placement.home)))
+      = show_attribute('Inskriven', placement.moved_in_at)
+      - if placement.moved_out_at.present?
+        = show_attribute('Utskriven', placement.moved_out_at)
+        - if placement.moved_out_reason.present?
+          = show_attribute('Orsak', placement.moved_out_reason.name)
+        = show_attribute('Utskrivningskommentar', placement.comment)
+
+      %p= link_to "Redigera", edit_refugee_placement_path(@refugee, placement)
+      %p= link_to "Skriv ut", refugee_placement_move_out_path(@refugee, placement)
 
   .placement= link_to "Ny placering", new_refugee_placement_path(@refugee)

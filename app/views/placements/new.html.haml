@@ -8,8 +8,6 @@
       = show_attribute('Namn', @refugee.name)
       = f.association :home, input_html: { class: 'chosen' }
       = f.input :moved_in_at, as: :string, wrapper: :datepicker
-      = f.input :moved_out_at, as: :string, wrapper: :datepicker
-      = f.input :comment
 
       .form-group
         %span.no-control-label
