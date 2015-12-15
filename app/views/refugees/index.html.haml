@@ -7,7 +7,6 @@
         %td{ colspan: 9 }
           .actions= link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'
       %tr
-        %th Kommun
         %th Namn
         %th Dossiernummer
         %th Personnummer
@@ -18,7 +17,6 @@
     %tbody
       - @refugees.each do |refugee|
         %tr
-          %td= refugee.municipality
           %td= link_to refugee.name, refugee
           %td= refugee.dossier_numbers.map(&:name).join(', ')
           %td= refugee.ssns.map(&:name).join(', ')
