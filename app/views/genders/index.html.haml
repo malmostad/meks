@@ -1,0 +1,21 @@
+- title "Språk"
+%section.box.index
+  %h1.box-title= h1
+  %table.full.wrap
+    %thead
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_gender_path, class: "btn btn-primary"
+      %tr
+        %th Namn
+        %th
+
+    %tbody
+      - @genders.each do |gender|
+        %tr
+          %td= link_to gender.name, edit_gender_path(gender)
+          %td.delete= link_to t('actions.delete'), gender, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_gender_path, class: "btn btn-primary"

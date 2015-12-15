@@ -23,6 +23,11 @@ class Refugee < ActiveRecord::Base
     reject_if: proc { |attr| attr[:name].blank? }
   validates_associated :dossier_numbers
 
+  has_many :relationships, dependent: :destroy
+  has_many :relateds, through: :relationships, dependent: :destroy
+  has_many :inverse_relationships, class_name: "Relationship", foreign_key: "related_id", dependent: :destroy
+  has_many :inverse_relateds, through: :inverse_relationships, source: :refugee
+
   validates_presence_of :name
   validates_length_of :name, maximum: 191
 

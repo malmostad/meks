@@ -180,11 +180,17 @@ ActiveRecord::Schema.define(version: 20151215135701) do
   add_index "refugees", ["municipality_id"], name: "index_refugees_on_municipality_id", using: :btree
 
   create_table "relationships", force: :cascade do |t|
-    t.integer  "refugee_id", limit: 4
-    t.integer  "related_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "refugee_id",              limit: 4
+    t.integer  "related_id",              limit: 4
+    t.integer  "type_of_relationship_id", limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
+
+  add_index "relationships", ["refugee_id", "related_id"], name: "index_relationships_on_refugee_id_and_related_id", unique: true, using: :btree
+  add_index "relationships", ["refugee_id"], name: "index_relationships_on_refugee_id", using: :btree
+  add_index "relationships", ["related_id"], name: "index_relationships_on_related_id", using: :btree
+  add_index "relationships", ["type_of_relationship_id"], name: "index_relationships_on_type_of_relationship_id", using: :btree
 
   create_table "ssns", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -222,4 +228,5 @@ ActiveRecord::Schema.define(version: 20151215135701) do
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "refugees", "genders"
   add_foreign_key "refugees", "municipalities"
+  add_foreign_key "relationships", "type_of_relationships"
 end

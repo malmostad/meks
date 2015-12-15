@@ -16,7 +16,7 @@ class TypeOfRelationshipsController < ApplicationController
     @type_of_relationship = TypeOfRelationship.new(type_of_relationship_params)
 
     if @type_of_relationship.save
-      redirect_to type_of_relationships_path, notice: 'Boendeformen skapades'
+      redirect_to type_of_relationships_path, notice: 'Relationsformen skapades'
     else
       render :new
     end
@@ -24,7 +24,7 @@ class TypeOfRelationshipsController < ApplicationController
 
   def update
     if @type_of_relationship.update(type_of_relationship_params)
-      redirect_to type_of_relationships_path, notice: 'Boendeformen uppdaterades'
+      redirect_to type_of_relationships_path, notice: 'Relationsformen uppdaterades'
     else
       render :edit
     end
@@ -32,7 +32,7 @@ class TypeOfRelationshipsController < ApplicationController
 
   def destroy
     @type_of_relationship.destroy
-    redirect_to type_of_relationships_path, notice: 'Boendeformen raderades'
+    redirect_to type_of_relationships_path, notice: 'Relationsformen raderades'
   end
 
   private

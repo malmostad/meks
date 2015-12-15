@@ -1,5 +1,5 @@
 class TypeOfRelationship < ActiveRecord::Base
-  has_and_belongs_to_many :relationships
+  has_many :relationships, dependent: :nullify
 
   validates_uniqueness_of :name, case_sensitive: false
   validates_presence_of :name
