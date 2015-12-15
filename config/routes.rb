@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :target_groups
   resources :owner_types
   resources :type_of_housings
+  resources :municipalities
   resources :countries
   resources :languages
 

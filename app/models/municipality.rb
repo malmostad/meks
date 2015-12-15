@@ -1,4 +1,4 @@
-class Gender < ActiveRecord::Base
+class Municipality < ActiveRecord::Base
   has_many :refugees
 
   validates_uniqueness_of :name, case_sensitive: false

@@ -4,6 +4,11 @@ class CreateRefugees < ActiveRecord::Migration
       t.string :name
       t.date :registered
       t.date :deregistered
+      t.date :residence_permit_at
+      t.references :municipality, index: true, foreign_key: true
+      t.date :municipality_placement_migrationsverket_at
+      t.date :municipality_placement_per_agreement_at
+      t.text :municipality_placement_comment
       t.text :deregistered_reason
       t.boolean :special_needs
       t.text :comment

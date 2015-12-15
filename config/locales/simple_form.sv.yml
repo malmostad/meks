@@ -41,6 +41,12 @@ sv:
         homes: Boenden
         deregistered: Avregisterad
         deregistered_reason: Avslutsorsak
+        residence_permits: Uppehållstillstånd
+        municipality_id: Kommunplacerad
+        municipality_placement_migrationsverket_at: Kommunplacerad enligt migrationsverket
+        municipality_placement_per_agreement_at: Kommunplacerad enligt överenskommelse
+        municipality_placement_comment: Kommunplacerad, kommentar
+
       placement:
         <<: *defaults
         moved_in_at: Inskrivningsdatum

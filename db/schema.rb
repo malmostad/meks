@@ -128,6 +128,14 @@ ActiveRecord::Schema.define(version: 20151209110052) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "municipalities", force: :cascade do |t|
+    t.string   "name",       limit: 191
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "municipalities", ["name"], name: "index_municipalities_on_name", unique: true, using: :btree
+
   create_table "owner_types", force: :cascade do |t|
     t.string   "name",       limit: 191
     t.datetime "created_at",             null: false
@@ -152,18 +160,24 @@ ActiveRecord::Schema.define(version: 20151209110052) do
   add_index "placements", ["refugee_id"], name: "index_placements_on_refugee_id", using: :btree
 
   create_table "refugees", force: :cascade do |t|
-    t.string   "name",                limit: 191
+    t.string   "name",                                       limit: 191
     t.date     "registered"
     t.date     "deregistered"
-    t.text     "deregistered_reason", limit: 65535
+    t.date     "residence_permit_at"
+    t.integer  "municipality_id",                            limit: 4
+    t.date     "municipality_placement_migrationsverket_at"
+    t.date     "municipality_placement_per_agreement_at"
+    t.text     "municipality_placement_comment",             limit: 65535
+    t.text     "deregistered_reason",                        limit: 65535
     t.boolean  "special_needs"
-    t.text     "comment",             limit: 65535
-    t.integer  "gender_id",           limit: 4
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.text     "comment",                                    limit: 65535
+    t.integer  "gender_id",                                  limit: 4
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
   end
 
   add_index "refugees", ["gender_id"], name: "index_refugees_on_gender_id", using: :btree
+  add_index "refugees", ["municipality_id"], name: "index_refugees_on_municipality_id", using: :btree
 
   create_table "ssns", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -192,4 +206,5 @@ ActiveRecord::Schema.define(version: 20151209110052) do
 
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "refugees", "genders"
+  add_foreign_key "refugees", "municipalities"
 end

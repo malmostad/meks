@@ -27,6 +27,7 @@ group :development do
   gem 'capistrano', '3.4.0'
   gem 'capistrano-rails', '1.1.5'
   gem 'capistrano-rbenv', '2.0.3'
+  gem 'quiet_assets'
   gem 'net-ldap' #, '0.3.1' # '0.3.1' works, 0.5 and 0.6 (0.10.1?) have an encoding issue: https://github.com/ruby-ldap/ruby-net-ldap/pull/82
 
   gem 'pry-rails'
@@ -40,7 +41,6 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4.0'
-  gem 'quiet_assets'
   gem 'thin'
   gem 'rb-readline'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

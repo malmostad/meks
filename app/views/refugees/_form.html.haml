@@ -2,7 +2,7 @@
   = simple_form_for @refugee, html: { class: "basic refugee" } do |f|
     = f.error_notification class: "warning"
 
-    %h2.group-title Basuppgifter
+    %h2.group-title Grunduppgifter
     = f.input :name
 
     .terms
@@ -24,21 +24,20 @@
           = add_ssns_button "Nytt personnummer", f
 
     = f.association :gender
-    = f.input :registered, as: :string, wrapper: :datepicker
 
-    %h2.group-title Egenskaper
     = f.association :languages, input_html: { class: 'chosen' }
     = f.association :countries, input_html: { class: 'chosen' }
     = f.input :special_needs, as: :select
+    = f.input :comment
 
-    %h2.group-title Boenden
-    = f.association :homes, input_html: { class: 'chosen' }
-
-    %h2.group-title Avregistrering
+    %h2.group-title Händelser
+    = f.input :registered, as: :string, wrapper: :datepicker
+    = f.input :residence_permit_at, as: :string, wrapper: :datepicker
+    = f.association :municipality, input_html: { class: 'chosen' }
+    = f.input :municipality_placement_migrationsverket_at, as: :string, wrapper: :datepicker
+    = f.input :municipality_placement_per_agreement_at, as: :string, wrapper: :datepicker
+    = f.input :municipality_placement_comment, as: :string, wrapper: :datepicker
     = f.input :deregistered, as: :string, wrapper: :datepicker
     = f.input :deregistered_reason
-
-    %h2.group-title Övrigt
-    = f.input :comment
 
     = render 'submit', form: f, cancel_path: refugee_path(@refugee)

@@ -2,6 +2,7 @@ class Refugee < ActiveRecord::Base
   attr_reader :total_placement_time
 
   belongs_to :gender
+  belongs_to :municipality
 
   has_many :placements
   has_many :homes, through: :placements

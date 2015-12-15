@@ -51,6 +51,11 @@ class RefugeesController < ApplicationController
     def refugee_params
       params.require(:refugee).permit(
         :name, :registered, :deregistered, :deregistered_reason,
+        :residence_permit_at,
+        :municipality_id,
+        :municipality_placement_migrationsverket_at,
+        :municipality_placement_per_agreement_at,
+        :municipality_placement_comment,
         :special_needs, :comment,
         :gender_id,
         home_ids: [],
