@@ -36,8 +36,9 @@
     = f.association :municipality, input_html: { class: 'chosen' }
     = f.input :municipality_placement_migrationsverket_at, as: :string, wrapper: :datepicker
     = f.input :municipality_placement_per_agreement_at, as: :string, wrapper: :datepicker
-    = f.input :municipality_placement_comment, as: :string, wrapper: :datepicker
+    = f.input :municipality_placement_comment
     = f.input :deregistered, as: :string, wrapper: :datepicker
     = f.input :deregistered_reason
 
-    = render 'submit', form: f, cancel_path: refugee_path(@refugee)
+    = render 'submit', form: f,
+      cancel_path: @refugee.id.present? ? refugee_path(@refugee) : refugees_path

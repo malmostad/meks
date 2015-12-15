@@ -10,8 +10,7 @@
       = show_attribute('Namn', @refugee.name)
       = show_attribute('Dossiernummer', @refugee.dossier_numbers.map(&:name).join(', '))
       = show_attribute('Personnummer', @refugee.ssns.map(&:name).join(', '))
-      - if @refugee.gender.present?
-        = show_attribute('Kön', @refugee.gender.name)
+      = show_attribute('Kön', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
 
       = show_attribute('Språk', @refugee.languages.map(&:name).join(', '))
       = show_attribute('Länder', @refugee.countries.map(&:name).join(', '))
@@ -21,7 +20,7 @@
       %h2.group-title Händelser
       = show_attribute('Registrerad', @refugee.registered)
       = show_attribute('Uppehållstillstånd', @refugee.residence_permit_at)
-      = show_attribute('Kommunplacering', @refugee.municipality.name)
+      = show_attribute('Kommunplacering', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
       = show_attribute('Kommunplacering enligt migrationsverket', @refugee.municipality_placement_migrationsverket_at)
       = show_attribute('Kommunplacering enligt överenskommelse', @refugee.municipality_placement_per_agreement_at)
       = show_attribute('Kommunplacering, kommentar', @refugee.municipality_placement_comment)
