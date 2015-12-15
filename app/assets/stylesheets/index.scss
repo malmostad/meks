@@ -22,3 +22,15 @@ table {
     border-bottom: 0;
   }
 }
+
+section.box.show.statistics {
+  h2.group-title {
+    font-family: $sans-serif;
+    font-weight: bold;
+  }
+  .box-content.basic .stat {
+    font-family: $sans-serif;
+    font-size: emize(14);
+    margin-bottom: .4em;
+  }
+}

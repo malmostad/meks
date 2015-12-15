@@ -4,8 +4,8 @@ class Refugee < ActiveRecord::Base
   belongs_to :gender
 
   has_many :placements
-  accepts_nested_attributes_for :placements, reject_if: :all_blank
   has_many :homes, through: :placements
+  accepts_nested_attributes_for :placements, reject_if: :all_blank
 
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages

@@ -10,7 +10,7 @@ class LoginController < ApplicationController
   end
 
   def ok
-    redirect_to controller: :refugees, action: :index
+    redirect_to controller: :statistics, action: :index
   end
 
   def nope

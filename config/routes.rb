@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   root 'login#index'
   get 'login/index'
   post 'login/ok'
-
   get '/nope' => 'login#nope'
+
+  get 'statistics/index'
 
   resources :refugees do
     resources :placements do
