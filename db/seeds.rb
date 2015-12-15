@@ -43,7 +43,7 @@ end
 
 (0...250).each do
   r = Refugee.create(
-    name: Faker::Name.name,
+    name: Faker::Name.name.gsub(/(Prof.|Dr.|PhD.)/, '').strip,
     gender_id: rand(Gender.count) + 1,
     country_ids: [rand(Country.count) + 1],
     language_ids: [rand(Language.count) + 1],

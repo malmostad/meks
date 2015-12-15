@@ -11,4 +11,14 @@ class Home < ActiveRecord::Base
   validates_uniqueness_of :name, case_sensitive: false
   validates_presence_of :name
   validates_length_of :name, maximum: 191
+
+  def current_placements
+    placements.includes(:refugee,
+      refugee: [:languages, :countries, :dossier_numbers, :ssns, :gender]
+      ).where(moved_out_at: nil).order('refugees.name')
+  end
+
+  def total_placement_time
+    placements.map(&:placement_time).inject(&:+)
+  end
 end

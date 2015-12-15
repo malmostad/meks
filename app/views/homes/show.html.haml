@@ -19,11 +19,35 @@
       = show_attribute('Ägarform', @home.owner_types.map(&:name).join(', '))
       = show_attribute('Målgrupp', @home.target_groups.map(&:name).join(', '))
       = show_attribute('Språk', @home.languages.map(&:name).join(', '))
+      = show_attribute('Kommentar', @home.comment)
 
       %h2.group-title Tillgänglighet
+      = show_attribute('Aktuella placeringar', @home.current_placements.count)
+      = show_attribute('Placeringar totalt', @home.placements.count)
+      = show_attribute('Total placeringstid', "#{@home.total_placement_time} dagar")
       = show_attribute('Platser', @home.seats)
       = show_attribute('Garanterade platser', @home.guaranteed_seats)
       = show_attribute('Rörliga platser', @home.movable_seats)
 
-      %h2.group-title Övrigt
-      = show_attribute('Kommentar', @home.comment)
+      %h2.group-title Aktuella placeringar
+      %table.full.wrap
+        %thead
+          %tr
+            %th Namn
+            %th Dossiernummer
+            %th Personnummer
+            %th Kön
+            %th Land
+            %th Placerad
+
+        %tbody
+          - @home.current_placements.each do |placement|
+            %tr
+              %td= link_to placement.refugee.name, placement.refugee
+              %td= placement.refugee.dossier_numbers.map(&:name).join(', ')
+              %td= placement.refugee.ssns.map(&:name).join(', ')
+              %td
+                - if placement.refugee.gender.present?
+                  = placement.refugee.gender.name
+              %td= placement.refugee.countries.map(&:name).join(', ')
+              %td= placement.moved_in_at
