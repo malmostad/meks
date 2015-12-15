@@ -1,0 +1,7 @@
+.box-content
+  = simple_form_for @type_of_relationship, html: { class: "basic" } do |f|
+    = f.error_notification class: "warning"
+
+    = f.input :name
+
+    = render 'submit', form: f, cancel_path: type_of_relationships_path

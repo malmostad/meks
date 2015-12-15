@@ -1,0 +1,18 @@
+- title "Boendeformer"
+%section.box.index
+  %h1.box-title= h1
+  %table.full.wrap
+    %thead
+      %tr
+        %th Namn
+        %th
+
+    %tbody
+      - @type_of_relationships.each do |type_of_relationship|
+        %tr
+          %td= link_to type_of_relationship.name, edit_type_of_relationship_path(type_of_relationship)
+          %td.delete= link_to t('actions.delete'), type_of_relationship, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_type_of_relationship_path, class: "btn btn-primary"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209110052) do
+ActiveRecord::Schema.define(version: 20151215135701) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -179,6 +179,13 @@ ActiveRecord::Schema.define(version: 20151209110052) do
   add_index "refugees", ["gender_id"], name: "index_refugees_on_gender_id", using: :btree
   add_index "refugees", ["municipality_id"], name: "index_refugees_on_municipality_id", using: :btree
 
+  create_table "relationships", force: :cascade do |t|
+    t.integer  "refugee_id", limit: 4
+    t.integer  "related_id", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "ssns", force: :cascade do |t|
     t.string   "name",       limit: 191
     t.integer  "refugee_id", limit: 4
@@ -203,6 +210,14 @@ ActiveRecord::Schema.define(version: 20151209110052) do
   end
 
   add_index "type_of_housings", ["name"], name: "index_type_of_housings_on_name", unique: true, using: :btree
+
+  create_table "type_of_relationships", force: :cascade do |t|
+    t.string   "name",       limit: 191
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "type_of_relationships", ["name"], name: "index_type_of_relationships_on_name", unique: true, using: :btree
 
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "refugees", "genders"

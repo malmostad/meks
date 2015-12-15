@@ -41,6 +41,10 @@ end
   MovedOutReason.create(name: name)
 end
 
+['partner', 'man', 'hustru', 'syster', 'bror', 'mamma', 'pappa', 'kusin', 'morbror', 'farbror', 'faster', 'moster', 'annan släkting', 'annan', 'samma person'].each do |name|
+  TypeOfRelationship.create(name: name)
+end
+
 (0...250).each do
   r = Refugee.create(
     name: Faker::Name.name.gsub(/(Prof.|Dr.|PhD.)/, '').strip,
