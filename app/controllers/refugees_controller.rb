@@ -47,7 +47,7 @@ class RefugeesController < ApplicationController
   def search
     @q = params[:q].present? ? params[:q].dup : ''
 
-    @limit = 10
+    @limit = 100
     @offset = params[:page].to_i * @limit
     @more_request = refugees_search_path(load_more_query)
 

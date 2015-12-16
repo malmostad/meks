@@ -1,16 +1,32 @@
-- @refugees.each do |refugee|
-  %tr
-    %td= link_to refugee.name, refugee
-    %td= refugee.dossier_numbers.map(&:name).join(', ')
-    %td= refugee.ssns.map(&:name).join(', ')
-    %td
-      - if refugee.gender.present?
-        = refugee.gender.name
-    %td= refugee.countries.map(&:name).join(', ')
-    %td
-      - if refugee.placements.empty?
-        = 'Ej ännu placerad'
-      - elsif refugee.placements.last.moved_out_at.present?
-        = 'Utskriven'
-      - else
-        = link_to refugee.homes.last.name, home_path(refugee.homes.last)
+%div
+  %table.full.wrap.refugee.results
+    %thead
+      %tr
+        %th Namn
+        %th Dossiernummer
+        %th Personnummer
+        %th Kön
+        %th Land
+        %th Aktuellt boenden
+
+    %tbody
+      - @refugees.each do |refugee|
+        %tr
+          %td= link_to refugee.name, refugee
+          %td= refugee.dossier_numbers.map(&:name).join(', ')
+          %td= refugee.ssns.map(&:name).join(', ')
+          %td
+            - if refugee.gender.present?
+              = refugee.gender.name
+          %td= refugee.countries.map(&:name).join(', ')
+          %td
+            - if refugee.placements.empty?
+              = 'Ej ännu placerad'
+            - elsif refugee.placements.last.moved_out_at.present?
+              = 'Utskriven'
+            - else
+              = link_to refugee.homes.last.name, home_path(refugee.homes.last)
+
+  - if @has_more
+    .load-more
+      %input.btn.btn-default{ type: "button", value: "Visa fler", "data-path" => @more_request }

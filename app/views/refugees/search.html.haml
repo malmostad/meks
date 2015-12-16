@@ -16,24 +16,6 @@
       %div.summary= "#{number_to_words(@total).titlecase} #{@total > 1 ? 'personer' : 'person'} matchade din sökning"
 
     - if @refugees.present?
-      - unless @xhr
-        %table.full.wrap.results
-          %thead
-            %tr
-              %th Namn
-              %th Dossiernummer
-              %th Personnummer
-              %th Kön
-              %th Land
-              %th Aktuellt boenden
-          %tbody
-            = render "search_results"
-      - else
-        = render "search_results"
-
-      - if @has_more
-        .load-more
-          %input.btn.btn-default{ type: "button", value: "Visa fler", "data-path" => @more_request }
-
+      = render "search_results"
     - else
       .actions= link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'

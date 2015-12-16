@@ -20,6 +20,7 @@ $ ->
     event.preventDefault()
     $trigger = $(@)
     $trigger.val("Hämtar fler...").addClass('disabled')
+
     $.get $trigger.attr('data-path'), (data) ->
-      $trigger.parent().remove()
-      $('table.results tbody').append(data)
+      $('.load-more').replaceWith($(data).find('.load-more'))
+      $(data).find('tbody tr').appendTo('table.results tbody')
