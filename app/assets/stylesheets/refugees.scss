@@ -19,3 +19,11 @@ section.refugees {
     }
   }
 }
+
+.ui-autocomplete.ui-menu .ui-menu-item {
+  a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

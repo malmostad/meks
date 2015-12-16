@@ -74,8 +74,8 @@ class RefugeesController < ApplicationController
         { id: r.id,
           name: r.name,
           path: "#{root_url}refugees/#{r.id}",
-          ssns: r.ssns || '',
-          dossier_numbers: r.dossier_numbers || ''
+          ssns: r.ssns.split(/\s/) || [],
+          dossier_numbers: r.dossier_numbers.split(/\s/) || []
         }
       }
     else
