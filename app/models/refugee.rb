@@ -1,4 +1,7 @@
 class Refugee < ActiveRecord::Base
+
+  include RefugeeSearch
+
   attr_reader :total_placement_time
 
   belongs_to :gender
