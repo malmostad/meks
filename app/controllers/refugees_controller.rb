@@ -47,7 +47,7 @@ class RefugeesController < ApplicationController
   def search
     @q = params[:q].present? ? params[:q].dup : ''
 
-    @limit = 100
+    @limit = 10
     @offset = params[:page].to_i * @limit
     @more_request = refugees_search_path(load_more_query)
 
@@ -59,6 +59,7 @@ class RefugeesController < ApplicationController
     end
     @has_more = @total.present? ? (@offset + @limit < @total) : false
     if request.xhr?
+      @xhr = true
       render :_search_results, layout: false
     else
       render :search

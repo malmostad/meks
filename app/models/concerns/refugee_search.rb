@@ -42,7 +42,8 @@ module RefugeeSearch
       begin
         response = __elasticsearch__.search fuzzy_query(query, settings[:from], settings[:size])
 
-        { refugees: response.records.to_a, # to_a is needed to be able to serialize for memcached
+        { refugees: response.records.includes(
+            :countries, :ssns, :dossier_numbers, :gender, :placements, :homes).to_a,
           total: response.results.total,
           took: response.took
         }

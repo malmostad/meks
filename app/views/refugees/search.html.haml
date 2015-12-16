@@ -4,18 +4,36 @@
   .box-content.body-copy
     = form_tag(refugees_search_path, method: "get", class: "basic") do
       .form-group
-        = label_tag "query-employee", "Sök person: ", class: "control-label"
+        = label_tag "query-refugee", "Sök person: ", class: "control-label"
         .controls
           .input-group
-            = text_field_tag "query-employee", @q, name: "q", "data-autocomplete-url" => refugees_suggest_path, class: "form-control", placeholder: "Ange söktext"
+            = text_field_tag "query-refugee", @q, name: "q", "data-autocomplete-url" => refugees_suggest_path, class: "form-control", placeholder: "Ange söktext"
             %span.input-group-btn
               = submit_tag "Sök", { class: "btn btn-default", name: nil }
           .help-inline Sök på namn, person- eller dossiernummer
 
     - if @total.present?
-      %div.summary= "#{number_to_words(@total).titlecase} personer matchade din sökning"
+      %div.summary= "#{number_to_words(@total).titlecase} #{@total > 1 ? 'personer' : 'person'} matchade din sökning"
 
     - if @refugees.present?
-      = render "search_results"
+      - unless @xhr
+        %table.full.wrap.results
+          %thead
+            %tr
+              %th Namn
+              %th Dossiernummer
+              %th Personnummer
+              %th Kön
+              %th Land
+              %th Aktuellt boenden
+          %tbody
+            = render "search_results"
+      - else
+        = render "search_results"
+
+      - if @has_more
+        .load-more
+          %input.btn.btn-default{ type: "button", value: "Visa fler", "data-path" => @more_request }
+
     - else
       .actions= link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'
