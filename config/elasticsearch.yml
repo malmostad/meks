@@ -1,0 +1,69 @@
+analysis:
+  analyzer:
+    name_index:
+      tokenizer: edge_ngram_2
+      char_filter:
+      - phonetic_mappings
+      - hyphen
+      filter:
+      - lowercase
+      - name_synonyms
+    name_search:
+      tokenizer: standard
+      filter:
+      - lowercase
+      - name_synonyms
+      char_filter:
+      - phonetic_mappings
+      - hyphen
+    phone_number:
+      tokenizer: keyword
+      filter:
+      - phone_number
+      char_filter:
+      - phone_number
+
+  tokenizer:
+    edge_ngram_2:
+      type: edgeNGram
+      min_gram: 2
+      max_gram: 50
+      token_chars:
+      - letter
+
+  filter:
+    phone_number:
+      type: edgeNGram
+      side: back
+      min_gram: 5
+      max_gram: 12
+    name_synonyms:
+      type: synonym
+      synonyms:
+      - "carlsson, carlson => karlsson"
+      - "karlson => karlsson"
+      - "hanson => hansson"
+      # - "nilson => nilsson"
+      # - "person => persson"
+      # - "anderson => andersson"
+      # - "svenson => svensson"
+      - "carl => karl"
+
+  char_filter:
+    phone_number:
+      type: pattern_replace
+      pattern: "[^0-9]"
+      replacement: ''
+    hyphen_space:
+      type: pattern_replace
+      pattern: "[-,\\s]"
+      replacement: ''
+    hyphen:
+      type: pattern_replace
+      pattern: "[-]"
+      replacement: ''
+    phonetic_mappings:
+      type: mapping
+      mappings:
+      - "û => y"
+      - "ph => f"
