@@ -9,14 +9,14 @@ module RefugeeSearch
 
     # Override model name
     index_name "refugees_#{Rails.env}"
-    document_type "refugee"
+    document_type 'refugee'
 
     mappings dynamic: 'false' do
       indexes :name, analyzer: 'simple'
-      indexes :name_phrase, analyzer: "simple"
-      # indexes :name_search, index_analyzer: 'name_index', search_analyzer: 'name_search'
-      indexes :ssns, analyzer: 'simple'
-      indexes :dossier_numbers, analyzer: 'simple'
+      indexes :name_phrase, analyzer: 'simple'
+      indexes :name_search, analyzer: 'name_index', search_analyzer: 'name_search'
+      indexes :ssns, analyzer: 'nmbr', search_analyzer: 'standard'
+      indexes :dossier_numbers, analyzer: 'nmbr', search_analyzer: 'standard'
     end
   end
 
@@ -25,18 +25,20 @@ module RefugeeSearch
       id: id,
       name: name,
       name_phrase: name,
-      # name_search: name,
-      ssns: ssns.map(&:name),
-      dossier_numbers: dossier_numbers.map(&:name),
+      name_search: name,
+      ssns: ssns.map(&:name).join(' '),
+      dossier_numbers: dossier_numbers.map(&:name).join(' '),
     }.as_json
   end
 
   module ClassMethods
     def fuzzy_search(query, options = {})
       return false if query.blank?
+
       settings = {
         from: 0, size: 10
       }.merge(options)
+
       begin
         response = __elasticsearch__.search fuzzy_query(query, settings[:from], settings[:size])
 
@@ -63,7 +65,6 @@ module RefugeeSearch
   private
 
     def fuzzy_query(query, from, size)
-      query = sanitize_query(query)
       {
         from: from,
         size: size,
@@ -97,35 +98,24 @@ module RefugeeSearch
               },
               {
                 match: {
-                  name_search: {
-                    query: query,
-                    prefix_length: 0
+                  ssns: {
+                    boost: 10,
+                    query: query
                   }
                 }
               },
               {
-                multi_match: {
-                  fields: [
-                    "ssns",
-                    "dossier_numbers"
-                  ],
-                  query: query
+                match: {
+                  dossier_numbers: {
+                    boost: 10,
+                    query: query
+                  }
                 }
               }
             ]
           }
         }
       }
-    end
-
-    # NOTE: The sanitizer does not allow grouping and operators in the query
-    def sanitize_query(query)
-      # Remove Lucene reserved characters
-      query.gsub!(/([#{Regexp.escape('\\+-&|!(){}[]^~*?:/"\'')}])/, '')
-
-      # Remove Lucene operators
-      query.gsub!(/\s+\b(AND|OR|NOT)\b/i, '')
-      query
     end
   end
 end

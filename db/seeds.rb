@@ -56,11 +56,11 @@ end
     comment: Faker::Lorem.paragraph
   )
 
-  (rand(2)).times do
+  (rand(3)).times do
     DossierNumber.create(refugee_id: r.id, name: Faker::Number.number(10))
   end
 
-  (rand(2)).times do
+  (rand(3)).times do
     Ssn.create(refugee_id: r.id, name: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s.gsub('-', '')[0..7])
   end
 
