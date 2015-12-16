@@ -1,5 +1,6 @@
 class RefugeesController < ApplicationController
   before_action :set_refugee, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery except: :suggest
 
   def index
     @refugees = Refugee.order(:name).includes(
@@ -39,6 +40,51 @@ class RefugeesController < ApplicationController
   def destroy
     @refugee.destroy
     redirect_to refugees_url, notice: 'Ensamkommande flyktingbarnet togs bort'
+  end
+
+  # Full search for refugees
+  def search
+    @q = params[:q].present? ? params[:q].dup : ''
+
+    @limit = 100
+    @offset = params[:page].to_i * @limit
+    @more_request = refugees_search_path(load_more_query)
+
+    response = Refugee.fuzzy_search(params[:q], from: @offset, size: @limit)
+    if response
+      @refugees = response[:refugees]
+      @total = response[:total]
+      logger.info { "Elasticsearch took #{response[:took]}ms" }
+    end
+    @has_more = @total.present? ? (@offset + @limit < @total) : false
+    if request.xhr?
+      render :_search_results, layout: false
+    else
+      render :search
+    end
+  end
+
+  # Suggest refugees based on a search query
+  def suggest
+    @refugees = Refugee.fuzzy_suggest(params[:term])
+    if @refugees
+      @refugees = @refugees.map { |r|
+        { id: r.id,
+          name: r.name,
+          path: "#{root_url}refugees/#{r.id}",
+          ssns: r.ssns || '',
+          dossier_numbers: r.dossier_numbers || ''
+        }
+      }
+    else
+      @refugees = { error: "Couldn't get suggestions"}
+    end
+
+    if params['callback']
+      render json: @refugees.to_json, callback: params['callback']
+    else
+      render json: @refugees
+    end
   end
 
   private

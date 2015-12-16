@@ -73,7 +73,7 @@ module RefugeeSearch
             should: [
               { # very fuzzy
                 match: {
-                  name: {
+                  name_search: {
                     query: query,
                     fuzziness: 2,
                     prefix_length: 0
@@ -82,7 +82,7 @@ module RefugeeSearch
               },
               { # boost exact match
                 match: {
-                  name: {
+                  name_search: {
                     boost: 5,
                     query: query
                   }
@@ -93,6 +93,14 @@ module RefugeeSearch
                   name_phrase: {
                     boost: 10,
                     query: query
+                  }
+                }
+              },
+              {
+                match: {
+                  name: {
+                    query: query,
+                    prefix_length: 0
                   }
                 }
               },

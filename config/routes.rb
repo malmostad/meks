@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'statistics/index'
 
   resources :refugees do
+    get :suggest
     resources :placements do
       get :move_out
       patch :move_out_update
