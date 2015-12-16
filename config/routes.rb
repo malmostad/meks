@@ -6,8 +6,11 @@ Rails.application.routes.draw do
 
   get 'statistics/index'
 
+  get '/refugees/suggest'
+  get '/refugees/search'
+  get '/refugees' => 'refugees#search'
+
   resources :refugees do
-    get :suggest
     resources :placements do
       get :move_out
       patch :move_out_update

@@ -1,0 +1,21 @@
+- title 'Ensamkommande flyktingbarn'
+%section.box.search.refugees
+  %h1.box-title= h1
+  .box-content.body-copy
+    = form_tag(refugees_search_path, method: "get", class: "basic") do
+      .form-group
+        = label_tag "query-employee", "Sök person: ", class: "control-label"
+        .controls
+          .input-group
+            = text_field_tag "query-employee", @q, name: "q", "data-autocomplete-url" => refugees_suggest_path, class: "form-control", placeholder: "Ange söktext"
+            %span.input-group-btn
+              = submit_tag "Sök", { class: "btn btn-default", name: nil }
+          .help-inline Sök på namn, person- eller dossiernummer
+
+    - if @total.present?
+      %div.summary= "#{number_to_words(@total).titlecase} personer matchade din sökning"
+
+    - if @refugees.present?
+      = render "search_results"
+    - else
+      .actions= link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'

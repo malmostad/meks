@@ -213,3 +213,32 @@ sv:
       long: "%e %B %Y %H:%M"
       short: "%e %b %H:%M"
     pm: ''
+
+  number_words:
+    - ingen
+    - en
+    - två
+    - tre
+    - fyra
+    - fem
+    - sex
+    - sju
+    - åtta
+    - nio
+    - tio
+    - elva
+    - tolv
+  number_words_alt:
+    - inget
+    - ett
+    - två
+    - tre
+    - fyra
+    - fem
+    - sex
+    - sju
+    - åtta
+    - nio
+    - tio
+    - elva
+    - tolv

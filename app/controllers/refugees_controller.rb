@@ -1,5 +1,6 @@
 class RefugeesController < ApplicationController
   before_action :set_refugee, only: [:show, :edit, :update, :destroy]
+
   protect_from_forgery except: :suggest
 
   def index
@@ -88,6 +89,10 @@ class RefugeesController < ApplicationController
   end
 
   private
+    def load_more_query
+      { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_refugee
       @refugee = Refugee.find(params[:id])
