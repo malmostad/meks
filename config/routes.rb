@@ -4,11 +4,9 @@ Rails.application.routes.draw do
   post 'login/ok'
   get '/nope' => 'login#nope'
 
-  get 'statistics/index'
-
   get '/refugees/suggest'
   get '/refugees/search'
-  get '/refugees' => 'refugees#search'
+  get '/refugees/search' => 'refugees#search'
 
   resources :refugees do
     resources :placements do
