@@ -45,9 +45,11 @@ end
   TypeOfRelationship.create(name: name)
 end
 
-(0...250).each do
+locales = Rails.configuration.i18n.available_locales
+(0...1000).each do
+  I18n.locale = locales[rand(locales.size)]
   r = Refugee.create(
-    name: Faker::Name.name.gsub(/(Prof.|Dr.|PhD.)/, '').strip,
+    name: Faker::Name.name.gsub(/(Prof.|Dr.|PhD.|Mgr.|Sr.)/, '').strip,
     gender_id: rand(Gender.count) + 1,
     country_ids: [rand(Country.count) + 1],
     language_ids: [rand(Language.count) + 1],
