@@ -13,7 +13,8 @@ class RefugeesController < ApplicationController
     @without_municipality_placement = Refugee.where(municipality: nil).count
     @deregistered = Refugee.where.not(deregistered: nil).count
 
-    @homes = Home.count
+    @seats = Home.sum(:seats)
+    @guaranteed_seats = Home.sum(:guaranteed_seats)
     @total_placement_time = Placement.all.map(&:placement_time).inject(&:+)
   end
 
