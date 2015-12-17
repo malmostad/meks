@@ -51,3 +51,5 @@
                   = placement.refugee.gender.name
               %td= placement.refugee.countries.map(&:name).join(', ')
               %td= placement.moved_in_at
+
+      .action= link_to "Exportera alla placeringar för boendet", nope_path
