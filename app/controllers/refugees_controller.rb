@@ -34,7 +34,7 @@ class RefugeesController < ApplicationController
     @refugee = Refugee.new(refugee_params)
 
     if @refugee.save
-      redirect_to @refugee, notice: 'Ensamkommande flyktingbarnet registrerat'
+      redirect_to @refugee, notice: 'Ensamkommande barnet registrerat'
     else
       render :new
     end
@@ -42,15 +42,10 @@ class RefugeesController < ApplicationController
 
   def update
     if @refugee.update(refugee_params)
-      redirect_to @refugee, notice: 'Ensamkommande flyktingbarnet uppdaterades'
+      redirect_to @refugee, notice: 'Ensamkommande barnet uppdaterades'
     else
       render :edit
     end
-  end
-
-  def destroy
-    @refugee.destroy
-    redirect_to refugees_url, notice: 'Ensamkommande flyktingbarnet togs bort'
   end
 
   # Full search for refugees

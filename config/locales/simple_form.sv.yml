@@ -13,7 +13,7 @@ sv:
       defaults: &defaults
         name: Namn
         home: Boende
-        refugee: Ensamkommande flyktingbarn
+        refugee: Ensamkommande barn
         comment: Kommentar
       home:
         <<: *defaults
@@ -26,7 +26,7 @@ sv:
         owner_types: Ägarformer
         target_groups: Målgrupper
         seats: Platser
-        guaranteed_seats: Garanterade platser
+        guaranteed_seats: Garantiplatser
         movable_seats: Rörliga platser
         languages: Språk
       refugee:
@@ -42,10 +42,10 @@ sv:
         deregistered: Avregisterad
         deregistered_reason: Avslutsorsak
         residence_permit_at: Uppehållstillstånd
-        municipality: Kommunplacerad
-        municipality_placement_migrationsverket_at: Kommunplacerad enligt migrationsverket
-        municipality_placement_per_agreement_at: Kommunplacerad enligt överenskommelse
-        municipality_placement_comment: Kommunplacerad, kommentar
+        municipality: Anvisad
+        municipality_placement_migrationsverket_at: Anvisad enligt migrationsverket
+        municipality_placement_per_agreement_at: Anvisad enligt överenskommelse
+        municipality_placement_comment: Anvisad, kommentar
 
       placement:
         <<: *defaults

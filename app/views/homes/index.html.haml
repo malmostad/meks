@@ -14,7 +14,6 @@
         %th Ägarform
         %th Platser
         %th Placeringar
-        %th
 
     %tbody
       - @homes.each do |home|
@@ -26,8 +25,7 @@
           %td= home.owner_types.map(&:name).join(', ')
           %td= home.seats
           %td= home.current_placements.count
-          %td.delete= link_to t('actions.delete'), home, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
-        %td{ colspan: 10 }
+        %td{ colspan: 9 }
           .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"

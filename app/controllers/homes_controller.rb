@@ -33,11 +33,6 @@ class HomesController < ApplicationController
     end
   end
 
-  def destroy
-    @home.destroy
-    redirect_to homes_url, notice: 'Boendet raderades'
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_home
