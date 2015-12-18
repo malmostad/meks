@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
     body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
     axlsx.workbook.add_worksheet do |sheet|
       sheet.add_row [
-        'Person',
+        'Barn',
         'Boende',
         'Placerad',
         'Utskriven',
