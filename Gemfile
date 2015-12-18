@@ -13,6 +13,8 @@ gem 'dalli', '2.7.4'
 gem 'elasticsearch-model', '0.1.8'
 gem 'elasticsearch-rails', '0.1.8'
 
+gem 'axlsx'
+
 gem 'whenever', '0.9.4', require: false
 gem 'highline'
 gem 'execjs'
