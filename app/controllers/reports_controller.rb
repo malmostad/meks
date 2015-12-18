@@ -81,7 +81,7 @@ class ReportsController < ApplicationController
       ], style: @heading_style
 
       Refugee.includes(
-          :countries, :ssns, :dossier_numbers, :gender, :placements, :homes).find_each do |refugee|
+          :countries, :languages, :ssns, :dossier_numbers, :gender, :homes, :placements).find_each do |refugee|
         sheet.add_row([
           refugee.name,
           refugee.registered,
