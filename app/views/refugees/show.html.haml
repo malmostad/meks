@@ -20,10 +20,10 @@
       %h2.group-title Händelser
       = show_attribute('Registrerad', @refugee.registered)
       = show_attribute('Uppehållstillstånd', @refugee.residence_permit_at)
-      = show_attribute('Kommunplacering', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
-      = show_attribute('Kommunplacering enligt migrationsverket', @refugee.municipality_placement_migrationsverket_at)
-      = show_attribute('Kommunplacering enligt överenskommelse', @refugee.municipality_placement_per_agreement_at)
-      = show_attribute('Kommunplacering, kommentar', @refugee.municipality_placement_comment)
+      = show_attribute('Anvisning', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
+      = show_attribute('Anvisning enligt migrationsverket', @refugee.municipality_placement_migrationsverket_at)
+      = show_attribute('Anvisning enligt överenskommelse', @refugee.municipality_placement_per_agreement_at)
+      = show_attribute('Anvisning, kommentar', @refugee.municipality_placement_comment)
       = show_attribute('Avregistrerad', @refugee.deregistered)
       = show_attribute('Avregistrerad, anledning', @refugee.deregistered_reason)
 
