@@ -3,13 +3,21 @@ module RefugeeSearch
 
   included do
     include Elasticsearch::Model
-    include Elasticsearch::Model::Callbacks
+    # include Elasticsearch::Model::Callbacks
 
     settings Rails.application.config.elasticsearch
 
     # Override model name
     index_name "refugees_#{Rails.env}"
     document_type 'refugee'
+
+    after_save do
+      __elasticsearch__.index_document
+    end
+
+    after_destroy do
+      delete_document
+    end
 
     mappings dynamic: 'false' do
       indexes :name, analyzer: 'simple'
