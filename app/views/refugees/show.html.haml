@@ -7,8 +7,8 @@
     = form_for @refugee, html: { class: 'basic' } do |f|
 
       %h2.group-title Grunduppgifter
-      = show_attribute('Namn', @refugee.name)
-      = show_attribute('Dossiernummer', @refugee.dossier_numbers.map(&:name).join(', '))
+      = show_attribute('refugee.name', @refugee.name)
+      = show_attribute('refugee.dossier_numbers', @refugee.dossier_numbers.map(&:name).join(', '))
       = show_attribute('Personnummer', @refugee.ssns.map(&:name).join(', '))
       = show_attribute('Kön', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
 
