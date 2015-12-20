@@ -28,7 +28,7 @@ class Refugee < ActiveRecord::Base
 
   has_many :relationships, dependent: :destroy
   has_many :relateds, through: :relationships, dependent: :destroy
-  has_many :inverse_relationships, class_name: "Relationship", foreign_key: "related_id", dependent: :destroy
+  has_many :inverse_relationships, class_name: 'Relationship', foreign_key: 'related_id', dependent: :destroy
   has_many :inverse_relateds, through: :inverse_relationships, source: :refugee
 
   validates_presence_of :name

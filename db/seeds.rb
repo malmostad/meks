@@ -41,7 +41,7 @@ end
   MovedOutReason.create(name: name)
 end
 
-['partner', 'man', 'hustru', 'syster', 'bror', 'mamma', 'pappa', 'kusin', 'morbror', 'farbror', 'faster', 'moster', 'annan släkting', 'annan', 'samma person'].each do |name|
+['syster', 'bror', 'kusin', 'annan släkting', 'annan', 'samma person'].each do |name|
   TypeOfRelationship.create(name: name)
 end
 

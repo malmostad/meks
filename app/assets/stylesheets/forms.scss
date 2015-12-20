@@ -1,5 +1,6 @@
 .mf-v4 {
-  &.placements-controller {
+  &.placements-controller,
+  &.relationships-controller {
     main,
     section.box .box-content {
       overflow: visible;
@@ -40,6 +41,10 @@
       }
     }
   }
+  .form-group.datepicker {
+    padding: 0;
+  }
+
   button.btn {
     margin-left: 0;
   }

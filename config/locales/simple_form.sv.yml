@@ -29,7 +29,7 @@ sv:
         guaranteed_seats: Garantiplatser
         movable_seats: Rörliga platser
         languages: Språk
-      refugee:
+      refugee: &refugee
         <<: *defaults
         registered: Registrerad
         special_needs: Insatsbild
@@ -46,6 +46,20 @@ sv:
         municipality_placement_migrationsverket_at: Anvisad enligt migrationsverket
         municipality_placement_per_agreement_at: Anvisad enligt överenskommelse
         municipality_placement_comment: Anvisad, kommentar
+        related: Anhörig
+        relateds: Anhöriga
+        type_of_relationships: Anhörigform
+        other_relateds: Anhöriga utanför systemet
+
+      relationship:
+        <<: *defaults
+        <<: *refugee
+        search_related: Sök anhörigt barn
+        related: Anhörig
+        relateds: Anhöriga
+        related_id: Anhörig-id
+        type_of_relationship: Anhörigform
+        other_relateds: Anhöriga utanför systemet
 
       placement:
         <<: *defaults

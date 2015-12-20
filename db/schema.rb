@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20151215135701) do
     t.datetime "updated_at",             null: false
   end
 
+  add_index "dossier_numbers", ["name"], name: "index_dossier_numbers_on_name", unique: true, using: :btree
   add_index "dossier_numbers", ["refugee_id"], name: "index_dossier_numbers_on_refugee_id", using: :btree
 
   create_table "genders", force: :cascade do |t|
@@ -53,6 +54,8 @@ ActiveRecord::Schema.define(version: 20151215135701) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  add_index "genders", ["name"], name: "index_genders_on_name", unique: true, using: :btree
 
   create_table "homes", force: :cascade do |t|
     t.string   "name",             limit: 191
@@ -128,6 +131,8 @@ ActiveRecord::Schema.define(version: 20151215135701) do
     t.datetime "updated_at",             null: false
   end
 
+  add_index "moved_out_reasons", ["name"], name: "index_moved_out_reasons_on_name", unique: true, using: :btree
+
   create_table "municipalities", force: :cascade do |t|
     t.string   "name",       limit: 191
     t.datetime "created_at",             null: false
@@ -170,6 +175,7 @@ ActiveRecord::Schema.define(version: 20151215135701) do
     t.text     "municipality_placement_comment",             limit: 65535
     t.text     "deregistered_reason",                        limit: 65535
     t.boolean  "special_needs"
+    t.text     "other_relateds",                             limit: 65535
     t.text     "comment",                                    limit: 65535
     t.integer  "gender_id",                                  limit: 4
     t.datetime "created_at",                                               null: false

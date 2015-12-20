@@ -20,6 +20,23 @@ section.refugees {
   }
 }
 
+section.refugee {
+  ul.related {
+    list-style: none;
+    margin: 0 0 1em;
+    padding: 0;
+    li {
+      font-size: emize(14, 14);
+      margin: 0 0 .2em;
+      padding: 0;
+    }
+  }
+  .actions {
+    margin: 1em 0;
+  }
+}
+
+
 .ui-autocomplete.ui-menu .ui-menu-item {
   a {
     white-space: nowrap;

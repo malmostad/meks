@@ -11,6 +11,7 @@ class CreateRefugees < ActiveRecord::Migration
       t.text :municipality_placement_comment
       t.text :deregistered_reason
       t.boolean :special_needs
+      t.text :other_relateds
       t.text :comment
       t.references :gender, index: true, foreign_key: true
 
@@ -44,5 +45,6 @@ class CreateRefugees < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :dossier_numbers, :name, unique: true
   end
 end

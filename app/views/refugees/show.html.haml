@@ -27,7 +27,5 @@
       = show_attribute('Avregistrerad', @refugee.deregistered)
       = show_attribute('Avregistrerad, anledning', @refugee.deregistered_reason)
 
-      %h2.group-title Anhöriga
-      [TODO]
-
+      = render 'relateds'
       = render 'placements'

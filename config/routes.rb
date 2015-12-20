@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get :move_out
       patch :move_out_update
     end
+    resources :relationships
   end
 
   resources :homes

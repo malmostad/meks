@@ -25,6 +25,24 @@ $ ->
       $('.load-more').replaceWith($(data).find('.load-more'))
       $(data).find('tbody tr').appendTo('table.results tbody')
 
+  $relationship_related = $("#relationship_related")
+  $relationship_related.autocomplete
+    source: (request, response) ->
+      $.ajax
+        url: $relationship_related.attr('data-autocomplete-url')
+        dataType: "jsonp"
+        data:
+          term: request.term.toLowerCase()
+          items: 10
+        success: (data) ->
+          response $.map data, (item) ->
+            label: "#{item.name} #{item.dossier_numbers.concat(item.ssns).join(', ')}"
+            id: item.id
+    select: (event, ui) ->
+      $('#relationship_related_id').attr('value', ui.item.id)
+    minLength: 2
+
+
   # Autocomplete on refugee search
   # Well, this is a little bit too much
   items = 0

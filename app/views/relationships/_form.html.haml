@@ -1,0 +1,14 @@
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    = simple_form_for [@refugee, @relationship], html: { class: "basic" } do |f|
+      = f.error_notification class: "warning"
+
+      = show_attribute('Barn', @refugee.name)
+      - related = @relationship.related.present? ? @relationship.related.name : ''
+      = f.input :related do
+        = text_field_tag :relationship_related, nil, value: related, 'data-autocomplete-url' => refugees_suggest_path, class: 'form-control'
+      = f.input :related_id
+      = f.association :type_of_relationship, input_html: { class: 'chosen' }
+
+      = render 'submit', form: f, cancel_path: @refugee.new_record? ? @refugee : refugee_relationships_path(@refugee)
