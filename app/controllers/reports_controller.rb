@@ -8,8 +8,8 @@ class ReportsController < ApplicationController
     @axlsx.workbook.add_worksheet do |sheet|
       sheet.add_row [
         'Barn',
-        'Personnummer',
         'Dossiernummer',
+        'Personnummer',
         'Boende',
         'Placerad',
         'Utskriven',
