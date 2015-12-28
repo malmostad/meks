@@ -2,7 +2,10 @@ module ReportGenerator
   class Template
     def initialize(axlsx)
       @axlsx = axlsx
-      @style = Style.new(@axlsx)
+    end
+
+    def style
+      @style ||= Style.new(@axlsx)
     end
 
     def placements(records)
@@ -18,7 +21,7 @@ module ReportGenerator
           'Anledning till utskrivning',
           'Kommentar till utskrivning'
         ],
-        style: @style.heading
+        style: style.heading
 
         records.find_each do |placement|
           sheet.add_row([
@@ -33,15 +36,15 @@ module ReportGenerator
             placement.comment
           ],
           style: [
-            @style.normal,
-            @style.normal,
-            @style.normal,
-            @style.normal,
-            @style.date,
-            @style.date,
-            @style.normal,
-            @style.normal,
-            @style.wrap
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.date,
+            style.date,
+            style.normal,
+            style.normal,
+            style.wrap
           ],
           types: [
             :string,
@@ -77,7 +80,7 @@ module ReportGenerator
           'Aktuellt boenden',
           'All boenden',
           'Placeringstid (dagar)'
-        ], style: @style.heading
+        ], style: style.heading
 
         records.find_each do |refugee|
           sheet.add_row([
@@ -95,18 +98,18 @@ module ReportGenerator
             refugee.total_placement_time
           ],
           style: [
-            @style.normal,
-            @style.date,
-            @style.date,
-            @style.normal,
-            @style.normal,
-            @style.normal,
-            @style.normal,
-            @style.normal,
-            @style.normal,
-            @style.normal,
-            @style.wrap,
-            @style.normal
+            style.normal,
+            style.date,
+            style.date,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.wrap,
+            style.normal
           ],
           types: [
             :string,
