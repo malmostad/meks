@@ -1,0 +1,16 @@
+= form_tag reports_homes_path, class: "basic" do
+  %h2.group-title Boenden
+  .form-group
+    %span.control-label
+      %label{for: 'homes_from'} Registrerade mellan:
+    .controls
+      .input-group.input-daterange
+        = text_field_tag 'homes_from', DateTime.now.to_date - 1.year, class: 'form-control'
+        %span.input-group-addon till
+        = text_field_tag 'homes_to', DateTime.now.to_date, class: 'form-control'
+
+  .form-group
+    %span.no-control-label
+    .controls
+      = submit_tag t('actions.generate'), name: nil, class: "btn btn-primary"
+      = link_to t('actions.cancel'), reports_path, class: "btn btn-default"

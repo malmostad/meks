@@ -1,3 +1,5 @@
+# TODO: A DSL for this would've been nice
+
 module ReportGenerator
   class Template
     def initialize(axlsx)
@@ -83,7 +85,7 @@ module ReportGenerator
           'Placeringstid (dagar)'
         ], style: style.heading
 
-        records.find_each do |refugee|
+        records.find_each(batch_size: 1000) do |refugee|
           sheet.add_row([
             refugee.name,
             refugee.registered,
@@ -129,6 +131,86 @@ module ReportGenerator
           sheet.column_info.each { |c| c.width = 20 }
           sheet.column_info[6].width = 8
           sheet.column_info[10].width = 25
+        end
+      end
+    end
+
+    def homes(records)
+      @axlsx.workbook.add_worksheet do |sheet|
+        sheet.add_row [
+          'name',
+          'phone',
+          'fax',
+          'address',
+          'post_code',
+          'postal_town',
+          'seats',
+          'guaranteed_seats',
+          'movable_seats',
+          'languages',
+          'comment',
+          'created_at',
+          'updated_at',
+          'current_placements',
+          'total_placement_time'
+        ], style: style.heading
+
+        records.find_each(batch_size: 1000) do |home|
+          sheet.add_row([
+            home.name,
+            home.phone,
+            home.fax,
+            home.address,
+            home.post_code,
+            home.postal_town,
+            home.seats,
+            home.guaranteed_seats,
+            home.movable_seats,
+            home.languages.map(&:name).join(', '),
+            home.comment,
+            home.created_at,
+            home.updated_at,
+            home.current_placements.size,
+            home.total_placement_time
+          ],
+          style: [
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.wrap,
+            style.date,
+            style.date,
+            style.normal,
+            style.normal
+          ],
+          types: [
+            :string,
+            :string,
+            :string,
+            :string,
+            :string,
+            :string,
+            :integer,
+            :integer,
+            :integer,
+            :string,
+            :string,
+            :time,
+            :time,
+            :integer,
+            :integer
+          ])
+          sheet.column_info.each { |c| c.width = 20 }
+          sheet.column_info[10].width = 25
+          sheet.column_info[11].width = 12
+          sheet.column_info[12].width = 12
         end
       end
     end

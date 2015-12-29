@@ -9,6 +9,7 @@ sv:
   actions:
     new: "Lägg till"
     register: "Registrera ny"
+    generate: "Skapa"
     save: "Spara"
     cancel: "Avbryt"
     show_all: "Visa alla"

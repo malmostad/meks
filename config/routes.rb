@@ -28,8 +28,9 @@ Rails.application.routes.draw do
   resources :genders
 
   get 'reports' => 'reports#index'
-  get 'reports/refugees'
-  get 'reports/placements'
+  post 'reports/refugees'
+  post 'reports/placements'
+  post 'reports/homes'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

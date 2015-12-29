@@ -1,3 +1,7 @@
 $ ->
-  $('.input-group.date.from').datepicker('setEndDate', 'today')
-  $('.input-group.date.to').datepicker('setEndDate', 'today')
+  $('.input-group.input-daterange').datepicker
+    weekStart: 1
+    language: 'sv'
+    autoclose: true
+    todayHighlight: true
+    endDate: 'today'
