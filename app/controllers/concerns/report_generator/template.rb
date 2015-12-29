@@ -23,7 +23,7 @@ module ReportGenerator
         ],
         style: style.heading
 
-        records.find_each do |placement|
+        records.find_each(batch_size: 1000) do |placement|
           sheet.add_row([
             placement.refugee.name,
             placement.refugee.dossier_numbers.map(&:name).join(', '),
@@ -35,6 +35,7 @@ module ReportGenerator
             placement.moved_out_reason.present? ? placement.moved_out_reason.name : '',
             placement.comment
           ],
+          # Styling all cells individually like this is very expensive
           style: [
             style.normal,
             style.normal,

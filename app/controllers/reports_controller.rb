@@ -13,7 +13,7 @@ class ReportsController < ApplicationController
 
   def refugees
     records = Refugee.includes(
-        :countries, :languages, :ssns, :dossier_numbers, :gender, :homes, :placements)
+      :countries, :languages, :ssns, :dossier_numbers, :gender, :homes, :placements)
 
     send_xlsx generate_xlsx(:refugees, records), 'Ensamkommand-barn'
   end
