@@ -10,6 +10,7 @@ sv:
     new: "Lägg till"
     register: "Registrera ny"
     generate: "Skapa"
+    download: "Ladda ned"
     save: "Spara"
     cancel: "Avbryt"
     show_all: "Visa alla"

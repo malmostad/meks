@@ -1,3 +1,15 @@
 = form_tag reports_refugees_path, class: "basic" do
   %h2.group-title Ensamkommande barn
   .form-group
+    %span.control-label
+      %label{for: 'refugees_from'} Registrerade mellan:
+    .controls
+      .input-group.input-daterange
+        = text_field_tag 'refugees_from', DateTime.now.to_date - 1.month, class: 'form-control'
+        %span.input-group-addon och
+        = text_field_tag 'refugees_to', DateTime.now.to_date, class: 'form-control'
+
+  .form-group
+    %span.no-control-label
+    .controls
+      = submit_tag t('actions.download'), name: nil, class: "btn btn-primary"
