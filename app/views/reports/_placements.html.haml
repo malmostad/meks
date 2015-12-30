@@ -2,10 +2,9 @@
   %h2.group-title Placeringar
   .form-group
     %span.control-label
-      %label{for: 'home_id_'} Boende:
+      %label{for: 'home_id_'} På boende:
     .controls
-      .input-group
-        = collection_select(:home_id, nil, @homes, :id, :name, prompt: 'Alla')
+      = collection_select(:home_id, nil, @homes, :id, :name, {prompt: 'Alla'}, {class: 'form-control chosen'})
 
   .form-group
     %span.control-label
