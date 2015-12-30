@@ -175,7 +175,7 @@ module ReportGenerator
             home.seats,
             home.guaranteed_seats,
             home.movable_seats,
-            home.current_placements.size,
+            home.current_placements_size,
             home.placements.size,
             home.total_placement_time,
             home.created_at,

@@ -18,6 +18,10 @@ class Home < ActiveRecord::Base
       ).where(moved_out_at: nil).order('refugees.name')
   end
 
+  def current_placements_size
+    placements.where(moved_out_at: nil).count
+  end
+
   def total_placement_time
     placements.map(&:placement_time).inject(&:+)
   end

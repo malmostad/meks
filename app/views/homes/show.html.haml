@@ -51,9 +51,3 @@
                   = placement.refugee.gender.name
               %td= placement.refugee.countries.map(&:name).join(', ')
               %td= placement.moved_in_at
-
-  .box-content.basic.form-data
-    = form_tag reports_placements_path, class: "basic" do
-      %h2.group-title Exportera alla placeringar för boendet
-      = hidden_field_tag 'placements_home', @home.id
-      = submit_tag t('actions.download'), name: nil, class: "btn btn-primary"
