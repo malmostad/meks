@@ -11,7 +11,6 @@ module ReportGenerator
     end
 
     def send_xlsx(xlsx, base_name)
-      Rails.logger.debug xlsx
       send_data xlsx.to_stream.read, type: :xlsx, disposition: "attachment",
         filename: "#{base_name}_#{DateTime.now.strftime('%Y-%m-%d_%H%M%S')}.xlsx"
     end

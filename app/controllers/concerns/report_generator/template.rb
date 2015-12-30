@@ -130,7 +130,7 @@ module ReportGenerator
           ])
           sheet.column_info.each { |c| c.width = 20 }
           sheet.column_info[6].width = 8
-          sheet.column_info[10].width = 25
+          sheet.column_info[10].width = 40
         end
       end
     end
@@ -138,21 +138,25 @@ module ReportGenerator
     def homes(records)
       @axlsx.workbook.add_worksheet do |sheet|
         sheet.add_row [
-          'name',
-          'phone',
-          'fax',
-          'address',
-          'post_code',
-          'postal_town',
-          'seats',
-          'guaranteed_seats',
-          'movable_seats',
-          'languages',
-          'comment',
-          'created_at',
-          'updated_at',
-          'current_placements',
-          'total_placement_time'
+          'Namn',
+          'Telefon',
+          'Fax',
+          'Adress',
+          'Postnummer',
+          'Postort',
+          'Boendeform',
+          'Ägarform',
+          'Målgrupp',
+          'Kommentar',
+          'Platser',
+          'Garantiplatser',
+          'Rörliga platser',
+          'Språk',
+          'Aktuella placeringar',
+          'Placeringar totalt',
+          'Total placeringstid',
+          'Registrerad',
+          'Senast uppdaterad'
         ], style: style.heading
 
         records.find_each(batch_size: 1000) do |home|
@@ -163,15 +167,19 @@ module ReportGenerator
             home.address,
             home.post_code,
             home.postal_town,
+            home.type_of_housings.map(&:name).join(', '),
+            home.owner_types.map(&:name).join(', '),
+            home.target_groups.map(&:name).join(', '),
+            home.languages.map(&:name).join(', '),
+            home.comment,
             home.seats,
             home.guaranteed_seats,
             home.movable_seats,
-            home.languages.map(&:name).join(', '),
-            home.comment,
+            home.current_placements.size,
+            home.placements.count,
+            home.total_placement_time,
             home.created_at,
             home.updated_at,
-            home.current_placements.size,
-            home.total_placement_time
           ],
           style: [
             style.normal,
@@ -185,10 +193,14 @@ module ReportGenerator
             style.normal,
             style.normal,
             style.wrap,
-            style.date,
-            style.date,
             style.normal,
-            style.normal
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.normal,
+            style.date,
+            style.date
           ],
           types: [
             :string,
@@ -197,20 +209,23 @@ module ReportGenerator
             :string,
             :string,
             :string,
-            :integer,
-            :integer,
-            :integer,
             :string,
             :string,
-            :time,
-            :time,
+            :string,
+            :string,
+            :string,
             :integer,
-            :integer
+            :integer,
+            :integer,
+            :integer,
+            :integer,
+            :integer,
+            :time,
+            :time
           ])
           sheet.column_info.each { |c| c.width = 20 }
-          sheet.column_info[10].width = 25
-          sheet.column_info[11].width = 12
-          sheet.column_info[12].width = 12
+          sheet.column_info[9].width = 40
+          sheet.column_info[12..18].each { |c| c.width = 15 }
         end
       end
     end
