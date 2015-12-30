@@ -17,6 +17,11 @@ class ReportsController < ApplicationController
       records = records.where(home_id: params[:placements_home])
     end
 
+    # Selected one home or all
+    if params[:home_id].reject(&:empty?).present?
+      records = records.where(home_id: params[:home_id])
+    end
+
     xlsx = generate_xlsx(:placements, records)
     send_xlsx xlsx, 'Placeringar'
   end

@@ -2,6 +2,13 @@
   %h2.group-title Placeringar
   .form-group
     %span.control-label
+      %label{for: 'home_id_'} Boende:
+    .controls
+      .input-group
+        = collection_select(:home_id, nil, @homes, :id, :name, prompt: 'Alla')
+
+  .form-group
+    %span.control-label
       %label{for: 'placements_from'} Inskrivna mellan:
     .controls
       .input-group.input-daterange

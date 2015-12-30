@@ -176,10 +176,10 @@ module ReportGenerator
             home.guaranteed_seats,
             home.movable_seats,
             home.current_placements.size,
-            home.placements.count,
+            home.placements.size,
             home.total_placement_time,
             home.created_at,
-            home.updated_at,
+            home.updated_at
           ],
           style: [
             style.normal,
