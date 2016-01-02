@@ -6,20 +6,23 @@ class ReportsController < ApplicationController
   end
 
   def placements
-    records = Placement.includes(
-      :refugee, :home, :moved_out_reason, refugee: [:dossier_numbers, :ssns])
+    if params[:placement_selection] == 'overlapping'
+      records = Placement.overlapping_by_refugee(params)
+    else
+      records = Placement.includes(:refugee, :home, :moved_out_reason, refugee: [:dossier_numbers, :ssns])
 
-    if params[:placements_from].present? && params[:placements_to].present?
-      records = records.where(moved_in_at: params[:placements_from]..params[:placements_to])
-    end
+      if params[:placements_from].present? && params[:placements_to].present?
+        records = records.where(moved_in_at: params[:placements_from]..params[:placements_to])
+      end
 
-    if params[:placements_home].present?
-      records = records.where(home_id: params[:placements_home])
-    end
+      if params[:placements_home].present?
+        records = records.where(home_id: params[:placements_home])
+      end
 
-    # Selected one home or all
-    if params[:home_id].reject(&:empty?).present?
-      records = records.where(home_id: params[:home_id])
+      # Selected one home or all
+      if params[:home_id].reject(&:empty?).present?
+        records = records.where(home_id: params[:home_id])
+      end
     end
 
     xlsx = generate_xlsx(:placements, records)

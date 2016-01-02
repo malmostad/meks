@@ -4,7 +4,14 @@
     %span.control-label
       %label{for: 'home_id_'} På boende:
     .controls
-      = collection_select(:home_id, nil, @homes, :id, :name, {prompt: 'Alla'}, {class: 'form-control chosen'})
+      = collection_select(:home_id, nil, @homes, :id, :name, { prompt: 'Alla' }, { class: 'form-control chosen' })
+
+  .form-group
+    %span.control-label
+      %label{for: 'placement_selection'} Urval:
+    .controls
+      = select_tag('placement_selection', options_for_select("Alla" => 'all', "Överlapppande per barn" => 'overlapping'),
+        class: 'form-control chosen')
 
   .form-group
     %span.control-label

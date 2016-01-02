@@ -74,7 +74,7 @@ locales = Rails.configuration.i18n.available_locales
     else
       moved_in_at = (rand(100*t-50..100*t)).days.ago
     end
-    moved_out_at = moved_in_at + (rand(2..100)).days
+    moved_out_at = moved_in_at + (rand(-10..100)).days
 
     r.placements.create(
       home_id: rand(Home.count) + 1,

@@ -25,7 +25,8 @@ module ReportGenerator
         ],
         style: style.heading
 
-        records.find_each(batch_size: 1000) do |placement|
+        # records can be and active record enumerator or an array of records
+        records.send(records.is_a?(Array) ? 'each' : 'find_each') do |placement|
           sheet.add_row([
             placement.refugee.name,
             placement.refugee.dossier_numbers.map(&:name).join(', '),
