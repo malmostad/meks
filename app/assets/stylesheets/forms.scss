@@ -23,11 +23,18 @@
     padding-top: 0;
   }
 
+  .box-content.basic h2.group-title,
   form.basic h2.group-title {
     margin-top: 2em;
   }
+
+  .box-content.basic > h2.group-title:first-of-type,
   form.basic > h2.group-title:first-of-type {
     margin-top: 0;
+  }
+
+  .box-content.basic h2.group-title {
+    margin-bottom: .3em;
   }
 
   div.terms {
