@@ -29,7 +29,7 @@ class Placement < ActiveRecord::Base
       inner join placements B on
         (B.moved_in_at <= A.moved_out_at or A.moved_out_at is null)
         and (B.moved_out_at >= A.moved_in_at or B.moved_out_at is null)
-      and ((B.moved_in_at   between '#{range_from}' and '#{range_to}') or (A.moved_in_at between '#{range_from}' and '#{range_to}'))
+      and ((B.moved_in_at  between '#{range_from}' and '#{range_to}') or (A.moved_in_at between '#{range_from}' and '#{range_to}'))
       and ((A.moved_out_at between '#{range_from}' and '#{range_to}') or A.moved_out_at is null)
       and ((B.moved_out_at between '#{range_from}' and '#{range_to}') or B.moved_out_at is null)
       and #{select_home}
