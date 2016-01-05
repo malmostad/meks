@@ -39,7 +39,7 @@ namespace :deploy do
   desc "Copy vendor statics"
   task :copy_vendor_statics do
     on roles(:app) do
-      execute "cp #{fetch(:deploy_to)}/vendor/chosen/*.png #{fetch(:deploy_to)}/public/assets/"
+      execute "cp #{fetch(:release_path)}/vendor/chosen/*.png #{fetch(:release_path)}/public/assets/"
     end
   end
 
