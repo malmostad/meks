@@ -6,5 +6,5 @@ stdout_path "#{root}/log/unicorn.log"
 
 listen "/tmp/unicorn.meks.sock"
 worker_processes 5
-timeout 15
+timeout 180
 preload_app false
