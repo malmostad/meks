@@ -38,7 +38,9 @@ namespace :deploy do
 
   desc "Copy vendor statics"
   task :copy_vendor_statics do
-    execute "cp #{fetch(:deploy_to)}/vendor/chosen/*.png #{fetch(:deploy_to)}/public/assets/"
+    on roles(:app) do
+      execute "cp #{fetch(:deploy_to)}/vendor/chosen/*.png #{fetch(:deploy_to)}/public/assets/"
+    end
   end
 
   desc "Full restart of unicorn server"
