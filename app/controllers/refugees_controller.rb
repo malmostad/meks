@@ -4,6 +4,7 @@ class RefugeesController < ApplicationController
   protect_from_forgery except: :suggest
 
   def index
+    # This view is for statistics
     @refugees = Refugee.count
     @genders = Gender.all.map { |g| "#{Refugee.where(gender: g).count} är #{g.name.downcase}" }.join(', ')
     @registered_last_seven_days = Refugee.where(registered: 7.days.ago..DateTime.now).count

@@ -9,6 +9,10 @@
     .stat
       = "#{@registered_last_seven_days} har registrerats de senaste sju dagarna"
       = "(#{@genders_last_seven_days})"
+    .stat= "#{@deregistered} är avregistrerade"
+
+    %h2.group-title Uppehållstillstånd
+    .stat= "#{@without_residence_permit} saknar uppehållstillstånd"
 
     %h2.group-title Härkomst och språk
     .stat
@@ -28,12 +32,10 @@
       - @top_languages_last_seven_days[0...9].each_with_index do |lang, index|
         = "#{lang[0]} (#{lang[1]}), "
 
-    %h2.group-title Placering och uppehållstillstånd
-    .stat= "#{@without_residence_permit} saknar uppehållstillstånd"
+    %h2.group-title Placeringar
     .stat= "#{@without_municipality_placement} saknar anvisning"
     .stat= "#{@without_placement} har ännu inte boendeplacerats"
     .stat= "Det finns #{@overlapping_placement / 2} överlappande placeringar (#{@overlapping_placement_last_seven_days / 2} senaste sju dagarna)"
-    .stat= "#{@deregistered} är avregistrerade"
 
     %h2.group-title Boendeplatser
     .stat= "Det finns #{@seats} boendenplatser fördelade på #{@homes} boenden"
