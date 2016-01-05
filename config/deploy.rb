@@ -36,6 +36,11 @@ namespace :deploy do
     end
   end
 
+  desc "Copy vendor statics"
+  task :copy_vendor_statics do
+    execute "cp #{fetch(:deploy_to)}/vendor/chosen/*.png #{fetch(:deploy_to)}/public/assets/"
+  end
+
   desc "Full restart of unicorn server"
   task :full_restart do
     on roles(:app), except: {no_release: true} do
@@ -83,6 +88,6 @@ namespace :deploy do
   end
 
   before :starting, "deploy:are_you_sure", "deploy:check_revision"
-  after :published, "deploy:full_restart"
+  after :published, "deploy:copy_vendor_statics", "deploy:full_restart"
   after :finishing, "deploy:cleanup"
 end
