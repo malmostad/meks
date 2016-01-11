@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215135701) do
+ActiveRecord::Schema.define(version: 20160110153243) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -230,6 +230,18 @@ ActiveRecord::Schema.define(version: 20151215135701) do
   end
 
   add_index "type_of_relationships", ["name"], name: "index_type_of_relationships_on_name", unique: true, using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.string   "username",   limit: 191
+    t.string   "name",       limit: 191
+    t.string   "email",      limit: 191
+    t.string   "role",       limit: 191
+    t.datetime "last_login"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "refugees", "genders"

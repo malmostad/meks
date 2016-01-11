@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  root 'login#index'
-  get 'login/index'
-  post 'login/ok'
-  get '/nope' => 'login#nope'
+  root 'refugees#index'
+
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
 
   get '/refugees/suggest'
   get '/refugees/search'

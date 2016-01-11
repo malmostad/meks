@@ -1,6 +1,7 @@
 defaults: &defaults
   base_url: "https://komin.malmo.se/"
   assets_url_base: "//assets.malmo.se/internal/v4-staging/"
+  stub_auth: false
 
 development:
   <<: *defaults
@@ -8,6 +9,7 @@ development:
   cache_ttl: 1
   max_age: 0
   title_suffix: "MEKS (utveckling)"
+  stub_auth: true
 
 test:
   <<: *defaults

@@ -1,0 +1,8 @@
+set :rails_env, :production
+set :stage, :production
+
+set :branch, 'master'
+
+role :app, %w{app_runner@example.com}
+role :web, %w{app_runner@example.com}
+role :db,  %w{app_runner@example.com}

@@ -1,4 +1,12 @@
-body.mf-v4.login {
+body.mf-v4.sessions {
+  ul {
+    list-style: none;
+    margin: 0 0 .5em;
+    padding: 0;
+  }
+  li {
+    margin: 0;
+  }
   .login-instructions {
     padding-top: .5em;
     margin-top: 2em;
@@ -7,5 +15,8 @@ body.mf-v4.login {
   #login {
     max-width: 30em;
     margin: 0 auto;
+  }
+  #password {
+    margin-bottom: .7em;
   }
 }
