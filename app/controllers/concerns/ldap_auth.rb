@@ -43,10 +43,6 @@ class LdapAuth
           "CN=#{group['ldap_name']},#{@config['base_group']}"))
 
       entry = @client.search(base: @config['basedn'], filter: filter).first
-      Rails.logger.info 'LDAP'
-      Rails.logger.info group
-      Rails.logger.info entry
-      Rails.logger.info entry.class
       return group['name'] if entry.present?
     end
     false

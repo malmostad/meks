@@ -28,10 +28,6 @@ class SessionsController < ApplicationController
         # Get LDAP app group for user
         role = @ldap.belongs_to_group(ldap_entry['cn'].first)
 
-        logger.info 'SESSION'
-        logger.info role
-        logger.info role.class
-
         if !role.present?
           logger.info "AUTH: #{params[:username]} from #{request.remote_ip} failed to log in: doesn't belong to a group"
           @login_failed = 'Du saknar behörighet till systemet'
@@ -55,7 +51,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_url, notice: "Nu är du utloggad från MEKS"
+    redirect_to root_url, notice: 'Nu är du utloggad från MEKS'
   end
 
   private
