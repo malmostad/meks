@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action { add_body_class("#{controller_name} #{action_name}") }
+  before_action :init_body_class
   before_action :authenticate
 
   def current_user
@@ -34,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def init_body_class
-    add_body_class(Rails.env)
+    add_body_class(Rails.env) unless Rails.env.production?
     add_body_class('user') if current_user.present?
   end
 
