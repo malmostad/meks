@@ -25,17 +25,23 @@ class SessionsController < ApplicationController
         # Find or create user
         user = User.where(username: username).first_or_initialize
 
-        # Get user attributes and role assignments from ldap
-        user.username = ldap_entry['cn'].first
-        user.name     = ldap_entry['displayname'].first || ldap_entry['cn'].first
-        user.email    = ldap_entry['mail'].first || "#{user.username}@malmo.se"
-        user.role     = @ldap.belongs_to_group(ldap_entry['cn'].first)
+        # Get LDAP app group for user
+        role = @ldap.belongs_to_group(ldap_entry['cn'].first)
 
-        if !user.role
+        logger.info 'SESSION'
+        logger.info role
+        logger.info role.class
+
+        if !role.present?
           logger.info "AUTH: #{params[:username]} from #{request.remote_ip} failed to log in: doesn't belong to a group"
           @login_failed = 'Du saknar behörighet till systemet'
           render 'new'
         else
+          # Get user attributes and role assignments from ldap
+          user.username = ldap_entry['cn'].first
+          user.name     = ldap_entry['displayname'].first || ldap_entry['cn'].first
+          user.email    = ldap_entry['mail'].first || "#{user.username}@malmo.se"
+          user.role     = role
           user.last_login = Time.now
           user.ip = request.remote_ip
           user.save
