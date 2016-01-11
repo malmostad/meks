@@ -18,6 +18,7 @@ class SessionsController < ApplicationController
 
       if !ldap_entry
         @login_failed = 'Fel användarnamn eller lösenord. Vänligen försök igen.'
+        logger.info "AUTH: #{params[:username]} from #{request.remote_ip}failed to log in"
         render 'new'
 
       else
@@ -25,14 +26,13 @@ class SessionsController < ApplicationController
         user = User.where(username: username).first_or_initialize
 
         # Get user attributes and role assignments from ldap
-        ldap_attributes = @ldap.user_attributes(ldap_entry)
-
-        user.username = entry['cn'].first
-        user.name     = entry['displayname'].first || entry['cn'].first
-        user.email    = entry['mail'].first || "#{user.username}@malmo.se"
-        user.role     = @ldap.belongs_to_group(entry['cn'].first)
+        user.username = ldap_entry['cn'].first
+        user.name     = ldap_entry['displayname'].first || ldap_entry['cn'].first
+        user.email    = ldap_entry['mail'].first || "#{user.username}@malmo.se"
+        user.role     = @ldap.belongs_to_group(ldap_entry['cn'].first)
 
         if !user.role
+          logger.info "AUTH: #{params[:username]} from #{request.remote_ip} failed to log in: doesn't belong to a group"
           @login_failed = 'Du saknar behörighet till systemet'
           render 'new'
         else
@@ -40,6 +40,7 @@ class SessionsController < ApplicationController
           user.ip = request.remote_ip
           user.save
           session[:user_id] = user.id
+          logger.info "AUTH: #{params[:username]} logged in from #{request.remote_ip}"
           redirect_after_login
         end
       end
@@ -57,7 +58,7 @@ class SessionsController < ApplicationController
   # User needs to exist
   def stub_auth(username)
     if !Rails.application.config.consider_all_requests_local
-      @login_failed = "Stubbed authentication only available in local environment"
+      @login_failed = 'Stubbed authentication only available in local environment'
       render 'new'
     else
       user = User.where(username: username).first

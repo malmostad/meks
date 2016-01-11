@@ -28,7 +28,6 @@ class LdapAuth
     # We need to check that cn is the same as username
     # since the AD binds usernames with non-ascii chars
     if bind_user && bind_user.first.cn.first.downcase == username
-      Rails.logger.info "LDAP: #{username} logged in."
       bind_user.first
     else
       Rails.logger.info "LDAP: #{username} failed to log in. #{@client.get_operation_result}"
@@ -44,7 +43,7 @@ class LdapAuth
           "CN=#{group['ldap_name']},#{@config['base_group']}"))
 
       entry = @client.search(base: @config['basedn'], filter: filter).first
-      return group['name'] if entry.present?
+      return group['name'] if entry.present? && entry != '0'
     end
     false
   end
