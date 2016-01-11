@@ -51,7 +51,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_url, notice: 'Nu är du utloggad från MEKS'
+    redirect_to root_path, notice: 'Nu är du utloggad från MEKS'
   end
 
   private
