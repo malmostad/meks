@@ -236,6 +236,7 @@ ActiveRecord::Schema.define(version: 20160110153243) do
     t.string   "name",       limit: 191
     t.string   "email",      limit: 191
     t.string   "role",       limit: 191
+    t.string   "ip",         limit: 191
     t.datetime "last_login"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false

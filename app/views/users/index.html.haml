@@ -1,0 +1,22 @@
+- title "Handläggare"
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    .help-inline Denna lista visar information om användare som har loggat in i systemet. Användare administreras via katalogen Intra.
+  %table.full.wrap
+    %thead
+      %tr
+        %th Namn
+        %th E-postadress
+        %th Roll
+        %th Senast inloggad
+        %th IP-adress
+
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= link_to user.name, "https://webapps06.malmo.se/dashboard/users/#{user.username}"
+          %td= user.email
+          %td= user.role
+          %td= user.last_login.to_s[0...20]
+          %td= user.ip

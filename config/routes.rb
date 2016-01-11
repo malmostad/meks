@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   resources :countries
   resources :languages
   resources :genders
+  resources :users, only: :index
 
   get 'reports' => 'reports#index'
   post 'reports/refugees'
