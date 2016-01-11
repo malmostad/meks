@@ -25,13 +25,19 @@ class SessionsController < ApplicationController
         user = User.where(username: username).first_or_initialize
 
         # Get user attributes and role assignments from ldap
-        user.merge @ldap.user_attributes(ldap_entry)
+        ldap_attributes = @ldap.user_attributes(ldap_entry)
+
+        user.username = entry['cn'].first
+        user.name     = entry['displayname'].first || entry['cn'].first
+        user.email    = entry['mail'].first || "#{user.username}@malmo.se"
+        user.role     = @ldap.belongs_to_group(entry['cn'].first)
 
         if !user.role
           @login_failed = 'Du saknar behörighet till systemet'
           render 'new'
         else
           user.last_login = Time.now
+          user.ip = request.remote_ip
           user.save
           session[:user_id] = user.id
           redirect_after_login

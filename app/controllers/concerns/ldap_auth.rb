@@ -36,19 +36,8 @@ class LdapAuth
     end
   end
 
-  def user_attributes(entry)
-    {
-      username: entry['cn'],
-      name:     entry['displayname'] || entry['cn'],
-      email:    entry['mail'].first || "#{user.username}@malmo.se",
-      role:     belongs_to_group(entry['cn'])
-    }
-  end
-
-  private
-
   def belongs_to_group(username)
-    @config['groups'].each do |group|
+    @config['roles'].each do |group|
       # 1.2.840.113556.1.4.1941 is the MS AD way
       filter = (Net::LDAP::Filter.eq('cn', username) &
         Net::LDAP::Filter.ex('memberOf:1.2.840.113556.1.4.1941',

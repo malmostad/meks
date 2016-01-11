@@ -13,6 +13,8 @@ gem 'dalli', '2.7.4'
 gem 'elasticsearch-model', '0.1.8'
 gem 'elasticsearch-rails', '0.1.8'
 
+gem 'net-ldap'
+
 gem 'axlsx'
 
 gem 'whenever', '0.9.4', require: false
@@ -30,8 +32,6 @@ group :development do
   gem 'capistrano-rails', '1.1.5'
   gem 'capistrano-rbenv', '2.0.3'
   gem 'quiet_assets'
-  gem 'net-ldap' #, '0.3.1' # '0.3.1' works, 0.5 and 0.6 (0.10.1?) have an encoding issue: https://github.com/ruby-ldap/ruby-net-ldap/pull/82
-
   gem 'pry-rails'
 end
 
