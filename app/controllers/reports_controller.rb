@@ -1,4 +1,8 @@
 class ReportsController < ApplicationController
+  skip_authorize_resource
+  skip_authorization_check
+  before_action { authorize! :generate, :reports }
+
   include ReportGenerator
 
   def index

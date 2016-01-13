@@ -5,7 +5,10 @@ class Ability
     if user.has_role? :writer
       can :manage, :all
     elsif user.has_role? :reader
-      can :read, :all
+      can :read, Refugee
+      can :read, Home
+      can [:read, :search, :suggest], Refugee
+      can :generate, :reports
     end
 
     # Define abilities for the passed in user here. For example:
