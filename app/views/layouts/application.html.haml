@@ -17,7 +17,7 @@
       = render "layouts/breadcrumbs"
       %main
         - flash.each do |key, value|
-          %p{ class: "flash #{key}" }= value
+          %p{ class: "#{key}" }= value
         = yield
       - if true || current_user
         = render "layouts/nav"

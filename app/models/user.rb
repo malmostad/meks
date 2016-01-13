@@ -5,4 +5,8 @@ class User < ActiveRecord::Base
   validates_length_of :username, maximum: 191
   validates_length_of :name, maximum: 191
   validates_length_of :email, maximum: 191
+
+  def has_role?(check_role)
+    role == check_role.to_s
+  end
 end

@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::Base
+  before_action :authenticate
+
+  authorize_resource
+  check_authorization
+
   protect_from_forgery with: :exception
 
   before_action { add_body_class("#{controller_name} #{action_name}") }
   before_action :init_body_class
-  before_action :authenticate
 
   def current_user
     begin
@@ -32,6 +36,10 @@ class ApplicationController < ActionController::Base
     else
       redirect_to root_path
     end
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: 'Din roll saknar behörighet för detta'
   end
 
   def init_body_class
