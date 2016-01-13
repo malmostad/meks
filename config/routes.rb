@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
 
   get '/refugees/suggest'
-  get '/refugees/search'
   get '/refugees/search' => 'refugees#search'
+  get '/refugees/drafts' => 'refugees#drafts'
 
   resources :refugees do
     resources :placements do

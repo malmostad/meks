@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20160110153243) do
   add_index "placements", ["refugee_id"], name: "index_placements_on_refugee_id", using: :btree
 
   create_table "refugees", force: :cascade do |t|
+    t.boolean  "draft"
     t.string   "name",                                       limit: 191
     t.date     "registered"
     t.date     "deregistered"

@@ -107,6 +107,12 @@ class RefugeesController < ApplicationController
     end
   end
 
+  def drafts
+    @refugees = Refugee.where(draft: true)
+    render :search
+  end
+
+
   private
     def load_more_query
       { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
@@ -120,7 +126,7 @@ class RefugeesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def refugee_params
       params.require(:refugee).permit(
-        :name, :registered, :deregistered, :deregistered_reason,
+        :draft, :name, :registered, :deregistered, :deregistered_reason,
         :residence_permit_at,
         :municipality_id,
         :municipality_placement_migrationsverket_at,

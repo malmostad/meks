@@ -31,6 +31,7 @@ sv:
         languages: Språk
       refugee: &refugee
         <<: *defaults
+        draft: Utkast
         registered: Registrerad
         special_needs: Insatsbild
         gender: Kön

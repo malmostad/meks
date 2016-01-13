@@ -17,5 +17,8 @@
 
     - if @refugees.present?
       = render "search_results"
-    - elsif can? :manage, Refugee
-      .actions= link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'
+    - else
+      .actions
+        - if can? :manage, Refugee
+          = link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'
+        = link_to 'Lista alla utkast', refugees_drafts_path, class: 'btn btn-default'
