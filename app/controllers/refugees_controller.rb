@@ -125,8 +125,8 @@ class RefugeesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def refugee_params
-      params.require(:refugee).permit(
-        :draft, :name, :registered, :deregistered, :deregistered_reason,
+      permitted_params = [
+        :name, :registered, :deregistered, :deregistered_reason,
         :residence_permit_at,
         :municipality_id,
         :municipality_placement_migrationsverket_at,
@@ -139,6 +139,8 @@ class RefugeesController < ApplicationController
         language_ids: [],
         ssns_attributes: [:id, :_destroy, :name],
         dossier_numbers_attributes: [:id, :_destroy, :name]
-      )
+      ]
+      permitted_params.unshift(:draft) if can? :manage, Refugee
+      params.require(:refugee).permit(*permitted_params)
     end
 end

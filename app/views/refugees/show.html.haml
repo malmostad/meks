@@ -5,6 +5,7 @@
     .form-group
       - if can? :draft, Refugee
         = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'
+
     = form_for @refugee, html: { class: 'basic' } do |f|
 
       = show_attribute('refugee.draft', @refugee.draft? ? 'Ja' : 'Nej')
