@@ -11,8 +11,9 @@
         = "(#{r.type_of_relationship.name})"
 
 .actions
-  = link_to "Ny anhörig", new_refugee_relationship_path(@refugee), class: "btn btn-default btn-sm"
-  = link_to "Redigera anhöriga", refugee_relationships_path(@refugee), class: "btn btn-default btn-sm"
+  - if can? :manage, Refugee
+    = link_to "Ny anhörig", new_refugee_relationship_path(@refugee), class: "btn btn-default btn-sm"
+    = link_to "Redigera anhöriga", refugee_relationships_path(@refugee), class: "btn btn-default btn-sm"
 
 - if @refugee.inverse_relationships.present?
   %h3= "#{@refugee.name} är uppgiven som anhörig av:"

@@ -3,7 +3,8 @@
   %h1.box-title= h1
   .box-content.basic.form-data
     .form-group
-      = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'
+      - if can? :manage, Refugee
+        = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'
     = form_for @refugee, html: { class: 'basic' } do |f|
 
       %h2.group-title Grunduppgifter

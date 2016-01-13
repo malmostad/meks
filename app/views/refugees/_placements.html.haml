@@ -14,11 +14,13 @@
           = show_attribute('Utskrivningsorsak', placement.moved_out_reason.name)
           = show_attribute('Utskrivningskommentar', placement.comment)
 
-      .form-group.action
-        %span.no-control-label
-        .controls
-          = link_to "Redigera placeringen", edit_refugee_placement_path(@refugee, placement), class: "btn btn-default btn-sm"
-          - if placement.moved_out_at.blank?
-            = link_to "Utskrivning", refugee_placement_move_out_path(@refugee, placement), class: "btn btn-default btn-sm"
+      - if can? :manage, Refugee
+        .form-group.action
+          %span.no-control-label
+          .controls
+            = link_to "Redigera placeringen", edit_refugee_placement_path(@refugee, placement), class: "btn btn-default btn-sm"
+            - if placement.moved_out_at.blank?
+              = link_to "Utskrivning", refugee_placement_move_out_path(@refugee, placement), class: "btn btn-default btn-sm"
 
-  .placement= link_to "Ny placering", new_refugee_placement_path(@refugee), class: "btn btn-default btn-sm"
+  - if can? :manage, Refugee
+    .placement= link_to "Ny placering", new_refugee_placement_path(@refugee), class: "btn btn-default btn-sm"

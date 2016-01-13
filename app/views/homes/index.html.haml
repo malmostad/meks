@@ -2,10 +2,11 @@
 %section.box.index
   %h1.box-title= h1
   %table.full.wrap
-    %thead
-      %tr
-        %td{ colspan: 9 }
-          .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"
+    - if can? :manage, Refugee
+      %thead
+        %tr
+          %td{ colspan: 9 }
+            .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"
       %tr
         %th Namn
         %th Postort
@@ -26,6 +27,7 @@
           %td= home.seats
           %td= home.current_placements.count
 
-      %tr
-        %td{ colspan: 9 }
-          .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"
+      - if can? :manage, Refugee
+        %tr
+          %td{ colspan: 9 }
+            .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"

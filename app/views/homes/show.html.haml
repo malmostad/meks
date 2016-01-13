@@ -2,8 +2,9 @@
 %section.box.show
   %h1.box-title= h1
   .box-content.basic.form-data
-    .form-group
-      = link_to 'Redigera', edit_home_path(@home), class: 'btn btn-default'
+    - if can? :manage, Refugee
+      .form-group
+        = link_to 'Redigera', edit_home_path(@home), class: 'btn btn-default'
     = form_for @home, html: { class: 'basic' } do |f|
 
       %h2.group-title Kontaktuppgifter
