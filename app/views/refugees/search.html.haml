@@ -19,6 +19,6 @@
       = render "search_results"
     - else
       .actions
-        - if can? :manage, Refugee
+        - if can? :create, Refugee
           = link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'
         = link_to 'Lista alla utkast', refugees_drafts_path, class: 'btn btn-default'

@@ -8,8 +8,9 @@ class Ability
       can :read, Home
       can [:read, :search, :suggest], Refugee
 
-      # 'reader' can edit and list refugee drafts
-      can [:edit, :create, :update, :drafts], Refugee, draft: true
+      # 'reader' create, and edit and list refugee drafts
+      can :create, Refugee
+      can [:edit, :update, :drafts], Refugee, draft: true
 
        # Model less controller
       can :generate, :reports

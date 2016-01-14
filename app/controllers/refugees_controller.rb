@@ -48,6 +48,8 @@ class RefugeesController < ApplicationController
     @refugee = Refugee.new(refugee_params)
     authorize! :create, @refugee
 
+    @refugee.draft = true if current_user.has_role? :reader
+
     if @refugee.save
       redirect_to @refugee, notice: 'Ensamkommande barnet registrerat'
     else

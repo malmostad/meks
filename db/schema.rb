@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 20160110153243) do
   add_index "placements", ["refugee_id"], name: "index_placements_on_refugee_id", using: :btree
 
   create_table "refugees", force: :cascade do |t|
-    t.boolean  "draft",                                                    null: false
+    t.boolean  "draft",                                                    default: false
     t.string   "name",                                       limit: 191
     t.date     "registered"
     t.date     "deregistered"
@@ -179,8 +179,8 @@ ActiveRecord::Schema.define(version: 20160110153243) do
     t.text     "other_relateds",                             limit: 65535
     t.text     "comment",                                    limit: 65535
     t.integer  "gender_id",                                  limit: 4
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
   end
 
   add_index "refugees", ["gender_id"], name: "index_refugees_on_gender_id", using: :btree

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_authorize_resource
+  skip_authorization_check
   skip_before_action :authenticate
 
   layout 'login'
