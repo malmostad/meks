@@ -5,13 +5,14 @@ class Ability
     if user.has_role? :writer
       can :manage, :all
     elsif user.has_role? :reader
-      can :read, Refugee
       can :read, Home
       can [:read, :search, :suggest], Refugee
-      can :generate, :reports
 
-      alias_action :create, :update, :edit, :drafts, to: :draft
-      can :draft, Refugee, draft: true
+      # 'reader' can edit and list refugee drafts
+      can [:edit, :create, :update, :drafts], Refugee, draft: true
+
+       # Model less controller
+      can :generate, :reports
     end
   end
 end

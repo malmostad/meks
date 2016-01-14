@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate
-
   authorize_resource
   check_authorization
 

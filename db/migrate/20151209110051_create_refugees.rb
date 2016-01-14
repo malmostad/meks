@@ -1,7 +1,7 @@
 class CreateRefugees < ActiveRecord::Migration
   def change
     create_table :refugees do |t|
-      t.boolean :draft
+      t.boolean :draft, null: false
       t.string :name
       t.date :registered
       t.date :deregistered

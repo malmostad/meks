@@ -3,11 +3,10 @@
   %h1.box-title= h1
   .box-content.basic.form-data
     .form-group
-      - if can? :draft, Refugee
+      - if can? :edit, @refugee
         = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'
 
     = form_for @refugee, html: { class: 'basic' } do |f|
-
       = show_attribute('refugee.draft', @refugee.draft? ? 'Ja' : 'Nej')
 
       %h2.group-title Grunduppgifter

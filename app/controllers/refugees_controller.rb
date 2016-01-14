@@ -1,6 +1,4 @@
 class RefugeesController < ApplicationController
-  before_action :set_refugee, only: [:show, :edit, :update, :destroy]
-
   protect_from_forgery except: :suggest
 
   def index
@@ -32,6 +30,7 @@ class RefugeesController < ApplicationController
   end
 
   def show
+    @refugee = Refugee.find(params[:id])
   end
 
   def new
@@ -41,10 +40,13 @@ class RefugeesController < ApplicationController
   end
 
   def edit
+    @refugee = Refugee.find(params[:id])
+    authorize! :edit, @refugee
   end
 
   def create
     @refugee = Refugee.new(refugee_params)
+    authorize! :create, @refugee
 
     if @refugee.save
       redirect_to @refugee, notice: 'Ensamkommande barnet registrerat'
@@ -54,6 +56,9 @@ class RefugeesController < ApplicationController
   end
 
   def update
+    @refugee = Refugee.find(params[:id])
+    authorize! :update, @refugee
+
     if @refugee.update(refugee_params)
       redirect_to @refugee, notice: 'Ensamkommande barnet uppdaterades'
     else
@@ -116,11 +121,6 @@ class RefugeesController < ApplicationController
   private
     def load_more_query
       { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_refugee
-      @refugee = Refugee.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
