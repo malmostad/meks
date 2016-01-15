@@ -37,6 +37,6 @@ class StatisticsController < ApplicationController
         Refugee.maximum(:updated_at),
         Home.maximum(:updated_at),
         Placement.maximum(:updated_at)].sort.last.try(:utc).try(:to_s, :number)
-      "status/index-#{count}-#{latest_update}"
+      "status/index-#{Date.today.to_s}-#{count}-#{latest_update}"
   end
 end
