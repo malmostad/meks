@@ -1,0 +1,43 @@
+- cache "view-#{@cache_key_for_status}" do
+  - title 'Aktuellt läge'
+  %section.box.show.statistics
+    %h1.box-title= h1
+    .box-content.basic
+      %h2.group-title Inskrivna
+      .stat
+        = "#{@stats[:refugees]} barn"
+        = "(#{@stats[:genders]})"
+      .stat
+        = "#{@stats[:registered_last_seven_days]} har registrerats de senaste sju dagarna"
+        = "(#{@stats[:genders_last_seven_days]})"
+      .stat= "#{@stats[:deregistered]} är avregistrerade"
+
+      %h2.group-title Uppehållstillstånd
+      .stat= "#{@stats[:without_residence_permit]} saknar uppehållstillstånd"
+
+      %h2.group-title Härkomst och språk
+      .stat
+        = raw "Vanligast härkomst:<br>"
+        - @stats[:top_countries][0...10].each do |lang|
+          = "#{lang[0]} (#{lang[1]}),"
+      .stat
+        = raw "Vanligast härkomst för registrerade senaste sju dagarna:<br>"
+        - @stats[:top_countries_last_seven_days][0...10].each do |countries|
+          = "#{countries[0]} (#{countries[1]}),"
+      .stat
+        = raw "Vanligast talade språk:<br>"
+        - @stats[:top_languages][0...10].each do |lang|
+          = "#{lang[0]} (#{lang[1]}),"
+      .stat
+        = raw "Vanligast talade språk för registrerade senaste sju dagarna:<br>"
+        - @stats[:top_languages_last_seven_days][0...9].each_with_index do |lang, index|
+          = "#{lang[0]} (#{lang[1]}), "
+
+      %h2.group-title Placeringar
+      .stat= "#{@stats[:without_municipality_placement]} saknar anvisning"
+      .stat= "#{@stats[:without_placement]} har ännu inte boendeplacerats"
+      .stat= "Det finns #{@stats[:overlapping_placement] / 2} överlappande placeringar (#{@stats[:overlapping_placement_last_seven_days] / 2} senaste sju dagarna)"
+
+      %h2.group-title Boendeplatser
+      .stat= "Det finns #{@stats[:seats]} boendenplatser fördelade på #{@stats[:homes]} boenden"
+      .stat= "Det finns #{@stats[:guaranteed_seats]} garantiplatser och #{@stats[:movable_seats]} rörliga"

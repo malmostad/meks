@@ -93,3 +93,8 @@ locales = Rails.configuration.i18n.available_locales
     )
   end
 end
+
+if Rails.env.development?
+  User.create(username: 'r', name: 'The Reader', email: 'reader@malmo.se', role: 'reader')
+  User.create(username: 'w', name: 'The Writer', email: 'writer@malmo.se', role: 'writer')
+end

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'refugees#index'
+  root 'statistics#index'
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/refugees/suggest'
   get '/refugees/search' => 'refugees#search'
   get '/refugees/drafts' => 'refugees#drafts'
+  get '/refugees' => 'refugees#search'
 
   resources :refugees do
     resources :placements do
@@ -28,6 +29,7 @@ Rails.application.routes.draw do
   resources :languages
   resources :genders
   resources :users, only: :index
+  resources :statistics, only: :index
 
   get 'reports' => 'reports#index'
   post 'reports/refugees'
