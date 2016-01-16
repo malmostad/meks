@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   resources :homes
   resources :moved_out_reasons
   resources :target_groups
-  resources :owner_types
   resources :type_of_housings
   resources :type_of_relationships
   resources :municipalities
