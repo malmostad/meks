@@ -8,27 +8,27 @@
     = form_for @home, html: { class: 'basic' } do |f|
 
       %h2.group-title Kontaktuppgifter
-      = show_attribute('Namn', @home.name)
-      = show_attribute('Telefon', @home.phone)
-      = show_attribute('Fax', @home.fax)
-      = show_attribute('Adress', @home.address)
-      = show_attribute('Postnummer', @home.post_code)
-      = show_attribute('Postort', @home.postal_town)
+      = show_attribute('home.name', @home.name)
+      = show_attribute('home.phone', @home.phone)
+      = show_attribute('home.fax', @home.fax)
+      = show_attribute('home.address', @home.address)
+      = show_attribute('home.post_code', @home.post_code)
+      = show_attribute('home.postal_town', @home.postal_town)
 
       %h2.group-title Boendefakta
-      = show_attribute('Boendeform', @home.type_of_housings.map(&:name).join(', '))
-      = show_attribute('Ägarform', @home.owner_types.map(&:name).join(', '))
-      = show_attribute('Målgrupp', @home.target_groups.map(&:name).join(', '))
-      = show_attribute('Språk', @home.languages.map(&:name).join(', '))
-      = show_attribute('Kommentar', @home.comment)
+      = show_attribute('home.type_of_housings', @home.type_of_housings.map(&:name).join(', '))
+      = show_attribute('home.owner_types', @home.owner_types.map(&:name).join(', '))
+      = show_attribute('home.target_groups', @home.target_groups.map(&:name).join(', '))
+      = show_attribute('home.languages', @home.languages.map(&:name).join(', '))
+      = show_attribute('home.comment', @home.comment)
 
       %h2.group-title Tillgänglighet
       = show_attribute('Aktuella placeringar', @home.current_placements.count)
       = show_attribute('Placeringar totalt', @home.placements.count)
       = show_attribute('Total placeringstid', "#{@home.total_placement_time} dagar")
-      = show_attribute('Platser', @home.seats)
-      = show_attribute('Garantiplatser', @home.guaranteed_seats)
-      = show_attribute('Rörliga platser', @home.movable_seats)
+      = show_attribute('home.seats', @home.seats)
+      = show_attribute('home.guaranteed_seats', @home.guaranteed_seats)
+      = show_attribute('home.movable_seats', @home.movable_seats)
 
       %h2.group-title Aktuella placeringar
       %table.full.wrap

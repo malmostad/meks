@@ -23,8 +23,8 @@ sv:
         post_code: Postnummer
         postal_town: Postort
         type_of_housings: Boendeformer
-        owner_types: Ägarformer
-        target_groups: Målgrupper
+        owner_types: Ägarform
+        target_groups: Målgrupp
         seats: Platser
         guaranteed_seats: Garantiplatser
         movable_seats: Rörliga platser
@@ -32,7 +32,7 @@ sv:
       refugee: &refugee
         <<: *defaults
         draft: Utkast
-        registered: Registrerad
+        registered: Inskriven
         special_needs: Insatsbild
         gender: Kön
         languages: Språk
@@ -42,7 +42,8 @@ sv:
         homes: Boenden
         deregistered: Avregisterad
         deregistered_reason: Avslutsorsak
-        residence_permit_at: Uppehållstillstånd
+        residence_permit_at: <abbr title='Permanent uppehållstillstånd'>PUT</abbr>
+        temporary_permit_at: <abbr title='Tillfälligt uppehållstillstånd'>TUT</abbr>
         municipality: Anvisad
         municipality_placement_migrationsverket_at: Anvisad enligt migrationsverket
         municipality_placement_per_agreement_at: Anvisad enligt överenskommelse

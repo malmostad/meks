@@ -12,23 +12,23 @@
       %h2.group-title Grunduppgifter
       = show_attribute('refugee.name', @refugee.name)
       = show_attribute('refugee.dossier_numbers', @refugee.dossier_numbers.map(&:name).join(', '))
-      = show_attribute('Personnummer', @refugee.ssns.map(&:name).join(', '))
-      = show_attribute('Kön', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
+      = show_attribute('refugee.ssns', @refugee.ssns.map(&:name).join(', '))
+      = show_attribute('refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
 
-      = show_attribute('Språk', @refugee.languages.map(&:name).join(', '))
-      = show_attribute('Länder', @refugee.countries.map(&:name).join(', '))
-      = show_attribute('Insatsbild', @refugee.special_needs ? 'Ja' : 'Nej')
-      = show_attribute('Kommentar', @refugee.comment)
+      = show_attribute('refugee.languages', @refugee.languages.map(&:name).join(', '))
+      = show_attribute('refugee.countries', @refugee.countries.map(&:name).join(', '))
+      = show_attribute('refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej')
+      = show_attribute('refugee.comment', @refugee.comment)
 
       %h2.group-title Händelser
-      = show_attribute('Registrerad', @refugee.registered)
-      = show_attribute('Uppehållstillstånd', @refugee.residence_permit_at)
-      = show_attribute('Anvisning', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
-      = show_attribute('Anvisning enligt migrationsverket', @refugee.municipality_placement_migrationsverket_at)
-      = show_attribute('Anvisning enligt överenskommelse', @refugee.municipality_placement_per_agreement_at)
-      = show_attribute('Anvisning, kommentar', @refugee.municipality_placement_comment)
-      = show_attribute('Avregistrerad', @refugee.deregistered)
-      = show_attribute('Avregistrerad, anledning', @refugee.deregistered_reason)
+      = show_attribute('refugee.registered', @refugee.registered)
+      = show_attribute('refugee.residence_permit_at', @refugee.residence_permit_at)
+      = show_attribute('refugee.municipality', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
+      = show_attribute('refugee.municipality_placement_migrationsverket_at', @refugee.municipality_placement_migrationsverket_at)
+      = show_attribute('refugee.municipality_placement_per_agreement_at', @refugee.municipality_placement_per_agreement_at)
+      = show_attribute('refugee.municipality_placement_comment', @refugee.municipality_placement_comment)
+      = show_attribute('refugee.deregistered', @refugee.deregistered)
+      = show_attribute('refugee.deregistered_reason', @refugee.deregistered_reason)
 
       = render 'relateds'
       = render 'placements'

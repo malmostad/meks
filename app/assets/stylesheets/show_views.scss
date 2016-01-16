@@ -10,3 +10,7 @@ section.box.show .box-content {
     margin-bottom: .4em;
   }
 }
+
+abbr {
+  border-bottom: dotted 1px $border-color;
+}

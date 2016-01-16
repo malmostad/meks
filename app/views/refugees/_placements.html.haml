@@ -5,14 +5,14 @@
 
   - @refugee.placements.each do |placement|
     .placement
-      = show_attribute('Boende', (link_to placement.home.name, home_path(placement.home)))
+      = show_attribute('refugee.home', (link_to placement.home.name, home_path(placement.home)))
       = show_attribute('Boendetid', "#{placement.placement_time} dagar")
-      = show_attribute('Inskriven', placement.moved_in_at)
+      = show_attribute('placement.moved_in_at', placement.moved_in_at)
       - if placement.moved_out_at.present?
-        = show_attribute('Utskriven', placement.moved_out_at)
+        = show_attribute('placement.moved_out_at', placement.moved_out_at)
         - if placement.moved_out_reason.present?
-          = show_attribute('Utskrivningsorsak', placement.moved_out_reason.name)
-          = show_attribute('Utskrivningskommentar', placement.comment)
+          = show_attribute('placement.moved_out_reason', placement.moved_out_reason.name)
+          = show_attribute('placement.comment', placement.comment)
 
       - if can? :manage, Refugee
         .form-group.action

@@ -24,7 +24,7 @@ module ApplicationHelper
   # name can be defined in simple_form.labels yaml definitions or a string as fallback
   def show_attribute(name, value)
     content_tag(:div,
-      content_tag(:div, I18n.t("simple_form.labels.#{name}", default: name) + ':', class: 'control-label') +
+      content_tag(:div, raw(I18n.t("simple_form.labels.#{name}", default: name)) + ':', class: 'control-label') +
       content_tag(:div, raw(value), class: 'controls'),
       class: 'form-group')
   end
