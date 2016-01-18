@@ -14,7 +14,7 @@
           = show_attribute('placement.moved_out_reason', placement.moved_out_reason.name)
           = show_attribute('placement.comment', placement.comment)
 
-      - if can? :manage, Refugee
+      - if can? :edit, @refugee
         .form-group.action
           %span.no-control-label
           .controls
@@ -22,5 +22,5 @@
             - if placement.moved_out_at.blank?
               = link_to "Utskrivning", refugee_placement_move_out_path(@refugee, placement), class: "btn btn-default btn-sm"
 
-  - if can? :manage, Refugee
+  - if can? :edit, @refugee
     .placement= link_to "Ny placering", new_refugee_placement_path(@refugee), class: "btn btn-default btn-sm"

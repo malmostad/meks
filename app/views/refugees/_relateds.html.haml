@@ -11,7 +11,7 @@
         = "(#{r.type_of_relationship.name})"
 
 .actions
-  - if can? :manage, Refugee
+  - if can? :edit, @refugee
     = link_to "Ny anhörig", new_refugee_relationship_path(@refugee), class: "btn btn-default btn-sm"
     = link_to "Redigera anhöriga", refugee_relationships_path(@refugee), class: "btn btn-default btn-sm"
 
