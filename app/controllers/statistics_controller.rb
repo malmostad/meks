@@ -1,10 +1,14 @@
 class StatisticsController < ApplicationController
+  skip_authorize_resource
+  skip_authorization_check
+  before_action { authorize! :view, :statistics }
+
   def index
     @stats = Rails.cache.fetch("queries-#{cache_key_for_status}") do
       {
         refugees: Refugee.count,
         genders: Gender.all.map { |g| "#{Refugee.where(gender: g).count} är #{g.name.downcase}" }.join(', '),
-        registered_last_seven_days: Refugee.where(registered: 7.days.ago..DateTime.now).count,
+        registered_last_seven_days: registered_last_seven_days,
         genders_last_seven_days: Gender.all.map { |g| "#{Refugee.where(gender: g, registered: 7.days.ago..DateTime.now).count} är #{g.name.downcase}" }.join(', '),
 
         without_placement: Refugee.includes(:placements).where(placements: { refugee_id: nil }).count,
@@ -28,6 +32,10 @@ class StatisticsController < ApplicationController
         total_placement_time: Placement.all.map(&:placement_time).inject(&:+)
       }
     end
+  end
+
+  def registered_last_seven_days
+    Refugee.where(registered: 7.days.ago..DateTime.now)
   end
 
   def cache_key_for_status

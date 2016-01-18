@@ -12,8 +12,9 @@ class Ability
       can :create, Refugee
       can [:edit, :update, :drafts], Refugee, draft: true
 
-       # Model less controller
+       # Model less controllers
       can :generate, :reports
+      can :view, :statistics
     end
   end
 end
