@@ -8,7 +8,7 @@
         = "#{@stats[:refugees]} barn"
         = "(#{@stats[:genders]})"
       .stat
-        = "#{@stats[:registered_last_seven_days]} har registrerats de senaste sju dagarna"
+        = "#{@stats[:registered_last_seven_days].count} har registrerats de senaste sju dagarna"
         = "(#{@stats[:genders_last_seven_days]})"
       .stat= "#{@stats[:deregistered]} är avregistrerade"
 

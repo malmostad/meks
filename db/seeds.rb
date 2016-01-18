@@ -97,4 +97,5 @@ end
 if Rails.env.development?
   User.create(username: 'r', name: 'The Reader', email: 'reader@malmo.se', role: 'reader')
   User.create(username: 'w', name: 'The Writer', email: 'writer@malmo.se', role: 'writer')
+  User.create(username: 'a', name: 'The Admin', email: 'admin@malmo.se', role: 'admin')
 end

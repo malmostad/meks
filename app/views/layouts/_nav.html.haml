@@ -20,6 +20,5 @@
 
   %h1 Användare
   %ul
-    - if can? :manage, :all
-      %li.users= link_to "Handläggare", users_path
+    %li.users= link_to "Handläggare", users_path
     %li= link_to "Logga ut #{current_user.name}", logout_path
