@@ -10,16 +10,20 @@ class PlacementsController < ApplicationController
 
   def new
     @placement = @refugee.placements.new
+    authorize! :create, @placement
   end
 
   def edit
+    authorize! :edit, @placement
   end
 
   def move_out
+    authorize! :edit, @placement
   end
 
   def create
     @placement = @refugee.placements.new(placement_params)
+    authorize! :create, @placement
 
     if @placement.save
       redirect_to @refugee, notice: 'Placeringen registrerades'
@@ -29,6 +33,7 @@ class PlacementsController < ApplicationController
   end
 
   def update
+    authorize! :update, @placement
     if @placement.update(placement_params)
       redirect_to @refugee, notice: 'Placeringen uppdaterades'
     else
@@ -37,6 +42,7 @@ class PlacementsController < ApplicationController
   end
 
   def move_out_update
+    authorize! :edit, @placement
     if @placement.update(placement_params)
       redirect_to @refugee, notice: 'Placeringen uppdaterades'
     else

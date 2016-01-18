@@ -47,10 +47,6 @@ class RelationshipsController < ApplicationController
 
   private
 
-    def authorize_action
-      authorize! @refugee
-    end
-
     def set_refugee
       @refugee = Refugee.find(params[:refugee_id])
     end
