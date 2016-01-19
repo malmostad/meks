@@ -170,6 +170,8 @@ ActiveRecord::Schema.define(version: 20160110153243) do
     t.date     "registered"
     t.date     "deregistered"
     t.date     "residence_permit_at"
+    t.date     "temporary_permit_starts_at"
+    t.date     "temporary_permit_ends_at"
     t.integer  "municipality_id",                            limit: 4
     t.date     "municipality_placement_migrationsverket_at"
     t.date     "municipality_placement_per_agreement_at"

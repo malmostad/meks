@@ -23,6 +23,8 @@
       %h2.group-title Händelser
       = show_attribute('refugee.registered', @refugee.registered)
       = show_attribute('refugee.residence_permit_at', @refugee.residence_permit_at)
+      = show_attribute('refugee.temporary_permit_starts_at', @refugee.temporary_permit_ends_at)
+      = show_attribute('refugee.temporary_permit_ends_at', @refugee.temporary_permit_ends_at)
       = show_attribute('refugee.municipality', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
       = show_attribute('refugee.municipality_placement_migrationsverket_at', @refugee.municipality_placement_migrationsverket_at)
       = show_attribute('refugee.municipality_placement_per_agreement_at', @refugee.municipality_placement_per_agreement_at)

@@ -43,7 +43,8 @@ sv:
         deregistered: Avregisterad
         deregistered_reason: Avslutsorsak
         residence_permit_at: <abbr title='Permanent uppehållstillstånd'>PUT</abbr>
-        temporary_permit_at: <abbr title='Tillfälligt uppehållstillstånd'>TUT</abbr>
+        temporary_permit_starts_at: <abbr title='Tillfälligt uppehållstillstånd startar'>TUT startar</abbr>
+        temporary_permit_ends_at: <abbr title='Tillfälligt uppehållstillstånd slutar'>TUT slutar</abbr>
         municipality: Anvisad
         municipality_placement_migrationsverket_at: Anvisad enligt migrationsverket
         municipality_placement_per_agreement_at: Anvisad enligt överenskommelse
