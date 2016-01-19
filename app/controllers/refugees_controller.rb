@@ -3,6 +3,7 @@ class RefugeesController < ApplicationController
 
   def show
     @refugee = Refugee.find(params[:id])
+    @latest_event = latest_event
   end
 
   def new
@@ -93,6 +94,20 @@ class RefugeesController < ApplicationController
 
 
   private
+    def latest_event
+      events = {}
+      %w(registered residence_permit_at temporary_permit_ends_at temporary_permit_ends_at).each do |event|
+        events[event.to_s] = @refugee.send(event.to_s)
+      end
+
+      events = events.delete_if { |key, value| value.blank? }
+      last_event = Hash[events.sort_by{|k, v| v}.reverse].first
+      if last_event.nil?
+        last_event = ['Ingen händelse', '']
+      end
+      last_event
+    end
+
     def load_more_query
       { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
     end

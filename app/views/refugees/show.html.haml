@@ -11,6 +11,7 @@
 
       %h2.group-title Grunduppgifter
       = show_attribute('refugee.name', @refugee.name)
+      = show_attribute('Senaste händelse', t("simple_form.labels.refugee.#{@latest_event[0]}", default: @latest_event[0]) + ' ' + @latest_event[1].to_s)
       = show_attribute('refugee.dossier_numbers', @refugee.dossier_numbers.map(&:name).join(', '))
       = show_attribute('refugee.ssns', @refugee.ssns.map(&:name).join(', '))
       = show_attribute('refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
