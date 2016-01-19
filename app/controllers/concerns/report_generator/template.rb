@@ -30,7 +30,7 @@ module ReportGenerator
           sheet.add_row([
             placement.refugee.name,
             placement.refugee.dossier_numbers.map(&:name).join(', '),
-            placement.refugee.ssns.map(&:name).join(', '),
+            placement.refugee.ssns.map(&:date_of_birth).join(', '),
             placement.home.name,
             placement.moved_in_at,
             placement.moved_out_at,
@@ -92,7 +92,7 @@ module ReportGenerator
             refugee.registered,
             refugee.deregistered,
             refugee.dossier_numbers.map(&:name).join(', '),
-            refugee.ssns.map(&:name).join(', '),
+            refugee.ssns.map(&:date_of_birth).join(', '),
             refugee.municipality.present? ? refugee.municipality.name : '',
             refugee.gender.present? ? refugee.gender.name : '',
             refugee.languages.map(&:name).join(', '),

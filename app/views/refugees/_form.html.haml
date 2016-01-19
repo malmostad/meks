@@ -10,17 +10,16 @@
 
     .terms
       = f.simple_fields_for :dossier_numbers do |s|
-        - @label = 'Dossiernummer'
-        = render "fields_for_terms", s: s
+        = render "fields_for_dossier_number", s: s
       .form-group
         %span.control-label
         .controls
           = add_dossier_numbers_button "Nytt dossiernummer", f
 
     .terms
+      = render "foo"
       = f.simple_fields_for :ssns do |s|
-        - @label = 'Personnummer'
-        = render "fields_for_terms", s: s
+        = render "fields_for_ssn", s: s
       .form-group
         %span.control-label
         .controls

@@ -46,7 +46,7 @@
             %tr
               %td= link_to placement.refugee.name, placement.refugee
               %td= placement.refugee.dossier_numbers.map(&:name).join(', ')
-              %td= placement.refugee.ssns.map(&:name).join(', ')
+              %td= placement.refugee.ssns.map(&:full_ssn).join(', ')
               %td
                 - if placement.refugee.gender.present?
                   = placement.refugee.gender.name

@@ -1,0 +1,10 @@
+= s.input :date_of_birth, label: 'Personnummer', wrapper: :addon do
+  = s.input_field :_destroy, as: :hidden
+  .dob
+    %span.input-group-addon
+      %span.m-icon-calendar
+    = s.input_field :date_of_birth, as: :string, class: "form-control"
+  = s.input_field :extension, class: "form-control"
+  %span.input-group-btn
+    %button.btn.btn-default.remove{ type: :button }
+      %span.m-icon-close-0

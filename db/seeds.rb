@@ -63,7 +63,11 @@ locales = Rails.configuration.i18n.available_locales
   end
 
   (rand(3)).times do
-    Ssn.create(refugee_id: r.id, name: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s.gsub('-', '')[0..7])
+    Ssn.create(
+      refugee_id: r.id,
+      date_of_birth: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s.gsub('-', '')[0..7],
+      extension: rand(1000..9999)
+      )
   end
 
   # Assign and deassing refugees to homes

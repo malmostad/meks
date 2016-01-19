@@ -36,7 +36,8 @@ class CreateRefugees < ActiveRecord::Migration
     end
 
     create_table :ssns do |t|
-      t.string :name
+      t.date :date_of_birth
+      t.integer :extension
       t.references :refugee, index: true
 
       t.timestamps null: false

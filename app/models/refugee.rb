@@ -17,7 +17,7 @@ class Refugee < ActiveRecord::Base
   has_many :ssns, dependent: :destroy
   accepts_nested_attributes_for :ssns,
     allow_destroy: true,
-    reject_if: proc { |attr| attr[:name].blank? }
+    reject_if: proc { |attr| attr[:date_of_birth].blank? }
   validates_associated :ssns
 
   has_many :dossier_numbers, dependent: :destroy

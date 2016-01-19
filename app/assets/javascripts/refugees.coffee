@@ -1,4 +1,10 @@
 $ ->
+  $('.dob input, .dob .input-group-addon').datepicker
+    weekStart: 1
+    language: 'sv'
+    autoclose: true
+    todayHighlight: true
+
   # Add term
   $("form.refugee").on "click", ".add-term", (event) ->
     event.preventDefault()

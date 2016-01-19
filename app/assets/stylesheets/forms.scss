@@ -44,6 +44,12 @@
     input.term {
       max-width: 10em;
     }
+    .ssn {
+      input {
+        min-width: 9em;
+      }
+    }
+
     .remove {
       .m-icon-close-0 {
         display: inline-block;

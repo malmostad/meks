@@ -1,4 +1,7 @@
 class Ssn < ActiveRecord::Base
   belongs_to :refugee
-  validates :name, length: { maximum: 191 }
+
+  def full_ssn
+    date_of_birth.to_s.gsub('-', '') + '-' + extension.to_s
+  end
 end

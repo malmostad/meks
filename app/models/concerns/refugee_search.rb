@@ -34,7 +34,7 @@ module RefugeeSearch
       name: name,
       name_phrase: name,
       name_search: name,
-      ssns: ssns.map(&:name).join(' '),
+      ssns: ssns.map(&:full_ssn).join(' '),
       dossier_numbers: dossier_numbers.map(&:name).join(' '),
     }.as_json
   end

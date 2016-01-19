@@ -37,7 +37,9 @@ sv:
         gender: Kön
         languages: Språk
         countries: Land
-        ssns: Personnummer
+        ssns:
+          date_of_birth: Födelsedata
+          extension: Fyra sista
         dossier_numbers: Dossiernummer
         homes: Boenden
         deregistered: Avregisterad

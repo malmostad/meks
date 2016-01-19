@@ -128,7 +128,7 @@ class RefugeesController < ApplicationController
         home_ids: [],
         country_ids: [],
         language_ids: [],
-        ssns_attributes: [:id, :_destroy, :name],
+        ssns_attributes: [:id, :_destroy, :date_of_birth, :extension],
         dossier_numbers_attributes: [:id, :_destroy, :name]
       ]
       permitted_params.unshift(:draft) if can? :manage, Refugee

@@ -202,10 +202,11 @@ ActiveRecord::Schema.define(version: 20160110153243) do
   add_index "relationships", ["type_of_relationship_id"], name: "index_relationships_on_type_of_relationship_id", using: :btree
 
   create_table "ssns", force: :cascade do |t|
-    t.string   "name",       limit: 191
-    t.integer  "refugee_id", limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.date     "date_of_birth"
+    t.integer  "extension",     limit: 4
+    t.integer  "refugee_id",    limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "ssns", ["refugee_id"], name: "index_ssns_on_refugee_id", using: :btree
