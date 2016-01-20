@@ -1,9 +1,17 @@
 $ ->
-  $('.datepicker .input-group.date, .dob.date').datepicker
+  $('.datepicker .input-group.date').datepicker
     weekStart: 1
     language: 'sv'
     autoclose: true
     todayHighlight: true
+    orientation: 'left bottom'
+
+  $('.dob.date').datepicker
+    weekStart: 1
+    language: 'sv'
+    autoclose: true
+    todayHighlight: true
+    orientation: 'left bottom'
 
   # Add term
   $("form.refugee").on "click", ".add-term", (event) ->
