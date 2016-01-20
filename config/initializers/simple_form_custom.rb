@@ -17,7 +17,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :addon, tag: 'div', class: 'form-group addon', error_class: 'warning has-error' do |b|
+  config.wrappers :addon, tag: 'div', class: 'form-group addon', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.wrapper tag: 'span', class: 'control-label' do |label|
@@ -25,29 +25,8 @@ SimpleForm.setup do |config|
     end
     b.wrapper tag: 'div', class: 'controls input-group' do |ba|
       ba.use :input, class: 'form-control'
-      ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
-      ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
-    end
-  end
-
-  config.wrappers :ssn, tag: 'div', class: 'form-group addon', error_class: 'warning has-error' do |b|
-    b.use :html5
-    b.use :placeholder
-    b.wrapper tag: 'span', class: 'control-label' do |label|
-      label.use :label
     end
     b.wrapper tag: 'div', class: 'controls input-group' do |ba|
-      ba.wrapper tag: 'span', class: 'input-group-addon' do |x|
-        x.wrapper tag: 'span', class: 'm-icon-calendar' do |y|
-        end
-      end
-      ba.use :input, as: :string, class: 'form-control string'
-      ba.wrapper tag: 'span', class: 'input-group-btn' do |x|
-        x.wrapper tag: 'button', class: 'btn.btn-default.remove', type: :button do |y|
-          x.wrapper tag: 'span', class: 'm-icon-close-0' do |y|
-          end
-        end
-      end
       ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
       ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
     end

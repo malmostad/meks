@@ -17,7 +17,6 @@
           = add_dossier_numbers_button "Nytt dossiernummer", f
 
     .terms
-      = render "foo"
       = f.simple_fields_for :ssns do |s|
         = render "fields_for_ssn", s: s
       .form-group

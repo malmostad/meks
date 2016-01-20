@@ -44,9 +44,12 @@
     input.term {
       max-width: 10em;
     }
-    .ssn {
+    .input-group.ssn {
       input {
-        min-width: 9em;
+        min-width: 8em;
+      }
+      input.numeric.ssn-extension {
+        width: 6em;
       }
     }
 
@@ -61,6 +64,17 @@
   }
   .form-group.datepicker {
     padding: 0;
+  }
+
+  .datepicker.datepicker-dropdown.dropdown-menu {
+    margin-top: 3.5em;
+    &.datepicker-orient-left.datepicker-orient-top {
+      margin-top: 6em;
+    }
+  }
+
+  .form-group.addon.warning .input-group-btn {
+    display: table-cell !important;
   }
 
   button.btn {

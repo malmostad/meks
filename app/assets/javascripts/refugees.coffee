@@ -1,5 +1,5 @@
 $ ->
-  $('.dob input, .dob .input-group-addon').datepicker
+  $('.datepicker .input-group.date, .dob.date').datepicker
     weekStart: 1
     language: 'sv'
     autoclose: true
