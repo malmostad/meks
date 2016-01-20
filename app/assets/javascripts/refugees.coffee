@@ -5,6 +5,7 @@ $ ->
     autoclose: true
     todayHighlight: true
     orientation: 'left bottom'
+    keyboardNavigation: false
 
   $('.dob.date').datepicker
     weekStart: 1
@@ -12,6 +13,7 @@ $ ->
     autoclose: true
     todayHighlight: true
     orientation: 'left bottom'
+    keyboardNavigation: false
 
   # Add term
   $("form.refugee").on "click", ".add-term", (event) ->
