@@ -34,6 +34,11 @@ class Refugee < ActiveRecord::Base
   validates_presence_of :name
   validates_length_of :name, maximum: 191
 
+  # The SSN that is most reacently updated is the primary one
+  def primary_ssn
+    ssns.sort_by{|k| k.updated_at}.reverse.first
+  end
+
   def total_placement_time
     placements.map(&:placement_time).inject(&:+)
   end
