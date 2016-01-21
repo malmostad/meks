@@ -18,6 +18,15 @@ $ ->
 
   register_dob_cal()
 
+
+  # Do you want to leave this page confirm
+  $form = $('form.simple_form.basic.refugee')
+  if $form.length
+    $(window).bind 'beforeunload', (e) ->
+      'Dina ändringar kommer att gå förlorade'
+    $form.bind 'submit', (e) ->
+      $(window).unbind 'beforeunload'
+
   # Add term
   $("form.refugee").on "click", ".add-term", (event) ->
     event.preventDefault()
