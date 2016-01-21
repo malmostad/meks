@@ -4,27 +4,13 @@ class StatisticsController < ApplicationController
   before_action { authorize! :view, :statistics }
 
   def index
+    @periods = [
+      {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
+      {title: 'Inskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)}
+    ]
+
     @stats = Rails.cache.fetch("queries-#{cache_key_for_status}") do
       {
-        refugees: Refugee.count,
-        genders: Gender.all.map { |g| "#{Refugee.where(gender: g).count} är #{g.name.downcase}" }.join(', '),
-        registered_last_seven_days: registered_last_seven_days,
-        genders_last_seven_days: Gender.all.map { |g| "#{Refugee.where(gender: g, registered: 7.days.ago..DateTime.now).count} är #{g.name.downcase}" }.join(', '),
-
-        without_placement: Refugee.includes(:placements).where(placements: { refugee_id: nil }).count,
-        overlapping_placement: Placement.overlapping_by_refugee.count,
-        overlapping_placement_last_seven_days: Placement.overlapping_by_refugee(placements_from: 170.days.ago.to_s, placements_to: Date.today.to_s).count,
-
-        without_residence_permit: Refugee.where(residence_permit_at: nil).count,
-        without_municipality_placement: Refugee.where(municipality: nil).count,
-        deregistered: Refugee.where.not(deregistered: nil).count,
-
-        top_countries: Refugee.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
-        top_countries_last_seven_days: Refugee.joins(:countries).where(registered: 7.days.ago..DateTime.now).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
-
-        top_languages: Refugee.joins(:languages).select('languages.name').group('languages.name').count('languages.name').sort_by{ |key, value| value }.reverse,
-        top_languages_last_seven_days: Refugee.joins(:languages).where(registered: 7.days.ago..DateTime.now).select('languages.name').group('languages.name').count('languages.name').sort_by{ |key, value| value }.reverse,
-
         homes: Home.count,
         seats: Home.sum(:seats),
         guaranteed_seats: Home.sum(:guaranteed_seats),
@@ -34,8 +20,30 @@ class StatisticsController < ApplicationController
     end
   end
 
-  def registered_last_seven_days
-    Refugee.where(registered: 7.days.ago..DateTime.now)
+  private
+
+  def stats_for_collection(collection)
+    {
+      refugees: collection.count,
+      per_gender: Gender.all.map { |g| "#{collection.where(gender: g).count} är #{g.name.downcase}" }.join(', '),
+      deregistered: collection.where.not(deregistered: nil).count,
+      with_residence_permit: collection.where.not(residence_permit_at: nil).count,
+      with_temporary_permit: collection.where.not(temporary_permit_starts_at: nil).count,
+      with_placement: collection.includes(:placements).where.not(placements: { refugee_id: nil }).count,
+      with_municipality_placement: collection.where(municipality: nil).count,
+      top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
+      top_languages: collection.joins(:languages).select('languages.name').group('languages.name').count('languages.name').sort_by{ |key, value| value }.reverse,
+    }
+  end
+
+  def registered_this_year
+    @registered_this_year ||=
+      Refugee.where('registered >= ?', Date.today.beginning_of_year)
+  end
+
+  def registered_this_quarter
+    @registered_this_quarter ||=
+      Refugee.where('registered >= ?', Date.today.beginning_of_quarter)
   end
 
   def cache_key_for_status
