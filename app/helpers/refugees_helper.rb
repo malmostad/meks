@@ -22,7 +22,11 @@ module RefugeesHelper
   end
 
   def format_ssn(ssn)
-    return if ssn.blank?
+    return '' if ssn.blank?
     "#{ssn.date_of_birth.to_s.gsub('-', '')}-#{ssn.extension}"
+  end
+
+  def format_age(age)
+    age.blank? ? 'Okänd' : "#{age} år"
   end
 end
