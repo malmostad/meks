@@ -96,12 +96,22 @@ class RefugeesController < ApplicationController
   private
     def latest_event
       events = {}
-      %w(registered residence_permit_at temporary_permit_ends_at temporary_permit_ends_at).each do |event|
+
+      %w(
+        registered residence_permit_at
+        temporary_permit_starts_at temporary_permit_ends_at
+        municipality_placement_migrationsverket_at
+        municipality_placement_per_agreement_at
+      ).each do |event|
         events[event.to_s] = @refugee.send(event.to_s)
       end
 
       events = events.delete_if { |key, value| value.blank? }
       last_event = Hash[events.sort_by{|k, v| v}.reverse].first
+
+      @placement_is_latest = last_event.include?('municipality_placement_migrationsverket_at') ||
+        last_event.include?('municipality_placement_per_agreement_at')
+
       if last_event.nil?
         last_event = ['Ingen händelse', '']
       end
