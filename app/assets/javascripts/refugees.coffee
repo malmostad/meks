@@ -7,13 +7,16 @@ $ ->
     orientation: 'left bottom'
     keyboardNavigation: false
 
-  $('.dob.date').datepicker
-    weekStart: 1
-    language: 'sv'
-    autoclose: true
-    todayHighlight: true
-    orientation: 'left bottom'
-    keyboardNavigation: false
+  register_dob_cal = () ->
+    $('.dob.date input').datepicker
+      weekStart: 1
+      language: 'sv'
+      autoclose: true
+      todayHighlight: true
+      orientation: 'left bottom'
+      keyboardNavigation: false
+
+  register_dob_cal()
 
   # Add term
   $("form.refugee").on "click", ".add-term", (event) ->
@@ -21,7 +24,7 @@ $ ->
     regexp = new RegExp($(@).data('id'), 'g')
     $(@).closest(".form-group")
       .before($(@).data('fields').replace(regexp, new Date().getTime()))
-      .prev().find("input").focus()
+    register_dob_cal()
 
   # Remove term
   $("form.refugee .terms").on "click", ".remove", (event) ->
