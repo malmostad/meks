@@ -29,11 +29,13 @@ class StatisticsController < ApplicationController
       with_residence_permit: collection.where.not(residence_permit_at: nil).count,
       with_temporary_permit: collection.where.not(temporary_permit_starts_at: nil).count,
       with_placement: collection.includes(:placements).where.not(placements: { refugee_id: nil }).count,
-      with_municipality_placement: collection.where(municipality: nil).count,
+      with_municipality_placement: collection.where.not(municipality: nil).count,
       top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
       top_languages: collection.joins(:languages).select('languages.name').group('languages.name').count('languages.name').sort_by{ |key, value| value }.reverse,
     }
   end
+
+  private
 
   def registered_this_year
     @registered_this_year ||=
