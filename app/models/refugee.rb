@@ -50,6 +50,6 @@ class Refugee < ActiveRecord::Base
   end
 
   def total_placement_time
-    placements.map(&:placement_time).inject(&:+)
+    placements.map(&:placement_time).inject(&:+) || 0
   end
 end
