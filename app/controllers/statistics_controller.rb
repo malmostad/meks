@@ -4,13 +4,12 @@ class StatisticsController < ApplicationController
   before_action { authorize! :view, :statistics }
 
   def index
-    @periods = [
-      {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
-      {title: 'Inskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)}
-    ]
-
     @stats = Rails.cache.fetch("queries-#{cache_key_for_status}") do
       {
+        periods: [
+          {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
+          {title: 'Inskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)}
+        ],
         homes: Home.count,
         seats: Home.sum(:seats),
         guaranteed_seats: Home.sum(:guaranteed_seats),
