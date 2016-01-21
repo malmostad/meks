@@ -20,4 +20,9 @@ module RefugeesHelper
       name
     end
   end
+
+  def format_ssn(ssn)
+    return if ssn.blank?
+    "#{ssn.date_of_birth.to_s.gsub('-', '')}-#{ssn.extension}"
+  end
 end

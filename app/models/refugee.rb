@@ -36,7 +36,17 @@ class Refugee < ActiveRecord::Base
 
   # The SSN that is most reacently updated is the primary one
   def primary_ssn
-    ssns.sort_by{|k| k.updated_at}.reverse.first
+    primary = ssns.sort_by{|k| k.updated_at}.reverse.first
+  end
+
+  # Age old in years
+  def age
+    return if primary_ssn.blank?
+
+    dob = primary_ssn.date_of_birth
+    years_old = Date.today.year - dob.year
+    years_old -= 1 if Date.today < dob + years_old.years
+    years_old
   end
 
   def total_placement_time

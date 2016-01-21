@@ -15,20 +15,7 @@ sv:
         home: Boende
         refugee: Ensamkommande barn
         comment: Kommentar
-      home:
-        <<: *defaults
-        phone: Telefonnummer
-        fax: Faxnummer
-        address: Adress
-        post_code: Postnummer
-        postal_town: Postort
-        type_of_housings: Boendeformer
-        owner_types: Ägarform
-        target_groups: Målgrupp
-        seats: Platser
-        guaranteed_seats: Garantiplatser
-        movable_seats: Rörliga platser
-        languages: Språk
+
       refugee: &refugee
         <<: *defaults
         draft: Utkast
@@ -37,8 +24,9 @@ sv:
         gender: Kön
         languages: Språk
         countries: Land
+        ssn: Personnummer
         ssns:
-          date_of_birth: Födelsedata
+          date_of_birth: Födelsedag
           extension: Fyra sista
         dossier_numbers: Dossiernummer
         homes: Boenden
@@ -55,6 +43,21 @@ sv:
         relateds: Anhöriga
         type_of_relationships: Anhörigform
         other_relateds: Anhöriga utanför systemet
+
+      home:
+        <<: *defaults
+        phone: Telefonnummer
+        fax: Faxnummer
+        address: Adress
+        post_code: Postnummer
+        postal_town: Postort
+        type_of_housings: Boendeformer
+        owner_types: Ägarform
+        target_groups: Målgrupp
+        seats: Platser
+        guaranteed_seats: Garantiplatser
+        movable_seats: Rörliga platser
+        languages: Språk
 
       relationship:
         <<: *defaults
