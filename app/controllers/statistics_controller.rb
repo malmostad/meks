@@ -8,7 +8,8 @@ class StatisticsController < ApplicationController
       {
         periods: [
           {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
-          {title: 'Inskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)}
+          {title: 'Inskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)},
+          {title: 'Inskrivna denna månad', data: stats_for_collection(registered_this_month)}
         ],
         homes: Home.count,
         seats: Home.sum(:seats),
@@ -45,6 +46,11 @@ class StatisticsController < ApplicationController
   def registered_this_quarter
     @registered_this_quarter ||=
       Refugee.where('registered >= ?', Date.today.beginning_of_quarter)
+  end
+
+  def registered_this_month
+    @registered_this_month ||=
+      Refugee.where('registered >= ?', Date.today.beginning_of_month)
   end
 
   def cache_key_for_status

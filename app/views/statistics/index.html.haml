@@ -9,8 +9,8 @@
           = "#{period[:data][:refugees]} barn"
           = "(#{period[:data][:per_gender]})"
         %p= "#{period[:data][:deregistered]} är avregistrerade"
-        %p= "#{period[:data][:with_residence_permit]} har permantent uppehållstillstånd"
-        %p= "#{period[:data][:with_temporary_permit]} har tillfälligt uppehållstillstånd"
+        %p= raw "#{period[:data][:with_residence_permit]} har <abbr title='Permanent uppehållstillstånd'>PUT</abbr>"
+        %p= raw "#{period[:data][:with_temporary_permit]} har <abbr title='Tillfälligt uppehållstillstånd'>TUT</abbr>"
         %p= "#{period[:data][:with_municipality_placement]} har anvisning"
         %p= "#{period[:data][:with_placement]} har boendeplats"
         %p
