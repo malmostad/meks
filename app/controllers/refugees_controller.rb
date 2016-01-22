@@ -109,8 +109,8 @@ class RefugeesController < ApplicationController
       events = events.delete_if { |key, value| value.blank? }
       last_event = Hash[events.sort_by{|k, v| v}.reverse].first
 
-      @placement_is_latest = last_event.include?('municipality_placement_migrationsverket_at') ||
-        last_event.include?('municipality_placement_per_agreement_at')
+      @placement_is_latest = !last_event.nil? && (last_event.include?('municipality_placement_migrationsverket_at') ||
+        last_event.include?('municipality_placement_per_agreement_at'))
 
       if last_event.nil?
         last_event = ['Ingen händelse', '']

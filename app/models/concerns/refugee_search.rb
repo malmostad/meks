@@ -26,6 +26,15 @@ module RefugeeSearch
       indexes :ssns, analyzer: 'nmbr', search_analyzer: 'standard'
       indexes :dossier_numbers, analyzer: 'nmbr', search_analyzer: 'standard'
     end
+
+    def delete_document
+      # ES document might already be deleted, so we do not log errors unless debug
+      begin
+        __elasticsearch__.delete_document
+      rescue Exception => e
+        logger.debug { "Document could not be deleted: #{e}" }
+      end
+    end
   end
 
   def as_indexed_json(options={})
