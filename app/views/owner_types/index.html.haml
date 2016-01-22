@@ -1,0 +1,18 @@
+- title "Boenden, ägarformer"
+%section.box.index
+  %h1.box-title= h1
+  %table.full.wrap
+    %thead
+      %tr
+        %th Namn
+        %th
+
+    %tbody
+      - @owner_types.each do |owner_type|
+        %tr
+          %td= link_to owner_type.name, edit_owner_type_path(owner_type)
+          %td.delete= link_to t('actions.delete'), owner_type, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_owner_type_path, class: "btn btn-primary"
