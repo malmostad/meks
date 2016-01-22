@@ -7,9 +7,9 @@ class StatisticsController < ApplicationController
     @stats = Rails.cache.fetch("queries-#{cache_key_for_status}") do
       {
         periods: [
-          {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
+          {title: 'Inskrivna denna månad', data: stats_for_collection(registered_this_month)},
           {title: 'Inskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)},
-          {title: 'Inskrivna denna månad', data: stats_for_collection(registered_this_month)}
+          {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
         ],
         homes: Home.count,
         seats: Home.sum(:seats),
@@ -31,6 +31,7 @@ class StatisticsController < ApplicationController
       with_temporary_permit: collection.where.not(temporary_permit_starts_at: nil).count,
       with_placement: collection.includes(:placements).where.not(placements: { refugee_id: nil }).count,
       with_municipality_placement: collection.where.not(municipality: nil).count,
+      with_municipality_placement_in_malmo: collection.joins(:municipality).where("municipalities.name like ?", "malmö%").count,
       top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
       top_languages: collection.joins(:languages).select('languages.name').group('languages.name').count('languages.name').sort_by{ |key, value| value }.reverse,
     }

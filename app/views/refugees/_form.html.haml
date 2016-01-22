@@ -36,7 +36,7 @@
     = f.input :registered, as: :string, wrapper: :datepicker
     = f.input :residence_permit_at, label: raw(t("simple_form.labels.refugee.residence_permit_at")), as: :string, wrapper: :datepicker
     = f.input :temporary_permit_starts_at, label: raw(t("simple_form.labels.refugee.temporary_permit_starts_at")), as: :string, wrapper: :datepicker
-    = f.input :temporary_permit_ends_at, label: raw(t("simple_form.labels.refugee.temporary_permit_starts_at")), as: :string, wrapper: :datepicker
+    = f.input :temporary_permit_ends_at, label: raw(t("simple_form.labels.refugee.temporary_permit_ends_at")), as: :string, wrapper: :datepicker
     = f.association :municipality, input_html: { class: 'chosen' }
     = f.input :municipality_placement_migrationsverket_at, as: :string, wrapper: :datepicker
     = f.input :municipality_placement_per_agreement_at, as: :string, wrapper: :datepicker

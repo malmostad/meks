@@ -4,6 +4,7 @@ $ ->
     language: 'sv'
     autoclose: true
     todayHighlight: true
+    todayBtn: true
     orientation: 'left bottom'
     keyboardNavigation: false
 
@@ -13,6 +14,7 @@ $ ->
       language: 'sv'
       autoclose: true
       todayHighlight: true
+      todayBtn: true
       orientation: 'left bottom'
       keyboardNavigation: false
 
