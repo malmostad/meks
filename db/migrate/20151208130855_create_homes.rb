@@ -22,11 +22,6 @@ class CreateHomes < ActiveRecord::Migration
       t.belongs_to :type_of_housing, index: true
     end
 
-    create_table :homes_owner_types, id: false do |t|
-      t.belongs_to :home, index: true
-      t.belongs_to :owner_type, index: true
-    end
-
     create_table :homes_target_groups, id: false do |t|
       t.belongs_to :home, index: true
       t.belongs_to :target_group, index: true

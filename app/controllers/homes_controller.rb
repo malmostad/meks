@@ -2,7 +2,7 @@ class HomesController < ApplicationController
   before_action :set_home, only: [:show, :edit, :update, :destroy]
 
   def index
-    @homes = Home.includes(:type_of_housings, :owner_types, :target_groups, :languages).order(:name)
+    @homes = Home.includes(:type_of_housings, :owner_type, :target_groups, :languages).order(:name)
   end
 
   def show
@@ -44,9 +44,9 @@ class HomesController < ApplicationController
       params.require(:home).permit(
         :name, :phone, :fax, :address, :post_code,
         :postal_town, :guaranteed_seats, :movable_seats, :comment,
+        :owner_type_id,
         language_ids: [],
         target_group_ids: [],
-        owner_type_ids: [],
         type_of_housing_ids: [])
     end
 end

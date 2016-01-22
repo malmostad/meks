@@ -48,7 +48,7 @@ class ReportsController < ApplicationController
   def homes
     records = Home.includes(
       :placements, :type_of_housings,
-      :owner_types, :target_groups, :languages)
+      :owner_type, :target_groups, :languages)
 
     if params[:homes_from].present? && params[:homes_to].present?
       records = records.where(created_at: params[:homes_from]..params[:homes_to])

@@ -17,7 +17,7 @@
 
       %h2.group-title Boendefakta
       = show_attribute('home.type_of_housings', @home.type_of_housings.map(&:name).join(', '))
-      = show_attribute('home.owner_type', @home.owner_type)
+      = show_attribute('home.owner_type', @home.owner_type.present? ? @home.owner_type.name : '')
       = show_attribute('home.target_groups', @home.target_groups.map(&:name).join(', '))
       = show_attribute('home.languages', @home.languages.map(&:name).join(', '))
       = show_attribute('home.comment', @home.comment)

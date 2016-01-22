@@ -169,7 +169,7 @@ module ReportGenerator
             home.post_code,
             home.postal_town,
             home.type_of_housings.map(&:name).join(', '),
-            home.owner_types.map(&:name).join(', '),
+            home.owner_type,
             home.target_groups.map(&:name).join(', '),
             home.languages.map(&:name).join(', '),
             home.comment,

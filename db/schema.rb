@@ -84,14 +84,6 @@ ActiveRecord::Schema.define(version: 20160110153243) do
   add_index "homes_languages", ["home_id"], name: "index_homes_languages_on_home_id", using: :btree
   add_index "homes_languages", ["language_id"], name: "index_homes_languages_on_language_id", using: :btree
 
-  create_table "homes_owner_types", id: false, force: :cascade do |t|
-    t.integer "home_id",       limit: 4
-    t.integer "owner_type_id", limit: 4
-  end
-
-  add_index "homes_owner_types", ["home_id"], name: "index_homes_owner_types_on_home_id", using: :btree
-  add_index "homes_owner_types", ["owner_type_id"], name: "index_homes_owner_types_on_owner_type_id", using: :btree
-
   create_table "homes_target_groups", id: false, force: :cascade do |t|
     t.integer "home_id",         limit: 4
     t.integer "target_group_id", limit: 4

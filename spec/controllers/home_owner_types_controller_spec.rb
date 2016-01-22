@@ -37,7 +37,7 @@ RSpec.describe HomeOwnerTypesController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns all home_owner_types as @home_owner_types" do
+    it "assigns all home_owner_type as @home_owner_types" do
       home_owner_type = HomeOwnerType.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:home_owner_types)).to eq([home_owner_type])
