@@ -17,7 +17,7 @@
 
       %h2.group-title Boendefakta
       = show_attribute('home.type_of_housings', @home.type_of_housings.map(&:name).join(', '))
-      = show_attribute('home.owner_types', @home.owner_types.map(&:name).join(', '))
+      = show_attribute('home.owner_type', @home.owner_type)
       = show_attribute('home.target_groups', @home.target_groups.map(&:name).join(', '))
       = show_attribute('home.languages', @home.languages.map(&:name).join(', '))
       = show_attribute('home.comment', @home.comment)
@@ -26,9 +26,9 @@
       = show_attribute('Aktuella placeringar', @home.current_placements.count)
       = show_attribute('Placeringar totalt', @home.placements.count)
       = show_attribute('Total placeringstid', "#{@home.total_placement_time} dagar")
-      = show_attribute('home.seats', @home.seats)
       = show_attribute('home.guaranteed_seats', @home.guaranteed_seats)
       = show_attribute('home.movable_seats', @home.movable_seats)
+      = show_attribute('Summa platser', @home.seats)
 
       %h2.group-title Aktuella placeringar
       %table.full.wrap

@@ -28,8 +28,9 @@ end
     postal_town: 'Malmö',
     type_of_housing_ids: [rand(TypeOfHousing.count) + 1],
     target_group_ids: [rand(TargetGroup.count) + 1],
-    owner_type_ids: [rand(OwnerType.count) + 1],
-    seats: rand(100) + 1
+    owner_type_id: [rand(OwnerType.count) + 1],
+    guaranteed_seats: rand(100) + 1,
+    movable_seats: rand(100) + 1
   )
 end
 

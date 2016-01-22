@@ -52,7 +52,7 @@ sv:
         post_code: Postnummer
         postal_town: Postort
         type_of_housings: Boendeformer
-        owner_types: Ägarform
+        owner_type: Ägarform
         target_groups: Målgrupp
         seats: Platser
         guaranteed_seats: Garantiplatser

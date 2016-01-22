@@ -4,9 +4,9 @@ class Home < ActiveRecord::Base
   has_many :refugees, through: :placements
 
   has_and_belongs_to_many :type_of_housings
-  has_and_belongs_to_many :owner_types
   has_and_belongs_to_many :target_groups
   has_and_belongs_to_many :languages
+  belongs_to :owner_type
 
   validates_uniqueness_of :name, case_sensitive: false
   validates_presence_of :name
@@ -20,6 +20,10 @@ class Home < ActiveRecord::Base
 
   def current_placements_size
     placements.where(moved_out_at: nil).count
+  end
+
+  def seats
+    guaranteed_seats + movable_seats
   end
 
   def total_placement_time

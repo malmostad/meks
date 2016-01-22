@@ -1,5 +1,5 @@
 class OwnerType < ActiveRecord::Base
-  has_and_belongs_to_many :homes
+  has_many :homes, dependent: :nullify
 
   validates_uniqueness_of :name, case_sensitive: false
   validates_presence_of :name

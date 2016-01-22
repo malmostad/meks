@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20160110153243) do
     t.string   "address",          limit: 191
     t.string   "post_code",        limit: 191
     t.string   "postal_town",      limit: 191
-    t.integer  "seats",            limit: 4
+    t.integer  "owner_type_id",    limit: 4
     t.integer  "guaranteed_seats", limit: 4
     t.integer  "movable_seats",    limit: 4
     t.string   "languages",        limit: 191
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20160110153243) do
   end
 
   add_index "homes", ["name"], name: "index_homes_on_name", unique: true, using: :btree
+  add_index "homes", ["owner_type_id"], name: "index_homes_on_owner_type_id", using: :btree
 
   create_table "homes_languages", id: false, force: :cascade do |t|
     t.integer "home_id",     limit: 4
@@ -248,6 +249,7 @@ ActiveRecord::Schema.define(version: 20160110153243) do
 
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  add_foreign_key "homes", "owner_types"
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "refugees", "genders"
   add_foreign_key "refugees", "municipalities"

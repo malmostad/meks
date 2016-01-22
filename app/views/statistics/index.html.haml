@@ -24,6 +24,9 @@
           - period[:data][:top_languages][0...10].each do |lang|
             = "#{lang[0]} (#{lang[1]}),"
 
-      %h2.group-title Boendeplatser
-      %p= "Det finns #{@stats[:seats]} boendenplatser fördelade på #{@stats[:homes]} boenden"
-      %p= "Det finns #{@stats[:guaranteed_seats]} garantiplatser och #{@stats[:movable_seats]} rörliga"
+      %h2.group-title Boenden och placeringar
+      %p= "Det finns för närvarande #{@stats[:current_placements].count} boendeplaceringar"
+      %p
+        = "Det finns #{@stats[:guaranteed_seats] + @stats[:movable_seats]} boendenplatser fördelade på #{@stats[:homes]} boenden."
+        = "Av dessa är #{@stats[:guaranteed_seats]} garantiplatser och #{@stats[:movable_seats]} rörliga."
+      %p= "#{@stats[:home_by_owner_type]}"

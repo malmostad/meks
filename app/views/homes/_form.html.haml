@@ -12,12 +12,11 @@
 
     %h2.group-title Boendefakta
     = f.association :type_of_housings, input_html: { class: 'chosen' }
-    = f.association :owner_types, input_html: { class: 'chosen' }
+    = f.association :owner_type
     = f.association :target_groups, input_html: { class: 'chosen' }
     = f.association :languages, input_html: { class: 'chosen' }
 
     %h2.group-title Tillgänglighet
-    = f.input :seats
     = f.input :guaranteed_seats
     = f.input :movable_seats
 

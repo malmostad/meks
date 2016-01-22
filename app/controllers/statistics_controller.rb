@@ -12,9 +12,12 @@ class StatisticsController < ApplicationController
           {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
         ],
         homes: Home.count,
-        seats: Home.sum(:seats),
+        home_by_owner_type: OwnerType.all.map { |ot| "#{Home.where(owner_type: ot).count} är #{ot.name}" }.join(', '),
+
+        current_placements: Placement.current_placements,
         guaranteed_seats: Home.sum(:guaranteed_seats),
         movable_seats: Home.sum(:movable_seats),
+
         total_placement_time: Placement.all.map(&:placement_time).inject(&:+)
       }
     end

@@ -7,7 +7,7 @@ class CreateHomes < ActiveRecord::Migration
       t.string :address
       t.string :post_code
       t.string :postal_town
-      t.integer :seats
+      t.references :owner_type, index: true, foreign_key: true
       t.integer :guaranteed_seats
       t.integer :movable_seats
       t.string :languages
