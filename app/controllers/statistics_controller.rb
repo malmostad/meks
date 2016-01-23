@@ -7,18 +7,21 @@ class StatisticsController < ApplicationController
     @stats = Rails.cache.fetch("queries-#{cache_key_for_status}") do
       {
         periods: [
+          {title: 'Inskrivna förra veckan', data: stats_for_collection(registered_last_week)},
           {title: 'Inskrivna denna månad', data: stats_for_collection(registered_this_month)},
           {title: 'Inskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)},
           {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
         ],
-        homes: Home.count,
-        home_by_owner_type: OwnerType.all.map { |ot| "#{Home.where(owner_type: ot).count} är #{ot.name}" }.join(', '),
 
+        homes: Home.count,
+        home_by_owner_type: OwnerType.all.map { |ot|
+          "#{Home.where(owner_type: ot).count} är #{ot.name}" }.join(', '),
         current_placements: Placement.current_placements,
+        current_placements_per_owner_type: OwnerType.all.map { |ot|
+          "#{Placement.current_placements.includes(:home).where(
+            homes: { owner_type_id: ot.id }).count} på #{ot.name}" }.join(', '),
         guaranteed_seats: Home.sum(:guaranteed_seats),
         movable_seats: Home.sum(:movable_seats),
-
-        total_placement_time: Placement.all.map(&:placement_time).inject(&:+)
       }
     end
   end
@@ -63,6 +66,12 @@ class StatisticsController < ApplicationController
   def registered_this_month
     @registered_this_month ||=
       Refugee.where('registered >= ?', Date.today.beginning_of_month)
+  end
+
+  def registered_last_week
+    @registered_last_week ||=
+      one_week_ago = Date.today - 1.week
+      Refugee.where(registered: one_week_ago.beginning_of_week..one_week_ago.end_of_week)
   end
 
   def cache_key_for_status
