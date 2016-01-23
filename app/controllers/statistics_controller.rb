@@ -40,7 +40,6 @@ class StatisticsController < ApplicationController
           municipality_placement_per_agreement_at: nil,
           deregistered: nil).count,
       with_residence_permit: collection.where.not(residence_permit_at: nil).count,
-      with_residence_permit: collection.where.not(residence_permit_at: nil).count,
       with_temporary_permit: collection.where.not(temporary_permit_starts_at: nil).count,
       with_placement: collection.includes(:placements).where.not(placements: { refugee_id: nil }).count,
       with_municipality_placement: collection.where.not(municipality: nil).count,
