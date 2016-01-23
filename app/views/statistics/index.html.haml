@@ -15,6 +15,7 @@
         %p= "#{period[:data][:with_municipality_placement]} har anvisning totalt"
         %p= "#{period[:data][:with_placement]} har boendeplats"
         %p= "#{period[:data][:deregistered]} är avregistrerade"
+        %p= "#{period[:data][:drafts]} inskrivningar är utkast"
         %p
           = "Vanligast härkomst:"
           - period[:data][:top_countries][0...10].each do |lang|

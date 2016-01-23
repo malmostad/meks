@@ -16,10 +16,12 @@ class StatisticsController < ApplicationController
         homes: Home.count,
         home_by_owner_type: OwnerType.all.map { |ot|
           "#{Home.where(owner_type: ot).count} är #{ot.name}" }.join(', '),
+
         current_placements: Placement.current_placements,
         current_placements_per_owner_type: OwnerType.all.map { |ot|
           "#{Placement.current_placements.includes(:home).where(
             homes: { owner_type_id: ot.id }).count} på #{ot.name}" }.join(', '),
+
         guaranteed_seats: Home.sum(:guaranteed_seats),
         movable_seats: Home.sum(:movable_seats),
       }
@@ -45,6 +47,7 @@ class StatisticsController < ApplicationController
       with_municipality_placement: collection.where.not(municipality: nil).count,
       with_municipality_placement_in_malmo: collection.joins(:municipality).where("municipalities.name like ?", "malmö%").count,
       deregistered: collection.where.not(deregistered: nil).count,
+      drafts: collection.where(draft: true).count,
       top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
       top_languages: collection.joins(:languages).select('languages.name').group('languages.name').count('languages.name').sort_by{ |key, value| value }.reverse,
     }
