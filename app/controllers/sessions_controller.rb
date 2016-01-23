@@ -62,19 +62,14 @@ class SessionsController < ApplicationController
   # In dev env if the LDAP is not available
   # User needs to exist
   def stub_auth(username)
-    if !Rails.application.config.consider_all_requests_local
-      @login_failed = 'Stubbed authentication only available in local environment'
-      render 'new'
+    user = User.where(username: username).first
+    if user
+      session[:user_id] = user.id
+      logger.debug { "Stubbed authenticated user #{current_user.id}" }
+      redirect_after_login
     else
-      user = User.where(username: username).first
-      if user
-        session[:user_id] = user.id
-        logger.debug { "Stubbed authenticated user #{current_user.id}" }
-        redirect_after_login
-      else
-        @login_failed = "Användarnamnet finns inte"
-        render "new"
-      end
+      @login_failed = "Användarnamnet finns inte"
+      render "new"
     end
   end
 end
