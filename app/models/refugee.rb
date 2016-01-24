@@ -36,7 +36,13 @@ class Refugee < ActiveRecord::Base
 
   # The SSN that is most reacently updated is the primary one
   def primary_ssn
-    primary = ssns.sort_by{|k| k.updated_at}.reverse.first
+    ssns.sort_by{|k| k.updated_at}.reverse.first
+  end
+
+  # The dossier number that is most reacently updated is the primary one
+  def primary_dossier_number
+    return '' if dossier_numbers.blank?
+    dossier_numbers.sort_by{|k| k.updated_at}.reverse.first.name
   end
 
   # Age old in years
