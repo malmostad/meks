@@ -1,139 +1,95 @@
-# TODO: A DSL for this would've been nice
-
 module ReportGenerator
   class Template
-    def initialize(axlsx)
-      @axlsx = axlsx
-    end
-
-    def style
-      @style ||= Style.new(@axlsx)
-    end
-
-    def placements(records)
-      @axlsx.workbook.add_worksheet do |sheet|
-        sheet.add_row [
-          'Barn',
-          'Dossiernummer',
-          'Personnummer',
-          'Boende',
-          'Placerad',
-          'Utskriven',
-          'Total placeringstid (dagar)',
-          'Anledning till utskrivning',
-          'Kommentar till utskrivning'
-        ],
-        style: style.heading
-
-        # records can be and active record enumerator or an array of records
-        records.send(records.is_a?(Array) ? 'each' : 'find_each') do |placement|
-          sheet.add_row([
-            placement.refugee.name,
-            placement.refugee.dossier_numbers.map(&:name).join(', '),
-            placement.refugee.ssns.map(&:date_of_birth).join(', '),
-            placement.home.name,
-            placement.moved_in_at,
-            placement.moved_out_at,
-            placement.placement_time,
-            placement.moved_out_reason.present? ? placement.moved_out_reason.name : '',
-            placement.comment
-          ],
-          # Styling all cells individually like this is very expensive
-          style: [
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.date,
-            style.date,
-            style.normal,
-            style.normal,
-            style.wrap
-          ],
-          types: [
-            :string,
-            :string,
-            :string,
-            :string,
-            :date,
-            :date,
-            :integer,
-            :string,
-            :string
-          ])
-        end
-        sheet.column_info.each { |c| c.width = 20 }
-        sheet.column_info[4].width = 12
-        sheet.column_info[5].width = 12
-        sheet.column_info[8].width = 40
-      end
-    end
-
-    def refugees(records)
-      @axlsx.workbook.add_worksheet do |sheet|
-        sheet.add_row [
-          'Namn',
-          'Registrerad',
-          'Avregistrerad',
-          'Dossiernummer',
-          'Personnummer',
-          'Anvisad',
-          'Kön',
-          'Land',
-          'Språk',
-          'Aktuellt boenden',
-          'All boenden',
-          'Placeringstid (dagar)'
-        ], style: style.heading
-
-        records.find_each(batch_size: 1000) do |refugee|
-          sheet.add_row([
-            refugee.name,
-            refugee.registered,
-            refugee.deregistered,
-            refugee.dossier_numbers.map(&:name).join(', '),
-            refugee.ssns.map(&:date_of_birth).join(', '),
-            refugee.municipality.present? ? refugee.municipality.name : '',
-            refugee.gender.present? ? refugee.gender.name : '',
-            refugee.languages.map(&:name).join(', '),
-            refugee.countries.map(&:name).join(', '),
-            refugee.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(', '),
-            refugee.homes.map(&:name).join(', '),
-            refugee.total_placement_time
-          ],
-          style: [
-            style.normal,
-            style.date,
-            style.date,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.wrap,
-            style.normal
-          ],
-          types: [
-            :string,
-            :date,
-            :date,
-            :string,
-            :string,
-            :string,
-            :string,
-            :string,
-            :string,
-            :string,
-            :string,
-            :integer
-          ])
-          sheet.column_info.each { |c| c.width = 20 }
-          sheet.column_info[6].width = 8
-          sheet.column_info[10].width = 40
-        end
-      end
+    def refugees
+      {
+        'Barn' => {
+          query: 'name'
+        },
+        'Primärt dossiernummer' => {
+          query: 'primary_dossier_number'
+        },
+        'Alla dossiernummer' => {
+          query: 'dossier_numbers.map(&:name).join(", ")'
+        },
+        'Ålder' => {
+          query: 'age',
+          type: :integer
+        },
+        'Primärt personnummer' => {
+          query: 'primary_ssn.full_ssn'
+        },
+        'Alla personnummer' => {
+          query: 'ssns.map(&:full_ssn).join(", ")'
+        },
+        'Kön' => {
+          query: 'gender.name'
+        },
+        'Språk' => {
+          query: 'languages.map(&:name).join(", ")'
+        },
+        'Land' => {
+          query: 'countries.map(&:name).join(", ")'
+        },
+        'Insatsbild' => {
+          query: 'special_needs'
+        },
+        'Kommentar' => {
+          query: 'comment'
+        },
+        'Inskriven' => {
+          query: 'registered',
+          type: :date
+        },
+        'PUT' => {
+          query: 'residence_permit_at',
+          type: :date
+        },
+        'TUT startar' => {
+          query: 'temporary_permit_starts_at',
+          type: :date
+        },
+        'TUT slutar' => {
+          query: 'temporary_permit_ends_at',
+          type: :date
+        },
+        'Anvisad' => {
+          query: 'municipality.name'
+        },
+        'Anvisad enligt Migrationsverket' => {
+          query: 'municipality_placement_migrationsverket_at',
+          type: :date
+        },
+        'Anvisad enligt överenskommelse' => {
+          query: 'municipality_placement_per_agreement_at',
+          type: :date
+        },
+        'Anvisad, kommentar' => {
+          query: 'municipality_placement_comment'
+        },
+        'Avregisterad' => {
+          query: 'deregistered',
+          type: :date
+        },
+        'Avslutsorsak' => {
+          query: 'deregistered_reason'
+        },
+        'Aktuellt boende' => {
+          query: 'placements.where(moved_out_at: nil).map(&:home).map(&:name).join(", ")'
+        },
+        'Alla boende' => {
+          query: 'homes.map(&:name).join(", ")'
+        },
+        'Total placeringstid (dagar)' => {
+          query: 'total_placement_time',
+          type: :integer
+        },
+        'Anhöriga' => {
+          query: 'relateds.map(&:name).join(", ")'
+        },
+        'Angiven som anhöriga till' => {
+          query: 'inverse_relateds.map(&:name).join(", ")'
+        }
+      }
     end
 
     def homes(records)
@@ -158,7 +114,7 @@ module ReportGenerator
           'Total placeringstid',
           'Registrerad',
           'Senast uppdaterad'
-        ], style: style.heading
+        ], style: @style.heading
 
         records.find_each(batch_size: 1000) do |home|
           sheet.add_row([
@@ -183,25 +139,25 @@ module ReportGenerator
             home.updated_at
           ],
           style: [
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.wrap,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.normal,
-            style.date,
-            style.date
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.wrap,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.normal,
+            @style.date,
+            @style.date
           ],
           types: [
             :string,
