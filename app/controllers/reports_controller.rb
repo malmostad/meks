@@ -35,7 +35,9 @@ class ReportsController < ApplicationController
 
   def refugees
     records = Refugee.includes(
-      :countries, :languages, :ssns, :dossier_numbers, :gender, :homes, :placements)
+      :countries, :languages, :ssns, :dossier_numbers,
+      :gender, :homes, :placements, :municipality,
+      :relateds, :inverse_relateds)
 
     if params[:refugees_from].present? && params[:refugees_to].present?
       records = records.where(registered: params[:refugees_from]..params[:refugees_to])

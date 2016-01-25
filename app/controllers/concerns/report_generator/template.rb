@@ -34,7 +34,7 @@ module ReportGenerator
           query: 'record.countries.map(&:name).join(", ")'
         },
         'Insatsbild' => {
-          query: 'record.special_needs'
+          query: 'record.special_needs? ? "Ja" : "Nej"'
         },
         'Kommentar' => {
           query: 'record.comment'
@@ -77,7 +77,7 @@ module ReportGenerator
           query: 'record.deregistered_reason'
         },
         'Aktuellt boende' => {
-          query: 'record.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(", ")'
+          query: 'record.current_placements.map(&:home).map(&:name).join(", ")'
         },
         'Alla boende' => {
           query: 'record.homes.map(&:name).join(", ")'
