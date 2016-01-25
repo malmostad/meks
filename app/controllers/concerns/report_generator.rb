@@ -9,8 +9,9 @@ module ReportGenerator
       template = Template.new.send(template_name.to_sym)
 
       axlsx.workbook.add_worksheet do |sheet|
-        # Col headings
-        sheet.add_row template.keys, style: style.heading
+        # Column headings
+        sheet.add_row template.keys.map { |key| col_heading(key) },
+          style: style.heading
 
         # data rows
         records.each do |record|
@@ -36,5 +37,9 @@ module ReportGenerator
         # filename: "#{base_name}_#{DateTime.now.strftime('%Y-%m-%d_%H%M%S')}.xlsx"
         filename: "#{base_name}.xlsx"
     end
+  end
+
+  def col_heading(name)
+    I18n.t("simple_form.labels.#{name}", default: name)
   end
 end
