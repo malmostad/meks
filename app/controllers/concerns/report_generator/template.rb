@@ -2,92 +2,95 @@ module ReportGenerator
   class Template
     def refugees
       {
-        'Barn' => {
-          query: 'name'
+        'Namn' => {
+          query: 'record.name'
+        },
+        'Visa i MEKS' => {
+          query: 'refugee_url(record)'
         },
         'Primärt dossiernummer' => {
-          query: 'primary_dossier_number'
+          query: 'record.primary_dossier_number'
         },
         'Alla dossiernummer' => {
-          query: 'dossier_numbers.map(&:name).join(", ")'
+          query: 'record.dossier_numbers.map(&:name).join(", ")'
         },
         'Ålder' => {
-          query: 'age',
+          query: 'record.age',
           type: :integer
         },
         'Primärt personnummer' => {
-          query: 'primary_ssn.full_ssn'
+          query: 'record.primary_ssn.full_ssn'
         },
         'Alla personnummer' => {
-          query: 'ssns.map(&:full_ssn).join(", ")'
+          query: 'record.ssns.map(&:full_ssn).join(", ")'
         },
         'Kön' => {
-          query: 'gender.name'
+          query: 'record.gender.name'
         },
         'Språk' => {
-          query: 'languages.map(&:name).join(", ")'
+          query: 'record.languages.map(&:name).join(", ")'
         },
         'Land' => {
-          query: 'countries.map(&:name).join(", ")'
+          query: 'record.countries.map(&:name).join(", ")'
         },
         'Insatsbild' => {
-          query: 'special_needs'
+          query: 'record.special_needs'
         },
         'Kommentar' => {
-          query: 'comment'
+          query: 'record.comment'
         },
         'Inskriven' => {
-          query: 'registered',
+          query: 'record.registered',
           type: :date
         },
         'PUT' => {
-          query: 'residence_permit_at',
+          query: 'record.residence_permit_at',
           type: :date
         },
         'TUT startar' => {
-          query: 'temporary_permit_starts_at',
+          query: 'record.temporary_permit_starts_at',
           type: :date
         },
         'TUT slutar' => {
-          query: 'temporary_permit_ends_at',
+          query: 'record.temporary_permit_ends_at',
           type: :date
         },
         'Anvisad' => {
-          query: 'municipality.name'
+          query: 'record.municipality.name'
         },
         'Anvisad enligt Migrationsverket' => {
-          query: 'municipality_placement_migrationsverket_at',
+          query: 'record.municipality_placement_migrationsverket_at',
           type: :date
         },
         'Anvisad enligt överenskommelse' => {
-          query: 'municipality_placement_per_agreement_at',
+          query: 'record.municipality_placement_per_agreement_at',
           type: :date
         },
         'Anvisad, kommentar' => {
-          query: 'municipality_placement_comment'
+          query: 'record.municipality_placement_comment'
         },
         'Avregisterad' => {
-          query: 'deregistered',
+          query: 'record.deregistered',
           type: :date
         },
         'Avslutsorsak' => {
-          query: 'deregistered_reason'
+          query: 'record.deregistered_reason'
         },
         'Aktuellt boende' => {
-          query: 'placements.where(moved_out_at: nil).map(&:home).map(&:name).join(", ")'
+          query: 'record.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(", ")'
         },
         'Alla boende' => {
-          query: 'homes.map(&:name).join(", ")'
+          query: 'record.homes.map(&:name).join(", ")'
         },
         'Total placeringstid (dagar)' => {
-          query: 'total_placement_time',
+          query: 'record.total_placement_time',
           type: :integer
         },
         'Anhöriga' => {
-          query: 'relateds.map(&:name).join(", ")'
+          query: 'record.relateds.map(&:name).join(", ")'
         },
         'Angiven som anhöriga till' => {
-          query: 'inverse_relateds.map(&:name).join(", ")'
+          query: 'record.inverse_relateds.map(&:name).join(", ")'
         }
       }
     end

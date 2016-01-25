@@ -17,7 +17,7 @@ module ReportGenerator
           sheet.add_row(
             template.map { |key, value|
               begin
-                eval "record.#{value[:query]}"
+                eval value[:query]
               rescue
                 ''
               end
