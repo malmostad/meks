@@ -135,7 +135,7 @@ module ReportGenerator
           query: 'record.comment'
         },
         'Aktuella placeringar' => {
-          query: 'record.current_placements.count'
+          query: 'record.placements.where(moved_out_at: nil).count'
         },
         'Placeringar totalt' => {
           query: 'record.placements.count',
