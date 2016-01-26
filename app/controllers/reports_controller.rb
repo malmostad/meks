@@ -13,7 +13,13 @@ class ReportsController < ApplicationController
     if params[:placement_selection] == 'overlapping'
       records = Placement.overlapping_by_refugee(params)
     else
-      records = Placement.includes(:refugee, :home, :moved_out_reason, refugee: [:dossier_numbers, :ssns])
+      records = Placement.includes(
+        :refugee, :home, :moved_out_reason,
+        refugee: [:countries, :languages, :ssns, :dossier_numbers,
+          :gender, :homes, :placements, :municipality,
+          :relateds, :inverse_relateds],
+        home: [:placements, :type_of_housings,
+          :owner_type, :target_groups, :languages])
 
       if params[:placements_from].present? && params[:placements_to].present?
         records = records.where(moved_in_at: params[:placements_from]..params[:placements_to])

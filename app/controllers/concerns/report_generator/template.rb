@@ -200,7 +200,8 @@ module ReportGenerator
           query: 'record.refugee.homes.map(&:name).join(", ")'
         },
         'Boende barnet bott på innevarande kvartal' => {
-          query: 'record.refugee.placements.where("moved_out_at = null or moved_in_at >= ?", Date.today.beginning_of_quarter).map(&:home).map(&:name).join(", ")'
+          query: 'record.refugee.placements.where("moved_out_at = null or moved_in_at >= ?",
+            Date.today.beginning_of_quarter).map(&:home).map(&:name).join(", ")'
         },
         'Barnets primära dossiernummer' => {
           query: 'record.refugee.primary_dossier_number'
