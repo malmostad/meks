@@ -48,7 +48,7 @@ class StatisticsController < ApplicationController
       with_municipality_placement_in_malmo: collection.joins(:municipality).where("municipalities.name like ?", "malmö%").count,
       deregistered: collection.where.not(deregistered: nil).count,
       drafts: collection.where(draft: true).count,
-      duplicates: collection.includes(:relationships).where('relationships.type_of_relationship_id' => 6).count,
+      duplicates: collection.includes(:relationships).where('relationships.type_of_relationship_id' => 1).count,
       top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
       top_languages: collection.joins(:languages).select('languages.name').group('languages.name').count('languages.name').sort_by{ |key, value| value }.reverse,
     }
