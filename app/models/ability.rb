@@ -26,7 +26,6 @@ class Ability
       can :manage, Placement, refugee: { draft: true }
 
        # Model less controllers
-      can :generate, :reports
       can :view, :statistics
     end
   end
