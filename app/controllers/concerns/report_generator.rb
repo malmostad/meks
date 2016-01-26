@@ -13,19 +13,22 @@ module ReportGenerator
         sheet.add_row template.keys.map { |key| col_heading(key) },
           style: style.heading
 
-        # data rows
-        records.each do |record|
+        # xlsx data rows
+        # records can be and active record enumerator or an array of records
+        records.send(records.is_a?(Array) ? 'each' : 'find_each') do |record|
           sheet.add_row(
-            template.map { |key, value|
+            template.map do |_key, value|
               begin
+                # Note: evaled queries are not based on user input,
+                # they are defined in the 'template' file
                 eval value[:query]
               rescue
                 ''
               end
-            },
+            end,
             # Styling is very performance consuming for larger sets
-            # style: template.map { |key, value| value[:style].present? ? style.send(value[:style]) : style.normal },
-            types: template.map { |key, value| value[:type] || :string }
+            # style: template.map { |_key, value| value[:style].present? ? style.send(value[:style]) : style.normal },
+            types: template.map { |_key, value| value[:type] || :string }
           )
         end
       end
@@ -33,7 +36,8 @@ module ReportGenerator
     end
 
     def send_xlsx(xlsx, base_name)
-      send_data xlsx.to_stream.read, type: :xlsx, disposition: "attachment",
+      # xlsx = xlsx.encrypt("#{base_name}.xlsx", 'meks')
+      send_data xlsx.to_stream.read, type: :xlsx, disposition: 'attachment',
         # filename: "#{base_name}_#{DateTime.now.strftime('%Y-%m-%d_%H%M%S')}.xlsx"
         filename: "#{base_name}.xlsx"
     end

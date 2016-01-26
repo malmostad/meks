@@ -159,5 +159,50 @@ module ReportGenerator
         }
       }
     end
+
+    def placements
+      {
+        'Barn' => {
+          query: 'record.refugee.name'
+        },
+        'Primärt dossiernummer' => {
+          query: 'record.refugee.primary_dossier_number'
+        },
+        'refugee.dossier_numbers' => {
+          query: 'record.refugee.dossier_numbers.map(&:name).join(", ")'
+        },
+        'Ålder' => {
+          query: 'record.refugee.age',
+          type: :integer
+        },
+        'Primärt personnummer' => {
+          query: 'record.refugee.primary_ssn.full_ssn'
+        },
+        'refugee.ssn' => {
+          query: 'record.refugee.ssns.map(&:date_of_birth).join(", ")'
+        },
+        'Boende' => {
+          query: 'record.home.name'
+        },
+        'placement.moved_in_at' => {
+          query: 'record.moved_in_at',
+          type: :date
+        },
+        'placement.moved_out_at' => {
+          query: 'record.moved_out_at',
+          type: :date
+        },
+        'Total placeringstid (dagar)' => {
+          query: 'record.placement_time',
+          type: :integer
+        },
+        'placement.moved_out_reason' => {
+          query: 'record.moved_out_reason.name'
+        },
+        'Kommentar till utskrivning' => {
+          query: 'record.comment'
+        }
+      }
+    end
   end
 end

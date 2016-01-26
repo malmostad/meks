@@ -44,21 +44,6 @@ sv:
         type_of_relationships: Anhörigform
         other_relateds: Anhöriga utanför systemet
 
-      home:
-        <<: *defaults
-        phone: Telefonnummer
-        fax: Faxnummer
-        address: Adress
-        post_code: Postnummer
-        postal_town: Postort
-        type_of_housings: Boendeformer
-        owner_type: Ägarform
-        target_groups: Målgrupp
-        seats: Platser
-        guaranteed_seats: Garantiplatser
-        movable_seats: Rörliga platser
-        languages: Språk
-
       relationship:
         <<: *defaults
         <<: *refugee
@@ -75,6 +60,20 @@ sv:
         moved_out_at: Utskrivningsdatum
         moved_out_reason: Anledning till utskrivning
 
+      home:
+        <<: *defaults
+        phone: Telefonnummer
+        fax: Faxnummer
+        address: Adress
+        post_code: Postnummer
+        postal_town: Postort
+        type_of_housings: Boendeformer
+        owner_type: Ägarform
+        target_groups: Målgrupp
+        seats: Platser
+        guaranteed_seats: Garantiplatser
+        movable_seats: Rörliga platser
+        languages: Språk
 
     placeholders:
       home:
