@@ -8,7 +8,7 @@ module ReportGenerator
 
       template = Template.new.send(template_name.to_sym)
 
-      axlsx.workbook.add_worksheet do |sheet|
+      axlsx.workbook.add_worksheet(name: "Genererad #{Date.today.to_s}") do |sheet|
         # Column headings
         sheet.add_row template.keys.map { |key| col_heading(key) },
           style: style.heading

@@ -14,6 +14,7 @@
         %th Målgrupp
         %th Ägarform
         %th Platser
+        %th Lediga platser
         %th Placeringar
 
     %tbody
@@ -25,6 +26,7 @@
           %td= home.target_groups.map(&:name).join(', ')
           %td= home.owner_type.present? ? home.owner_type.name : ''
           %td= home.seats
+          %td= home.seats - home.current_placements.count
           %td= home.current_placements.count
 
       - if can? :manage, Refugee
