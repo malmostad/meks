@@ -9,9 +9,9 @@ module ReportGenerator
         'refugee.name' => {
           query: 'record.name'
         },
-        'Visa i MEKS' => {
-          query: 'refugee_url(record)'
-        },
+        # 'Visa i MEKS' => {
+        #   query: 'refugee_url(record)'
+        # },
         'Primärt dossiernummer' => {
           query: 'record.primary_dossier_number'
         },
@@ -135,7 +135,8 @@ module ReportGenerator
           query: 'record.comment'
         },
         'Aktuella placeringar' => {
-          query: 'record.placements.where(moved_out_at: nil).count'
+          query: 'record.placements.where(moved_out_at: nil).count',
+          type: :integer
         },
         'Placeringar totalt' => {
           query: 'record.placements.count',
@@ -162,8 +163,20 @@ module ReportGenerator
 
     def placements
       {
+        # 'Visa placering i MEKS' => {
+        #   query: 'edit_refugee_placement_url(record.refugee, record)'
+        # },
         'Barn' => {
           query: 'record.refugee.name'
+        },
+        # 'Visa barn i MEKS' => {
+        #   query: 'refugee_url(record.refugee)'
+        # },
+        'Boende' => {
+          query: 'record.home.name'
+        },
+        'Alla boende barnet bott på' => {
+          query: 'record.refugee.homes.map(&:name).join(", ")'
         },
         'Primärt dossiernummer' => {
           query: 'record.refugee.primary_dossier_number'
@@ -181,9 +194,9 @@ module ReportGenerator
         'refugee.ssn' => {
           query: 'record.refugee.ssns.map(&:date_of_birth).join(", ")'
         },
-        'Boende' => {
-          query: 'record.home.name'
-        },
+        # 'Visa boende i MEKS' => {
+        #   query: 'home_url(record.home)'
+        # },
         'placement.moved_in_at' => {
           query: 'record.moved_in_at',
           type: :date
