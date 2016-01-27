@@ -4,4 +4,6 @@ $ ->
     language: 'sv'
     autoclose: true
     todayHighlight: true
-    endDate: 'today'
+    todayBtn: true
+    orientation: 'left bottom'
+    keyboardNavigation: false
