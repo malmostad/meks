@@ -13,11 +13,9 @@
       - @refugees.each do |refugee|
         %tr
           %td= link_to refugee.name, refugee
-          %td= refugee.dossier_numbers.map(&:name).join(', ')
+          %td= refugee.dossier_number
           %td= refugee.ssn
-          %td
-            - if refugee.gender.present?
-              = refugee.gender.name
+          %td= refugee.gender.name if refugee.gender.present?
           %td= refugee.countries.map(&:name).join(', ')
           %td
             - if refugee.placements.empty?
