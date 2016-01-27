@@ -217,7 +217,7 @@ module ReportGenerator
           query: 'record.refugee.primary_ssn.full_ssn'
         },
         'Barnets alla personnummer' => {
-          query: 'record.refugee.ssns.map(&:date_of_birth).join(", ")'
+          query: 'record.refugee.ssns.map(&:full_ssn).join(", ")'
         },
         'Barnets kön' => {
           query: 'record.refugee.gender.name'
