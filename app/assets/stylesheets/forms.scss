@@ -3,6 +3,11 @@
       width: 18em;
   }
 
+  .controls .radio-inline,
+  .controls .checkbox-inline {
+    padding-left: 0;
+  }
+
   &.placements,
   &.reports,
   &.relationships {

@@ -12,37 +12,6 @@ module ReportGenerator
         # 'Visa i MEKS' => {
         #   query: 'refugee_url(record)'
         # },
-        'Dossiernummer' => {
-          query: 'record.dossier_number'
-        },
-        'Extra dossiernummer' => {
-          query: 'record.dossier_numbers.map(&:name).join(", ")'
-        },
-        'Ålder' => {
-          query: 'record.age',
-          type: :integer
-        },
-        'Personnummer' => {
-          query: 'record.ssn'
-        },
-        'Extra personnummer' => {
-          query: 'record.ssns.map(&:full_ssn).join(", ")'
-        },
-        'refugee.gender' => {
-          query: 'record.gender.name'
-        },
-        'refugee.languages' => {
-          query: 'record.languages.map(&:name).join(", ")'
-        },
-        'refugee.countries' => {
-          query: 'record.countries.map(&:name).join(", ")'
-        },
-        'refugee.special_needs' => {
-          query: 'record.special_needs? ? "Ja" : "Nej"'
-        },
-        'refugee.comment' => {
-          query: 'record.comment'
-        },
         'refugee.registered' => {
           query: 'record.registered',
           type: :date
@@ -79,6 +48,37 @@ module ReportGenerator
         },
         'refugee.deregistered_reason' => {
           query: 'record.deregistered_reason'
+        },
+        'Dossiernummer' => {
+          query: 'record.dossier_number'
+        },
+        'Extra dossiernummer' => {
+          query: 'record.dossier_numbers.map(&:name).join(", ")'
+        },
+        'Ålder' => {
+          query: 'record.age',
+          type: :integer
+        },
+        'Personnummer' => {
+          query: 'record.ssn'
+        },
+        'Extra personnummer' => {
+          query: 'record.ssns.map(&:full_ssn).join(", ")'
+        },
+        'refugee.gender' => {
+          query: 'record.gender.name'
+        },
+        'refugee.languages' => {
+          query: 'record.languages.map(&:name).join(", ")'
+        },
+        'refugee.countries' => {
+          query: 'record.countries.map(&:name).join(", ")'
+        },
+        'refugee.special_needs' => {
+          query: 'record.special_needs? ? "Ja" : "Nej"'
+        },
+        'refugee.comment' => {
+          query: 'record.comment'
         },
         'Aktuellt boende' => {
           query: 'record.current_placements.map(&:home).map(&:name).join(", ")'
@@ -203,37 +203,6 @@ module ReportGenerator
           query: 'record.refugee.placements.where("moved_out_at = null or moved_in_at >= ?",
             Date.today.beginning_of_quarter).map(&:home).map(&:name).join(", ")'
         },
-        'Barnets primära dossiernummer' => {
-          query: 'record.refugee.dossier_number'
-        },
-        'Barnets dossiernummer' => {
-          query: 'record.refugee.dossier_numbers.map(&:name).join(", ")'
-        },
-        'Barnets ålder' => {
-          query: 'record.refugee.age',
-          type: :integer
-        },
-        'Barnets primära personnummer' => {
-          query: 'record.refugee.ssn'
-        },
-        'Barnets alla personnummer' => {
-          query: 'record.refugee.ssns.map(&:full_ssn).join(", ")'
-        },
-        'Barnets kön' => {
-          query: 'record.refugee.gender.name'
-        },
-        'Barnets språk' => {
-          query: 'record.refugee.languages.map(&:name).join(", ")'
-        },
-        'Barnets härkomst' => {
-          query: 'record.refugee.countries.map(&:name).join(", ")'
-        },
-        'Barn, speciella behov' => {
-          query: 'record.refugee.special_needs? ? "Ja" : "Nej"'
-        },
-        'Barn, kommentar' => {
-          query: 'record.refugee.comment'
-        },
         'Barn, registrerad' => {
           query: 'record.refugee.registered',
           type: :date
@@ -270,6 +239,37 @@ module ReportGenerator
         },
         'Barn, avslutsorsak' => {
           query: 'record.refugee.deregistered_reason'
+        },
+        'Barnets primära dossiernummer' => {
+          query: 'record.refugee.dossier_number'
+        },
+        'Barnets dossiernummer' => {
+          query: 'record.refugee.dossier_numbers.map(&:name).join(", ")'
+        },
+        'Barnets ålder' => {
+          query: 'record.refugee.age',
+          type: :integer
+        },
+        'Barnets primära personnummer' => {
+          query: 'record.refugee.ssn'
+        },
+        'Barnets alla personnummer' => {
+          query: 'record.refugee.ssns.map(&:full_ssn).join(", ")'
+        },
+        'Barnets kön' => {
+          query: 'record.refugee.gender.name'
+        },
+        'Barnets språk' => {
+          query: 'record.refugee.languages.map(&:name).join(", ")'
+        },
+        'Barnets härkomst' => {
+          query: 'record.refugee.countries.map(&:name).join(", ")'
+        },
+        'Barn, speciella behov' => {
+          query: 'record.refugee.special_needs? ? "Ja" : "Nej"'
+        },
+        'Barn, kommentar' => {
+          query: 'record.refugee.comment'
         },
         'Barn anhöriga' => {
           query: 'record.refugee.relateds.map(&:name).join(", ")'

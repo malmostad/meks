@@ -45,8 +45,14 @@ class ReportsController < ApplicationController
       :gender, :homes, :placements, :municipality,
       :relateds, :inverse_relateds)
 
-    if params[:refugees_from].present? && params[:refugees_to].present?
-      records = records.where(registered: params[:refugees_from]..params[:refugees_to])
+    if params[:refugees_registered_from].present? && params[:refugees_registered_to].present?
+      records = records.where(registered: params[:refugees_registered_from]..params[:refugees_registered_to])
+    end
+
+    dob_selection = [(params[:refugees_born_after]..params[:refugees_born_before])]
+    dob_selection << nil if params[:refugees_include_without_date_of_birth]
+    if params[:refugees_born_after].present? && params[:refugees_born_before].present?
+      records = records.where(date_of_birth: dob_selection)
     end
 
     xlsx = generate_xlsx(:refugees, records)
