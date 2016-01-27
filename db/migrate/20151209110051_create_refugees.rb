@@ -3,6 +3,9 @@ class CreateRefugees < ActiveRecord::Migration
     create_table :refugees do |t|
       t.boolean :draft, default: false
       t.string :name
+      t.date :date_of_birth
+      t.integer :ssn_extension
+      t.string :dossier_number
       t.date :registered
       t.date :deregistered
       t.date :residence_permit_at

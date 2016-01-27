@@ -14,12 +14,14 @@ class Refugee < ActiveRecord::Base
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
 
+  # Refugee has date_of_birth and ssn_extension attributes, `ssns` are additional ones
   has_many :ssns, dependent: :destroy
   accepts_nested_attributes_for :ssns,
     allow_destroy: true,
     reject_if: proc { |attr| attr[:date_of_birth].blank? }
   validates_associated :ssns
 
+  # Refugee has a `dossier_number` attribute, `dossier_numbers` are additional ones
   has_many :dossier_numbers, dependent: :destroy
   accepts_nested_attributes_for :dossier_numbers,
     allow_destroy: true,
@@ -34,28 +36,29 @@ class Refugee < ActiveRecord::Base
   validates_presence_of :name
   validates_length_of :name, maximum: 191
 
+  validate :validate_date_of_birth
+
+  def validate_date_of_birth
+    return true if date_of_birth_before_type_cast.empty?
+    unless date_of_birth_before_type_cast =~ /\A\d{4}-\d{2}-\d{2}\z/
+      errors.add(:date_of_birth, 'Ogiltigt datumformat, måste vara yyyy-mm-dd')
+    end
+  end
+
   def current_placements
     placements.includes(:home).where(moved_out_at: nil)
   end
 
-  # The SSN that is most reacently updated is the primary one
-  def primary_ssn
-    ssns.sort_by{|k| k.updated_at}.reverse.first
-  end
-
-  # The dossier number that is most reacently updated is the primary one
-  def primary_dossier_number
-    return '' if dossier_numbers.blank?
-    dossier_numbers.sort_by{|k| k.updated_at}.reverse.first.name
+  def ssn
+    date_of_birth.to_s.gsub('-', '') + '-' + ssn_extension.to_s
   end
 
   # Age old in years
   def age
-    return if primary_ssn.blank?
+    return if date_of_birth.nil?
 
-    dob = primary_ssn.date_of_birth
-    years_old = Date.today.year - dob.year
-    years_old -= 1 if Date.today < dob + years_old.years
+    years_old = Date.today.year - date_of_birth.year
+    years_old -= 1 if Date.today < date_of_birth + years_old.years
     years_old
   end
 

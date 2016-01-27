@@ -3,7 +3,7 @@ class RefugeesController < ApplicationController
 
   def show
     @refugee = Refugee.find(params[:id])
-    @latest_event = latest_event
+    # @latest_event = latest_event
   end
 
   def new
@@ -94,29 +94,6 @@ class RefugeesController < ApplicationController
 
 
   private
-    def latest_event
-      events = {}
-
-      %w(
-        registered residence_permit_at
-        temporary_permit_starts_at temporary_permit_ends_at
-        municipality_placement_migrationsverket_at
-        municipality_placement_per_agreement_at
-      ).each do |event|
-        events[event.to_s] = @refugee.send(event.to_s)
-      end
-
-      events = events.delete_if { |key, value| value.blank? }
-      last_event = Hash[events.sort_by{|k, v| v}.reverse].first
-
-      @placement_is_latest = !last_event.nil? && (last_event.include?('municipality_placement_migrationsverket_at') ||
-        last_event.include?('municipality_placement_per_agreement_at'))
-
-      if last_event.nil?
-        last_event = ['Ingen händelse', '']
-      end
-      last_event
-    end
 
     def load_more_query
       { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
@@ -126,6 +103,9 @@ class RefugeesController < ApplicationController
     def refugee_params
       permitted_params = [
         :name, :registered, :deregistered, :deregistered_reason,
+        :date_of_birth,
+        :ssn_extension,
+        :dossier_number,
         :residence_permit_at,
         :temporary_permit_starts_at,
         :temporary_permit_ends_at,

@@ -160,6 +160,9 @@ ActiveRecord::Schema.define(version: 20160110153243) do
   create_table "refugees", force: :cascade do |t|
     t.boolean  "draft",                                                    default: false
     t.string   "name",                                       limit: 191
+    t.date     "date_of_birth"
+    t.integer  "ssn_extension",                              limit: 4
+    t.string   "dossier_number",                             limit: 191
     t.date     "registered"
     t.date     "deregistered"
     t.date     "residence_permit_at"

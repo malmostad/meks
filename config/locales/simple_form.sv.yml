@@ -25,10 +25,13 @@ sv:
         languages: Språk
         countries: Land
         ssn: Personnummer
+        date_of_birth: Födelsedag
+        ssn_extension: Fyra sista
         ssns:
           date_of_birth: Födelsedag
           extension: Fyra sista
-        dossier_numbers: Dossiernummer
+        dossier_number: Dossiernummer
+        dossier_numbers: Extra dossiernummer
         homes: Boenden
         deregistered: Avregisterad
         deregistered_reason: Avslutsorsak

@@ -14,7 +14,7 @@
         %tr
           %td= link_to refugee.name, refugee
           %td= refugee.dossier_numbers.map(&:name).join(', ')
-          %td= format_ssn refugee.primary_ssn
+          %td= refugee.ssn
           %td
             - if refugee.gender.present?
               = refugee.gender.name

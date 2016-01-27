@@ -1,3 +1,4 @@
+# Refugee has a `dossier_number` attribute, `dossier_numbers` are additional ones
 class DossierNumber < ActiveRecord::Base
   belongs_to :refugee
 

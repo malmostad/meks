@@ -12,20 +12,20 @@ module ReportGenerator
         # 'Visa i MEKS' => {
         #   query: 'refugee_url(record)'
         # },
-        'Primärt dossiernummer' => {
-          query: 'record.primary_dossier_number'
+        'Dossiernummer' => {
+          query: 'record.dossier_number'
         },
-        'refugee.dossier_numbers' => {
+        'Extra dossiernummer' => {
           query: 'record.dossier_numbers.map(&:name).join(", ")'
         },
         'Ålder' => {
           query: 'record.age',
           type: :integer
         },
-        'Primärt personnummer' => {
-          query: 'record.primary_ssn.full_ssn'
+        'Personnummer' => {
+          query: 'record.ssn'
         },
-        'Alla personnummer' => {
+        'Extra personnummer' => {
           query: 'record.ssns.map(&:full_ssn).join(", ")'
         },
         'refugee.gender' => {
@@ -204,7 +204,7 @@ module ReportGenerator
             Date.today.beginning_of_quarter).map(&:home).map(&:name).join(", ")'
         },
         'Barnets primära dossiernummer' => {
-          query: 'record.refugee.primary_dossier_number'
+          query: 'record.refugee.dossier_number'
         },
         'Barnets dossiernummer' => {
           query: 'record.refugee.dossier_numbers.map(&:name).join(", ")'
@@ -214,7 +214,7 @@ module ReportGenerator
           type: :integer
         },
         'Barnets primära personnummer' => {
-          query: 'record.refugee.primary_ssn.full_ssn'
+          query: 'record.refugee.ssn'
         },
         'Barnets alla personnummer' => {
           query: 'record.refugee.ssns.map(&:full_ssn).join(", ")'

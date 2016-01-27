@@ -1,32 +1,15 @@
 - title 'Ensamkommande barn'
 %section.box.show.refugee
-  %h1.box-title= h1
+  %h1.box-title= "#{h1} #{@refugee.draft? ? '(Utkast)' : ''}"
   .box-content.basic.form-data
     .form-group
       - if can? :edit, @refugee
         = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'
 
     = form_for @refugee, html: { class: 'basic' } do |f|
-      = show_attribute('refugee.draft', @refugee.draft? ? 'Ja' : 'Nej')
-
-      %h2.group-title Grunduppgifter
       = show_attribute('refugee.name', @refugee.name)
-      = show_attribute('Asylstatus', t("simple_form.labels.refugee.#{@latest_event[0]}", default: @latest_event[0]) + ' ' + @latest_event[1].to_s)
-      - if @placement_is_latest && @refugee.municipality.present?
-        = show_attribute('Anvisad till', @refugee.municipality.name)
-      = show_attribute('Primärt dossiernummer', @refugee.primary_dossier_number)
-      = show_attribute('refugee.dossier_numbers', @refugee.dossier_numbers.map(&:name).join(', '))
-      = show_attribute('Ålder', format_age(@refugee.age))
-      = show_attribute('Primärt personnummer', format_ssn(@refugee.primary_ssn))
-      = show_attribute('refugee.ssn', @refugee.ssns.map(&:full_ssn).join(', '))
-      = show_attribute('refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
 
-      = show_attribute('refugee.languages', @refugee.languages.map(&:name).join(', '))
-      = show_attribute('refugee.countries', @refugee.countries.map(&:name).join(', '))
-      = show_attribute('refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej')
-      = show_attribute('refugee.comment', @refugee.comment)
-
-      %h2.group-title Händelser
+      %h2.group-title Asylstatus
       = show_attribute('refugee.registered', @refugee.registered)
       = show_attribute('refugee.residence_permit_at', @refugee.residence_permit_at)
       = show_attribute('refugee.temporary_permit_starts_at', @refugee.temporary_permit_starts_at)
@@ -37,6 +20,21 @@
       = show_attribute('refugee.municipality_placement_comment', @refugee.municipality_placement_comment)
       = show_attribute('refugee.deregistered', @refugee.deregistered)
       = show_attribute('refugee.deregistered_reason', @refugee.deregistered_reason)
+
+      %h2.group-title Personuppgifter
+      = show_attribute('Personnummer', @refugee.ssn)
+      = show_attribute('Extra personnummer', @refugee.ssns.map(&:full_ssn).join(', '))
+
+      = show_attribute('Dossiernummer', @refugee.dossier_number)
+      = show_attribute('Extra dossiernummer', @refugee.dossier_numbers.map(&:name).join(', '))
+      = show_attribute('Ålder', @refugee.age)
+
+      = show_attribute('refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
+
+      = show_attribute('refugee.languages', @refugee.languages.map(&:name).join(', '))
+      = show_attribute('refugee.countries', @refugee.countries.map(&:name).join(', '))
+      = show_attribute('refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej')
+      = show_attribute('refugee.comment', @refugee.comment)
 
       = render 'relateds'
       = render 'placements'
