@@ -49,10 +49,27 @@ class ReportsController < ApplicationController
       records = records.where(registered: params[:refugees_registered_from]..params[:refugees_registered_to])
     end
 
-    dob_selection = [(params[:refugees_born_after]..params[:refugees_born_before])]
-    dob_selection << nil if params[:refugees_include_without_date_of_birth]
+    query = [(params[:refugees_born_after]..params[:refugees_born_before])]
+    query << nil if params[:refugees_include_without_date_of_birth]
     if params[:refugees_born_after].present? && params[:refugees_born_before].present?
-      records = records.where(date_of_birth: dob_selection)
+      records = records.where(date_of_birth: query)
+    end
+
+    if params[:refugees_asylum].present?
+      query = []
+      if params[:refugees_asylum].include? 'put'
+        query << 'refugees.residence_permit_at is not null'
+      end
+      if params[:refugees_asylum].include? 'tut'
+         query << 'refugees.temporary_permit_starts_at is not null'
+      end
+      if params[:refugees_asylum].include? 'municipality'
+        query << 'refugees.municipality_id is not null'
+      end
+      logger.debug 'query ' * 10
+      logger.debug query.join(' or ')
+      logger.debug params[:refugees_asylum]
+      records = records.where(query.join(' or '))
     end
 
     xlsx = generate_xlsx(:refugees, records)
