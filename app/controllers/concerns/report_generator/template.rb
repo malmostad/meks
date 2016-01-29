@@ -49,6 +49,16 @@ module ReportGenerator
         'refugee.deregistered_reason' => {
           query: 'record.deregistered_reason'
         },
+        'Aktuellt boende' => {
+          query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.map(&:home).map(&:name).join(", ")'
+        },
+        'Alla boende' => {
+          query: 'record.homes.map(&:name).join(", ")'
+        },
+        'Total placeringstid (dagar)' => {
+          query: 'record.total_placement_time',
+          type: :integer
+        },
         'Dossiernummer' => {
           query: 'record.dossier_number'
         },
@@ -79,16 +89,6 @@ module ReportGenerator
         },
         'refugee.comment' => {
           query: 'record.comment'
-        },
-        'Aktuellt boende' => {
-          query: 'record.current_placements.map(&:home).map(&:name).join(", ")'
-        },
-        'Alla boende' => {
-          query: 'record.homes.map(&:name).join(", ")'
-        },
-        'Total placeringstid (dagar)' => {
-          query: 'record.total_placement_time',
-          type: :integer
         },
         'refugee.relateds' => {
           query: 'record.relateds.map(&:name).join(", ")'
