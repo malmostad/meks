@@ -108,19 +108,15 @@ module ReportGenerator
           query: 'record.name'
         },
         'Lediga platser' => {
-          query: 'record.free_seats',
+          query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.size - (record.guaranteed_seats + record.movable_seats)',
           type: :integer
         },
         'Aktuella placeringar' => {
-          query: 'record.placements.where(moved_out_at: nil).count',
+          query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.size',
           type: :integer
         },
         'Placeringar totalt' => {
           query: 'record.placements.count',
-          type: :integer
-        },
-        'Total placeringstid (dagar)' => {
-          query: 'record.total_placement_time',
           type: :integer
         },
         'home.guaranteed_seats' => {
@@ -133,6 +129,10 @@ module ReportGenerator
         },
         'Summa platser' => {
           query: 'record.seats',
+          type: :integer
+        },
+        'Total placeringstid (dagar)' => {
+          query: 'record.total_placement_time',
           type: :integer
         },
         'home.phone' => {
@@ -202,10 +202,6 @@ module ReportGenerator
         },
         'Boende barnet bott på' => {
           query: 'record.refugee.homes.map(&:name).join(", ")'
-        },
-        'Boende barnet bott på innevarande kvartal' => {
-          query: 'record.refugee.placements.where("moved_out_at = null or moved_in_at >= ?",
-            Date.today.beginning_of_quarter).map(&:home).map(&:name).join(", ")'
         },
         'Barn, registrerad' => {
           query: 'record.refugee.registered',
