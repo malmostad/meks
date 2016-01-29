@@ -24,6 +24,10 @@ class Home < ActiveRecord::Base
     guaranteed_seats + movable_seats
   end
 
+  def free_seats
+    seats - current_placements.size
+  end
+
   def total_placement_time
     placements.map(&:placement_time).inject(&:+)
   end

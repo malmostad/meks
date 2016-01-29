@@ -63,7 +63,7 @@ class ReportsController < ApplicationController
         query << 'refugees.residence_permit_at is not null'
       end
       if params[:refugees_asylum].include? 'tut'
-         query << 'refugees.temporary_permit_starts_at is not null'
+        query << 'refugees.temporary_permit_starts_at is not null'
       end
       if params[:refugees_asylum].include? 'municipality'
         query << 'refugees.municipality_id is not null'
@@ -80,8 +80,12 @@ class ReportsController < ApplicationController
       :placements, :type_of_housings,
       :owner_type, :target_groups, :languages)
 
-    if params[:homes_from].present? && params[:homes_to].present?
-      records = records.where(created_at: params[:homes_from]..params[:homes_to])
+    if params[:homes_owner_type].present?
+      records = records.where(owner_type: params[:homes_owner_type])
+    end
+
+    if params[:homes_free_seats] == 'with'
+      records = records.each.reject { |r| r.free_seats <= 0 }
     end
 
     xlsx = generate_xlsx(:homes, records)

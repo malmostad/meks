@@ -107,6 +107,34 @@ module ReportGenerator
         'home.name' => {
           query: 'record.name'
         },
+        'Lediga platser' => {
+          query: 'record.free_seats',
+          type: :integer
+        },
+        'Aktuella placeringar' => {
+          query: 'record.placements.where(moved_out_at: nil).count',
+          type: :integer
+        },
+        'Placeringar totalt' => {
+          query: 'record.placements.count',
+          type: :integer
+        },
+        'Total placeringstid (dagar)' => {
+          query: 'record.total_placement_time',
+          type: :integer
+        },
+        'home.guaranteed_seats' => {
+          query: 'record.guaranteed_seats',
+          type: :integer
+        },
+        'home.movable_seats' => {
+          query: 'record.movable_seats',
+          type: :integer
+        },
+        'Summa platser' => {
+          query: 'record.seats',
+          type: :integer
+        },
         'home.phone' => {
           query: 'record.phone'
         },
@@ -136,30 +164,6 @@ module ReportGenerator
         },
         'home.comment' => {
           query: 'record.comment'
-        },
-        'Aktuella placeringar' => {
-          query: 'record.placements.where(moved_out_at: nil).count',
-          type: :integer
-        },
-        'Placeringar totalt' => {
-          query: 'record.placements.count',
-          type: :integer
-        },
-        'Total placeringstid (dagar)' => {
-          query: 'record.total_placement_time',
-          type: :integer
-        },
-        'home.guaranteed_seats' => {
-          query: 'record.guaranteed_seats',
-          type: :integer
-        },
-        'home.movable_seats' => {
-          query: 'record.movable_seats',
-          type: :integer
-        },
-        'Summa platser' => {
-          query: 'record.seats',
-          type: :integer
         }
       }
     end
