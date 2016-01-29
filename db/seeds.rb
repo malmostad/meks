@@ -51,8 +51,8 @@ locales = Rails.configuration.i18n.available_locales
   I18n.locale = locales[rand(locales.size)]
   r = Refugee.create(
     name: Faker::Name.name.gsub(/(Prof.|Dr.|PhD.|Mgr.|Sr.)/, '').strip,
-    date_of_birth: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s.gsub('-', '')[0..7],
-    ssn_extension: rand(1000..9999),
+    date_of_birth: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s[0..9],
+    ssn_extension: Faker::Number.number(4),
     dossier_number: Faker::Number.number(10),
     gender_id: rand(Gender.count) + 1,
     country_ids: [rand(Country.count) + 1],
