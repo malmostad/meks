@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
     end
 
     # Only overlapping placements in time per refugee
-    if params[:placement_selection] == 'overlapping'
+    if params[:placements_selection] == 'overlapping'
       records = Placement.overlapping_by_refugee(params)
     end
 
