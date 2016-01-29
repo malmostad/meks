@@ -10,29 +10,31 @@ class ReportsController < ApplicationController
   end
 
   def placements
+    records = Placement.includes(
+      :refugee, :home, :moved_out_reason,
+      refugee: [:countries, :languages, :ssns, :dossier_numbers,
+        :gender, :homes, :placements, :municipality,
+        :relateds, :inverse_relateds],
+      home: [:placements, :type_of_housings,
+        :owner_type, :target_groups, :languages])
+
+    # Been on the home during a given range
+    if params[:placements_from].present? && params[:placements_to].present?
+      records = records.where(
+        '(moved_out_at >= ? or moved_out_at is null)
+         and moved_in_at <= ?',
+        params[:placements_from],
+        params[:placements_to])
+    end
+
+    # Selected one home or all
+    if params[:placements_home_id].reject(&:empty?).present?
+      records = records.where(home_id: params[:placements_home_id])
+    end
+
+    # Only overlapping placements in time per refugee
     if params[:placement_selection] == 'overlapping'
       records = Placement.overlapping_by_refugee(params)
-    else
-      records = Placement.includes(
-        :refugee, :home, :moved_out_reason,
-        refugee: [:countries, :languages, :ssns, :dossier_numbers,
-          :gender, :homes, :placements, :municipality,
-          :relateds, :inverse_relateds],
-        home: [:placements, :type_of_housings,
-          :owner_type, :target_groups, :languages])
-
-      if params[:placements_from].present? && params[:placements_to].present?
-        records = records.where(moved_in_at: params[:placements_from]..params[:placements_to])
-      end
-
-      if params[:placements_home].present?
-        records = records.where(home_id: params[:placements_home])
-      end
-
-      # Selected one home or all
-      if params[:home_id].reject(&:empty?).present?
-        records = records.where(home_id: params[:home_id])
-      end
     end
 
     xlsx = generate_xlsx(:placements, records)
@@ -66,9 +68,6 @@ class ReportsController < ApplicationController
       if params[:refugees_asylum].include? 'municipality'
         query << 'refugees.municipality_id is not null'
       end
-      logger.debug 'query ' * 10
-      logger.debug query.join(' or ')
-      logger.debug params[:refugees_asylum]
       records = records.where(query.join(' or '))
     end
 

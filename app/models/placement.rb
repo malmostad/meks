@@ -43,7 +43,6 @@ class Placement < ActiveRecord::Base
     records
   end
 
-
   def self.current_placements
     where.not(moved_in_at: nil).where(moved_out_at: nil)
   end

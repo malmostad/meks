@@ -2,9 +2,12 @@
   %h2.group-title Placeringar
   .form-group
     %span.control-label
-      %label{for: 'home_id_'} På boende:
+      %label{for: 'placements_from'} Har bott på boendet under tiden:
     .controls
-      = collection_select(:home_id, nil, @homes, :id, :name, { prompt: 'Alla' }, { class: 'form-control chosen' })
+      .input-group.input-daterange
+        = text_field_tag 'placements_from', DateTime.now.beginning_of_quarter.to_date, class: 'form-control'
+        %span.input-group-addon och
+        = text_field_tag 'placements_to', DateTime.now.to_date, class: 'form-control'
 
   .form-group
     %span.control-label
@@ -15,12 +18,9 @@
 
   .form-group
     %span.control-label
-      %label{for: 'placements_from'} Inskrivna mellan:
+      %label{for: 'placements_home_id_'} På boende:
     .controls
-      .input-group.input-daterange
-        = text_field_tag 'placements_from', DateTime.now.beginning_of_quarter.to_date, class: 'form-control'
-        %span.input-group-addon och
-        = text_field_tag 'placements_to', DateTime.now.to_date, class: 'form-control'
+      = collection_select(:placements_home_id, nil, @homes, :id, :name, { prompt: 'Alla' }, { class: 'form-control chosen' })
 
   .form-group
     %span.no-control-label

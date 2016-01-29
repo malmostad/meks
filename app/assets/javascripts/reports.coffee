@@ -5,5 +5,5 @@ $ ->
     autoclose: true
     todayHighlight: true
     todayBtn: true
-    orientation: 'left bottom'
+    orientation: 'auto'
     keyboardNavigation: false

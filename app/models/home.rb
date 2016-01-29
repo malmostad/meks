@@ -12,6 +12,8 @@ class Home < ActiveRecord::Base
   validates_presence_of :name
   validates_length_of :name, maximum: 191
 
+  default_scope { order(:name) }
+
   def current_placements
     placements.includes(:refugee,
       refugee: [:languages, :countries, :dossier_numbers, :ssns, :gender]

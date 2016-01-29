@@ -23,7 +23,7 @@
 
   .form-group
     %span.control-label
-      %label{for: 'refugees_asylum'} Endast med asylstatus:
+      %label{for: 'refugees_asylum'} Endast de med asylstatus:
     .controls
       = select_tag('refugees_asylum',
         options_for_select('Har PUT' => 'put', 'Har TUT' => 'tut', 'Har kommunanvisning' => 'municipality'),
