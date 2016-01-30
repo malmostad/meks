@@ -66,14 +66,15 @@ class SessionsController < ApplicationController
       @login_failed = 'Stubbed authentication only available in local environment'
       render 'new'
     else
-    user = User.where(username: username).first
-    if user
-      session[:user_id] = user.id
-      logger.debug { "Stubbed authenticated user #{current_user.id}" }
-      redirect_after_login
-    else
-      @login_failed = "Användarnamnet finns inte"
-      render "new"
+      user = User.where(username: username).first
+      if user
+        session[:user_id] = user.id
+        logger.debug { "Stubbed authenticated user #{current_user.id}" }
+        redirect_after_login
+      else
+        @login_failed = "Användarnamnet finns inte"
+        render "new"
+      end
     end
   end
 end
