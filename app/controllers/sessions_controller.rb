@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
 
       if !ldap_entry
         @login_failed = 'Fel användarnamn eller lösenord. Vänligen försök igen.'
-        logger.info "AUTH: #{params[:username]} from #{request.remote_ip}failed to log in"
+        logger.info "AUTH: #{params[:username]} from #{request.remote_ip} failed to log in"
         render 'new'
 
       else
@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
         role = @ldap.belongs_to_group(ldap_entry['cn'].first)
 
         if !role.present?
-          logger.info "AUTH: #{params[:username]} from #{request.remote_ip} failed to log in: doesn't belong to a group. #{@ldap.client.get_operation_result}"
+          logger.info "AUTH: #{params[:username]} from #{request.remote_ip} failed to log in: doesn't belong to a group."
           @login_failed = 'Du saknar behörighet till systemet'
           render 'new'
         else
