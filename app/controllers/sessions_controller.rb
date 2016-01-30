@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
         role = @ldap.belongs_to_group(ldap_entry['cn'].first)
 
         if !role.present?
-          logger.info "AUTH: #{params[:username]} from #{request.remote_ip} failed to log in: doesn't belong to a group"
+          logger.info "AUTH: #{params[:username]} from #{request.remote_ip} failed to log in: doesn't belong to a group. #{@ldap.client.get_operation_result}"
           @login_failed = 'Du saknar behörighet till systemet'
           render 'new'
         else
@@ -62,6 +62,10 @@ class SessionsController < ApplicationController
   # In dev env if the LDAP is not available
   # User needs to exist
   def stub_auth(username)
+    if !Rails.application.config.consider_all_requests_local
+      @login_failed = 'Stubbed authentication only available in local environment'
+      render 'new'
+    else
     user = User.where(username: username).first
     if user
       session[:user_id] = user.id
