@@ -4,7 +4,7 @@ RSpec.describe RefugeesController, type: :routing do
   describe "routing" do
 
     it "routes to #index" do
-      expect(:get => "/refugees").to route_to("refugees#index")
+      expect(:get => "/refugees").to route_to("refugees#search")
     end
 
     it "routes to #new" do

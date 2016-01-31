@@ -9,9 +9,9 @@ RSpec.describe "homes/new", type: :view do
       :address => "MyString",
       :post_code => "MyString",
       :postal_town => "MyString",
-      :home_type => nil,
-      :home_owner_type => nil,
-      :home_target_group => nil,
+      :type_of_housing => nil,
+      :owner_type => nil,
+      :target_group => nil,
       :seats => 1,
       :guaranteed_seats => 1,
       :movable_seats => 1,
@@ -37,11 +37,11 @@ RSpec.describe "homes/new", type: :view do
 
       assert_select "input#home_postal_town[name=?]", "home[postal_town]"
 
-      assert_select "input#home_home_type_id[name=?]", "home[home_type_id]"
+      assert_select "input#home_type_of_housing_id[name=?]", "home[type_of_housing_id]"
 
-      assert_select "input#home_home_owner_type_id[name=?]", "home[home_owner_type_id]"
+      assert_select "input#owner_type_id[name=?]", "home[owner_type_id]"
 
-      assert_select "input#home_home_target_group_id[name=?]", "home[home_target_group_id]"
+      assert_select "input#target_group_id[name=?]", "home[target_group_id]"
 
       assert_select "input#home_seats[name=?]", "home[seats]"
 

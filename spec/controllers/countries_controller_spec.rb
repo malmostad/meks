@@ -44,14 +44,6 @@ RSpec.describe CountriesController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested country as @country" do
-      country = Country.create! valid_attributes
-      get :show, {:id => country.to_param}, valid_session
-      expect(assigns(:country)).to eq(country)
-    end
-  end
-
   describe "GET #new" do
     it "assigns a new country as @country" do
       get :new, {}, valid_session

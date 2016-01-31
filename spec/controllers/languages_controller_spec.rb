@@ -44,14 +44,6 @@ RSpec.describe LanguagesController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested language as @language" do
-      language = Language.create! valid_attributes
-      get :show, {:id => language.to_param}, valid_session
-      expect(assigns(:language)).to eq(language)
-    end
-  end
-
   describe "GET #new" do
     it "assigns a new language as @language" do
       get :new, {}, valid_session
