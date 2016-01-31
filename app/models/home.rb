@@ -21,7 +21,7 @@ class Home < ActiveRecord::Base
   end
 
   def seats
-    guaranteed_seats + movable_seats
+    guaranteed_seats.to_i + movable_seats.to_i
   end
 
   def free_seats

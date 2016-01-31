@@ -39,7 +39,7 @@ class Refugee < ActiveRecord::Base
   validate :validate_date_of_birth
 
   def validate_date_of_birth
-    return true if date_of_birth_before_type_cast.empty?
+    return true if date_of_birth_before_type_cast.blank?
     unless date_of_birth_before_type_cast =~ /\A\d{4}-\d{2}-\d{2}\z/
       errors.add(:date_of_birth, 'Ogiltigt datumformat, måste vara yyyy-mm-dd')
     end
