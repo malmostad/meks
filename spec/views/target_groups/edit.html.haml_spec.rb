@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "target_group/edit", type: :view do
+RSpec.describe "target_groups/edit", type: :view do
   before(:each) do
     @target_group = assign(:target_group, TargetGroup.create!(
       :name => "MyString"

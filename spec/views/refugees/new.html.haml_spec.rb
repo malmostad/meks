@@ -8,10 +8,11 @@ RSpec.describe "refugees/new", type: :view do
       :special_needs => false,
       :comment => "MyText",
       :gender => nil,
-      :home => nil,
-      :countries => nil,
-      :ssns => nil,
-      :dossier_numbers => nil
+      :homes => [],
+      :countries => [],
+      :date_of_birth => nil,
+      :ssn_extension => nil,
+      :dossier_number => '123123'
     ))
   end
 
@@ -24,19 +25,9 @@ RSpec.describe "refugees/new", type: :view do
 
       assert_select "textarea#refugee_deregistered_reason[name=?]", "refugee[deregistered_reason]"
 
-      assert_select "input#refugee_special_needs[name=?]", "refugee[special_needs]"
+      assert_select "input#refugee_special_needs[name=?]", false
 
       assert_select "textarea#refugee_comment[name=?]", "refugee[comment]"
-
-      assert_select "input#refugee_gender_id[name=?]", "refugee[gender_id]"
-
-      assert_select "input#refugee_home_id[name=?]", "refugee[home_id]"
-
-      assert_select "input#refugee_countries_id[name=?]", "refugee[countries_id]"
-
-      assert_select "input#refugee_ssns_id[name=?]", "refugee[ssns_id]"
-
-      assert_select "input#refugee_dossier_numbers_id[name=?]", "refugee[dossier_numbers_id]"
     end
   end
 end

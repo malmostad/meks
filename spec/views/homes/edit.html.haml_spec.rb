@@ -9,13 +9,12 @@ RSpec.describe "homes/edit", type: :view do
       :address => "MyString",
       :post_code => "MyString",
       :postal_town => "MyString",
-      :type_of_housing => nil,
+      :type_of_housings => [],
       :owner_type => nil,
-      :target_group => nil,
-      :seats => 1,
+      :target_groups => [],
       :guaranteed_seats => 1,
       :movable_seats => 1,
-      :languages => "MyString",
+      :languages => [],
       :comment => "MyText"
     ))
   end
@@ -37,19 +36,17 @@ RSpec.describe "homes/edit", type: :view do
 
       assert_select "input#home_postal_town[name=?]", "home[postal_town]"
 
-      assert_select "input#home_type_of_housing_id[name=?]", "home[type_of_housing_id]"
+      assert_select "input#home_type_of_housings[name=?]", nil
 
-      assert_select "input#home_owner_type_id[name=?]", "home[home_owner_type_id]"
+      assert_select "input#home_owner_types[name=?]", nil
 
-      assert_select "input#home_target_group_id[name=?]", "home[home_target_group_id]"
-
-      assert_select "input#home_seats[name=?]", "home[seats]"
+      assert_select "input#home_target_group[name=?]", nil
 
       assert_select "input#home_guaranteed_seats[name=?]", "home[guaranteed_seats]"
 
       assert_select "input#home_movable_seats[name=?]", "home[movable_seats]"
 
-      assert_select "input#home_languages[name=?]", "home[languages]"
+      assert_select "input#home_languages[name=?]", nil
 
       assert_select "textarea#home_comment[name=?]", "home[comment]"
     end

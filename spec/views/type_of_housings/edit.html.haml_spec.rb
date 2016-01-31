@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "type_of_housings/edit", type: :view do
   before(:each) do
     @type_of_housing = assign(:type_of_housing, TypeOfHousing.create!(
-      :name => "MyString"
+      :name => "Name 3"
     ))
   end
 

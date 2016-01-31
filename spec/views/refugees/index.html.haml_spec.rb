@@ -1,43 +1,25 @@
 require 'rails_helper'
 
-RSpec.describe "refugees/index", type: :view do
+RSpec.describe "refugees/search", type: :view do
   before(:each) do
     assign(:refugees, [
       Refugee.create!(
         :name => "Name",
-        :deregistered_reason => "MyText",
-        :special_needs => false,
-        :comment => "MyText",
-        :gender => nil,
-        :home => nil,
-        :countries => nil,
-        :ssns => nil,
-        :dossier_numbers => nil
+        :dossier_number => "123456",
+        :comment => "Comment"
       ),
       Refugee.create!(
-        :name => "Name",
-        :deregistered_reason => "MyText",
-        :special_needs => false,
-        :comment => "MyText",
-        :gender => nil,
-        :home => nil,
-        :countries => nil,
-        :ssns => nil,
-        :dossier_numbers => nil
+        :name => "Name 2",
+        :dossier_number => "123456",
+        :comment => "Comment"
       )
     ])
   end
 
   it "renders a list of refugees" do
     render
-    assert_select "tr>td", :text => "Name".to_s, :count => 2
-    assert_select "tr>td", :text => "MyText".to_s, :count => 2
-    assert_select "tr>td", :text => false.to_s, :count => 2
-    assert_select "tr>td", :text => "MyText".to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
+    assert_select "tr>td", :text => "Name".to_s, :count => 1
+    assert_select "tr>td", :text => "Name 2".to_s, :count => 1
+    assert_select "tr>td", :text => "123456".to_s, :count => 2
   end
 end
