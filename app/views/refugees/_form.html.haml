@@ -51,5 +51,5 @@
     = f.input :other_relateds
     = f.input :comment
 
-    = render 'submit', form: f,
+    = render 'application/submit', form: f,
       cancel_path: @refugee.id.present? ? refugee_path(@refugee) : refugees_path

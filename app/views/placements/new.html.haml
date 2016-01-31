@@ -9,4 +9,4 @@
       = f.association :home, input_html: { class: 'chosen' }
       = f.input :moved_in_at, as: :string, wrapper: :datepicker
 
-      = render 'submit', form: f, cancel_path: refugees_path
+      = render 'application/submit', form: f, cancel_path: refugees_path

@@ -23,5 +23,5 @@
     %h2.group-title Övrigt
     = f.input :comment
 
-    = render 'submit', form: f,
+    = render 'application/submit', form: f,
       cancel_path: @home.id.present? ? home_path(@home) : homes_path
