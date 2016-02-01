@@ -63,6 +63,11 @@ RSpec.describe CountriesController, type: :controller do
         post :create, {:country => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
+
+      it "too long name" do
+        post :create, {:country => { name: 'x' * 200 }}, valid_session
+        expect(response).to render_template("new")
+      end
     end
   end
 
