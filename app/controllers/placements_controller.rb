@@ -4,10 +4,6 @@ class PlacementsController < ApplicationController
   before_action :set_placement, only: [
     :edit, :move_out, :update, :move_out_update, :destroy]
 
-  def index
-    @placements = Placement.order('name')
-  end
-
   def new
     @placement = @refugee.placements.new
     authorize! :create, @placement
