@@ -2,7 +2,7 @@ class HomesController < ApplicationController
   before_action :set_home, only: [:show, :edit, :update, :destroy]
 
   def index
-    @homes = Home.includes(:type_of_housings, :owner_type, :target_groups, :languages).order(:name)
+    @homes = Home.includes(:type_of_housings, :owner_type, :target_groups, :languages, :placements).order(:name)
   end
 
   def show

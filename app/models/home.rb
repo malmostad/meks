@@ -15,9 +15,7 @@ class Home < ActiveRecord::Base
   default_scope { order(:name) }
 
   def current_placements
-    placements.includes(:refugee,
-      refugee: [:languages, :countries, :dossier_numbers, :ssns, :gender]
-      ).where(moved_out_at: nil).order('refugees.name')
+    placements.all
   end
 
   def seats

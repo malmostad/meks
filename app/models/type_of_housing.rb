@@ -1,5 +1,5 @@
 class TypeOfHousing < ActiveRecord::Base
-  has_many :homes, dependent: :nullify
+  has_many :homes #, dependent: :nullify
 
   validates_uniqueness_of :name, case_sensitive: false
   validates_presence_of :name

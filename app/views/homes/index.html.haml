@@ -26,7 +26,7 @@
           %td= home.target_groups.map(&:name).join(', ')
           %td= home.owner_type.present? ? home.owner_type.name : ''
           %td= home.seats
-          %td= home.seats - home.current_placements.count
+          %td= home.free_seats
           %td= home.current_placements.count
 
       - if can? :manage, Refugee
