@@ -40,6 +40,14 @@ RSpec.describe PlacementsController, type: :controller do
       end
     end
 
+    describe "GET #move_out" do
+      xit "assigns the requested placement as @placement" do
+        placement = Placement.create! valid_attributes
+        get :edit, {refugee_id: valid_refugee.id, :id => placement.to_param}, valid_session
+        expect(assigns(:placement)).to eq(placement)
+      end
+    end
+
     describe "POST #create" do
       context "with valid params" do
         it "creates a new Placement" do
@@ -79,6 +87,10 @@ RSpec.describe PlacementsController, type: :controller do
           { moved_in_at: '2016-01-02' }
         }
 
+        let(:moved_out_attributes) {
+          { moved_out_at: '2016-01-03' }
+        }
+
         it "updates the requested placement" do
           placement = Placement.create! valid_attributes
           put :update, {refugee_id: valid_refugee.id, :id => placement.to_param, :placement => new_attributes}, valid_session
@@ -96,6 +108,13 @@ RSpec.describe PlacementsController, type: :controller do
           placement = Placement.create! valid_attributes
           put :update, { refugee_id: valid_refugee.id, :id => placement.to_param, :placement => valid_attributes}, valid_session
           expect(response).to redirect_to(refugee_path(valid_refugee))
+        end
+
+        it "change the status to moved out" do
+          placement = Placement.create! valid_attributes
+          put :move_out_update, {refugee_id: valid_refugee.id, placement_id: placement.to_param, :placement => moved_out_attributes}, valid_session
+          expect(placement.moved_out_at).to eq(valid_refugee[:moved_out_at])
+          expect(valid_refugee.current_placements.size).to eq(0)
         end
       end
 
