@@ -68,15 +68,12 @@ RSpec.describe CountriesController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        { name: 'Danmark' }
-      }
-
       it "updates the requested country" do
         country = Country.create! valid_attributes
-        put :update, {:id => country.to_param, :country => new_attributes}, valid_session
+        new_name = "#{country.name} updated"
+        put :update, {:id => country.to_param, :country => { name: new_name } }, valid_session
         country.reload
-        expect(country.name).to eq('Danmark')
+        expect(country.name).to eq(new_name)
       end
 
       it "assigns the requested country as @country" do
