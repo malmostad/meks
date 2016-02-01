@@ -7,9 +7,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'haml'
 
-def current_user
-  @current_user ||= User.create!(username: 'cu', role: 'admin')
-end
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
