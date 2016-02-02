@@ -28,7 +28,7 @@ class ReportsController < ApplicationController
     end
 
     # Selected one home or all
-    if params[:placements_home_id].reject(&:empty?).present?
+    if params[:placements_home_id].present? && params[:placements_home_id].reject(&:empty?).present?
       records = records.where(home_id: params[:placements_home_id])
     end
 

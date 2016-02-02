@@ -54,8 +54,6 @@ class StatisticsController < ApplicationController
     }
   end
 
-  private
-
   def registered_this_year
     @registered_this_year ||=
       Refugee.where('registered >= ?', Date.today.beginning_of_year)
