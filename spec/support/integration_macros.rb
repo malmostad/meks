@@ -5,13 +5,13 @@ module IntegrationMacros
     end
   end
 
-  def get_or_create_user(role)
+  def get_or_create_user(role = :writer)
     user = User.first_or_initialize(username: "#{role}-user", role: role)
     user.save!
     user
   end
 
-  def current_user(role)
+  def current_user(role = :writer)
     @current_user ||= get_or_create_user(role)
   end
 
