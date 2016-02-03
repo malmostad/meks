@@ -20,6 +20,10 @@ module ReportGenerator
           query: 'record.residence_permit_at',
           type: :date
         },
+        'refugee.checked_out_to_our_city' => {
+          query: 'record.checked_out_to_our_city',
+          type: :date
+        },
         'TUT startar' => {
           query: 'record.temporary_permit_starts_at',
           type: :date
@@ -212,6 +216,10 @@ module ReportGenerator
         },
         'Barn, PUT' => {
           query: 'record.refugee.residence_permit_at',
+          type: :date
+        },
+        'refugee.checked_out_to_our_city' => {
+          query: 'record.refugee.checked_out_to_our_city',
           type: :date
         },
         'Barn, TUT startar' => {

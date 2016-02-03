@@ -9,6 +9,7 @@ class CreateRefugees < ActiveRecord::Migration
       t.date :registered
       t.date :deregistered
       t.date :residence_permit_at
+      t.date :checked_out_to_our_city
       t.date :temporary_permit_starts_at
       t.date :temporary_permit_ends_at
       t.references :municipality, index: true, foreign_key: true
