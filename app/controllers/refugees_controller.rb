@@ -107,6 +107,7 @@ class RefugeesController < ApplicationController
         :ssn_extension,
         :dossier_number,
         :residence_permit_at,
+        :checked_out_to_our_city,
         :temporary_permit_starts_at,
         :temporary_permit_ends_at,
         :municipality_id,

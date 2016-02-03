@@ -12,6 +12,7 @@
       %h2.group-title Asylstatus
       = show_attribute('refugee.registered', @refugee.registered)
       = show_attribute('refugee.residence_permit_at', @refugee.residence_permit_at)
+      = show_attribute('refugee.checked_out_to_our_city', @refugee.checked_out_to_our_city)
       = show_attribute('refugee.temporary_permit_starts_at', @refugee.temporary_permit_starts_at)
       = show_attribute('refugee.temporary_permit_ends_at', @refugee.temporary_permit_ends_at)
       = show_attribute('refugee.municipality', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')

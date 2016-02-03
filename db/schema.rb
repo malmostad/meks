@@ -67,10 +67,11 @@ ActiveRecord::Schema.define(version: 20160110153243) do
     t.integer  "owner_type_id",    limit: 4
     t.integer  "guaranteed_seats", limit: 4
     t.integer  "movable_seats",    limit: 4
+    t.boolean  "active",                         default: true
     t.string   "languages",        limit: 191
     t.text     "comment",          limit: 65535
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
 
   add_index "homes", ["name"], name: "index_homes_on_name", unique: true, using: :btree
@@ -166,6 +167,7 @@ ActiveRecord::Schema.define(version: 20160110153243) do
     t.date     "registered"
     t.date     "deregistered"
     t.date     "residence_permit_at"
+    t.date     "checked_out_to_our_city"
     t.date     "temporary_permit_starts_at"
     t.date     "temporary_permit_ends_at"
     t.integer  "municipality_id",                            limit: 4

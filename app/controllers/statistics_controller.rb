@@ -7,10 +7,10 @@ class StatisticsController < ApplicationController
     @stats = Rails.cache.fetch("queries-#{cache_key_for_status}") do
       {
         periods: [
-          {title: 'Inskrivna förra veckan', data: stats_for_collection(registered_last_week)},
-          {title: 'Inskrivna denna månad', data: stats_for_collection(registered_this_month)},
-          {title: 'Inskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)},
-          {title: 'Inskrivna detta år', data: stats_for_collection(registered_this_year)},
+          {title: 'Nyinskrivna förra veckan', data: stats_for_collection(registered_last_week)},
+          {title: 'Nyinskrivna denna månad', data: stats_for_collection(registered_this_month)},
+          {title: 'Nyinskrivna detta kvartal', data: stats_for_collection(registered_this_quarter)},
+          {title: 'Nyinskrivna detta år', data: stats_for_collection(registered_this_year)},
         ],
 
         homes: Home.count,

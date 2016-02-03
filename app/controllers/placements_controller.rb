@@ -55,6 +55,7 @@ class PlacementsController < ApplicationController
       @refugee = Refugee.find(params[:refugee_id])
       id = params[:id] || params[:placement_id]
       @placement = @refugee.placements.find(id)
+      @homes = Home.where(active: true)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

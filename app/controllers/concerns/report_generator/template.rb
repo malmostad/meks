@@ -20,6 +20,10 @@ module ReportGenerator
           query: 'record.residence_permit_at',
           type: :date
         },
+        'refugee.checked_out_to_our_city' => {
+          query: 'record.checked_out_to_our_city',
+          type: :date
+        },
         'TUT startar' => {
           query: 'record.temporary_permit_starts_at',
           type: :date
@@ -162,6 +166,9 @@ module ReportGenerator
         'home.languages' => {
           query: 'record.languages.map(&:name).join(", ")'
         },
+        'home.active' => {
+          query: 'record.active? ? "Ja" : "Nej"'
+        },
         'home.comment' => {
           query: 'record.comment'
         }
@@ -209,6 +216,10 @@ module ReportGenerator
         },
         'Barn, PUT' => {
           query: 'record.refugee.residence_permit_at',
+          type: :date
+        },
+        'refugee.checked_out_to_our_city' => {
+          query: 'record.refugee.checked_out_to_our_city',
           type: :date
         },
         'Barn, TUT startar' => {
@@ -291,6 +302,9 @@ module ReportGenerator
         },
         'Boende, språk' => {
           query: 'record.home.languages.map(&:name).join(", ")'
+        },
+        'Boendet är aktivt' => {
+          query: 'record.home.active? ? "Ja" : "Nej"'
         },
         'Boende, kommentar' => {
           query: 'record.home.comment'

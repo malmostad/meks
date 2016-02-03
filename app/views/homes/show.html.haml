@@ -29,6 +29,7 @@
       = show_attribute('home.guaranteed_seats', @home.guaranteed_seats)
       = show_attribute('home.movable_seats', @home.movable_seats)
       = show_attribute('Summa platser', @home.seats)
+      = show_attribute('home.active', @home.active? ? 'Ja' : 'Nej')
 
       %h2.group-title Aktuella placeringar
       %table.full.wrap

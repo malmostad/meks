@@ -10,6 +10,7 @@ class CreateHomes < ActiveRecord::Migration
       t.references :owner_type, index: true, foreign_key: true
       t.integer :guaranteed_seats
       t.integer :movable_seats
+      t.boolean :active, default: true
       t.string :languages
       t.text :comment
 

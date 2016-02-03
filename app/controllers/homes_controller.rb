@@ -43,7 +43,7 @@ class HomesController < ApplicationController
     def home_params
       params.require(:home).permit(
         :name, :phone, :fax, :address, :post_code,
-        :postal_town, :guaranteed_seats, :movable_seats, :comment,
+        :postal_town, :guaranteed_seats, :movable_seats, :active, :comment,
         :owner_type_id,
         language_ids: [],
         target_group_ids: [],

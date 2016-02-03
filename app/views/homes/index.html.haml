@@ -9,25 +9,27 @@
             .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"
       %tr
         %th Namn
-        %th Postort
         %th Boendeform
         %th Målgrupp
         %th Ägarform
         %th Platser
+        %th Garantiplatser
         %th Lediga platser
         %th Placeringar
+        %th Aktivt
 
     %tbody
       - @homes.each do |home|
         %tr
           %td= link_to home.name, home
-          %td= home.postal_town
           %td= home.type_of_housings.map(&:name).join(', ')
           %td= home.target_groups.map(&:name).join(', ')
           %td= home.owner_type.present? ? home.owner_type.name : ''
           %td= home.seats
+          %td= home.guaranteed_seats
           %td= home.free_seats
           %td= home.current_placements.count
+          %td= home.active? ? 'Ja' : 'Nej'
 
       - if can? :manage, Refugee
         %tr
