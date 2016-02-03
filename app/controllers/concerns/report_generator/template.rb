@@ -162,6 +162,9 @@ module ReportGenerator
         'home.languages' => {
           query: 'record.languages.map(&:name).join(", ")'
         },
+        'home.active' => {
+          query: 'record.active? ? "Ja" : "Nej"'
+        },
         'home.comment' => {
           query: 'record.comment'
         }
@@ -291,6 +294,9 @@ module ReportGenerator
         },
         'Boende, språk' => {
           query: 'record.home.languages.map(&:name).join(", ")'
+        },
+        'Boendet är aktivt' => {
+          query: 'record.home.active? ? "Ja" : "Nej"'
         },
         'Boende, kommentar' => {
           query: 'record.home.comment'

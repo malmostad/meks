@@ -16,6 +16,7 @@
         %th Garantiplatser
         %th Lediga platser
         %th Placeringar
+        %th Aktivt
 
     %tbody
       - @homes.each do |home|
@@ -28,6 +29,7 @@
           %td= home.guaranteed_seats
           %td= home.seats - home.current_placements.count
           %td= home.current_placements.count
+          %td= home.active? ? 'Ja' : 'Nej'
 
       - if can? :manage, Refugee
         %tr
