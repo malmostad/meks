@@ -1,5 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe TargetGroup, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "should be adding one" do
+    expect { TargetGroup.create(name: "Yngre") }.to change(TargetGroup, :count).by(+1)
+  end
+
+  describe 'validation' do
+    it "should be valid" do
+      expect(TargetGroup.create(name: "Yngre")).to be_valid
+    end
+
+    it "should require a name" do
+      expect(TargetGroup.new).not_to be_valid
+    end
+
+    it "should be valid with a not too long name" do
+      expect(TargetGroup.new name: "x" * 191).to be_valid
+    end
+
+    it "should not have a too long name" do
+      expect(TargetGroup.new name: "x" * 192).not_to be_valid
+    end
+
+    it "should have a unique name" do
+      TargetGroup.create(name: "Yngre")
+      expect(TargetGroup.new name: "Yngre").not_to be_valid
+    end
+
+    it "... just checking transactional support" do
+      expect(TargetGroup.count).to eq 0
+    end
+  end
+
+  describe 'destroy' do
+    it "should destroy a record" do
+      expect { TargetGroup.create(name: "Yngre") }.to change(TargetGroup, :count).by(+1)
+      expect { TargetGroup.where(name: "Yngre").first.destroy }.to change(TargetGroup, :count).by(-1)
+    end
+  end
 end
