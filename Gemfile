@@ -23,8 +23,7 @@ gem 'highline'
 gem 'execjs'
 gem 'faker'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.3.2'
+# gem 'jbuilder', '~> 2.3.2'
 
 gem 'bcrypt', '~> 3.1.10'
 
@@ -34,6 +33,7 @@ group :development do
   gem 'capistrano-rbenv', '2.0.3'
   gem 'quiet_assets'
   gem 'pry-rails'
+  gem 'web-console'
 end
 
 group :test do
@@ -44,15 +44,9 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4.0'
-  # gem 'thin'
   gem 'rb-readline'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-end
-
-group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console'
 end
 
 group :test, :production do
