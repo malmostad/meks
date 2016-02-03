@@ -23,8 +23,10 @@ module RefugeeSearch
       indexes :name, analyzer: 'simple'
       indexes :name_phrase, analyzer: 'simple'
       indexes :name_search, analyzer: 'name_index', search_analyzer: 'name_search'
+      indexes :ssn, analyzer: 'nmbr', search_analyzer: 'standard'
       indexes :ssns, analyzer: 'nmbr', search_analyzer: 'standard'
-      indexes :dossier_numbers, analyzer: 'nmbr', search_analyzer: 'standard'
+      indexes :dossier_number, analyzer: 'nmbr', search_analyzer: 'standard'
+      indexes :dossier_numbers, analyzer: 'simple' #, search_analyzer: 'standard'
     end
 
     def delete_document
@@ -43,8 +45,10 @@ module RefugeeSearch
       name: name,
       name_phrase: name,
       name_search: name,
-      ssns: ssns.map(&:full_ssn).unshift(ssn).join(' '),
-      dossier_numbers: dossier_numbers.map(&:name).unshift(dossier_number).join(' '),
+      ssn: ssn,
+      ssns: ssns.map(&:full_ssn).join(' '),
+      dossier_number: dossier_number,
+      dossier_numbers: dossier_numbers.map(&:name).join(' ')
     }.as_json
   end
 
@@ -124,7 +128,23 @@ module RefugeeSearch
               },
               {
                 match: {
+                  ssn: {
+                    boost: 10,
+                    query: query
+                  }
+                }
+              },
+              {
+                match: {
                   ssns: {
+                    boost: 5,
+                    query: query
+                  }
+                }
+              },
+              {
+                match: {
+                  dossier_number: {
                     boost: 10,
                     query: query
                   }
@@ -133,7 +153,7 @@ module RefugeeSearch
               {
                 match: {
                   dossier_numbers: {
-                    boost: 10,
+                    boost: 5,
                     query: query
                   }
                 }
