@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe RelationshipsController, type: :controller do
   let(:refugee) {
-    Refugee.create!(name: "Refugee")
+    create(:refugee)
   }
 
   let(:related_refugee) {
-    Refugee.create!(name: "Related refugee")
+    create(:refugee, name: "Related refugee")
   }
 
   let(:type_of_relationship) {
-    TypeOfRelationship.create!(name: "Sister")
+    create(:type_of_relationship)
   }
 
   let(:valid_attributes) {

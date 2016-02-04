@@ -7,7 +7,7 @@ class Refugee < ActiveRecord::Base
   belongs_to :gender
   belongs_to :municipality
 
-  has_many :placements
+  has_many :placements, dependent: :destroy
   has_many :homes, through: :placements
   accepts_nested_attributes_for :placements, reject_if: :all_blank
 

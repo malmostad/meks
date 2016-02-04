@@ -1,6 +1,6 @@
 class Home < ActiveRecord::Base
 
-  has_many :placements
+  has_many :placements, dependent: :destroy
   has_many :refugees, through: :placements
 
   has_and_belongs_to_many :type_of_housings
