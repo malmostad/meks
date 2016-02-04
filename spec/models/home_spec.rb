@@ -2,29 +2,29 @@ require 'rails_helper'
 
 RSpec.describe Home, type: :model do
   it "should be adding one" do
-    expect { Home.create(name: "Home name") }.to change(Home, :count).by(+1)
+    expect { create(:home) }.to change(Home, :count).by(+1)
   end
 
   describe 'validation' do
     it "should be valid" do
-      expect(Home.create(name: "Home name")).to be_valid
+      expect(build(:home)).to be_valid
     end
 
     it "should require a name" do
-      expect(Home.new).not_to be_valid
+      expect(build(:home, name: nil)).not_to be_valid
     end
 
     it "should be valid with a not too long name" do
-      expect(Home.new name: "x" * 191).to be_valid
+      expect(build(:home, name: "x" * 191)).to be_valid
     end
 
     it "should not have a too long name" do
-      expect(Home.new name: "x" * 192).not_to be_valid
+      expect(build(:home, name: "x" * 192)).not_to be_valid
     end
 
     it "should have a unique name" do
-      Home.create(name: "Home name")
-      expect(Home.new name: "Home name").not_to be_valid
+      create(:home, name: "home")
+      expect(build(:home, name: "home")).not_to be_valid
     end
 
     it "... just checking transactional support" do
@@ -34,7 +34,7 @@ RSpec.describe Home, type: :model do
 
   describe 'destroy' do
     it "should destroy a record" do
-      expect { Home.create(name: "Home name") }.to change(Home, :count).by(+1)
+      expect { create(:home, name: "Home name") }.to change(Home, :count).by(+1)
       expect { Home.where(name: "Home name").first.destroy }.to change(Home, :count).by(-1)
     end
   end
