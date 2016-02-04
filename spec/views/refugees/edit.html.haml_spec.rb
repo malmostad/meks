@@ -2,14 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "refugees/edit", type: :view do
   before(:each) do
-    @refugee = assign(:refugee, Refugee.create!(
-      :name => "MyString",
-      :date_of_birth => nil,
-      :ssn_extension => "1234",
-      :deregistered_reason => "MyText",
-      :special_needs => false,
-      :comment => "MyText"
-    ))
+    @refugee = assign(:refugee, create(:refugee))
   end
 
   it "renders the edit refugee form" do
