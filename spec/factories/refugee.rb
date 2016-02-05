@@ -22,6 +22,5 @@ FactoryGirl.define do
     municipality { create(:municipality) }
     languages { create_list(:language, 2) }
     countries { create_list(:country, 2) }
-    # placements { create_list(:placements, 2) }
   end
 end
