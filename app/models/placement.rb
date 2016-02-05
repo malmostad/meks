@@ -6,6 +6,7 @@ class Placement < ActiveRecord::Base
   belongs_to :moved_out_reason
 
   validates_presence_of :home
+  validates_presence_of :moved_in_at
 
   before_validation do
     if moved_out_at.present? && moved_in_at > moved_out_at
@@ -52,6 +53,8 @@ class Placement < ActiveRecord::Base
   end
 
   def placement_time
+    return 0 if moved_in_at.blank?
+
     if moved_out_at.present?
       diff = moved_out_at - moved_in_at + 1
     else

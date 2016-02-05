@@ -49,6 +49,7 @@ class PlacementsController < ApplicationController
   private
     def set_refugee
       @refugee = Refugee.find(params[:refugee_id])
+      @homes = Home.where(active: true)
     end
 
     def set_placement
