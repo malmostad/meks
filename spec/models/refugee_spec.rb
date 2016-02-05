@@ -82,6 +82,81 @@ RSpec.describe Refugee, type: :model do
     end
   end
 
+  describe 'assocations should be deleted when the refugee is deleted' do
+    let(:refugee) { create(:refugee) }
+
+    it "countries" do
+      country = create(:country)
+      refugee.countries = [country]
+      expect{ refugee.destroy }.to change(country.refugees, :count).by(-1)
+    end
+
+    it "languages" do
+      language = create(:language)
+      refugee.languages = [language]
+      expect{ refugee.destroy }.to change(language.refugees, :count).by(-1)
+    end
+
+    it "ssn" do
+      create(:ssn, refugee: refugee)
+      refugee.reload
+      expect{ refugee.destroy }.to change(Ssn, :count).by(-1)
+    end
+
+    it "dossier_numbers" do
+      create(:dossier_number, refugee: refugee)
+      refugee.reload
+      expect{ refugee.destroy }.to change(DossierNumber, :count).by(-1)
+    end
+
+    it "placements" do
+      create_list(:placement, 2, refugee: refugee)
+      number_of_placements = refugee.placements.size
+      expect{ refugee.destroy }.to change(Placement, :count).by(- number_of_placements)
+    end
+
+    it "relationships" do
+      create_list(:relationship, 2, refugee: refugee)
+      number_of_relationships = refugee.relationships.size
+      expect{ refugee.destroy }.to change(Relationship, :count).by(- number_of_relationships)
+    end
+
+    it "inverse_relationships" do
+      create_list(:relationship, 2, related: refugee)
+      number_of_inverse_relationships = refugee.inverse_relationships.size
+      expect{ refugee.destroy }.to change(Relationship, :count).by(- number_of_inverse_relationships)
+    end
+
+    it "inverse_relateds" do
+      create(:relationship, related: refugee)
+      expect{ refugee.inverse_relateds.first.destroy }.to change(Relationship, :count).by(-1)
+    end
+  end
+
+  describe 'extended deletion integrity checks' do
+    let(:refugee) { create(:refugee) }
+
+    it "ssns" do
+      ssns = refugee.ssns = create_list(:ssn, 3, refugee: refugee)
+      total_ssns = Ssn.count
+      expect(refugee.ssns).to be_present
+      expect { ssns.each { |s| s.destroy } }.to change(Ssn, :count).by(-3)
+      refugee.reload
+      expect(refugee.ssns).to be_empty
+      expect(refugee).to be_present
+    end
+
+    it "dossier_numbers" do
+      dossier_numbers = refugee.dossier_numbers = create_list(:dossier_number, 3, refugee: refugee)
+      total_dossier_numbers = DossierNumber.count
+      expect(refugee.dossier_numbers).to be_present
+      expect { dossier_numbers.each { |s| s.destroy } }.to change(DossierNumber, :count).by(-3)
+      refugee.reload
+      expect(refugee.dossier_numbers).to be_empty
+      expect(refugee).to be_present
+    end
+  end
+
   describe 'placements' do
     let(:refugee) { create(:refugee) }
 

@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :relationship do
-    association :refugee, :related, :type_of_relationship
+    refugee { create(:refugee) }
+    related { create(:refugee) }
+    type_of_relationship { create(:type_of_relationship) }
   end
 end
