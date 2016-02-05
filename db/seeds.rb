@@ -34,7 +34,7 @@ end
   )
 end
 
-['Kvinna', 'Man'].each do |s|
+['Kvinna', 'Man', 'Annat'].each do |s|
   Gender.create(name: s)
 end
 
