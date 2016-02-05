@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.5.1'
 gem 'haml-rails', '0.9.0'
 gem 'sass-rails', '~> 5.0.4'
 gem 'uglifier', '~> 2.7.2'
-gem 'coffee-rails', '4.1.0'
+gem 'coffee-rails', '4.1.1'
 gem 'jquery-rails'
 
-gem 'simple_form', '3.2.0'
-gem 'mysql2', '~> 0.4.2' #'0.3.20'
-gem 'dalli', '2.7.4'
+gem 'simple_form', '3.2.1'
+gem 'mysql2', '~> 0.4.2'
+gem 'dalli', '2.7.5'
 gem 'elasticsearch-model', '0.1.8'
 gem 'elasticsearch-rails', '0.1.8'
 
@@ -29,8 +29,8 @@ gem 'bcrypt', '~> 3.1.10'
 
 group :development do
   gem 'capistrano', '3.4.0'
-  gem 'capistrano-rails', '1.1.5'
-  gem 'capistrano-rbenv', '2.0.3'
+  gem 'capistrano-rails', '1.1.6'
+  gem 'capistrano-rbenv', '2.0.4'
   gem 'quiet_assets'
   gem 'pry-rails'
   gem 'web-console'
