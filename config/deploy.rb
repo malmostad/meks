@@ -90,6 +90,6 @@ namespace :deploy do
   end
 
   before :starting, "deploy:are_you_sure", "deploy:check_revision"
-  after :published, "deploy:copy_vendor_statics"
-  after :finishing, "deploy:full_restart", "deploy:cleanup"
+  after :published, "deploy:copy_vendor_statics", "deploy:full_restart"
+  after :finishing, "deploy:cleanup"
 end
