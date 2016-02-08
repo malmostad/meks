@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate
+  before_action :authenticate, :log_username_at_request
   authorize_resource
   check_authorization
 
@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
 
   before_action { add_body_class("#{controller_name} #{action_name}") }
   before_action :init_body_class
+
+  def log_username_at_request
+    username = current_user.present? ? current_user.username : 'Not authenticated'
+    logger.info { "USERNAME: #{username}" }
+    logger.info { "IP:       #{request.remote_ip}" }
+  end
 
   def current_user
     begin

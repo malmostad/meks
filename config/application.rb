@@ -8,6 +8,13 @@ Bundler.require(*Rails.groups)
 
 module Meks
   class Application < Rails::Application
+    # config.log_formatter = Logger::Formatter.new
+    # config.log_tags = [:some_var, :uuid, :remote_ip, lambda { |req| Time.now }]
+    # config.log_tags = [ :subdomain, :uuid ]
+
+    # Use a different logger for distributed setups.
+    # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
