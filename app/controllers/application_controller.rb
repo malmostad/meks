@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate, :log_username_at_request
+  before_action :authenticate
+  after_action :log_user_on_request
   authorize_resource
   check_authorization
 
@@ -8,10 +9,16 @@ class ApplicationController < ActionController::Base
   before_action { add_body_class("#{controller_name} #{action_name}") }
   before_action :init_body_class
 
-  def log_username_at_request
-    username = current_user.present? ? current_user.username : 'Not authenticated'
-    logger.info { "USERNAME: #{username}" }
-    logger.info { "IP:       #{request.remote_ip}" }
+  def log_user_on_request
+    taglogger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+
+    taglogger.tagged('REQUESTED BY') do
+      taglogger.info current_user.present? ? current_user.username : 'Not authenticated'
+    end
+
+    taglogger.tagged('REQUESTED FROM') do
+      taglogger.info request.remote_ip
+    end
   end
 
   def current_user
