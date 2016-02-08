@@ -3,7 +3,6 @@ class RefugeesController < ApplicationController
 
   def show
     @refugee = Refugee.find(params[:id])
-    # @latest_event = latest_event
   end
 
   def new
