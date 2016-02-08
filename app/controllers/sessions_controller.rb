@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
 
       if !ldap_entry
         @login_failed = 'Fel användarnamn eller lösenord. Vänligen försök igen.'
-        logger.info "AUTH: #{params[:username]} from #{remote_ip} failed to log in"
+        logger.info "[AUTH] #{params[:username]} from #{request.remote_ip} failed to log in"
         render 'new'
 
       else
@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
         role = @ldap.belongs_to_group(ldap_entry['cn'].first)
 
         if !role.present?
-          logger.info "AUTH: #{params[:username]} from #{remote_ip} failed to log in: doesn't belong to a group."
+          logger.info "[AUTH] #{params[:username]} from #{request.remote_ip} failed to log in: doesn't belong to a group."
           @login_failed = 'Du saknar behörighet till systemet'
           render 'new'
         else
@@ -42,10 +42,10 @@ class SessionsController < ApplicationController
           user.email    = ldap_entry['mail'].first || "#{user.username}@malmo.se"
           user.role     = role
           user.last_login = Time.now
-          user.ip = remote_ip
+          user.ip = request.remote_ip
           user.save
           session[:user_id] = user.id
-          logger.info "AUTH: #{params[:username]} logged in from #{remote_ip}"
+          logger.info "[AUTH] #{params[:username]} logged in from #{request.remote_ip}"
           redirect_after_login
         end
       end
@@ -58,10 +58,6 @@ class SessionsController < ApplicationController
   end
 
   private
-
-  def remote_ip
-    Socket.ip_address_list.detect(&:ipv4_private?).try(:ip_address) || request.remote_ip
-  end
 
   # In dev env if the LDAP is not available
   # User needs to exist

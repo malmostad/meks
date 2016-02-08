@@ -1,24 +1,18 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate
-  after_action :log_user_on_request
+  before_action :log_user_on_request
+  before_action { add_body_class("#{controller_name} #{action_name}") }
+  before_action :init_body_class
+
   authorize_resource
   check_authorization
 
   protect_from_forgery with: :exception
 
-  before_action { add_body_class("#{controller_name} #{action_name}") }
-  before_action :init_body_class
-
   def log_user_on_request
-    taglogger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-
-    taglogger.tagged('REQUESTED BY') do
-      taglogger.info current_user.present? ? current_user.username : 'Not authenticated'
-    end
-
-    taglogger.tagged('REQUESTED FROM') do
-      taglogger.info request.remote_ip
-    end
+    return if Rails.env.test?
+    logger.info "[REQUESTED_BY]   #{current_user.present? ? current_user.username : 'Not authenticated'}"
+    logger.info "[REQUESTED_FROM] #{request.remote_ip}"
   end
 
   def current_user
