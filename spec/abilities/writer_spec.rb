@@ -32,5 +32,8 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:read, TargetGroup.new) }
     it { should_not be_able_to(:read, TypeOfHousing.new) }
     it { should_not be_able_to(:read, TypeOfRelationship.new) }
+
+    it { should_not be_able_to(:destroy, Refugee.new) }
+    it { should_not be_able_to(:destroy, Home.new) }
   end
 end
