@@ -18,6 +18,8 @@ class Ability
       can :read, Home
       can [:read, :search, :suggest], Refugee
       can :read, User
+      can :read, Relationship
+      can :read, Placement
 
       # 'reader' create, and edit and list refugee drafts
       can :create, Refugee
