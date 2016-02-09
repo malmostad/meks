@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def log_user_on_request
-    return if Rails.env.test?
     logger.info "[REQUESTED_BY]   #{current_user.present? ? current_user.username : 'Not authenticated'}"
     logger.info "[REQUESTED_FROM] #{request.remote_ip}"
   end
