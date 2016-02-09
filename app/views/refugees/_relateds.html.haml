@@ -1,5 +1,6 @@
 %h2.group-title Anhöriga
-- if @refugee.relationships.empty? && @refugee.inverse_relationships.empty?
+- no_relatives = @refugee.relationships.empty? && @refugee.inverse_relationships.empty?
+- if no_relatives
   = "Har inte angivits som anhörig till någon annan i systemet"
 
 - if @refugee.relationships.present?
@@ -13,7 +14,8 @@
 .actions
   - if can? :edit, @refugee
     = link_to "Ny anhörig", new_refugee_relationship_path(@refugee), class: "btn btn-default btn-sm"
-    = link_to "Redigera anhöriga", refugee_relationships_path(@refugee), class: "btn btn-default btn-sm"
+    - unless no_relatives
+      = link_to "Redigera anhöriga", refugee_relationships_path(@refugee), class: "btn btn-default btn-sm"
 
 - if @refugee.inverse_relationships.present?
   %h3= "#{@refugee.name} är uppgiven som anhörig av:"
