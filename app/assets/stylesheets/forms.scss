@@ -66,12 +66,14 @@
       }
     }
   }
+  .datepicker,
   .form-group.datepicker {
     padding: 0;
+    margin-top: 3.2em;
   }
 
   .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-bottom {
-    margin-top: 3em;
+    margin-top: 3.2em;
   }
 
   .form-group.addon.warning .input-group-btn {

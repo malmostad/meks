@@ -5,7 +5,7 @@ $ ->
     autoclose: true
     todayHighlight: true
     todayBtn: true
-    orientation: 'left bottom'
+    orientation: 'auto'
     keyboardNavigation: false
 
   register_dob_cal = () ->
@@ -15,7 +15,7 @@ $ ->
       autoclose: true
       todayHighlight: true
       todayBtn: true
-      orientation: 'left bottom'
+      orientation: 'auto'
       keyboardNavigation: false
 
   register_dob_cal()
