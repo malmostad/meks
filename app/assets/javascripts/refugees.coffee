@@ -9,7 +9,7 @@ $ ->
     keyboardNavigation: false
 
   register_dob_cal = () ->
-    $('.dob.date input').datepicker
+    $('.input-group.ssn.date input:first-child').datepicker
       weekStart: 1
       language: 'sv'
       autoclose: true
