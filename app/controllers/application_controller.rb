@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def log_user_on_request
     logger.info "[REQUESTED_BY]   #{current_user.present? ? current_user.username : 'Not authenticated'}"
-    logger.info "[REQUESTED_FROM] #{request.remote_ip}"
+    logger.info "[REQUESTED_FROM] #{client_ip}"
   end
 
   def current_user
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if !current_user
-      if !request.xhr? # TODO: handle this separately
+      if !request.xhr?
         # Remember where the user was about to go
         session[:requested_url] = request.fullpath
       end
@@ -61,5 +61,9 @@ class ApplicationController < ActionController::Base
   def reset_body_classes
     @body_classes = nil
     init_body_class
+  end
+
+  def client_ip
+    request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip
   end
 end
