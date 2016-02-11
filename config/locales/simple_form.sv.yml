@@ -96,4 +96,9 @@ sv:
 
     hints:
       refugee:
-        comment: "Tänk på att inte skriva in något känsligt i kommentarsfältet"
+        comment: &comment
+          "Tänk på att inte skriva in något känsligt i fältet"
+        other_relateds: *comment
+        municipality_placement_comment: *comment
+      placement:
+        comment: *comment
