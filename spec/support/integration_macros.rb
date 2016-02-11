@@ -15,11 +15,10 @@ module IntegrationMacros
     @current_user ||= get_or_create_user(role)
   end
 
-  def login(role)
+  def login_user(role = :writer)
     user = get_or_create_user(role)
-    get login_path
+    visit login_path
     fill_in 'username', with: user.username
-    fill_in 'password', with: 'stubbed'
     click_button 'Logga in'
   end
 
