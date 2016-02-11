@@ -36,15 +36,15 @@ group :development do
   gem 'web-console'
 end
 
-group :test do
+group :local_test do
+  gem 'rspec-rails', '~> 3.4.0'
   gem 'factory_girl_rails'
   gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'database_cleaner'
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.4.0'
   gem 'rb-readline'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

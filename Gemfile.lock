@@ -66,10 +66,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.8.0)
-      capybara (>= 2.3.0, < 2.7.0)
-      json
     chronic (0.10.2)
+    cliver (0.3.2)
     coderay (1.1.0)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -149,6 +147,11 @@ GEM
     net-ssh (3.0.2)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    poltergeist (1.9.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -245,6 +248,9 @@ GEM
       activemodel (>= 4.2)
       debug_inspector
       railties (>= 4.2)
+    websocket-driver (0.6.3)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.2)
     whenever (0.9.4)
       chronic (>= 0.6.3)
     xpath (2.0.0)
@@ -262,7 +268,6 @@ DEPENDENCIES
   capistrano-rails (= 1.1.6)
   capistrano-rbenv (= 2.0.4)
   capybara
-  capybara-webkit
   coffee-rails (= 4.1.1)
   dalli (= 2.7.5)
   database_cleaner
@@ -276,6 +281,7 @@ DEPENDENCIES
   jquery-rails
   mysql2 (~> 0.4.2)
   net-ldap
+  poltergeist
   pry-rails
   quiet_assets
   rails (= 4.2.5.1)
