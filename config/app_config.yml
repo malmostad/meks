@@ -3,13 +3,16 @@ defaults: &defaults
   assets_url_base: "//assets.malmo.se/internal/v4-staging/"
   stub_auth: false
 
-development:
+development: &development
   <<: *defaults
   assets_url_base: "//assets.malmo.se/internal/v4/"
   cache_ttl: 1
   max_age: 0
   title_suffix: "MEKS (utveckling)"
   stub_auth: true
+
+local_test:
+  <<: *development
 
 test:
   <<: *defaults
