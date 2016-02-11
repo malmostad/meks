@@ -33,7 +33,7 @@ class Refugee < ActiveRecord::Base
   has_many :inverse_relationships, class_name: 'Relationship', foreign_key: 'related_id', dependent: :destroy
   has_many :inverse_relateds, through: :inverse_relationships, source: :refugee
 
-  validates_uniqueness_of :dossier_number, case_sensitive: false
+  validates_uniqueness_of :dossier_number, case_sensitive: false, allow_blank: true
 
   validates_presence_of :name
   validates_length_of :name, maximum: 191
