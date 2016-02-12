@@ -34,6 +34,7 @@ group :development do
   gem 'quiet_assets'
   gem 'pry-rails'
   gem 'web-console'
+  gem 'bullet'
 end
 
 group :local_test do
