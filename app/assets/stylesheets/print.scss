@@ -9,7 +9,10 @@
   main {
     width: 100%;
     float: none;
-    overflow-x: hide;
+    overflow: visible;
+  }
+  .table-wrapper {
+    overflow: visible;
   }
   .wrapper {
     padding: 0;
