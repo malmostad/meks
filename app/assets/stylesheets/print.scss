@@ -1,0 +1,40 @@
+@media print {
+  body {
+    margin: 2em !important;
+    padding: 0 !important;
+    .box-content {
+      margin: 0 !important;
+    }
+  }
+  main {
+    width: 100%;
+    float: none;
+    overflow-x: show;
+  }
+  .wrapper {
+    padding: 0;
+    margin: 0;
+  }
+
+  body.show,
+  body.index {
+    .wrapper {
+      width: 100%;
+    }
+    form {
+      display: block !important;
+    }
+
+    button,
+    input,
+    .btn,
+    .btn-default,
+    .btn-default,
+    .btn-primary {
+      display: none;
+    }
+  }
+  body.show form {
+    font-size: 85%;
+  }
+}
