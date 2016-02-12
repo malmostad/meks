@@ -15,7 +15,7 @@ class Home < ActiveRecord::Base
   default_scope { order(:name) }
 
   def current_placements
-    placements.all
+    placements.where(moved_out_at: nil)
   end
 
   def seats

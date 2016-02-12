@@ -1,11 +1,14 @@
 class HomesController < ApplicationController
-  before_action :set_home, only: [:show, :edit, :update, :destroy]
+  before_action :set_home, only: [:edit, :update, :destroy]
 
   def index
-    @homes = Home.includes(:type_of_housings, :owner_type, :target_groups, :languages, :placements).order(:name)
+    @homes = Home.includes(:type_of_housings, :owner_type,
+      :target_groups).order(:name)
   end
 
   def show
+    @home = Home.includes(:owner_type, :target_groups, :languages, :placements,
+      placements: { refugee: [:gender, :countries, :dossier_numbers, :ssns] }).find(params[:id])
   end
 
   def new

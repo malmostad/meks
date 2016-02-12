@@ -2,7 +2,7 @@ class RefugeesController < ApplicationController
   protect_from_forgery except: :suggest
 
   def show
-    @refugee = Refugee.find(params[:id])
+    @refugee = Refugee.includes(:placements, placements: [:home, :moved_out_reason]).find(params[:id])
   end
 
   def new
