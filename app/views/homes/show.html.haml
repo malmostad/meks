@@ -32,24 +32,27 @@
       = show_attribute('home.active', @home.active? ? 'Ja' : 'Nej')
 
       %h2.group-title Aktuella placeringar
-      %table.full.wrap
-        %thead
-          %tr
-            %th Namn
-            %th Dossiernummer
-            %th Personnummer
-            %th Kön
-            %th Land
-            %th Placerad
-
-        %tbody
-          - @placements.each do |placement|
+      - if @placements.blank?
+        %p Inga placering för närvarande
+      - else
+        %table.full.wrap
+          %thead
             %tr
-              %td= link_to placement.refugee.name, placement.refugee
-              %td= placement.refugee.dossier_numbers.map(&:name).join(', ')
-              %td= placement.refugee.ssns.map(&:full_ssn).join(', ')
-              %td
-                - if placement.refugee.gender.present?
-                  = placement.refugee.gender.name
-              %td= placement.refugee.countries.map(&:name).join(', ')
-              %td= placement.moved_in_at
+              %th Namn
+              %th Dossiernummer
+              %th Personnummer
+              %th Kön
+              %th Land
+              %th Placerad
+
+          %tbody
+            - @placements.each do |placement|
+              %tr
+                %td= link_to placement.refugee.name, placement.refugee
+                %td= placement.refugee.dossier_numbers.map(&:name).join(', ')
+                %td= placement.refugee.ssns.map(&:full_ssn).join(', ')
+                %td
+                  - if placement.refugee.gender.present?
+                    = placement.refugee.gender.name
+                %td= placement.refugee.countries.map(&:name).join(', ')
+                %td= placement.moved_in_at

@@ -27,8 +27,12 @@
           %td= home.owner_type.present? ? home.owner_type.name : ''
           %td.num= home.seats
           %td.num= home.guaranteed_seats
-          %td.num= home.seats - @current_placements[home.id].to_i
-          %td.num= @current_placements[home.id].to_i
+          %td.num
+            - if @current_placements.present?
+              = home.seats - @current_placements[home.id].to_i
+          %td.num
+            - if @current_placements.present?
+              = @current_placements[home.id].to_i
           %td= home.active? ? 'Ja' : 'Nej'
 
       - if can? :manage, Refugee
