@@ -18,12 +18,19 @@ class Home < ActiveRecord::Base
     placements.where(moved_out_at: nil)
   end
 
+  def number_of_current_placements
+    current_placements.count
+
+    # Pure Ruby to prevent n+1 in certain cases
+    # placements.reject { |p| p.moved_out_at.present? }.size
+  end
+
   def seats
     guaranteed_seats.to_i + movable_seats.to_i
   end
 
   def free_seats
-    seats - current_placements.size
+    seats - number_of_current_placements
   end
 
   def total_placement_time

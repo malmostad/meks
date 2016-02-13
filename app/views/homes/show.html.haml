@@ -23,7 +23,7 @@
       = show_attribute('home.comment', @home.comment)
 
       %h2.group-title Tillgänglighet
-      = show_attribute('Aktuella placeringar', @home.current_placements.count)
+      = show_attribute('Aktuella placeringar', @placements.to_a.size)
       = show_attribute('Placeringar totalt', @home.placements.count)
       = show_attribute('Total placeringstid', "#{@home.total_placement_time} dagar")
       = show_attribute('home.guaranteed_seats', @home.guaranteed_seats)
@@ -43,7 +43,7 @@
             %th Placerad
 
         %tbody
-          - @home.current_placements.each do |placement|
+          - @placements.each do |placement|
             %tr
               %td= link_to placement.refugee.name, placement.refugee
               %td= placement.refugee.dossier_numbers.map(&:name).join(', ')

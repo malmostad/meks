@@ -21,6 +21,10 @@ table {
   tbody tr:last-child td {
     border-bottom: 0;
   }
+  th.num,
+  td.num {
+    text-align: right;
+  }
 }
 
 section.box.show.statistics {

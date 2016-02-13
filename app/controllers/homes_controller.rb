@@ -3,12 +3,15 @@ class HomesController < ApplicationController
 
   def index
     @homes = Home.includes(:type_of_housings, :owner_type,
-      :target_groups).order(:name)
+      :target_groups)
+    @current_placements = Placement.joins(:home).where(moved_out_at: nil).select('home_id').group('home_id').count('home_id')
   end
 
   def show
-    @home = Home.includes(:owner_type, :target_groups, :languages, :placements,
-      placements: { refugee: [:gender, :countries, :dossier_numbers, :ssns] }).find(params[:id])
+    @home = Home.includes(:owner_type, :target_groups, :languages).find(params[:id])
+
+    @placements = Placement.includes(refugee: [:gender, :countries,
+      :dossier_numbers, :ssns]).where(home_id: params[:id], moved_out_at: nil)
   end
 
   def new
