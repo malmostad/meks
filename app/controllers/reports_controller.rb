@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
       refugee: [:countries, :languages, :ssns, :dossier_numbers,
         :gender, :homes, :placements, :municipality,
         :relateds, :inverse_relateds],
-      home: [:placements, :type_of_housings,
+      home: [:languages, :type_of_housings,
         :owner_type, :target_groups, :languages])
 
     # Been on the home during a given range
@@ -46,7 +46,7 @@ class ReportsController < ApplicationController
       :countries, :languages, :ssns, :dossier_numbers,
       :gender, :homes, :placements, :municipality,
       :relateds, :inverse_relateds,
-      placements: [:refugee, :home])
+      placements: [:home])
 
     if params[:refugees_registered_from].present? && params[:refugees_registered_to].present?
       records = records.where(registered: params[:refugees_registered_from]..params[:refugees_registered_to])

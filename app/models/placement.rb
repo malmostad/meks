@@ -40,7 +40,9 @@ class Placement < ActiveRecord::Base
       range_from, range_to, range_from, range_to,
       range_from, range_to, range_from, range_to, select_home])
 
-    ActiveRecord::Associations::Preloader.new.preload(records, [:refugee, :home, :moved_out_reason, refugee: [:dossier_numbers, :ssns]])
+    ActiveRecord::Associations::Preloader.new.preload(records,
+      [:refugee, :home, :moved_out_reason, refugee: [:dossier_numbers, :ssns, :gender, :homes, :municipality, :countries, :languages, :relateds, :inverse_relateds],
+      home: [:languages, :target_groups, :owner_type, :type_of_housings]])
     records
   end
 
