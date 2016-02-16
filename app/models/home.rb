@@ -1,5 +1,4 @@
 class Home < ActiveRecord::Base
-
   has_many :placements, dependent: :destroy
   has_many :refugees, through: :placements
 
