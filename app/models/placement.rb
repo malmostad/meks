@@ -1,8 +1,8 @@
 class Placement < ActiveRecord::Base
   attr_reader :placement_time
 
-  belongs_to :refugee
-  belongs_to :home
+  belongs_to :refugee, touch: true
+  belongs_to :home, touch: true
   belongs_to :moved_out_reason
 
   validates_presence_of :home
