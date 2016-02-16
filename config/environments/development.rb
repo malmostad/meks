@@ -54,7 +54,7 @@ Rails.application.configure do
     # Bullet.bugsnag = true
     # Bullet.airbrake = true
     # Bullet.rollbar = true
-    # Bullet.add_footer = true
+    Bullet.add_footer = true
     Bullet.stacktrace_includes = [ ]
     # Bullet.stacktrace_excludes = [ 'their_gem', 'their_middleware' ]
     # Bullet.slack = { webhook_url: 'http://some.slack.url', foo: 'bar' }
