@@ -1,6 +1,6 @@
 class Relationship < ActiveRecord::Base
-  belongs_to :refugee
-  belongs_to :related, class_name: 'Refugee'
+  belongs_to :refugee, touch: true
+  belongs_to :related, class_name: 'Refugee', touch: true
   belongs_to :type_of_relationship
 
   validates_presence_of :refugee_id
