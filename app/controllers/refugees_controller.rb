@@ -2,7 +2,11 @@ class RefugeesController < ApplicationController
   protect_from_forgery except: :suggest
 
   def show
-    @refugee = Refugee.includes(:placements, placements: [:home, :moved_out_reason]).find(params[:id])
+    @refugee = Refugee.includes(
+      :placements,
+      relationships: [:type_of_relationship, :related],
+      placements: [:home, :moved_out_reason]
+    ).find(params[:id])
   end
 
   def new
@@ -67,16 +71,16 @@ class RefugeesController < ApplicationController
   def suggest
     @refugees = Refugee.fuzzy_suggest(params[:term])
     if @refugees
-      @refugees = @refugees.map { |r|
+      @refugees = @refugees.map do |r|
         { id: r.id,
           name: r.name,
           path: "#{root_url}refugees/#{r.id}",
           ssns: r.ssns.split(/\s/) || [],
           dossier_numbers: r.dossier_numbers.split(/\s/) || []
         }
-      }
+      end
     else
-      @refugees = { error: "Couldn't get suggestions"}
+      @refugees = { error: 'Couldn’t get suggestions' }
     end
 
     if params['callback']
