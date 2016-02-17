@@ -133,6 +133,68 @@ RSpec.describe Refugee, type: :model do
     end
   end
 
+  describe 'deletetion of assocations should not delete refugees' do
+    let(:refugee) { create(:refugee) }
+
+    it "countries" do
+      country = create(:country)
+      refugee.countries = [country]
+      expect{ country.destroy }.not_to change(Refugee, :count)
+    end
+
+    it "languages" do
+      language = create(:language)
+      refugee.languages = [language]
+      expect{ language.destroy }.not_to change(Refugee, :count)
+    end
+
+    it "ssn" do
+      ssn = create(:ssn, refugee: refugee)
+      refugee.reload
+      expect{ ssn.destroy }.not_to change(Refugee, :count)
+    end
+
+    it "dossier_numbers" do
+      dossier_number = create(:dossier_number, refugee: refugee)
+      refugee.reload
+      expect{ dossier_number.destroy }.not_to change(Refugee, :count)
+    end
+
+    it "placements" do
+      placements = create_list(:placement, 2, refugee: refugee)
+      expect{ placements.first.destroy }.not_to change(Refugee, :count)
+      expect{ placements.each(&:destroy) }.not_to change(Refugee, :count)
+    end
+
+    it "relationships" do
+      relationships = create_list(:relationship, 2, refugee: refugee)
+      expect{ relationships.first.destroy }.not_to change(Refugee, :count)
+      expect{ relationships.each(&:destroy) }.not_to change(Refugee, :count)
+    end
+
+    it "inverse_relationships" do
+      create_list(:relationship, 2, refugee: refugee)
+      expect{ refugee.relationships.first.destroy }.not_to change(Refugee, :count)
+      expect{ refugee.relationships.destroy_all }.not_to change(Refugee, :count)
+    end
+  end
+
+  describe 'delete relateds should delete refugees' do
+    let(:refugee) { create(:refugee) }
+
+    it "relateds" do
+      create_list(:relationship, 10, refugee: refugee)
+      expect{ refugee.relateds.first.destroy }.to change(Refugee, :count).by(-1)
+      expect{ refugee.relateds.each(&:destroy) }.to change(Refugee, :count).by(-9)
+    end
+
+    it "inverse_relateds" do
+      create_list(:relationship, 10, related: refugee)
+      expect{ refugee.inverse_relateds.first.destroy }.to change(Refugee, :count).by(-1)
+      expect{ refugee.inverse_relateds.each(&:destroy) }.to change(Refugee, :count).by(-9)
+    end
+  end
+
   describe 'extended deletion integrity checks' do
     let(:refugee) { create(:refugee) }
 
