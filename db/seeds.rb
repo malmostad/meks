@@ -62,8 +62,7 @@ locales = Rails.configuration.i18n.available_locales
     country_ids: [rand(Country.count) + 1],
     language_ids: [rand(Language.count) + 1],
     registered: Faker::Date.between(1.year.ago, Date.today),
-    special_needs: rand(2),
-    comment: Faker::Lorem.paragraph
+    special_needs: rand(2)
   )
 
   (rand(3)).times do

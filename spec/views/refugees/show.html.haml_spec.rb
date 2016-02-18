@@ -30,7 +30,5 @@ RSpec.describe "refugees/show", type: :view do
     expect(rendered).to match(/#{@refugee.languages.map(&:name).join(', ')}/)
     expect(rendered).to match(/#{@refugee.countries.map(&:name).join(', ')}/)
     expect(rendered).to match(/#{@refugee.special_needs ? 'Ja' : 'Nej'}/)
-    expect(rendered).to match(/#{@refugee.comment}/)
-
   end
 end

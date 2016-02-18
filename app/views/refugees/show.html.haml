@@ -35,7 +35,6 @@
       = show_attribute('refugee.languages', @refugee.languages.map(&:name).join(', '))
       = show_attribute('refugee.countries', @refugee.countries.map(&:name).join(', '))
       = show_attribute('refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej')
-      = show_attribute('refugee.comment', @refugee.comment)
-
+      
       = render 'placements'
       = render 'relateds'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218115037) do
+ActiveRecord::Schema.define(version: 20160218140805) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -182,7 +182,6 @@ ActiveRecord::Schema.define(version: 20160218115037) do
     t.text     "municipality_placement_comment",             limit: 65535
     t.boolean  "special_needs"
     t.text     "other_relateds",                             limit: 65535
-    t.text     "comment",                                    limit: 65535
     t.integer  "gender_id",                                  limit: 4
     t.datetime "created_at",                                                               null: false
     t.datetime "updated_at",                                                               null: false

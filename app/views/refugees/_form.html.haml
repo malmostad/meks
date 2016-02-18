@@ -49,7 +49,6 @@
     = f.association :countries, input_html: { class: 'chosen' }
     = f.input :special_needs, as: :select
     = f.input :other_relateds
-    = f.input :comment
 
     = render 'application/submit', form: f,
       cancel_path: @refugee.id.present? ? refugee_path(@refugee) : refugees_path
