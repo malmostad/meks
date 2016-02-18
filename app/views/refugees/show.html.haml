@@ -20,7 +20,7 @@
       = show_attribute('refugee.municipality_placement_per_agreement_at', @refugee.municipality_placement_per_agreement_at)
       = show_attribute('refugee.municipality_placement_comment', @refugee.municipality_placement_comment)
       = show_attribute('refugee.deregistered', @refugee.deregistered)
-      = show_attribute('refugee.deregistered_reason', @refugee.deregistered_reason)
+      = show_attribute('refugee.deregistered_reason', @refugee.deregistered_reason.present? ? @refugee.deregistered_reason.name : '')
 
       %h2.group-title Personuppgifter
       = show_attribute('Personnummer', @refugee.ssn)
@@ -35,6 +35,6 @@
       = show_attribute('refugee.languages', @refugee.languages.map(&:name).join(', '))
       = show_attribute('refugee.countries', @refugee.countries.map(&:name).join(', '))
       = show_attribute('refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej')
-      
+
       = render 'placements'
       = render 'relateds'

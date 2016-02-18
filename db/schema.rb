@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218140805) do
+ActiveRecord::Schema.define(version: 20160218144554) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -155,9 +155,8 @@ ActiveRecord::Schema.define(version: 20160218140805) do
     t.date     "moved_in_at"
     t.date     "moved_out_at"
     t.integer  "moved_out_reason_id", limit: 4
-    t.text     "comment",             limit: 65535
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "placements", ["home_id"], name: "index_placements_on_home_id", using: :btree

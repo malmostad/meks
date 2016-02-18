@@ -63,7 +63,7 @@ class PlacementsController < ApplicationController
     def placement_params
       params.require(:placement).permit(
         :home_id, :refugee_id, :moved_in_at, :moved_out_at,
-        :moved_out_reason_id, :comment
+        :moved_out_reason_id
       )
     end
 end

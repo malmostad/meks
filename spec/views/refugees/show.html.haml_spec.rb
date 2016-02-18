@@ -17,7 +17,7 @@ RSpec.describe "refugees/show", type: :view do
     expect(rendered).to match(/#{@refugee.municipality_placement_per_agreement_at}/)
     expect(rendered).to match(/#{@refugee.municipality_placement_comment}/)
     expect(rendered).to match(/#{@refugee.deregistered}/)
-    expect(rendered).to match(/#{@refugee.deregistered_reason}/)
+    expect(rendered).to match(/#{@refugee.deregistered_reason.name}/)
 
     expect(rendered).to match(/#{@refugee.ssn}/)
     expect(rendered).to match(/#{@refugee.ssns.map(&:full_ssn).join(', ')}/)

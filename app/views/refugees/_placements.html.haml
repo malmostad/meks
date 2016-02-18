@@ -12,7 +12,6 @@
         = show_attribute('placement.moved_out_at', placement.moved_out_at)
         - if placement.moved_out_reason.present?
           = show_attribute('placement.moved_out_reason', placement.moved_out_reason.name)
-          = show_attribute('placement.comment', placement.comment)
 
       - if can? :edit, @refugee
         .form-group.action

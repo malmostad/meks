@@ -11,6 +11,5 @@
       - if @placement.moved_out_at.present?
         = f.input :moved_out_at, as: :string, wrapper: :datepicker
         = f.association :moved_out_reason
-        = f.input :comment
 
       = render 'application/submit', form: f, cancel_path: refugee_path(@refugee)
