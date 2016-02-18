@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   resources :homes
   resources :moved_out_reasons
+  resources :deregistered_reasons
   resources :target_groups
   resources :type_of_housings
   resources :owner_types

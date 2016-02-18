@@ -42,6 +42,10 @@ end
   MovedOutReason.create(name: name)
 end
 
+['Avskriven', 'Avvek', 'Avisad'].each do |name|
+  DeregisteredReason.create(name: name)
+end
+
 ['dubblett', 'syster', 'bror', 'kusin', 'annan släkting', 'annan'].each do |name|
   TypeOfRelationship.create(name: name)
 end

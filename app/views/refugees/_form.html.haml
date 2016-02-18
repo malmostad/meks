@@ -18,7 +18,7 @@
     = f.input :municipality_placement_per_agreement_at, as: :string, wrapper: :datepicker
     = f.input :municipality_placement_comment
     = f.input :deregistered, as: :string, wrapper: :datepicker
-    = f.input :deregistered_reason
+    = f.association :deregistered_reason
 
     %h2.group-title Personuppgifter
     .terms

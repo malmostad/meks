@@ -3,6 +3,7 @@ class Refugee < ActiveRecord::Base
 
   belongs_to :gender
   belongs_to :municipality
+  belongs_to :deregistered_reason
 
   has_many :placements, dependent: :destroy
   has_many :homes, through: :placements

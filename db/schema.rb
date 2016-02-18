@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160110153243) do
+ActiveRecord::Schema.define(version: 20160218115037) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(version: 20160110153243) do
 
   add_index "countries_refugees", ["country_id"], name: "index_countries_refugees_on_country_id", using: :btree
   add_index "countries_refugees", ["refugee_id"], name: "index_countries_refugees_on_refugee_id", using: :btree
+
+  create_table "deregistered_reasons", force: :cascade do |t|
+    t.string "name", limit: 191
+  end
+
+  add_index "deregistered_reasons", ["name"], name: "index_deregistered_reasons_on_name", unique: true, using: :btree
 
   create_table "dossier_numbers", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -174,15 +180,16 @@ ActiveRecord::Schema.define(version: 20160110153243) do
     t.date     "municipality_placement_migrationsverket_at"
     t.date     "municipality_placement_per_agreement_at"
     t.text     "municipality_placement_comment",             limit: 65535
-    t.text     "deregistered_reason",                        limit: 65535
     t.boolean  "special_needs"
     t.text     "other_relateds",                             limit: 65535
     t.text     "comment",                                    limit: 65535
     t.integer  "gender_id",                                  limit: 4
     t.datetime "created_at",                                                               null: false
     t.datetime "updated_at",                                                               null: false
+    t.integer  "deregistered_reason_id",                     limit: 4
   end
 
+  add_index "refugees", ["deregistered_reason_id"], name: "index_refugees_on_deregistered_reason_id", using: :btree
   add_index "refugees", ["gender_id"], name: "index_refugees_on_gender_id", using: :btree
   add_index "refugees", ["municipality_id"], name: "index_refugees_on_municipality_id", using: :btree
 
@@ -248,6 +255,7 @@ ActiveRecord::Schema.define(version: 20160110153243) do
 
   add_foreign_key "homes", "owner_types"
   add_foreign_key "placements", "moved_out_reasons"
+  add_foreign_key "refugees", "deregistered_reasons"
   add_foreign_key "refugees", "genders"
   add_foreign_key "refugees", "municipalities"
   add_foreign_key "relationships", "type_of_relationships"

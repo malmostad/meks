@@ -10,7 +10,7 @@ RSpec.describe "refugees/new", type: :view do
 
     assert_select "form[action=?][method=?]", refugees_path, "post" do
       assert_select "input#refugee_name[name=?]", "refugee[name]"
-      assert_select "textarea#refugee_deregistered_reason[name=?]", "refugee[deregistered_reason]"
+      assert_select "select#refugee_deregistered_reason_id[name=?]", "refugee[deregistered_reason_id]"
       assert_select "input#refugee_special_needs[name=?]", false
       assert_select "textarea#refugee_comment[name=?]", "refugee[comment]"
     end
