@@ -36,17 +36,17 @@ namespace :deploy do
     end
   end
 
-  desc "Copy vendor statics"
-  task :copy_vendor_statics do
-    on roles(:app) do
-      execute "cp #{fetch(:release_path)}/vendor/chosen/*.png #{fetch(:release_path)}/public/assets/"
-    end
-  end
-
   desc "Full restart of unicorn server"
   task :full_restart do
     on roles(:app) do
       execute "/etc/init.d/unicorn_#{fetch(:application)} stop && sleep 5 && /etc/init.d/unicorn_#{fetch(:application)} start"
+    end
+  end
+
+  desc "Copy vendor statics"
+  task :copy_vendor_statics do
+    on roles(:app) do
+      execute "cp #{fetch(:release_path)}/vendor/chosen/*.png #{fetch(:release_path)}/public/assets/"
     end
   end
 
@@ -90,6 +90,6 @@ namespace :deploy do
   end
 
   before :starting, "deploy:are_you_sure", "deploy:check_revision"
-  after :published, "deploy:copy_vendor_statics", "deploy:full_restart"
+  after :published, "deploy:copy_vendor_statics", "deploy:upgrade"
   after :finishing, "deploy:cleanup"
 end
