@@ -1,10 +1,15 @@
 - title 'Ensamkommande barn'
 %section.box.show.refugee
-  %h1.box-title= "#{h1} #{@refugee.draft? ? '(Utkast)' : ''}"
+  %h1.box-title
+    = h1
+    = "#{@refugee.draft? ?   '(Utkast)'  : ''}"
   .box-content.basic.form-data
     .form-group
       - if can? :edit, @refugee
         = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'
+
+      - if @refugee.secrecy?
+        .secrecy= 'Sekretess'
 
     = form_for @refugee, html: { class: 'basic' } do |f|
       = show_attribute('refugee.name', @refugee.name)

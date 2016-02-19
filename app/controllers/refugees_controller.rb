@@ -113,6 +113,7 @@ class RefugeesController < ApplicationController
         :checked_out_to_our_city,
         :temporary_permit_starts_at,
         :temporary_permit_ends_at,
+        :secrecy,
         :municipality_id,
         :municipality_placement_migrationsverket_at,
         :municipality_placement_per_agreement_at,

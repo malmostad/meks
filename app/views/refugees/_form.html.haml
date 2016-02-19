@@ -48,6 +48,7 @@
     = f.association :languages, input_html: { class: 'chosen' }
     = f.association :countries, input_html: { class: 'chosen' }
     = f.input :special_needs, as: :select
+    = f.input :secrecy, wrapper: :vertical_radio_and_checkboxes
     = f.input :other_relateds
 
     = render 'application/submit', form: f,

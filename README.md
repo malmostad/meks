@@ -84,11 +84,13 @@ $ bundle exec cap production deploy
 ```
 
 ## Testing
-Run tests before pushing code to the Git repository and before performing deployments. The application contains unit tests and high level integration/feature tests using RSpec, Capybara and PhantomJS. Run the test cases in the projects root directory in your Vagrant box:
+Run tests before pushing code to the Git repository and before making a deployment. The application contains unit tests and high level integration/feature tests using RSpec, Capybara and PhantomJS.  Run the test cases in the projects root directory in your Vagrant box:
 
 ```shell
 $ bundle exec rspec
 ```
+
+Note that the environment used for RSpec is `local_test`.
 
 ## License
 Released under AGPL version 3.

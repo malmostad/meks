@@ -27,6 +27,16 @@ RSpec.describe "Refugees", type: :feature do
       expect(page).to have_selector(".controls", text: "Bar")
     end
 
+    scenario "set secrecy" do
+      refugee = create(:refugee, name: "Foo")
+      visit edit_refugee_path(refugee)
+      check "refugee_secrecy"
+      click_button "Spara"
+
+      expect(current_path).to eq refugee_path(refugee)
+      expect(page).to have_selector(".secrecy", text: "Sekretess")
+    end
+
     scenario "validates the uniqueness of the dossier number" do
       create(:refugee, dossier_number: "1234")
       visit "/refugees/new"
