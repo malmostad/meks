@@ -26,7 +26,7 @@ set :linked_dirs, %w{log tmp/pids tmp/sockets}
 set :default_env, { path: '$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH' }
 set :keep_releases, 5
 
-namespace :deploy do
+namespace :unicorn do
   %w[stop start restart upgrade].each do |command|
     desc "#{command} unicorn server"
     task command do
@@ -37,12 +37,14 @@ namespace :deploy do
   end
 
   desc "Full restart of unicorn server"
-  task :full_restart do
+  task :stop_start do
     on roles(:app) do
       execute "/etc/init.d/unicorn_#{fetch(:application)} stop && sleep 5 && /etc/init.d/unicorn_#{fetch(:application)} start"
     end
   end
+end
 
+namespace :deploy do
   desc "Copy vendor statics"
   task :copy_vendor_statics do
     on roles(:app) do
@@ -90,6 +92,6 @@ namespace :deploy do
   end
 
   before :starting, "deploy:are_you_sure", "deploy:check_revision"
-  after :published, "deploy:copy_vendor_statics", "deploy:upgrade"
-  after :finishing, "deploy:cleanup"
+  after  :publishing, "deploy:copy_vendor_statics", "unicorn:upgrade"
+  after  :finishing, "deploy:cleanup"
 end
