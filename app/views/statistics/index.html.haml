@@ -1,3 +1,7 @@
+= javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
+:javascript
+  google.charts.load("current", { packages:["corechart"] });
+
 - cache "view-#{@cache_key_for_status}" do
   - title 'Översikt'
   %section.box.show.statistics
@@ -5,6 +9,9 @@
     .box-content.basic
       - @stats[:periods].each do |period|
         %h2.group-title= period[:title]
+
+        = render 'chart', id: period[:id]
+
         %p
           = "#{period[:data][:refugees]} barn"
           = "(#{period[:data][:per_gender]})"

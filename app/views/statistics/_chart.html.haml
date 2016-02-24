@@ -1,0 +1,31 @@
+.g-chart{ id: "chart-#{id}" }
+
+:javascript
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable
+      ([['X', 'antal barn'],
+      ['måndag',  2],
+      ['tisdag',  3],
+      ['torsdag', 10],
+      ['fredag',  5],
+      ['lördag',  6],
+      ['söndag',  7]
+    ]);
+
+    var options = {
+      chartArea: { left: 50, top: 50, bottom: 50, width: "100%", height: "100%" },
+      title: 'title',
+      legend: 'none',
+      vAxis: {
+        title: "Antal barn",
+        format: '0',
+      },
+      series: {
+        0: { color: '#e2431e' }
+      }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart-#{id}'));
+    chart.draw(data, options);
+  }
+  google.charts.setOnLoadCallback(drawChart);
