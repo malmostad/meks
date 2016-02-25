@@ -4,21 +4,9 @@
 
     - if can? :manage, Refugee
       = f.input :draft, wrapper: :vertical_radio_and_checkboxes
+    = f.input :secrecy, wrapper: :vertical_radio_and_checkboxes
 
     = f.input :name
-
-    %h2.group-title Asylstatus
-    = f.input :registered, as: :string, wrapper: :datepicker
-    = f.input :residence_permit_at, label: raw(t("simple_form.labels.refugee.residence_permit_at")), as: :string, wrapper: :datepicker
-    = f.input :checked_out_to_our_city, as: :string, wrapper: :datepicker
-    = f.input :temporary_permit_starts_at, label: raw(t("simple_form.labels.refugee.temporary_permit_starts_at")), as: :string, wrapper: :datepicker
-    = f.input :temporary_permit_ends_at, label: raw(t("simple_form.labels.refugee.temporary_permit_ends_at")), as: :string, wrapper: :datepicker
-    = f.association :municipality, input_html: { class: 'chosen' }
-    = f.input :municipality_placement_migrationsverket_at, as: :string, wrapper: :datepicker
-    = f.input :municipality_placement_per_agreement_at, as: :string, wrapper: :datepicker
-    = f.input :municipality_placement_comment
-    = f.input :deregistered, as: :string, wrapper: :datepicker
-    = f.association :deregistered_reason
 
     %h2.group-title Personuppgifter
     .terms
@@ -48,8 +36,21 @@
     = f.association :languages, input_html: { class: 'chosen' }
     = f.association :countries, input_html: { class: 'chosen' }
     = f.input :special_needs, as: :select
-    = f.input :secrecy, wrapper: :vertical_radio_and_checkboxes
+    = f.input :social_worker
     = f.input :other_relateds
+
+    %h2.group-title Asylstatus
+    = f.input :registered, as: :string, wrapper: :datepicker
+    = f.input :residence_permit_at, label: raw(t("simple_form.labels.refugee.residence_permit_at")), as: :string, wrapper: :datepicker
+    = f.input :checked_out_to_our_city, as: :string, wrapper: :datepicker
+    = f.input :temporary_permit_starts_at, label: raw(t("simple_form.labels.refugee.temporary_permit_starts_at")), as: :string, wrapper: :datepicker
+    = f.input :temporary_permit_ends_at, label: raw(t("simple_form.labels.refugee.temporary_permit_ends_at")), as: :string, wrapper: :datepicker
+    = f.association :municipality, input_html: { class: 'chosen' }
+    = f.input :municipality_placement_migrationsverket_at, as: :string, wrapper: :datepicker
+    = f.input :municipality_placement_per_agreement_at, as: :string, wrapper: :datepicker
+    = f.input :municipality_placement_comment
+    = f.input :deregistered, as: :string, wrapper: :datepicker
+    = f.association :deregistered_reason
 
     = render 'application/submit', form: f,
       cancel_path: @refugee.id.present? ? refugee_path(@refugee) : refugees_path

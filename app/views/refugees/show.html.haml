@@ -13,19 +13,10 @@
 
     = form_for @refugee, html: { class: 'basic' } do |f|
       = show_attribute('refugee.name', @refugee.name)
-
-      %h2.group-title Asylstatus
-      = show_attribute('refugee.registered', @refugee.registered)
-      = show_attribute('refugee.residence_permit_at', @refugee.residence_permit_at)
-      = show_attribute('refugee.checked_out_to_our_city', @refugee.checked_out_to_our_city)
-      = show_attribute('refugee.temporary_permit_starts_at', @refugee.temporary_permit_starts_at)
-      = show_attribute('refugee.temporary_permit_ends_at', @refugee.temporary_permit_ends_at)
-      = show_attribute('refugee.municipality', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
-      = show_attribute('refugee.municipality_placement_migrationsverket_at', @refugee.municipality_placement_migrationsverket_at)
-      = show_attribute('refugee.municipality_placement_per_agreement_at', @refugee.municipality_placement_per_agreement_at)
-      = show_attribute('refugee.municipality_placement_comment', @refugee.municipality_placement_comment)
-      = show_attribute('refugee.deregistered', @refugee.deregistered)
-      = show_attribute('refugee.deregistered_reason', @refugee.deregistered_reason.present? ? @refugee.deregistered_reason.name : '')
+      = show_attribute('Personnummer', @refugee.ssn)
+      = show_attribute('Dossiernummer', @refugee.dossier_number)
+      = show_attribute('Aktuellt boende', @refugee.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(', '))
+      = show_attribute('Asylstatus', @refugee.registered)
 
       %h2.group-title Personuppgifter
       = show_attribute('Personnummer', @refugee.ssn)
@@ -40,6 +31,20 @@
       = show_attribute('refugee.languages', @refugee.languages.map(&:name).join(', '))
       = show_attribute('refugee.countries', @refugee.countries.map(&:name).join(', '))
       = show_attribute('refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej')
+      = show_attribute('refugee.social_worker', @refugee.social_worker)
+
+      %h2.group-title Asylstatus
+      = show_attribute('refugee.registered', @refugee.registered)
+      = show_attribute('refugee.residence_permit_at', @refugee.residence_permit_at)
+      = show_attribute('refugee.checked_out_to_our_city', @refugee.checked_out_to_our_city)
+      = show_attribute('refugee.temporary_permit_starts_at', @refugee.temporary_permit_starts_at)
+      = show_attribute('refugee.temporary_permit_ends_at', @refugee.temporary_permit_ends_at)
+      = show_attribute('refugee.municipality', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
+      = show_attribute('refugee.municipality_placement_migrationsverket_at', @refugee.municipality_placement_migrationsverket_at)
+      = show_attribute('refugee.municipality_placement_per_agreement_at', @refugee.municipality_placement_per_agreement_at)
+      = show_attribute('refugee.municipality_placement_comment', @refugee.municipality_placement_comment)
+      = show_attribute('refugee.deregistered', @refugee.deregistered)
+      = show_attribute('refugee.deregistered_reason', @refugee.deregistered_reason.present? ? @refugee.deregistered_reason.name : '')
 
       = render 'placements'
       = render 'relateds'

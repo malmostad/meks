@@ -10,7 +10,8 @@
       - @stats[:periods].each do |period|
         %h2.group-title= period[:title]
 
-        = render 'chart', id: period[:id]
+        .chart-box
+          = render 'chart', id: period[:id], title: period[:chart_title]
 
         %p
           = "#{period[:data][:refugees]} barn"

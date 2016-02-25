@@ -91,6 +91,9 @@ module ReportGenerator
         'refugee.special_needs' => {
           query: 'record.special_needs? ? "Ja" : "Nej"'
         },
+        'refugee.social_worker' => {
+          query: 'record.social_worker'
+        },
         'refugee.comment' => {
           query: 'record.comment'
         },
@@ -230,7 +233,7 @@ module ReportGenerator
           query: 'record.refugee.temporary_permit_ends_at',
           type: :date
         },
-        'Barn, anvisad' => {
+        'Barn, anvisningskommun' => {
           query: 'record.refugee.municipality.name'
         },
         'Barn, anvisad enligt Migrationsverket' => {

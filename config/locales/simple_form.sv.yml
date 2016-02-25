@@ -34,20 +34,21 @@ sv:
         dossier_numbers: Extra dossiernummer
         secrecy: Sekretess
         homes: Boenden
-        deregistered: Avregisterad
+        deregistered: Avslutad
         deregistered_reason: Avslutsorsak
         residence_permit_at: <abbr title='Permanent uppehållstillstånd'>PUT</abbr>
         checked_out_to_our_city: Utskriven till Malmö
         temporary_permit_starts_at: <abbr title='Tillfälligt uppehållstillstånd startar'>TUT startar</abbr>
         temporary_permit_ends_at: <abbr title='Tillfälligt uppehållstillstånd slutar'>TUT slutar</abbr>
-        municipality: Anvisad
-        municipality_placement_migrationsverket_at: Anvisad enligt Migrationsverket
-        municipality_placement_per_agreement_at: Anvisad enligt överenskommelse
+        municipality: Anvisningskommun
+        municipality_placement_migrationsverket_at: Anvisningsdatum (Anvisad enligt Migrationsverket)
+        municipality_placement_per_agreement_at: "Ingår i överenskommelse: (Anvisad enligt överenskommelse)"
         municipality_placement_comment: Anvisad, kommentar
         related: Anhörig
         relateds: Anhöriga
         type_of_relationships: Anhörigform
         other_relateds: Anhöriga utanför systemet
+        social_worker: Socialsekreterare
 
       relationship:
         <<: *defaults
@@ -101,5 +102,6 @@ sv:
           "Tänk på att inte skriva in något känsligt i fältet"
         other_relateds: *comment
         municipality_placement_comment: *comment
+        social_worker: *comment
       placement:
         comment: *comment
