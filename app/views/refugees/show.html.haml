@@ -16,7 +16,7 @@
       = show_attribute('Personnummer', @refugee.ssn)
       = show_attribute('Dossiernummer', @refugee.dossier_number)
       = show_attribute('Aktuellt boende', @refugee.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(', '))
-      = show_attribute('Asylstatus', @refugee.registered)
+      = show_attribute('Asylstatus', format_asylum_status(@refugee.asylum_status) )
 
       %h2.group-title Personuppgifter
       = show_attribute('Personnummer', @refugee.ssn)

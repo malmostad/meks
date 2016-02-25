@@ -65,4 +65,24 @@ class Refugee < ActiveRecord::Base
   def total_placement_time
     placements.map(&:placement_time).inject(&:+) || 0
   end
+
+  # Get the asylum event with latest date
+  def asylum_status
+    dates = [:registered,
+        :municipality_placement_migrationsverket_at,
+        :municipality_placement_per_agreement_at,
+        :residence_permit_at,
+        :checked_out_to_our_city,
+        :temporary_permit_starts_at,
+        :temporary_permit_ends_at]
+
+    # Create a k: v hash from the array
+    Hash[dates.map! { |k| [k.to_s, send(k)] }]
+
+    # Delete blanks
+    dates = dates.delete_if { |_k, v| v.blank? }
+
+    # Get the event with the latest date
+    dates.sort_by { |_k, v| v }.last
+  end
 end
