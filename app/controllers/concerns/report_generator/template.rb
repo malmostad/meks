@@ -112,7 +112,7 @@ module ReportGenerator
           query: 'record.name'
         },
         'Lediga platser' => {
-          query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.size - (record.guaranteed_seats + record.movable_seats)',
+          query: '(record.guaranteed_seats + record.movable_seats) - record.placements.reject { |p| !p.moved_out_at.nil? }.size',
           type: :integer
         },
         'Aktuella placeringar' => {

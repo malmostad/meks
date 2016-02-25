@@ -27,6 +27,7 @@
       = show_attribute('Placeringar totalt', @home.placements.count)
       = show_attribute('Total placeringstid', "#{@home.total_placement_time} dagar")
       = show_attribute('home.guaranteed_seats', @home.guaranteed_seats)
+      = show_attribute('Lediga platser', @home.seats - @placements.to_a.size)
       = show_attribute('home.movable_seats', @home.movable_seats)
       = show_attribute('Summa platser', @home.seats)
       = show_attribute('home.active', @home.active? ? 'Ja' : 'Nej')
