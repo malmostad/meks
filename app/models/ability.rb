@@ -18,7 +18,7 @@ class Ability
       can :generate, :reports
       can :view, :statistics
 
-    elsif user.has_role? :reader
+    elsif user.has_role?(:reader) || user.has_role?(:super_reader)
       can :read, Home
       can [:read, :search, :suggest], Refugee
       can :read, User
@@ -33,6 +33,10 @@ class Ability
 
        # Model less controllers
       can :view, :statistics
+    end
+
+    if user.has_role?(:super_reader)
+      can :generate, :reports
     end
   end
 end

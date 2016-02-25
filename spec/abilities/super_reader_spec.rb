@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :ability do
-  describe "with reader role" do
-    let(:user) { build(:user, role: 'reader') }
+  describe "with super_writer role" do
+    let(:user) { build(:user, role: 'super_reader') }
     let(:refugee) { create(:refugee, name: 'bar') }
     let(:drafted_refugee) { create(:refugee, name: 'foo', draft: true) }
     subject(:ability) { Ability.new(user) }
@@ -33,8 +33,8 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:manage, Home.new) }
     it { should_not be_able_to(:manage, Placement.new) }
     it { should_not be_able_to(:manage, Relationship.new) }
-    it { should_not be_able_to(:generate, :reports) }
 
+    it { should be_able_to(:generate, :reports) }
     it { should be_able_to(:read, build(:refugee)) }
     it { should be_able_to(:read, build(:home)) }
     it { should be_able_to(:read, build(:placement)) }
