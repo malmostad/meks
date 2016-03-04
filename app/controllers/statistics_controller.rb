@@ -7,25 +7,30 @@ class StatisticsController < ApplicationController
     @stats = Rails.cache.fetch("queries-#{cache_key_for_status}") do
       {
         periods: [
-          { id: 'last-week',
-            title: 'Nyinskrivna förra veckan',
-            chart_title: 'Antal nyanlända barn per dag förra veckan',
-            data: stats_for_collection(registered_last_week)
+          { id: 'all',
+            title: 'Aktuella ärenden just nu',
+            data: stats_for_collection(all_registered),
+            chart: {
+              title: 'Antal nyanlända barn per dag förra veckan',
+              data: [
+                ['X', 'antal barn'],
+                ['mån', registered_per_date(last_week_start)],
+                ['tis', registered_per_date(last_week_start + 1.day)],
+                ['ons', registered_per_date(last_week_start + 2.day)],
+                ['tor', registered_per_date(last_week_start + 3.day)],
+                ['fre', registered_per_date(last_week_start + 4.day)],
+                ['lör', registered_per_date(last_week_start + 5.day)],
+                ['sön', registered_per_date(last_week_start + 6.day)]
+              ]
+            }
           },
           { id: 'this-month',
-            title: 'Nyinskrivna denna månad',
-            chart_title: 'Antal nyanlända barn per denna månad',
+            title: 'Nyinskrivna aktuell månad',
             data: stats_for_collection(registered_this_month)
-          },
-          { id: 'this-quarter',
-            title: 'Nyinskrivna detta kvartal',
-            chart_title: 'Antal nyanlända barn per detta kvartal',
-            data: stats_for_collection(registered_this_quarter)
           },
           { id: 'this-year',
             title: 'Nyinskrivna detta år',
-            chart_title: 'Antal nyanlända barn per detta år',
-            data: stats_for_collection(registered_this_year) },
+            data: stats_for_collection(registered_this_year) }
         ],
 
         homes: Home.count,
@@ -69,6 +74,10 @@ class StatisticsController < ApplicationController
     }
   end
 
+  def all_registered
+    @all_registered ||= Refugee.all
+  end
+
   def registered_this_year
     @registered_this_year ||=
       Refugee.where('registered >= ?', Date.today.beginning_of_year)
@@ -88,6 +97,14 @@ class StatisticsController < ApplicationController
     @registered_last_week ||=
       one_week_ago = Date.today - 1.week
       Refugee.where(registered: one_week_ago.beginning_of_week..one_week_ago.end_of_week)
+  end
+
+  def registered_per_date(date)
+    Refugee.where(registered: date).count
+  end
+
+  def last_week_start
+    Date.today.beginning_of_week - 7.days
   end
 
   def cache_key_for_status

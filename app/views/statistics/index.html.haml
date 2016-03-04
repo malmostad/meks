@@ -10,9 +10,6 @@
       - @stats[:periods].each do |period|
         %h2.group-title= period[:title]
 
-        .chart-box
-          = render 'chart', id: period[:id], title: period[:chart_title]
-
         %p
           = "#{period[:data][:refugees]} barn"
           = "(#{period[:data][:per_gender]})"
@@ -33,6 +30,10 @@
           = "Vanligast språk:"
           - period[:data][:top_languages][0...10].each do |lang|
             = "#{lang[0]} (#{lang[1]}),"
+
+        - if period[:chart].present?
+          .chart-box
+            = render 'chart', period: period
 
       %h2.group-title Boenden och placeringar
       %p

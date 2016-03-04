@@ -1,31 +1,28 @@
-.g-chart{ id: "chart-#{id}" }
+.g-chart{ id: "chart-#{period[:id]}" }
 
 :javascript
   function drawChart() {
-    var data = google.visualization.arrayToDataTable
-      ([['X', 'antal barn'],
-      ['måndag',  2],
-      ['tisdag',  3],
-      ['torsdag', 10],
-      ['fredag',  5],
-      ['lördag',  6],
-      ['söndag',  7]
-    ]);
+    var data = google.visualization.arrayToDataTable(#{period[:chart][:data]});
 
     var options = {
       chartArea: { left: 50, top: 50, bottom: 50, right: 10 },
-      title: "#{title}",
+      title: "#{period[:chart][:title]}",
       legend: 'none',
       vAxis: {
         title: "Antal barn",
-        format: '0',
+        format: 0,
       },
       series: {
         0: { color: '#e2431e' }
+      },
+      animation: {
+        duration: 1200,
+        startup: true,
+        easing: 'out'
       }
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart-#{id}'));
+    var chart = new google.visualization.LineChart(document.getElementById('chart-#{period[:id]}'));
     chart.draw(data, options);
   }
   google.charts.setOnLoadCallback(drawChart);

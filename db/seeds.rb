@@ -61,7 +61,7 @@ locales = Rails.configuration.i18n.available_locales
     gender_id: rand(Gender.count) + 1,
     country_ids: [rand(Country.count) + 1],
     language_ids: [rand(Language.count) + 1],
-    registered: Faker::Date.between(1.year.ago, Date.today),
+    registered: Faker::Date.between(120.days.ago, Date.today),
     special_needs: rand(2)
   )
 
@@ -91,8 +91,7 @@ locales = Rails.configuration.i18n.available_locales
       home_id: rand(Home.count) + 1,
       moved_in_at: moved_in_at,
       moved_out_at: moved_out_at,
-      moved_out_reason_id: rand(MovedOutReason.count) + 1,
-      comment: Faker::Lorem.paragraph
+      moved_out_reason_id: rand(MovedOutReason.count) + 1
     )
   end
 
