@@ -69,7 +69,7 @@ class StatisticsController < ApplicationController
       with_municipality_placement_others: collection.where.not(municipality: nil).count - malmo_total,
       with_no_municipality_placement: collection.where(municipality: nil).count,
       at_external_home: Placement.includes(:home).where(refugee: collection, moved_out_at: nil, homes: { owner_type_id: 2 }).select(:refugee_id).distinct.count,
-      top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
+      top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reject { |k, v| v <= 10  }.reverse
     }
   end
 

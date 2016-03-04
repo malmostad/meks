@@ -21,9 +21,8 @@
         %p= "#{period[:data][:with_no_municipality_placement]} saknar anvisning"
         %p= "#{period[:data][:at_external_home]} är placerade på externa boenden"
         %p
-          = "Vanligast härkomst:"
-          - period[:data][:top_countries][0...10].each do |lang|
-            = "#{lang[0]} (#{lang[1]}),"
+          = "Vanligaste länder:"
+          = period[:data][:top_countries][0...3].map(&:first).join(', ')
 
         - if period[:chart].present?
           .chart-box
