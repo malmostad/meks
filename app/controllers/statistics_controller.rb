@@ -51,6 +51,8 @@ class StatisticsController < ApplicationController
   private
 
   def stats_for_collection(collection)
+    malmo_srf = collection.joins(:municipality).where("municipalities.name like ?", "malmö%srf").count
+    malmo_total = collection.joins(:municipality).where("municipalities.name like ?", "malmö%").count
     {
       refugees: collection.count,
       per_gender: Gender.all.map { |g| "#{collection.where(gender: g).count} är #{g.name.downcase}" }.join(', '),
@@ -62,15 +64,12 @@ class StatisticsController < ApplicationController
           municipality_placement_per_agreement_at: nil,
           deregistered: nil).count,
       with_residence_permit: collection.where.not(residence_permit_at: nil).count,
-      with_temporary_permit: collection.where.not(temporary_permit_starts_at: nil).count,
-      with_placement: collection.includes(:placements).where.not(placements: { refugee_id: nil }).count,
-      with_municipality_placement: collection.where.not(municipality: nil).count,
-      with_municipality_placement_in_malmo: collection.joins(:municipality).where("municipalities.name like ?", "malmö%").count,
-      deregistered: collection.where.not(deregistered: nil).count,
-      drafts: collection.where(draft: true).count,
-      duplicates: collection.includes(:relationships).where('relationships.type_of_relationship_id' => 1).count,
+      with_municipality_placement_in_malmo_srf: malmo_srf,
+      with_municipality_placement_in_malmo_sdo: malmo_total - malmo_srf,
+      with_municipality_placement_others: collection.where.not(municipality: nil).count - malmo_total,
+      with_no_municipality_placement: collection.where(municipality: nil).count,
+      at_external_home: Placement.includes(:home).where(refugee: collection, moved_out_at: nil, homes: { owner_type_id: 2 }).select(:refugee_id).distinct.count,
       top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reverse,
-      top_languages: collection.joins(:languages).select('languages.name').group('languages.name').count('languages.name').sort_by{ |key, value| value }.reverse,
     }
   end
 

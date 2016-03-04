@@ -15,20 +15,14 @@
           = "(#{period[:data][:per_gender]})"
         %p= "#{period[:data][:in_transit]} är i ankomst"
         %p= raw "#{period[:data][:with_residence_permit]} har <abbr title='Permanent uppehållstillstånd'>PUT</abbr>"
-        %p= raw "#{period[:data][:with_temporary_permit]} har <abbr title='Tillfälligt uppehållstillstånd'>TUT</abbr>"
-        %p= "#{period[:data][:with_municipality_placement_in_malmo]} har anvisning till Malmö"
-        %p= "#{period[:data][:with_municipality_placement]} har anvisning totalt"
-        %p= "#{period[:data][:with_placement]} har boendeplats"
-        %p= "#{period[:data][:duplicates]} har en dubblett kopplad till sig"
-        %p= "#{period[:data][:deregistered]} är avregistrerade"
-        %p= "#{period[:data][:drafts]} inskrivningar är utkast"
+        %p= "#{period[:data][:with_municipality_placement_in_malmo_srf]} har anvisning till Malmö Srf"
+        %p= "#{period[:data][:with_municipality_placement_in_malmo_sdo]} har anvisning till Malmös stadsområden"
+        %p= "#{period[:data][:with_municipality_placement_others]} har anvisning till andra kommuner"
+        %p= "#{period[:data][:with_no_municipality_placement]} saknar anvisning"
+        %p= "#{period[:data][:at_external_home]} är placerade på externa boenden"
         %p
           = "Vanligast härkomst:"
           - period[:data][:top_countries][0...10].each do |lang|
-            = "#{lang[0]} (#{lang[1]}),"
-        %p
-          = "Vanligast språk:"
-          - period[:data][:top_languages][0...10].each do |lang|
             = "#{lang[0]} (#{lang[1]}),"
 
         - if period[:chart].present?
