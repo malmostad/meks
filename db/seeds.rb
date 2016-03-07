@@ -14,8 +14,8 @@ end
   TypeOfHousing.create(name: ht)
 end
 
-['Egna (SrF)', 'Externa'].each do |hot|
-  OwnerType.create(name: hot)
+['Kommunala (SRF)', 'Privata (SRF)', 'Externa'].each do |ot|
+  OwnerType.create(name: ot)
 end
 
 ['Inga behov', 'Flickor', 'Yngre', 'Speciella behov'].each do |htg|

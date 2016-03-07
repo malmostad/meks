@@ -37,6 +37,7 @@ class StatisticsController < ApplicationController
         home_by_owner_type: OwnerType.all.map { |ot|
           "#{Home.where(owner_type: ot).count} är #{ot.name}" }.join(', '),
 
+        current_placed_refugees: Placement.where(moved_out_at: nil).select(:refugee_id).distinct,
         current_placements: Placement.current_placements,
         current_placements_per_owner_type: OwnerType.all.map { |ot|
           "#{Placement.current_placements.includes(:home).where(
@@ -68,7 +69,7 @@ class StatisticsController < ApplicationController
       with_municipality_placement_in_malmo_sdo: malmo_total - malmo_srf,
       with_municipality_placement_others: collection.where.not(municipality: nil).count - malmo_total,
       with_no_municipality_placement: collection.where(municipality: nil).count,
-      at_external_home: Placement.includes(:home).where(refugee: collection, moved_out_at: nil, homes: { owner_type_id: 2 }).select(:refugee_id).distinct.count,
+      at_external_home: Placement.includes(:home).where(refugee: collection, moved_out_at: nil, homes: { owner_type_id: 3 }).select(:refugee_id).distinct.count,
       top_countries: collection.joins(:countries).select('countries.name').group('countries.name').count('countries.name').sort_by{ |key, value| value }.reject { |k, v| v <= 10  }.reverse
     }
   end
