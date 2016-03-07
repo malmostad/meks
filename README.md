@@ -1,5 +1,5 @@
 # MEKS
-MEKS manages the logistics of unaccompanied children, their asylum status and placements in homes. The system provides detailed statistics and Excel reports for further data modelling.
+MEKS is a management system for unaccompanied children, their asylum status, logistics and placements in homes. The system provides detailed statistics and Excel reports for further data modelling.
 
 ## Dependencies
 
