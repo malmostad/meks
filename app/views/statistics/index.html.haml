@@ -25,7 +25,7 @@
         %p= "#{period[:data][:with_no_municipality_placement]} saknar anvisning"
         %p= "#{period[:data][:at_external_home]} barn är placerade på externa placeringar"
         %p
-          = "Vanligaste länder:"
+          = "Vanligaste länder (10 barn eller fler):"
           = period[:data][:top_countries][0...3].map(&:first).join(', ')
 
       %h2.group-title Boenden och placeringar
