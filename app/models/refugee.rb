@@ -74,7 +74,8 @@ class Refugee < ActiveRecord::Base
         :residence_permit_at,
         :checked_out_to_our_city,
         :temporary_permit_starts_at,
-        :temporary_permit_ends_at]
+        :temporary_permit_ends_at,
+        :deregistered]
 
     # Create a k: v hash from the array
     Hash[dates.map! { |k| [k.to_s, send(k)] }]

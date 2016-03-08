@@ -31,18 +31,18 @@ class StatisticsController < ApplicationController
             data: stats_for_collection(registered_this_year) }
         ],
 
-        homes: Home.count,
+        homes: Home.where(active: true).count,
         home_by_owner_type: OwnerType.all.map { |ot|
-          "#{Home.where(owner_type: ot).count} är #{ot.name}" }.join(', '),
+          "#{Home.where(active: true, owner_type: ot).count} är #{ot.name}" }.join(', '),
 
         current_placed_refugees: Placement.where(moved_out_at: nil).select(:refugee_id).distinct,
         current_placements: Placement.current_placements,
         current_placements_per_owner_type: OwnerType.all.map { |ot|
           "#{Placement.current_placements.includes(:home).where(
-            homes: { owner_type_id: ot.id }).count} på #{ot.name}" }.join(', '),
+            homes: { active: true, owner_type_id: ot.id }).count} på #{ot.name}" }.join(', '),
 
-        guaranteed_seats: Home.sum(:guaranteed_seats),
-        movable_seats: Home.sum(:movable_seats),
+        guaranteed_seats: Home.where(active: true).sum(:guaranteed_seats),
+        movable_seats: Home.where(active: true).sum(:movable_seats),
       }
     end
   end

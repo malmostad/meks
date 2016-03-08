@@ -23,7 +23,7 @@
         %p= "#{period[:data][:with_municipality_placement_in_malmo_sdo]} har anvisning till Malmös stadsområden"
         %p= "#{period[:data][:with_municipality_placement_others]} har anvisning till andra kommuner"
         %p= "#{period[:data][:with_no_municipality_placement]} saknar anvisning"
-        %p= "#{period[:data][:at_external_home]} är placerade på externa boenden"
+        %p= "#{period[:data][:at_external_home]} barn är placerade på externa placeringar"
         %p
           = "Vanligaste länder:"
           = period[:data][:top_countries][0...3].map(&:first).join(', ')
