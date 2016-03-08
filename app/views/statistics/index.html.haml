@@ -1,36 +1,38 @@
+= javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
+:javascript
+  google.charts.load("current", { packages: ["corechart"] });
+
 - cache "view-#{@cache_key_for_status}" do
   - title 'Översikt'
   %section.box.show.statistics
     %h1.box-title= h1
     .box-content.basic
+
+      .chart-box
+        = render 'chart'
+
       - @stats[:periods].each do |period|
         %h2.group-title= period[:title]
+
         %p
           = "#{period[:data][:refugees]} barn"
           = "(#{period[:data][:per_gender]})"
         %p= "#{period[:data][:in_transit]} är i ankomst"
         %p= raw "#{period[:data][:with_residence_permit]} har <abbr title='Permanent uppehållstillstånd'>PUT</abbr>"
-        %p= raw "#{period[:data][:with_temporary_permit]} har <abbr title='Tillfälligt uppehållstillstånd'>TUT</abbr>"
-        %p= "#{period[:data][:with_municipality_placement_in_malmo]} har anvisning till Malmö"
-        %p= "#{period[:data][:with_municipality_placement]} har anvisning totalt"
-        %p= "#{period[:data][:with_placement]} har boendeplats"
-        %p= "#{period[:data][:duplicates]} har en dubblett kopplad till sig"
-        %p= "#{period[:data][:deregistered]} är avregistrerade"
-        %p= "#{period[:data][:drafts]} inskrivningar är utkast"
+        %p= "#{period[:data][:with_municipality_placement_in_malmo_srf]} har anvisning till Malmö Srf"
+        %p= "#{period[:data][:with_municipality_placement_in_malmo_sdo]} har anvisning till Malmös stadsområden"
+        %p= "#{period[:data][:with_municipality_placement_others]} har anvisning till andra kommuner"
+        %p= "#{period[:data][:with_no_municipality_placement]} saknar anvisning"
+        %p= "#{period[:data][:at_external_home]} barn är placerade på externa placeringar"
         %p
-          = "Vanligast härkomst:"
-          - period[:data][:top_countries][0...10].each do |lang|
-            = "#{lang[0]} (#{lang[1]}),"
-        %p
-          = "Vanligast språk:"
-          - period[:data][:top_languages][0...10].each do |lang|
-            = "#{lang[0]} (#{lang[1]}),"
+          = "Vanligaste länder (10 barn eller fler):"
+          = period[:data][:top_countries][0...3].map(&:first).join(', ')
 
       %h2.group-title Boenden och placeringar
       %p
-        = "Det finns för närvarande #{@stats[:current_placements].count} boendeplaceringar."
+        = "Det är för närvarande #{@stats[:current_placed_refugees].count} barn placerade."
         = "#{@stats[:current_placements_per_owner_type]} boenden."
       %p
-        = "Det finns #{@stats[:guaranteed_seats] + @stats[:movable_seats]} boendenplatser."
+        = "Det finns #{@stats[:homes]} boenden med #{@stats[:guaranteed_seats] + @stats[:movable_seats]} boendenplatser."
         = "Av dessa är #{@stats[:guaranteed_seats]} garantiplatser och #{@stats[:movable_seats]} rörliga."
-      %p= "Det finns #{@stats[:homes]} boenden,  #{@stats[:home_by_owner_type]}"
+      %p= "Av boenden är #{@stats[:home_by_owner_type]}"

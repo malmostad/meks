@@ -20,4 +20,11 @@ module RefugeesHelper
       name
     end
   end
+
+  # Takes a { 'attribute_name' => attribute_value } hash
+  def format_asylum_status(h)
+    return 'Ingen status' if h.blank?
+
+    I18n.t('simple_form.labels.refugee.' + h.first) + ' ' + h.second.to_s
+  end
 end

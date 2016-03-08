@@ -1,4 +1,4 @@
-['Abchazien', 'Afghanistan', 'Albanien', 'Algeriet', 'Andorra', 'Angola', 'Antigua och Barbuda', 'Argentina', 'Armenien', 'Australien', 'Azerbajdzjan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belgien', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnien och Hercegovina', 'Botswana', 'Brasilien', 'Brunei', 'Bulgarien', 'Burkina Faso', 'Burundi', 'Centralafrikanska republiken', 'Chile', 'Colombia', 'Costa Rica', 'Cypern', 'Nordcypern', 'Danmark', 'Djibouti', 'Dominica', 'Dominikanska republiken', 'Ecuador', 'Egypten', 'Ekvatorialguinea', 'Elfenbenskusten', 'El Salvador', 'Eritrea', 'Estland', 'Etiopien', 'Fijiöarna', 'Filippinerna', 'Finland', 'Franska republiken', 'Förenade Arabemiraten', 'Storbritannien och Nordirland', 'Gabonesiska republiken', 'Gambia', 'Georgien', 'Ghana', 'Grekland', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Indien', 'Indonesien', 'Irak', 'Iran', 'Irland', 'Island', 'Israel', 'Italienska republiken', 'Jamaica', 'Japan', 'Jemen', 'Jordanien', 'Kambodja', 'Kamerun', 'Kanada', 'Kap Verde', 'Kazakstan', 'Kenya', 'Kina', 'Kina', 'Kirgiziska republiken', 'Kiribati', 'Komorerna', 'Kongo', 'Kongo', 'Korea', 'Korea', 'Kosovo', 'Kroatien', 'Kuba', 'Kuwait', 'Laotiska folkets demokratiska republik', 'Lesotho', 'Lettland', 'Libanon', 'Liberia', 'Libyska folksocialistiska arab jamahiriya', 'Liechtenstein', 'Litauen', 'Luxemburg', 'Madagaskar', 'Makedonien', 'Malawi', 'Malaysia', 'Maldiverna', 'Mali', 'Malta', 'Marocko', 'Marshallöarna', 'Mauretanien', 'Mauritius', 'Mexikos förenta stater', 'Mikronesiens federerade stater', 'Moçambique', 'Moldavien', 'Monaco', 'Mongoliet', 'Montenegro', 'Myanmar', 'Nagorno-Karabach', 'Namibia', 'Nauru', 'Nederländerna', 'Nepal', 'Nicaragua', 'Niger', 'Nigeria', 'Norge', 'Nya Zeeland', 'Oman', 'Pakistan', 'Palau', 'Palestinska myndigheten', 'Panama', 'Papua Nya Guinea', 'Paraguay', 'Peru', 'Polen', 'Portugisiska repubiken', 'Qatar', 'Rumänien', 'Rwanda', 'Ryska federationen', 'Saint Kitts och Nevis', 'Saint Lucia', 'Saint Vincent och Grenadinerna', 'Salomonöarna', 'Samoa', 'San Marino', 'São Tomé och Príncipe', 'Saudiarabien', 'Schweiziska edsförbundet', 'Senegal', 'Serbien', 'Seychellerna', 'Sierra Leone', 'Singapore', 'Slovakiska republiken', 'Slovenien', 'Somalia', 'Somaliland', 'Spanien', 'Sri Lanka', 'Sudan', 'Surinam', 'Sverige', 'Swaziland', 'Sydafrika', 'Sydossetien', 'Sydsudan', 'Syriska arabrepubliken', 'Tadzjikistan', 'Taiwan (Republiken Kina)', 'Tanzania', 'Tchad', 'Thailand', 'Tjeckiska republiken', 'Togolesiska republiken', 'Tonga', 'Transnistriens moldaviska republik', 'Trinidad och Tobago', 'Tunisien', 'Turkiet', 'Turkmenistan', 'Tuvalu', 'Tyskland', 'Uganda', 'Ukraina', 'Ungern', 'Uruguay', 'USA', 'Uzbekistan', 'Vanuatu', 'Vatikanen', 'Venezuela', 'Vietnam', 'Vitryssland', 'Zambia', 'Zimbabwe', 'Österrike', 'Östtimor'].each do |c|
+['Afghanistan', 'Albanien', 'Algeriet', 'Angola', 'Argentina', 'Armenien', 'Azerbajdzjan', 'Bahrain', 'Bangladesh', 'Benin', 'Bhutan', 'Bolivia', 'Bosnien Och Hercegovina', 'Brasilien', 'Bulgarien', 'Burkina Faso', 'Burundi', 'Centralafrikanska Republiken', 'Chile', 'Colombia', 'Dem Republiken Kongo', 'Djibouti', 'Dominikanska Republiken', 'Ecuador', 'Egypten', 'Ekvatorialguinea', 'El Salvador', 'Elfenbenskusten', 'Eritrea', 'Estland', 'Etiopien', 'Filippinerna', 'Gabon', 'Gambia', 'Georgien', 'Ghana', 'Grekland', 'Guinea', 'Guinea Bissau', 'Honduras', 'Indien', 'Indonesien', 'Irak', 'Iran', 'Israel', 'Jemen', 'Jordanien', 'Kambodja', 'Kamerun', 'Kanada', 'Kazakstan', 'Kenya', 'Kina', 'Kirgizistan', 'Kongo', 'Kosovo', 'Kroatien', 'Kuba', 'Kuwait', 'Laos', 'Lettland', 'Libanon', 'Liberia', 'Libyen', 'Litauen', 'Makedonien', 'Mali', 'Marocko', 'Mauretanien', 'Mexico', 'Mocambique', 'Moldavien', 'Moldova', 'Mongoliet', 'Montenegro', 'Myanmar', 'Nepal', 'Nicaragua', 'Niger', 'Nigeria', 'Nordkorea', 'Okänt', 'Pakistan', 'Panama', 'Paraguay', 'Peru', 'Polen', 'Rumänien', 'Rwanda', 'Ryssland', 'Saudiarabien', 'Senegal', 'Serbien', 'Sierra Leone', 'Slovakien', 'Somalia', 'Spanien', 'Sri Lanka', 'Statslös', 'Sudan', 'Sydsudan', 'Syrien', 'Tadzjikistan', 'Tanzania', 'Tchad', 'Thailand', 'Tjeckien', 'Togo', 'Tunisien', 'Turkiet', 'Turkmenistan', 'Tyskland', 'Uganda', 'Ukraina', 'Under Utredning', 'Ungern', 'Usa', 'Uzbekistan', 'Vanuatu', 'Venezuela', 'Vietnam', 'Vitryssland', 'Yemen', 'Zambia', 'Zimbabwe'].each do |c|
   Country.create(name: c)
 end
 
@@ -14,8 +14,8 @@ end
   TypeOfHousing.create(name: ht)
 end
 
-['Egna (SrF)', 'Externa'].each do |hot|
-  OwnerType.create(name: hot)
+['Kommunala (SRF)', 'Privata (SRF)', 'Externa'].each do |ot|
+  OwnerType.create(name: ot)
 end
 
 ['Inga behov', 'Flickor', 'Yngre', 'Speciella behov'].each do |htg|
@@ -61,7 +61,7 @@ locales = Rails.configuration.i18n.available_locales
     gender_id: rand(Gender.count) + 1,
     country_ids: [rand(Country.count) + 1],
     language_ids: [rand(Language.count) + 1],
-    registered: Faker::Date.between(1.year.ago, Date.today),
+    registered: Faker::Date.between(120.days.ago, Date.today),
     special_needs: rand(2)
   )
 
@@ -91,8 +91,7 @@ locales = Rails.configuration.i18n.available_locales
       home_id: rand(Home.count) + 1,
       moved_in_at: moved_in_at,
       moved_out_at: moved_out_at,
-      moved_out_reason_id: rand(MovedOutReason.count) + 1,
-      comment: Faker::Lorem.paragraph
+      moved_out_reason_id: rand(MovedOutReason.count) + 1
     )
   end
 

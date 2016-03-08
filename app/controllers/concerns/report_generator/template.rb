@@ -91,6 +91,9 @@ module ReportGenerator
         'refugee.special_needs' => {
           query: 'record.special_needs? ? "Ja" : "Nej"'
         },
+        'refugee.social_worker' => {
+          query: 'record.social_worker'
+        },
         'refugee.comment' => {
           query: 'record.comment'
         },
@@ -112,7 +115,7 @@ module ReportGenerator
           query: 'record.name'
         },
         'Lediga platser' => {
-          query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.size - (record.guaranteed_seats + record.movable_seats)',
+          query: '(record.guaranteed_seats + record.movable_seats) - record.placements.reject { |p| !p.moved_out_at.nil? }.size',
           type: :integer
         },
         'Aktuella placeringar' => {
@@ -230,7 +233,7 @@ module ReportGenerator
           query: 'record.refugee.temporary_permit_ends_at',
           type: :date
         },
-        'Barn, anvisad' => {
+        'Barn, anvisningskommun' => {
           query: 'record.refugee.municipality.name'
         },
         'Barn, anvisad enligt Migrationsverket' => {
