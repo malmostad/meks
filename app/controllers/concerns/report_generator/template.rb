@@ -9,6 +9,9 @@ module ReportGenerator
         'refugee.name' => {
           query: 'record.name'
         },
+        'Asylstatus' => {
+          query: 'format_asylum_status(record.asylum_status)'
+        },
         'Personnummer' => {
           query: 'record.ssn'
         },
@@ -40,9 +43,8 @@ module ReportGenerator
         'refugee.social_worker' => {
           query: 'record.social_worker'
         },
-
         'refugee.registered' => {
-          query: 'format_asylum_status(record.asylum_status)'
+          query: 'record.registered'
         },
         'PUT' => {
           query: 'record.residence_permit_at',
@@ -81,7 +83,6 @@ module ReportGenerator
         'refugee.deregistered_reason' => {
           query: 'record.deregistered_reason'
         },
-
         'Aktuellt boende' => {
           query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.map(&:home).map(&:name).join(", ")'
         },
@@ -175,15 +176,9 @@ module ReportGenerator
 
     def placements
       {
-        # 'Visa placering i MEKS' => {
-        #   query: 'edit_refugee_placement_url(record.refugee, record)'
-        # },
         'Barn' => {
           query: 'record.refugee.name'
         },
-        # 'Visa barn i MEKS' => {
-        #   query: 'refugee_url(record.refugee)'
-        # },
         'Boende' => {
           query: 'record.home.name'
         },
@@ -205,14 +200,45 @@ module ReportGenerator
         'Kommentar till utskrivning' => {
           query: 'record.comment'
         },
-        'Boende barnet bott på' => {
-          query: 'record.refugee.homes.map(&:name).join(", ")'
+
+        'Asylstatus' => {
+          query: 'format_asylum_status(record.refugee.asylum_status)'
         },
-        'Barn, registrerad' => {
-          query: 'record.refugee.registered',
-          type: :date
+        'Personnummer' => {
+          query: 'record.refugee.ssn'
         },
-        'Barn, PUT' => {
+        'Extra personnummer' => {
+          query: 'record.refugee.ssns.map(&:full_ssn).join(", ")'
+        },
+        'Dossiernummer' => {
+          query: 'record.refugee.dossier_number'
+        },
+        'Extra dossiernummer' => {
+          query: 'record.refugee.dossier_numbers.map(&:name).join(", ")'
+        },
+        'Ålder' => {
+          query: 'record.refugee.age',
+          type: :integer
+        },
+        'refugee.gender' => {
+          query: 'record.refugee.gender.name'
+        },
+        'Språk (barn)' => {
+          query: 'record.refugee.languages.map(&:name).join(", ")'
+        },
+        'refugee.countries' => {
+          query: 'record.refugee.countries.map(&:name).join(", ")'
+        },
+        'refugee.special_needs' => {
+          query: 'record.refugee.special_needs? ? "Ja" : "Nej"'
+        },
+        'refugee.social_worker' => {
+          query: 'record.refugee.social_worker'
+        },
+        'refugee.registered' => {
+          query: 'record.refugee.registered'
+        },
+        'PUT' => {
           query: 'record.refugee.residence_permit_at',
           type: :date
         },
@@ -220,96 +246,87 @@ module ReportGenerator
           query: 'record.refugee.checked_out_to_our_city',
           type: :date
         },
-        'Barn, TUT startar' => {
+        'TUT startar' => {
           query: 'record.refugee.temporary_permit_starts_at',
           type: :date
         },
-        'Barn, TUT slutar' => {
+        'TUT slutar' => {
           query: 'record.refugee.temporary_permit_ends_at',
           type: :date
         },
-        'Barn, anvisningskommun' => {
+        'refugee.municipality' => {
           query: 'record.refugee.municipality.name'
         },
-        'Barn, anvisad enligt Migrationsverket' => {
+        'refugee.municipality_placement_migrationsverket_at' => {
           query: 'record.refugee.municipality_placement_migrationsverket_at',
           type: :date
         },
-        'Barn, anvisad per överenskommelse' => {
+        'refugee.municipality_placement_per_agreement_at' => {
           query: 'record.refugee.municipality_placement_per_agreement_at',
           type: :date
         },
-        'Barn, kommunplacering' => {
+        'refugee.municipality_placement_comment' => {
           query: 'record.refugee.municipality_placement_comment'
         },
-        'Barn, avregistrerad' => {
+        'refugee.deregistered' => {
           query: 'record.refugee.deregistered',
           type: :date
         },
-        'Barn, avslutsorsak' => {
+        'refugee.deregistered_reason' => {
           query: 'record.refugee.deregistered_reason'
         },
-        'Barnets primära dossiernummer' => {
-          query: 'record.refugee.dossier_number'
+        'Alla boende' => {
+          query: 'record.refugee.homes.map(&:name).join(", ")'
         },
-        'Barnets dossiernummer' => {
-          query: 'record.refugee.dossier_numbers.map(&:name).join(", ")'
+        'home.phone' => {
+          query: 'record.home.phone'
         },
-        'Barnets ålder' => {
-          query: 'record.refugee.age',
-          type: :integer
+        'home.fax' => {
+          query: 'record.home.fax'
         },
-        'Barnets primära personnummer' => {
-          query: 'record.refugee.ssn'
+        'home.address' => {
+          query: 'record.home.address'
         },
-        'Barnets alla personnummer' => {
-          query: 'record.refugee.ssns.map(&:full_ssn).join(", ")'
+        'home.post_code' => {
+          query: 'record.home.post_code'
         },
-        'Barnets kön' => {
-          query: 'record.refugee.gender.name'
+        'home.postal_town' => {
+          query: 'record.home.postal_town'
         },
-        'Barnets språk' => {
-          query: 'record.refugee.languages.map(&:name).join(", ")'
-        },
-        'Barnets härkomst' => {
-          query: 'record.refugee.countries.map(&:name).join(", ")'
-        },
-        'Barn, speciella behov' => {
-          query: 'record.refugee.special_needs? ? "Ja" : "Nej"'
-        },
-        'Barn, kommentar' => {
-          query: 'record.refugee.comment'
-        },
-        'Barn anhöriga' => {
-          query: 'record.refugee.relateds.map(&:name).join(", ")'
-        },
-        'Barn angiven som anhöriga till' => {
-          query: 'record.refugee.inverse_relateds.map(&:name).join(", ")'
-        },
-        'Övriga anhöriga' => {
-          query: 'record.refugee.other_relateds'
-        },
-        'Boendeform ' => {
+        'home.type_of_housings' => {
           query: 'record.home.type_of_housings.map(&:name).join(", ")'
         },
-        'Boende, ägartyp' => {
+        'home.owner_type' => {
           query: 'record.home.owner_type.name'
         },
-        'Boende, målgrupp' => {
+        'home.target_groups' => {
           query: 'record.home.target_groups.map(&:name).join(", ")'
         },
-        'Boende, språk' => {
+        'Språk (boende)' => {
           query: 'record.home.languages.map(&:name).join(", ")'
         },
-        'Boendet är aktivt' => {
-          query: 'record.home.active? ? "Ja" : "Nej"'
-        },
-        'Boende, kommentar' => {
+        'home.comment' => {
           query: 'record.home.comment'
         },
-        # 'Visa boende i MEKS' => {
-        #   query: 'home_url(record.home)'
-        # },
+        'home.guaranteed_seats' => {
+          query: 'record.home.guaranteed_seats',
+          type: :integer
+        },
+        'Lediga platser' => {
+          query: '(record.home.guaranteed_seats + record.home.movable_seats) - record.home.placements.reject { |p| !p.moved_out_at.nil? }.size',
+          type: :integer
+        },
+        'home.movable_seats' => {
+          query: 'record.home.movable_seats',
+          type: :integer
+        },
+        'Summa platser' => {
+          query: 'record.home.seats',
+          type: :integer
+        },
+        'home.active' => {
+          query: 'record.home.active? ? "Ja" : "Nej"'
+        }
       }
     end
   end
