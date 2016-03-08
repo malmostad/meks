@@ -9,12 +9,40 @@ module ReportGenerator
         'refugee.name' => {
           query: 'record.name'
         },
-        # 'Visa i MEKS' => {
-        #   query: 'refugee_url(record)'
-        # },
+        'Personnummer' => {
+          query: 'record.ssn'
+        },
+        'Extra personnummer' => {
+          query: 'record.ssns.map(&:full_ssn).join(", ")'
+        },
+        'Dossiernummer' => {
+          query: 'record.dossier_number'
+        },
+        'Extra dossiernummer' => {
+          query: 'record.dossier_numbers.map(&:name).join(", ")'
+        },
+        'Ålder' => {
+          query: 'record.age',
+          type: :integer
+        },
+        'refugee.gender' => {
+          query: 'record.gender.name'
+        },
+        'refugee.languages' => {
+          query: 'record.languages.map(&:name).join(", ")'
+        },
+        'refugee.countries' => {
+          query: 'record.countries.map(&:name).join(", ")'
+        },
+        'refugee.special_needs' => {
+          query: 'record.special_needs? ? "Ja" : "Nej"'
+        },
+        'refugee.social_worker' => {
+          query: 'record.social_worker'
+        },
+
         'refugee.registered' => {
-          query: 'record.registered',
-          type: :date
+          query: 'format_asylum_status(record.asylum_status)'
         },
         'PUT' => {
           query: 'record.residence_permit_at',
@@ -53,6 +81,7 @@ module ReportGenerator
         'refugee.deregistered_reason' => {
           query: 'record.deregistered_reason'
         },
+
         'Aktuellt boende' => {
           query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.map(&:home).map(&:name).join(", ")'
         },
@@ -62,40 +91,6 @@ module ReportGenerator
         'Total placeringstid (dagar)' => {
           query: 'record.total_placement_time',
           type: :integer
-        },
-        'Dossiernummer' => {
-          query: 'record.dossier_number'
-        },
-        'Extra dossiernummer' => {
-          query: 'record.dossier_numbers.map(&:name).join(", ")'
-        },
-        'Ålder' => {
-          query: 'record.age',
-          type: :integer
-        },
-        'Personnummer' => {
-          query: 'record.ssn'
-        },
-        'Extra personnummer' => {
-          query: 'record.ssns.map(&:full_ssn).join(", ")'
-        },
-        'refugee.gender' => {
-          query: 'record.gender.name'
-        },
-        'refugee.languages' => {
-          query: 'record.languages.map(&:name).join(", ")'
-        },
-        'refugee.countries' => {
-          query: 'record.countries.map(&:name).join(", ")'
-        },
-        'refugee.special_needs' => {
-          query: 'record.special_needs? ? "Ja" : "Nej"'
-        },
-        'refugee.social_worker' => {
-          query: 'record.social_worker'
-        },
-        'refugee.comment' => {
-          query: 'record.comment'
         },
         'refugee.relateds' => {
           query: 'record.relateds.map(&:name).join(", ")'
@@ -113,34 +108,6 @@ module ReportGenerator
       {
         'home.name' => {
           query: 'record.name'
-        },
-        'Lediga platser' => {
-          query: '(record.guaranteed_seats + record.movable_seats) - record.placements.reject { |p| !p.moved_out_at.nil? }.size',
-          type: :integer
-        },
-        'Aktuella placeringar' => {
-          query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.size',
-          type: :integer
-        },
-        'Placeringar totalt' => {
-          query: 'record.placements.count',
-          type: :integer
-        },
-        'home.guaranteed_seats' => {
-          query: 'record.guaranteed_seats',
-          type: :integer
-        },
-        'home.movable_seats' => {
-          query: 'record.movable_seats',
-          type: :integer
-        },
-        'Summa platser' => {
-          query: 'record.seats',
-          type: :integer
-        },
-        'Total placeringstid (dagar)' => {
-          query: 'record.total_placement_time',
-          type: :integer
         },
         'home.phone' => {
           query: 'record.phone'
@@ -169,11 +136,39 @@ module ReportGenerator
         'home.languages' => {
           query: 'record.languages.map(&:name).join(", ")'
         },
-        'home.active' => {
-          query: 'record.active? ? "Ja" : "Nej"'
-        },
         'home.comment' => {
           query: 'record.comment'
+        },
+        'Aktuella placeringar' => {
+          query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.size',
+          type: :integer
+        },
+        'Placeringar totalt' => {
+          query: 'record.placements.count',
+          type: :integer
+        },
+        'Total placeringstid (dagar)' => {
+          query: 'record.total_placement_time',
+          type: :integer
+        },
+        'home.guaranteed_seats' => {
+          query: 'record.guaranteed_seats',
+          type: :integer
+        },
+        'Lediga platser' => {
+          query: '(record.guaranteed_seats + record.movable_seats) - record.placements.reject { |p| !p.moved_out_at.nil? }.size',
+          type: :integer
+        },
+        'home.movable_seats' => {
+          query: 'record.movable_seats',
+          type: :integer
+        },
+        'Summa platser' => {
+          query: 'record.seats',
+          type: :integer
+        },
+        'home.active' => {
+          query: 'record.active? ? "Ja" : "Nej"'
         }
       }
     end
