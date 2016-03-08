@@ -1,12 +1,12 @@
-.g-chart{ id: "chart-#{period[:id]}" }
+.g-chart{ id: "chart-#{@chart[:id]}" }
 
 :javascript
   function drawChart() {
-    var data = google.visualization.arrayToDataTable(#{period[:chart][:data]});
+    var data = google.visualization.arrayToDataTable(#{@chart[:data]});
 
     var options = {
       chartArea: { left: 50, top: 50, bottom: 50, right: 10 },
-      title: "#{period[:chart][:title]}",
+      title: "#{@chart[:title]}",
       legend: 'none',
       vAxis: {
         title: "Antal barn",
@@ -22,7 +22,7 @@
       }
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart-#{period[:id]}'));
+    var chart = new google.visualization.LineChart(document.getElementById('chart-#{@chart[:id]}'));
     chart.draw(data, options);
   }
   google.charts.setOnLoadCallback(drawChart);

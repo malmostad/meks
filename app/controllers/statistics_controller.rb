@@ -4,25 +4,23 @@ class StatisticsController < ApplicationController
   before_action { authorize! :view, :statistics }
 
   def index
+    data = [['X', 'antal barn']]
+    registered_per_day(7.day.ago..1.day.ago).each do |date, quantity|
+      data << [I18n.l(date, format: :short), quantity]
+    end
+
+    @chart = {
+      id: 'weekly',
+      title: 'Antal nyanlända barn senaste sju dagarna',
+      data: data
+    }
+
     @stats = Rails.cache.fetch("queries-#{cache_key_for_status}") do
       {
         periods: [
           { id: 'all',
             title: 'Aktuella ärenden just nu',
             data: stats_for_collection(all_registered),
-            chart: {
-              title: 'Antal nyanlända barn per dag förra veckan',
-              data: [
-                ['X', 'antal barn'],
-                ['mån', registered_per_date(last_week_start)],
-                ['tis', registered_per_date(last_week_start + 1.day)],
-                ['ons', registered_per_date(last_week_start + 2.day)],
-                ['tor', registered_per_date(last_week_start + 3.day)],
-                ['fre', registered_per_date(last_week_start + 4.day)],
-                ['lör', registered_per_date(last_week_start + 5.day)],
-                ['sön', registered_per_date(last_week_start + 6.day)]
-              ]
-            }
           },
           { id: 'this-month',
             title: 'Nyinskrivna aktuell månad',
@@ -99,12 +97,8 @@ class StatisticsController < ApplicationController
       Refugee.where(registered: one_week_ago.beginning_of_week..one_week_ago.end_of_week)
   end
 
-  def registered_per_date(date)
-    Refugee.where(registered: date).count
-  end
-
-  def last_week_start
-    Date.today.beginning_of_week - 7.days
+  def registered_per_day(range)
+    Refugee.where(registered: range).select('registered').group('registered').count('registered')
   end
 
   def cache_key_for_status

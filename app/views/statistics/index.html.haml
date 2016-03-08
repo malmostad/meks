@@ -1,12 +1,16 @@
 = javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
 :javascript
-  google.charts.load("current", { packages:["corechart"] });
+  google.charts.load("current", { packages: ["corechart"] });
 
 - cache "view-#{@cache_key_for_status}" do
   - title 'Översikt'
   %section.box.show.statistics
     %h1.box-title= h1
     .box-content.basic
+
+      .chart-box
+        = render 'chart'
+
       - @stats[:periods].each do |period|
         %h2.group-title= period[:title]
 
@@ -23,10 +27,6 @@
         %p
           = "Vanligaste länder:"
           = period[:data][:top_countries][0...3].map(&:first).join(', ')
-
-        - if period[:chart].present?
-          .chart-box
-            = render 'chart', period: period
 
       %h2.group-title Boenden och placeringar
       %p
