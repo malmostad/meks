@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "reports/index", type: :view do
   before(:each) do
     assign(:homes, create_list(:home, 2))
+    assign(:pre_generated_reports, [])
   end
 
   it "renders a list of report forms" do
