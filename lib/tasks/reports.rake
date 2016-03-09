@@ -30,8 +30,38 @@ namespace :reports do
     xlsx.serialize("#{reports_dir}/#{find_report(2)['filename']}")
   end
 
+  desc 'Placements for the current quarter'
+  task placements_this_quarter: :environment do |task|
+    placements_this_quarter = Placement.includes(
+      :refugee, :home, :moved_out_reason,
+      refugee: [:countries, :languages, :ssns, :dossier_numbers,
+                :gender, :homes, :placements, :municipality,
+                :relateds, :inverse_relateds],
+      home: [:languages, :type_of_housings,
+             :owner_type, :target_groups, :languages]).where(
+        'moved_out_at is null or moved_out_at >= ?',
+        Date.today.beginning_of_quarter)
+
+    xlsx = generate_xlsx(:placements, placements_this_quarter)
+    xlsx.serialize("#{reports_dir}/#{find_report(3)['filename']}")
+  end
+
+  desc 'All placements'
+  task all_placements: :environment do |task|
+    all_placements = Placement.includes(
+      :refugee, :home, :moved_out_reason,
+      refugee: [:countries, :languages, :ssns, :dossier_numbers,
+                :gender, :homes, :placements, :municipality,
+                :relateds, :inverse_relateds],
+      home: [:languages, :type_of_housings,
+             :owner_type, :target_groups, :languages]).all
+
+    xlsx = generate_xlsx(:placements, all_placements)
+    xlsx.serialize("#{reports_dir}/#{find_report(4)['filename']}")
+  end
+
   desc 'Generate all reports'
-  task all: [:active_refugees, :refugees_this_year]
+  task all: [:active_refugees, :refugees_this_year, :placements_this_quarter, :all_placements]
 end
 
 def reports_dir

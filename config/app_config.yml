@@ -9,6 +9,12 @@ defaults: &defaults
     - id: 2
       desc: 'Aktuellt år: Barn som varit inskrivna i år eller har en placering första januari detta år'
       filename: 'aktuellt_ar.xlsx'
+    - id: 3
+      desc: 'Placeringar aktuellt kvartal'
+      filename: 'placeringar_aktuellt_kvartal.xlsx'
+    - id: 4
+      desc: 'Alla placeringar'
+      filename: 'alla_placeringar.xlsx'
 
 development: &development
   <<: *defaults

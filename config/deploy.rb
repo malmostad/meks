@@ -15,6 +15,8 @@ set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:application)}"
 set :scm, :git
 set :deploy_via, :remote_cache
 
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+
 # set :format, :pretty
 # set :log_level, :debug
 set :pty, true
