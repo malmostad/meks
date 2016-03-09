@@ -27,7 +27,7 @@ table {
   }
 }
 
-section.box.show.statistics {
+section.box.show {
   h2.group-title {
     font-family: $sans-serif;
     font-weight: bold;
@@ -36,6 +36,14 @@ section.box.show.statistics {
     font-family: $sans-serif;
     font-size: emize(14);
     margin-bottom: .4em;
+  }
+  .box-content.basic .reports {
+    font-family: $sans-serif;
+    font-size: emize(14, 15);
+    margin-bottom: 2em;
+    li {
+      margin-bottom: .8em;
+    }
   }
 }
 
