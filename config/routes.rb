@@ -32,7 +32,8 @@ Rails.application.routes.draw do
   resources :users, only: :index
   resources :statistics, only: :index
 
-  get 'reports' => 'reports#index'
+  get  'reports' => 'reports#index'
+  get  'reports/downloads/:id' => 'reports#downloads', as: 'reports_downloads'
   post 'reports/refugees'
   post 'reports/placements'
   post 'reports/homes'

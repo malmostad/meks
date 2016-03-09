@@ -2,6 +2,13 @@ defaults: &defaults
   base_url: "https://komin.malmo.se/"
   assets_url_base: "//assets.malmo.se/internal/v4-staging/"
   stub_auth: false
+  pre_generated_reports:
+    - id: 1
+      desc: 'Aktuella ärenden: Alla barn som inte är utskrivna'
+      filename: 'aktuella_arenden.xlsx'
+    - id: 2
+      desc: 'Aktuellt år: Barn som varit inskrivna i år eller har en placering första januari detta år'
+      filename: 'aktuellt_ar.xlsx'
 
 development: &development
   <<: *defaults

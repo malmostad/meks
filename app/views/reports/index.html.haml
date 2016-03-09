@@ -2,6 +2,15 @@
 %section.box.show.reports
   %h1.box-title= h1
   .box-content.basic.form-data
+    %form.basic
+      %h2.group-title Färdiggenererade rapporter
+      %ul
+        - @pre_generated_reports.each do |report|
+          %li
+            = link_to report['desc'], reports_downloads_path(report['id'])
+            = report[:filename]
+            = report[:filetime].to_s[0..18]
+            = "(#{number_to_human_size(report[:filesize], precision: 3)})"
 
     = render 'placements'
     = render 'refugees'

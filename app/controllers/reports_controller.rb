@@ -7,18 +7,12 @@ class ReportsController < ApplicationController
 
   def index
     @homes = Home.order(:name)
+    @pre_generated_reports = pre_generated_reports
+  end
 
-    @pre_generated_reports = %w(aktuella_arenden.xlsx aktuellt_ar.xlsx).map do |filename|
-      filepath = File.join(Rails.root, 'reports', filename)
-
-      if File.exist?(filepath)
-        {
-          filename: filename,
-          filetime: File.mtime(filepath).localtime,
-          filesize: File.size(filepath)
-        }
-      end
-    end.reject(&:blank?)
+  def downloads
+    filename = find_report(params[:id])['filename']
+    send_file report_filepath(filename), type: :xlsx, disposition: 'attachment', filename: filename
   end
 
   def placements
@@ -103,5 +97,28 @@ class ReportsController < ApplicationController
 
     xlsx = generate_xlsx(:homes, records)
     send_xlsx xlsx, 'Boenden'
+  end
+
+  private
+
+  def pre_generated_reports
+    APP_CONFIG['pre_generated_reports'].each do |report|
+      filepath = report_filepath(report['filename'])
+
+      if File.exist?(filepath)
+        report.merge!(
+          filetime: File.mtime(filepath).localtime,
+          filesize: File.size(filepath)
+        )
+      end
+    end
+  end
+
+  def report_filepath(filename)
+    File.join(Rails.root, 'reports', filename)
+  end
+
+  def find_report(id)
+    APP_CONFIG['pre_generated_reports'].detect { |r| r['id'] == id.to_i }
   end
 end
