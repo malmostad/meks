@@ -7,16 +7,28 @@ class ReportsController < ApplicationController
 
   def index
     @homes = Home.order(:name)
+
+    @pre_generated_reports = %w(aktuella_arenden.xlsx aktuellt_ar.xlsx).map do |filename|
+      filepath = File.join(Rails.root, 'reports', filename)
+
+      if File.exist?(filepath)
+        {
+          filename: filename,
+          filetime: File.mtime(filepath).localtime,
+          filesize: File.size(filepath)
+        }
+      end
+    end.reject(&:blank?)
   end
 
   def placements
     records = Placement.includes(
       :refugee, :home, :moved_out_reason,
       refugee: [:countries, :languages, :ssns, :dossier_numbers,
-        :gender, :homes, :placements, :municipality,
-        :relateds, :inverse_relateds],
+                :gender, :homes, :placements, :municipality,
+                :relateds, :inverse_relateds],
       home: [:languages, :type_of_housings,
-        :owner_type, :target_groups, :languages])
+             :owner_type, :target_groups, :languages])
 
     # Been on the home during a given range
     if params[:placements_from].present? && params[:placements_to].present?
