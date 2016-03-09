@@ -5,14 +5,15 @@
     %p.hint Högerklicka på en länk och välj <em>Spara länk som</em> (eller liknande)
     %ul.reports
       - @pre_generated_reports.each do |report|
-        %li
-          = link_to report['desc'], reports_downloads_path(report['id'])
-          = report[:filename]
-          %br/
-          = 'Skapad för'
-          = distance_of_time_in_words_to_now(report[:filetime])
-          = 'sen'
-          = "(#{number_to_human_size(report[:filesize], precision: 3)})"
+        - if report[:filetime].present?
+          %li
+            = link_to report['desc'], reports_downloads_path(report['id'])
+            = report[:filename]
+            %br/
+            = 'Skapad för'
+            = distance_of_time_in_words_to_now(report[:filetime])
+            = 'sen'
+            = "(#{number_to_human_size(report[:filesize], precision: 3)})"
 
 %section.box.show.reports
   %h1.box-title Generera rapporter
