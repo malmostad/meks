@@ -5,7 +5,7 @@ class StatisticsController < ApplicationController
 
   def index
     data = [['X', 'antal barn']]
-    registered_per_day(7.day.ago..1.day.ago).each do |date, quantity|
+    registered_per_day(7.day.ago.to_date..1.day.ago.to_date).each do |date, quantity|
       data << [I18n.l(date, format: :short), quantity]
     end
 
@@ -98,7 +98,10 @@ class StatisticsController < ApplicationController
   end
 
   def registered_per_day(range)
-    Refugee.where(registered: range).select('registered').group('registered').count('registered')
+    zero_included = {}
+    range.each { |d| zero_included.merge!(d => 0)}
+    registered = Refugee.where(registered: range).select('registered').group('registered').count('registered')
+    zero_included.merge(registered)
   end
 
   def cache_key_for_status
