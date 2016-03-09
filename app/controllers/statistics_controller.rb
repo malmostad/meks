@@ -4,7 +4,7 @@ class StatisticsController < ApplicationController
   before_action { authorize! :view, :statistics }
 
   def index
-    data = [['X', 'antal barn']]
+    data = [['X', 'antal']]
     registered_per_day(7.day.ago.to_date..1.day.ago.to_date).each do |date, quantity|
       data << [I18n.l(date, format: :short), quantity]
     end
