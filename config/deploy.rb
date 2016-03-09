@@ -23,7 +23,7 @@ set :pty, true
 set :forward_agent, true
 
 set :linked_files, %w{config/database.yml config/secrets.yml }
-set :linked_dirs, %w{log tmp/pids tmp/sockets}
+set :linked_dirs, %w{log tmp/pids tmp/sockets reports}
 
 set :default_env, { path: '$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH' }
 set :keep_releases, 5
