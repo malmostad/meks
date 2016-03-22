@@ -6,9 +6,13 @@
 
       = show_attribute('Barn', @refugee.name)
       - related = @relationship.related.present? ? @relationship.related.name : ''
-      = f.input :related do
-        = text_field_tag :relationship_related, nil, value: related, 'data-autocomplete-url' => refugees_suggest_path, class: 'form-control'
-      = f.input :related_id
+      = f.input :related, label: 'Sök anhörig' do
+        = text_field_tag :relationship_related, nil, value: '', 'data-autocomplete-url' => refugees_suggest_path,
+          class: 'form-control', placeholder: 'Sök på namn, person- eller dossiernummer'
+      .form-group
+        .control-label= label_tag 'Vald anhörig:*'
+        .controls= text_field_tag 'relationship_related_name', related, readonly: true, tabindex: -1, class: "form-control"
+      = f.input :related_id, as: :hidden
       = f.association :type_of_relationship, input_html: { class: 'chosen' }
 
       = render 'application/submit', form: f, cancel_path: @refugee.new_record? ? @refugee : refugee_relationships_path(@refugee)

@@ -66,10 +66,13 @@ $ ->
           items: 10
         success: (data) ->
           response $.map data, (item) ->
-            label: "#{item.name} #{item.dossier_numbers.concat(item.ssns).join(', ')}"
+            value: "#{item.name} #{item.dossier_numbers.concat(item.ssns).join(', ')}"
             id: item.id
     select: (event, ui) ->
-      $('#relationship_related_id').attr('value', ui.item.id)
+      event.preventDefault()
+      $('#relationship_related_id').val(ui.item.id)
+      $('#relationship_related_name').val(ui.item.value)
+      $('#relationship_related').val('')
     minLength: 2
 
 
