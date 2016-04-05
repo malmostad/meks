@@ -11,7 +11,7 @@ class ReportsController < ApplicationController
   end
 
   def downloads
-    filename = find_report(params[:id])['filename']
+    filename = find_report(params[:id].to_i)['filename']
     send_file report_filepath(filename), type: :xlsx, disposition: 'attachment', filename: filename
   end
 
