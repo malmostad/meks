@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225122005) do
+ActiveRecord::Schema.define(version: 20160406133717) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 20160225122005) do
     t.integer  "deregistered_reason_id",                     limit: 4
     t.boolean  "secrecy",                                                  default: false
     t.text     "social_worker",                              limit: 65535
+    t.text     "deregistered_comment",                       limit: 65535
   end
 
   add_index "refugees", ["deregistered_reason_id"], name: "index_refugees_on_deregistered_reason_id", using: :btree

@@ -51,6 +51,7 @@
     = f.input :municipality_placement_comment
     = f.input :deregistered, as: :string, wrapper: :datepicker
     = f.association :deregistered_reason
+    = f.input :deregistered_comment
 
     = render 'application/submit', form: f,
       cancel_path: @refugee.id.present? ? refugee_path(@refugee) : refugees_path

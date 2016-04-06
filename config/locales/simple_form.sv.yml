@@ -36,6 +36,7 @@ sv:
         homes: Boenden
         deregistered: Avslutad
         deregistered_reason: Avslutsorsak
+        deregistered_comment: Avslutsorsak, kommentar
         residence_permit_at: <abbr title='Permanent uppehållstillstånd'>PUT</abbr>
         checked_out_to_our_city: Utskriven till Malmö
         temporary_permit_starts_at: <abbr title='Tillfälligt uppehållstillstånd startar'>TUT startar</abbr>
@@ -103,5 +104,6 @@ sv:
         other_relateds: *comment
         municipality_placement_comment: *comment
         social_worker: *comment
+        deregistered_comment: *comment
       placement:
         comment: *comment

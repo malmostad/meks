@@ -107,7 +107,7 @@ class RefugeesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def refugee_params
       permitted_params = [
-        :name, :registered, :deregistered, :deregistered_reason_id,
+        :name, :registered, :deregistered, :deregistered_reason_id, :deregistered_comment,
         :date_of_birth,
         :ssn_extension,
         :dossier_number,

@@ -45,6 +45,7 @@
       = show_attribute('refugee.municipality_placement_comment', @refugee.municipality_placement_comment)
       = show_attribute('refugee.deregistered', @refugee.deregistered)
       = show_attribute('refugee.deregistered_reason', @refugee.deregistered_reason.present? ? @refugee.deregistered_reason.name : '')
+      = show_attribute('refugee.deregistered_comment', @refugee.deregistered_comment)
 
       = render 'placements'
       = render 'relateds'
