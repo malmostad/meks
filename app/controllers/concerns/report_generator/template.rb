@@ -83,6 +83,9 @@ module ReportGenerator
         'refugee.deregistered_reason' => {
           query: 'record.deregistered_reason'
         },
+        'refugee.deregistered_comment' => {
+          query: 'record.deregistered_comment'
+        },
         'Aktuellt boende' => {
           query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.map(&:home).map(&:name).join(", ")'
         },
@@ -274,6 +277,9 @@ module ReportGenerator
         },
         'refugee.deregistered_reason' => {
           query: 'record.refugee.deregistered_reason'
+        },
+        'refugee.deregistered_comment' => {
+          query: 'record.refugee.deregistered_comment'
         },
         'Alla boende' => {
           query: 'record.refugee.homes.map(&:name).join(", ")'
