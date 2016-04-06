@@ -75,7 +75,9 @@ class RefugeesController < ApplicationController
         { id: r.id,
           name: r.name,
           path: "#{root_url}refugees/#{r.id}",
+          ssn: r.ssn,
           ssns: r.ssns.split(/\s/) || [],
+          dossier_number: r.dossier_number,
           dossier_numbers: r.dossier_numbers.split(/\s/) || []
         }
       end
