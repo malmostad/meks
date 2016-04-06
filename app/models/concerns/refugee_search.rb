@@ -24,9 +24,9 @@ module RefugeeSearch
       indexes :name_phrase, analyzer: 'simple'
       indexes :name_search, analyzer: 'name_index', search_analyzer: 'name_search'
       indexes :ssn, analyzer: 'nmbr', search_analyzer: 'standard'
-      indexes :ssns, analyzer: 'nmbr', search_analyzer: 'standard'
+      indexes :ssns, analyzer: 'nmbr_letters', search_analyzer: 'standard'
       indexes :dossier_number, analyzer: 'nmbr', search_analyzer: 'standard'
-      indexes :dossier_numbers, analyzer: 'simple' #, search_analyzer: 'standard'
+      indexes :dossier_numbers, analyzer: 'nmbr_letters', search_analyzer: 'standard'
     end
 
     def delete_document

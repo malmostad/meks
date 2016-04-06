@@ -16,6 +16,8 @@ analysis:
       tokenizer: keyword
       filter:
       - nmbr
+    nmbr_letters:
+      tokenizer: edge_ngram_nmbr_letters
 
   tokenizer:
     edge_ngram_2:
@@ -24,6 +26,13 @@ analysis:
       max_gram: 50
       token_chars:
       - letter
+    edge_ngram_nmbr_letters:
+      type: edgeNGram
+      min_gram: 2
+      max_gram: 50
+      token_chars:
+      - letter
+      - digit
 
   filter:
     nmbr:
