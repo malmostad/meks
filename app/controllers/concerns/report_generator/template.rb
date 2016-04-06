@@ -81,7 +81,7 @@ module ReportGenerator
           type: :date
         },
         'refugee.deregistered_reason' => {
-          query: 'record.deregistered_reason'
+          query: 'record.deregistered_reason.name'
         },
         'refugee.deregistered_comment' => {
           query: 'record.deregistered_comment'
@@ -276,7 +276,7 @@ module ReportGenerator
           type: :date
         },
         'refugee.deregistered_reason' => {
-          query: 'record.refugee.deregistered_reason'
+          query: 'record.refugee.deregistered_reason.name'
         },
         'refugee.deregistered_comment' => {
           query: 'record.refugee.deregistered_comment'
