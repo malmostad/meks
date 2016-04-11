@@ -66,7 +66,7 @@ class StatisticsController < ApplicationController
       with_municipality_placement_in_malmo_srf: malmo_srf,
       with_municipality_placement_in_malmo_sdo: malmo_total - malmo_srf,
       with_municipality_placement_others: collection.where.not(municipality: nil).count - malmo_total,
-      with_no_municipality_placement: collection.where('municipality_id is ? and (deregistered_reason_id != ? or deregistered_reason_id is ?)', nil, 6, nil).count,
+      with_no_municipality_placement: collection.includes(:placements).where(municipality: nil, deregistered_reason: nil, deregistered: nil).where.not(placements: { id: nil } ).count,
       with_municipality_placement_and_not_deregistered: collection.where.not(municipality_id: nil).where(deregistered: nil).count,
       with_municipality_placement_in_malmo_and_deregistered: collection.joins(:municipality).where('municipalities.name not like ? and deregistered is not ?', "malmö%", nil).count,
       at_external_home: Placement.includes(:home).where(refugee: collection, moved_out_at: nil, homes: { owner_type_id: 3 }).select(:refugee_id).distinct.count,
