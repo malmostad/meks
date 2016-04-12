@@ -39,6 +39,13 @@
     = f.input :social_worker
     = f.input :other_relateds
 
+    - if @refugee.new_record? && @refugee.placements.present?
+      %h2.group-title Boendeplacering
+      .help-block Ange boende och inskrivningsdatum eller lämna båda blanka
+      = f.simple_fields_for :placements do |placement|
+        = placement.association :home, collection: @homes, include_blank: ' ', input_html: { class: 'chosen' }
+        = placement.input :moved_in_at, as: :string, wrapper: :datepicker
+
     %h2.group-title Asylstatus
     = f.input :registered, as: :string, wrapper: :datepicker
     = f.input :residence_permit_at, label: raw(t("simple_form.labels.refugee.residence_permit_at")), as: :string, wrapper: :datepicker

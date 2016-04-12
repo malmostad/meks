@@ -11,8 +11,8 @@ class RefugeesController < ApplicationController
 
   def new
     @refugee = Refugee.new
-    @refugee.dossier_numbers << DossierNumber.new
-    @refugee.ssns << Ssn.new
+    @refugee.placements.build
+    @homes = Home.where(active: true)
   end
 
   def edit
@@ -29,6 +29,7 @@ class RefugeesController < ApplicationController
     if @refugee.save
       redirect_to @refugee, notice: 'Ensamkommande barnet registrerat'
     else
+      @homes = Home.where(active: true)
       render :new
     end
   end
@@ -75,10 +76,9 @@ class RefugeesController < ApplicationController
         { id: r.id,
           name: r.name,
           path: "#{root_url}refugees/#{r.id}",
-          ssn: r.ssn,
-          ssns: r.ssns.split(/\s/) || [],
           dossier_number: r.dossier_number,
-          dossier_numbers: r.dossier_numbers.split(/\s/) || []
+          ssn: r.ssn,
+          value: [r.name, r.dossier_number, r.ssn].reject(&:blank?).join(', ')
         }
       end
     else
@@ -104,7 +104,6 @@ class RefugeesController < ApplicationController
       { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def refugee_params
       permitted_params = [
         :name, :registered, :deregistered, :deregistered_reason_id, :deregistered_comment,
@@ -127,7 +126,8 @@ class RefugeesController < ApplicationController
         country_ids: [],
         language_ids: [],
         ssns_attributes: [:id, :_destroy, :date_of_birth, :extension],
-        dossier_numbers_attributes: [:id, :_destroy, :name]
+        dossier_numbers_attributes: [:id, :_destroy, :name],
+        placements_attributes: [:home_id, :moved_in_at]
       ]
       permitted_params.unshift(:draft) if can? :manage, Refugee
       params.require(:refugee).permit(*permitted_params)
