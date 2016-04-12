@@ -66,7 +66,7 @@ $ ->
           items: 10
         success: (data) ->
           response $.map data, (item) ->
-            value: "#{item.name} #{item.dossier_numbers.concat(item.ssns).join(', ')}"
+            value: item.value
             id: item.id
     select: (event, ui) ->
       event.preventDefault()
@@ -95,7 +95,7 @@ $ ->
             if data.length
               items = data.length
               response $.map data, (item) ->
-                $.extend(item, { value: item.name })
+                $.extend(item, { value: item.value })
                 item
             else
               $queryRefugeeField.autocomplete("close")
@@ -116,5 +116,5 @@ $ ->
       ul.addClass('search-refugees')
       $("<li>")
         .data("ui-autocomplete-item", item)
-        .append("<a>#{item.name} #{item.dossier_numbers.concat(item.ssns).join(', ')}</a>")
+        .append("<a>#{item.value}</a>")
         .appendTo(ul).after($more)
