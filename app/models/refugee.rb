@@ -50,7 +50,7 @@ class Refugee < ActiveRecord::Base
   end
 
   def ssn
-    date_of_birth.to_s.gsub('-', '') + '-' + ssn_extension.to_s
+    date_of_birth.to_s.delete('-') + '-' + ssn_extension.to_s if date_of_birth.present?
   end
 
   # Age old in years
