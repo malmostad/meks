@@ -152,4 +152,65 @@ RSpec.describe RefugeesController, type: :controller do
       end
     end
   end
+
+  describe 'Placement nested attributes' do
+    let(:home) {
+      Home.create!(name: "Valid home")
+    }
+
+    let(:placement_attributes) {
+      {
+        name: "Firstname Lastname updated",
+        placements: {
+          home_id: 1,
+          moved_in_at: '2016-01-02'
+        }
+      }
+    }
+
+    it "new refugee to have a placement" do
+      attributes = {
+        name: "Firstname Lastname",
+        placements_attributes: [{
+          home_id: home.id,
+          moved_in_at: '2016-01-02'
+        }]
+      }
+      post :create, { :refugee => attributes }, valid_session
+      expect(assigns(:refugee)).to be_persisted
+      expect(Refugee.last.placements.size).to eq(1)
+    end
+
+    it "new refugee not to have a placement" do
+      attributes = {
+        name: "Firstname Lastname",
+        placements_attributes: []
+      }
+      post :create, { :refugee => attributes }, valid_session
+      expect(assigns(:refugee)).to be_persisted
+      expect(Refugee.last.placements.size).to eq(0)
+    end
+
+    it "re-renders the 'new' template if placement home_id is present but not moved_in_at" do
+      attributes = {
+        name: "Firstname Lastname",
+        placements_attributes: [{
+          home_id: home.id
+        }]
+      }
+      post :create, { refugee: attributes }, valid_session
+      expect(response).to render_template("new")
+    end
+
+    it "re-renders the 'new' template if placement home_id is abscent but moved_in_at is present" do
+      attributes = {
+        name: "Firstname Lastname",
+        placements_attributes: [{
+          moved_in_at: '2016-01-02'
+        }]
+      }
+      post :create, { refugee: attributes }, valid_session
+      expect(response).to render_template("new")
+    end
+  end
 end
