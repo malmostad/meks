@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
   root 'statistics#index'
 
-  get '/login' => 'sessions#new'
-  post '/login' => 'sessions#create'
-  get '/logout' => 'sessions#destroy'
+  get '/login' => 'login#new'
+  post '/login' => 'login#create'
+  get '/logout' => 'login#destroy'
+
+  namespace :saml do
+    get :sso
+    post :consume
+    get :metadata
+    get :logout
+  end
 
   get '/refugees/suggest'
   get '/refugees/search' => 'refugees#search'

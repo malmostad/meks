@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class LoginController < ApplicationController
   skip_authorize_resource
   skip_authorization_check
   skip_before_action :authenticate
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
   def create
     username = params[:username].strip.downcase
 
-    if APP_CONFIG['stub_auth'] # Stubbed authentication for dev
+    if APP_CONFIG['auth_method'] == 'stub' # Stubbed authentication for dev
       stub_auth(username)
 
     else # Authenticate with LDAP
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
 
       if !ldap_entry
         @login_failed = 'Fel användarnamn eller lösenord. Vänligen försök igen.'
-        logger.info "[AUTH] #{params[:username]} from #{client_ip} failed to log in"
+        logger.info "[LDAP_AUTH] #{params[:username]} from #{client_ip} failed to log in"
         render 'new'
 
       else
@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
         role = @ldap.belongs_to_group(ldap_entry['cn'].first)
 
         if !role.present?
-          logger.info "[AUTH] #{params[:username]} from #{client_ip} failed to log in: doesn't belong to a group."
+          logger.info "[LDAP_AUTH] #{params[:username]} from #{client_ip} failed to log in: doesn't belong to a group."
           @login_failed = 'Du saknar behörighet till systemet'
           render 'new'
         else
@@ -45,7 +45,7 @@ class SessionsController < ApplicationController
           user.ip = client_ip
           user.save
           session[:user_id] = user.id
-          logger.info "[AUTH] #{params[:username]} logged in from #{client_ip}"
+          logger.info "[LDAP_AUTH] #{params[:username]} logged in from #{client_ip}"
           redirect_after_login
         end
       end
@@ -60,7 +60,7 @@ class SessionsController < ApplicationController
   private
 
   # In dev env if the LDAP is not available
-  # User needs to exist
+  # User needs to exist in the db first
   def stub_auth(username)
     if !Rails.application.config.consider_all_requests_local
       @login_failed = 'Stubbed authentication only available in local environment'
@@ -73,7 +73,7 @@ class SessionsController < ApplicationController
         redirect_after_login
       else
         @login_failed = "Användarnamnet finns inte"
-        render "new"
+        render 'new'
       end
     end
   end
