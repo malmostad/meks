@@ -53,7 +53,7 @@ sv:
         other_relateds: Anhöriga utanför systemet
         social_worker: Socialsekreterare
         placements:
-          moved_in_at: Inskrivningsdatum
+          moved_in_at: Placerningsdatum
 
       relationship:
         <<: *defaults
@@ -67,7 +67,7 @@ sv:
 
       placement:
         <<: *defaults
-        moved_in_at: Inskrivningsdatum
+        moved_in_at: Placerningsdatum
         moved_out_at: Utskrivningsdatum
         moved_out_reason: Anledning till utskrivning
 
