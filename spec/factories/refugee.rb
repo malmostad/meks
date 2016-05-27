@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :refugee do
     sequence(:name) { |n| "name-#{n}" }
     draft false
-    date_of_birth { (Date.today  - 4.years - rand(16).years).to_s }
+    date_of_birth { (Date.today - 4.years - rand(16).years).to_s }
     ssn_extension { rand(1000..9999) }
     dossier_number { rand(100_000..999_999) }
     registered { (Date.today - rand(24).months).to_s }
@@ -21,5 +21,7 @@ FactoryGirl.define do
     municipality { create(:municipality) }
     languages { create_list(:language, 2) }
     countries { create_list(:country, 2) }
+    citizenship { create(:country) }
+    citizenship_at { (Date.today - rand(16).years).to_s }
   end
 end
