@@ -10,6 +10,8 @@ class Refugee < ActiveRecord::Base
   accepts_nested_attributes_for :placements, reject_if: :all_blank
 
   has_and_belongs_to_many :countries
+  belongs_to :citizenship, class_name: 'Country'
+
   has_and_belongs_to_many :languages
 
   # Refugee has date_of_birth and ssn_extension attributes, `ssns` are additional ones
