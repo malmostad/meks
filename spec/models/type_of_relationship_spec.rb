@@ -37,5 +37,14 @@ RSpec.describe TypeOfRelationship, type: :model do
       expect { create(:type_of_relationship, name: "syster") }.to change(TypeOfRelationship, :count).by(+1)
       expect { TypeOfRelationship.where(name: "Syster").first.destroy }.to change(TypeOfRelationship, :count).by(-1)
     end
+
+    it "should delete a type_of_relationship reference for a relationship" do
+      type_of_relationship = create(:type_of_relationship)
+      relationship = create(:relationship, type_of_relationship: type_of_relationship)
+      expect(relationship.type_of_relationship).to be_present
+      type_of_relationship.destroy
+      relationship.reload
+      expect(relationship.type_of_relationship).not_to be_present
+    end
   end
 end

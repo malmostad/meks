@@ -37,5 +37,14 @@ RSpec.describe OwnerType, type: :model do
       expect { create(:owner_type, name: "Egen") }.to change(OwnerType, :count).by(+1)
       expect { OwnerType.where(name: "Egen").first.destroy }.to change(OwnerType, :count).by(-1)
     end
+
+    it "should delete a owner_type reference for a home" do
+      owner_type = create(:owner_type)
+      home = create(:home, owner_type: owner_type)
+      expect(home.owner_type).to be_present
+      owner_type.destroy
+      home.reload
+      expect(home.owner_type).not_to be_present
+    end
   end
 end
