@@ -16,7 +16,6 @@ class Placement < ActiveRecord::Base
     end
   end
 
-
   def self.overlapping_by_refugee(options = {})
     # Within range
     range_from = begin; Date.parse(options[:placements_from]).to_s; rescue; (Date.today - 10.years).to_s; end

@@ -11,7 +11,7 @@ module RefugeeSearch
     index_name "refugees_#{Rails.env}"
     document_type 'refugee'
 
-    after_save do
+    after_commit do
       __elasticsearch__.index_document
     end
 
@@ -64,7 +64,7 @@ module RefugeeSearch
         response = __elasticsearch__.search fuzzy_query(query, settings[:from], settings[:size])
 
         { refugees: response.records.includes(
-            :countries, :gender, :placements, :homes).to_a,
+            :countries, :gender, placements: :home).with_current_placement.to_a,
           total: response.results.total,
           took: response.took
         }

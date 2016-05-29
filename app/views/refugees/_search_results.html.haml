@@ -19,11 +19,9 @@
           %td= refugee.countries.map(&:name).join(', ')
           %td
             - if refugee.placements.empty?
-              = 'Ej ännu placerad'
-            - elsif refugee.placements.last.moved_out_at.present?
-              = 'Utskriven'
+              = 'Ingen aktiv placering'
             - else
-              = link_to refugee.homes.last.name, home_path(refugee.homes.last)
+              = link_to refugee.placements.last.home.name, home_path(refugee.placements.last.home.name)
 
   - if @has_more
     .load-more

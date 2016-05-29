@@ -6,6 +6,14 @@ class Refugee < ActiveRecord::Base
   belongs_to :deregistered_reason
 
   has_many :placements, dependent: :destroy
+
+  scope :with_current_placement, -> {
+    includes(:placements)
+    .where(placements: { moved_out_at: nil })
+    .where.not(placements: { moved_in_at: nil })
+    .order('placements.moved_in_at desc')
+  }
+
   has_many :homes, through: :placements
   accepts_nested_attributes_for :placements, reject_if: :all_blank
 
