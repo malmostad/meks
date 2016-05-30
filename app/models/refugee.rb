@@ -1,4 +1,5 @@
 class Refugee < ActiveRecord::Base
+  include RefugeeIndex
   include RefugeeSearch
 
   belongs_to :gender
