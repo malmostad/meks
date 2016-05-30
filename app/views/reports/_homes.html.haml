@@ -3,9 +3,9 @@
 
   .form-group
     %span.control-label
-      %label{for: 'homes_free_seats'} Lediga platser:
+      %label{for: 'homes_free_seats'} Urval:
     .controls
-      = select_tag('homes_free_seats', options_for_select("Både med och utan" => nil, "Endast med" => 'with'),
+      = select_tag('homes_free_seats', options_for_select("Alla" => nil, "Endast med lediga platser" => 'with'),
         class: 'form-control chosen')
 
   .form-group
