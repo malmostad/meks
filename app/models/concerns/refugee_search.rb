@@ -13,7 +13,7 @@ module RefugeeSearch
         response = __elasticsearch__.search fuzzy_query(query, settings[:from], settings[:size])
 
         { refugees: response.records.includes(
-            :countries, :gender, placements: :home).with_current_placement.to_a,
+            :countries, :gender, current_placements: :home).to_a,
           total: response.results.total,
           took: response.took
         }

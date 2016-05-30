@@ -8,6 +8,12 @@ class Refugee < ActiveRecord::Base
 
   has_many :placements, dependent: :destroy
 
+  has_many :current_placements, -> {
+    where(moved_out_at: nil)
+    .where.not(moved_in_at: nil)
+  }, class_name: 'Placement'
+
+
   scope :with_current_placement, -> {
     includes(:placements)
     .where(placements: { moved_out_at: nil })
@@ -54,10 +60,6 @@ class Refugee < ActiveRecord::Base
     unless date_of_birth_before_type_cast =~ /\A\d{4}-\d{2}-\d{2}\z/
       errors.add(:date_of_birth, 'Ogiltigt datumformat, måste vara yyyy-mm-dd')
     end
-  end
-
-  def current_placements
-    placements.includes(:home).where(moved_out_at: nil)
   end
 
   def ssn
