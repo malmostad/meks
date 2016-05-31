@@ -122,7 +122,6 @@ class RefugeesController < ApplicationController
         :social_worker,
         :special_needs, :other_relateds, :comment_id,
         :gender_id,
-        :citizenship_id,
         :citizenship_at,
         home_ids: [],
         country_ids: [],

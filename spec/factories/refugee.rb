@@ -21,7 +21,6 @@ FactoryGirl.define do
     municipality { create(:municipality) }
     languages { create_list(:language, 2) }
     countries { create_list(:country, 2) }
-    citizenship { create(:country) }
     citizenship_at { (Date.today - rand(16).years).to_s }
   end
 end

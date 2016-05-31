@@ -188,11 +188,9 @@ ActiveRecord::Schema.define(version: 20160527125428) do
     t.boolean  "secrecy",                                                  default: false
     t.text     "social_worker",                              limit: 65535
     t.text     "deregistered_comment",                       limit: 65535
-    t.integer  "citizenship_id",                             limit: 4
     t.date     "citizenship_at"
   end
 
-  add_index "refugees", ["citizenship_id"], name: "index_refugees_on_citizenship_id", using: :btree
   add_index "refugees", ["deregistered_reason_id"], name: "index_refugees_on_deregistered_reason_id", using: :btree
   add_index "refugees", ["gender_id"], name: "index_refugees_on_gender_id", using: :btree
   add_index "refugees", ["municipality_id"], name: "index_refugees_on_municipality_id", using: :btree

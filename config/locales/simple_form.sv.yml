@@ -41,7 +41,6 @@ sv:
         checked_out_to_our_city: Utskriven till Malmö
         temporary_permit_starts_at: <abbr title='Tillfälligt uppehållstillstånd startar'>TUT startar</abbr>
         temporary_permit_ends_at: <abbr title='Tillfälligt uppehållstillstånd slutar'>TUT slutar</abbr>
-        citizenship: Medborgarskap
         citizenship_at: Medborgarskap erhölls
         municipality: Anvisningskommun
         municipality_placement_migrationsverket_at: Anvisningsdatum

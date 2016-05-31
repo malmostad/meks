@@ -62,6 +62,10 @@ module ReportGenerator
           query: 'record.temporary_permit_ends_at',
           type: :date
         },
+        'refugee.citizenship_at' => {
+          query: 'record.citizenship_at',
+          type: :date
+        },
         'refugee.municipality' => {
           query: 'record.municipality.name'
         },
@@ -255,6 +259,10 @@ module ReportGenerator
         },
         'TUT slutar' => {
           query: 'record.refugee.temporary_permit_ends_at',
+          type: :date
+        },
+        'refugee.citizenship_at' => {
+          query: 'record.citizenship_at',
           type: :date
         },
         'refugee.municipality' => {
