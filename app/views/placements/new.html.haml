@@ -5,8 +5,4 @@
     = simple_form_for @placement, url: refugee_placements_path(@refugee), html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
 
-      = show_attribute('Namn', @refugee.name)
-      = f.association :home, collection: @homes, input_html: { class: 'chosen' }
-      = f.input :moved_in_at, as: :string, wrapper: :datepicker
-
-      = render 'application/submit', form: f, cancel_path: refugees_path
+      = render 'form', f: f

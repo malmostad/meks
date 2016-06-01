@@ -20,6 +20,7 @@
       = show_attribute('home.owner_type', @home.owner_type.present? ? @home.owner_type.name : '')
       = show_attribute('home.target_groups', @home.target_groups.map(&:name).join(', '))
       = show_attribute('home.languages', @home.languages.map(&:name).join(', '))
+      = show_attribute('home.use_placement_specification', @home.use_placement_specification? ? 'Ja' : 'Nej')
       = show_attribute('home.comment', @home.comment)
 
       %h2.group-title Tillgänglighet

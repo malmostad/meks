@@ -50,6 +50,7 @@ class HomesController < ApplicationController
       params.require(:home).permit(
         :name, :phone, :fax, :address, :post_code,
         :postal_town, :guaranteed_seats, :movable_seats, :active, :comment,
+        :use_placement_specification,
         :owner_type_id,
         language_ids: [],
         target_group_ids: [],
