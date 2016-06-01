@@ -8,75 +8,113 @@ RSpec.describe "Placements", type: :feature do
       login_user(:writer)
     end
 
+    describe "Adds placement" do
+      scenario "for a refugee" do
+        refugee = create(:refugee)
+        homes   = create_list(:home, 10)
 
-    scenario "adds a placement for a refugee" do
-      refugee = create(:refugee)
-      homes   = create_list(:home, 10)
+        visit "/refugees/#{refugee.id}"
+        click_on "Ny placering"
+        expect(current_path).to eq new_refugee_placement_path(refugee)
 
-      visit "/refugees/#{refugee.id}"
-      click_on "Ny placering"
-      expect(current_path).to eq new_refugee_placement_path(refugee)
+        select(homes[1].name, from: "placement_home_id")
+        fill_in "placement_moved_in_at", with: Date.today.to_s
+        click_button "Spara"
 
-      select(homes[1].name, from: "placement_home_id")
-      fill_in "placement_moved_in_at", with: Date.today.to_s
-      click_button "Spara"
+        expect(current_path).to eq refugee_path(refugee)
+        expect(page).to have_selector(".notice", text: "Placeringen registrerades")
+        expect(page).to have_selector(".placement a", text: homes[1].name)
+      end
 
-      expect(current_path).to eq refugee_path(refugee)
-      expect(page).to have_selector(".notice", text: "Placeringen registrerades")
-      expect(page).to have_selector(".placement a", text: homes[1].name)
+      scenario "show and hide specification field", js: true do
+        refugee = create(:refugee)
+        homes = create_list(:home, 10)
+        homes << create(:home, use_placement_specification: true)
+
+        visit "/refugees/#{refugee.id}"
+        click_on "Ny placering"
+
+        expect(page).to have_selector('.placement_specification', visible: false)
+
+        page.execute_script("$('#placement_home_id').val(#{homes.last.id}).change()")
+        expect(page).to have_selector('.placement_specification', visible: true)
+
+        page.execute_script("$('#placement_home_id').val(#{homes.first.id}).change()")
+        expect(page).to have_selector('.placement_specification', visible: false)
+      end
     end
 
-    scenario "edits a placement for a refugee" do
-      refugee   = create(:refugee)
-      homes     = create_list(:home, 10)
-      placement = create(:placement, refugee: refugee, home: homes.first)
+    describe "Edit placement" do
+      scenario "for a refugee" do
+        refugee   = create(:refugee)
+        homes     = create_list(:home, 10)
+        placement = create(:placement, refugee: refugee, home: homes.first)
 
-      visit "/refugees/#{refugee.id}"
-      click_link("Redigera placeringen")
-      expect(current_path).to eq edit_refugee_placement_path(refugee, refugee.placements.first)
+        visit "/refugees/#{refugee.id}"
+        click_link("Redigera placeringen")
+        expect(current_path).to eq edit_refugee_placement_path(refugee, refugee.placements.first)
 
-      select(homes[3].name, from: "placement_home_id")
-      fill_in "placement_moved_in_at", with: Date.today.to_s
-      click_button "Spara"
+        select(homes[3].name, from: "placement_home_id")
+        fill_in "placement_moved_in_at", with: Date.today.to_s
+        click_button "Spara"
 
-      expect(current_path).to eq refugee_path(refugee)
-      expect(page).to have_selector(".notice", text: "Placeringen uppdaterades")
-      expect(page).to have_selector(".placement a", text: homes[3].name)
+        expect(current_path).to eq refugee_path(refugee)
+        expect(page).to have_selector(".notice", text: "Placeringen uppdaterades")
+        expect(page).to have_selector(".placement a", text: homes[3].name)
+      end
+
+      scenario "show and hide specification field", js: true do
+        refugee = create(:refugee)
+        homes = create_list(:home, 10)
+        homes << create(:home, use_placement_specification: true)
+
+        placement = create(:placement, refugee: refugee, home: homes.last)
+
+        visit "/refugees/#{refugee.id}"
+        click_link("Redigera placeringen")
+
+        expect(page).to have_selector('.placement_specification', visible: true)
+
+        page.execute_script("$('#placement_home_id').val(#{homes.last.id}).change()")
+        expect(page).to have_selector('.placement_specification', visible: true)
+      end
     end
 
-    scenario "ends a placement for a refugee" do
-      refugee   = create(:refugee)
-      homes     = create_list(:home, 10)
-      placement = create(:placement, refugee: refugee, home: homes.first)
-      moved_out_reasons = create_list(:moved_out_reason, 5)
+    describe "Ends placement" do
+      scenario "for a refugee" do
+        refugee   = create(:refugee)
+        homes     = create_list(:home, 10)
+        placement = create(:placement, refugee: refugee, home: homes.first)
+        moved_out_reasons = create_list(:moved_out_reason, 5)
 
-      visit "/refugees/#{refugee.id}"
-      click_link("Utskrivning")
+        visit "/refugees/#{refugee.id}"
+        click_link("Utskrivning")
 
-      select(moved_out_reasons[3].name, from: "placement_moved_out_reason_id")
-      fill_in "placement_moved_out_at", with: Date.today.to_s
-      click_button "Spara"
+        select(moved_out_reasons[3].name, from: "placement_moved_out_reason_id")
+        fill_in "placement_moved_out_at", with: Date.today.to_s
+        click_button "Spara"
 
-      expect(current_path).to eq refugee_path(refugee)
-      expect(page).to have_selector(".notice", text: "Placeringen uppdaterades")
-      expect(page).to have_selector(".placement .controls", text: Date.today.to_s)
-    end
+        expect(current_path).to eq refugee_path(refugee)
+        expect(page).to have_selector(".notice", text: "Placeringen uppdaterades")
+        expect(page).to have_selector(".placement .controls", text: Date.today.to_s)
+      end
 
-    scenario "can't end a placement before it was started" do
-      refugee   = create(:refugee)
-      homes     = create_list(:home, 10)
-      placement = create(:placement, refugee: refugee, home: homes.first)
-      moved_out_reasons = create_list(:moved_out_reason, 5)
+      scenario "can't end before it was started" do
+        refugee   = create(:refugee)
+        homes     = create_list(:home, 10)
+        placement = create(:placement, refugee: refugee, home: homes.first)
+        moved_out_reasons = create_list(:moved_out_reason, 5)
 
-      visit "/refugees/#{refugee.id}"
-      click_link("Utskrivning")
+        visit "/refugees/#{refugee.id}"
+        click_link("Utskrivning")
 
-      select(moved_out_reasons[3].name, from: "placement_moved_out_reason_id")
-      fill_in "placement_moved_out_at", with: (Date.today - 10.day).to_s
-      click_button "Spara"
+        select(moved_out_reasons[3].name, from: "placement_moved_out_reason_id")
+        fill_in "placement_moved_out_at", with: (Date.today - 10.day).to_s
+        click_button "Spara"
 
-      expect(current_path).to eq refugee_placement_path(refugee, placement)
-      expect(page).to have_selector(".warning", text: "måste vara senare än inskrivningen")
+        expect(current_path).to eq refugee_placement_path(refugee, placement)
+        expect(page).to have_selector(".warning", text: "måste vara senare än inskrivningen")
+      end
     end
   end
 end
