@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406133717) do
+ActiveRecord::Schema.define(version: 20160531114937) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -64,20 +64,21 @@ ActiveRecord::Schema.define(version: 20160406133717) do
   add_index "genders", ["name"], name: "index_genders_on_name", unique: true, using: :btree
 
   create_table "homes", force: :cascade do |t|
-    t.string   "name",             limit: 191
-    t.string   "phone",            limit: 191
-    t.string   "fax",              limit: 191
-    t.string   "address",          limit: 191
-    t.string   "post_code",        limit: 191
-    t.string   "postal_town",      limit: 191
-    t.integer  "owner_type_id",    limit: 4
-    t.integer  "guaranteed_seats", limit: 4
-    t.integer  "movable_seats",    limit: 4
-    t.boolean  "active",                         default: true
-    t.string   "languages",        limit: 191
-    t.text     "comment",          limit: 65535
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.string   "name",                        limit: 191
+    t.string   "phone",                       limit: 191
+    t.string   "fax",                         limit: 191
+    t.string   "address",                     limit: 191
+    t.string   "post_code",                   limit: 191
+    t.string   "postal_town",                 limit: 191
+    t.integer  "owner_type_id",               limit: 4
+    t.integer  "guaranteed_seats",            limit: 4
+    t.integer  "movable_seats",               limit: 4
+    t.boolean  "active",                                    default: true
+    t.string   "languages",                   limit: 191
+    t.text     "comment",                     limit: 65535
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.boolean  "use_placement_specification",               default: false
   end
 
   add_index "homes", ["name"], name: "index_homes_on_name", unique: true, using: :btree
@@ -155,8 +156,9 @@ ActiveRecord::Schema.define(version: 20160406133717) do
     t.date     "moved_in_at"
     t.date     "moved_out_at"
     t.integer  "moved_out_reason_id", limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "specification",       limit: 65535
   end
 
   add_index "placements", ["home_id"], name: "index_placements_on_home_id", using: :btree
@@ -188,6 +190,7 @@ ActiveRecord::Schema.define(version: 20160406133717) do
     t.boolean  "secrecy",                                                  default: false
     t.text     "social_worker",                              limit: 65535
     t.text     "deregistered_comment",                       limit: 65535
+    t.date     "citizenship_at"
   end
 
   add_index "refugees", ["deregistered_reason_id"], name: "index_refugees_on_deregistered_reason_id", using: :btree

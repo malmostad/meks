@@ -15,14 +15,13 @@
     = f.association :owner_type
     = f.association :target_groups, input_html: { class: 'chosen' }
     = f.association :languages, input_html: { class: 'chosen' }
+    = f.input :use_placement_specification, wrapper: :vertical_radio_and_checkboxes
+    = f.input :comment
 
     %h2.group-title Tillgänglighet
     = f.input :guaranteed_seats
     = f.input :movable_seats
     = f.input :active, wrapper: :vertical_radio_and_checkboxes
-
-    %h2.group-title Övrigt
-    = f.input :comment
 
     = render 'application/submit', form: f,
       cancel_path: @home.id.present? ? home_path(@home) : homes_path

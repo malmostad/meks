@@ -37,5 +37,14 @@ RSpec.describe Gender, type: :model do
       expect { create(:gender) }.to change(Gender, :count).by(+1)
       expect { Gender.first.destroy }.to change(Gender, :count).by(-1)
     end
+
+    it "should delete a gender reference for a refugee" do
+      gender = create(:gender)
+      refugee = create(:refugee, gender: gender)
+      expect(refugee.gender).to be_present
+      gender.destroy
+      refugee.reload
+      expect(refugee.gender).not_to be_present
+    end
   end
 end

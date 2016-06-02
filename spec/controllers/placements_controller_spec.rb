@@ -79,6 +79,28 @@ RSpec.describe PlacementsController, type: :controller do
           expect(response).to render_template("new")
         end
       end
+
+      context "strong params" do
+        let(:attributes_with_specification) {
+          {
+            home_id: valid_home.id,
+            refugee_id: valid_refugee.id,
+            moved_in_at: "2016-01-01",
+            specification: 'foo'
+          }
+        }
+
+        it "don't save non-allowed attribute" do
+          post :create, {refugee_id: valid_refugee.id, :placement => attributes_with_specification}, valid_session
+          expect(assigns(:placement).specification).to be_nil
+        end
+
+        it "save placement.specification when allowed " do
+          valid_home.update_attribute(:use_placement_specification, true)
+          post :create, {refugee_id: valid_refugee.id, :placement => attributes_with_specification}, valid_session
+          expect(assigns(:placement).specification).to eq 'foo'
+        end
+      end
     end
 
     describe "PUT #update" do

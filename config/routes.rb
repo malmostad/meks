@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   post 'reports/placements'
   post 'reports/homes'
 
+  match '*path', via: :all, to: 'errors#not_found'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

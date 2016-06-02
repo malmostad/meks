@@ -107,6 +107,13 @@ RSpec.describe Home, type: :model do
       expect(home.placements.first.moved_in_at).to be_a(Date)
     end
 
+    it "home placement should have specification" do
+      home2 = create(:home)
+      home2.placements << create(:placement, specification: 'foo', home: home2)
+
+      expect(home2.placements.last.specification).to eq 'foo'
+    end
+
     it "should not have a placement after the home is deleted" do
       refugee = home.placements.first.refugee
       refugee.destroy

@@ -37,5 +37,14 @@ RSpec.describe Country, type: :model do
       expect { create(:country, name: "Sverige") }.to change(Country, :count).by(+1)
       expect { Country.where(name: "Sverige").first.destroy }.to change(Country, :count).by(-1)
     end
+
+    it "should delete a country reference for a refugee" do
+      country = create(:country)
+      refugee = create(:refugee, countries: [country])
+      expect(refugee.countries).to be_present
+      country.destroy
+      refugee.reload
+      expect(refugee.countries).to be_empty
+    end
   end
 end

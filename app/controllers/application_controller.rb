@@ -44,7 +44,21 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
+    logger.warn "#{exception.message}"
     redirect_to root_path, alert: 'Din roll saknar behörighet för detta'
+  end
+
+  rescue_from ActiveRecord::RecordNotFound,
+              ActionController::RoutingError,
+              ActionController::UnknownController,
+              ActionController::MethodNotAllowed do |exception|
+
+    logger.warn "#{exception.message}"
+    logger.warn "Not found: #{request.fullpath}"
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404", layout: false, status: 404 }
+      format.all  { render nothing: true, status: 404 }
+    end
   end
 
   def init_body_class

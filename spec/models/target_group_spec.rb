@@ -37,5 +37,14 @@ RSpec.describe TargetGroup, type: :model do
       expect { create(:target_group, name: "Yngre") }.to change(TargetGroup, :count).by(+1)
       expect { TargetGroup.where(name: "Yngre").first.destroy }.to change(TargetGroup, :count).by(-1)
     end
+
+    it "should delete a target_group reference for a home" do
+      target_group = create(:target_group)
+      home = create(:home, target_groups: [target_group])
+      expect(home.target_groups).not_to be_empty
+      target_group.destroy
+      home.reload
+      expect(home.target_groups).to be_empty
+    end
   end
 end

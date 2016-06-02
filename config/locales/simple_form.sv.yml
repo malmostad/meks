@@ -41,6 +41,7 @@ sv:
         checked_out_to_our_city: Utskriven till Malmö
         temporary_permit_starts_at: <abbr title='Tillfälligt uppehållstillstånd startar'>TUT startar</abbr>
         temporary_permit_ends_at: <abbr title='Tillfälligt uppehållstillstånd slutar'>TUT slutar</abbr>
+        citizenship_at: Medborgarskap erhölls
         municipality: Anvisningskommun
         municipality_placement_migrationsverket_at: Anvisningsdatum
         municipality_placement_per_agreement_at: Ingår i överenskommelse
@@ -51,7 +52,7 @@ sv:
         other_relateds: Anhöriga utanför systemet
         social_worker: Socialsekreterare
         placements:
-          moved_in_at: Inskrivningsdatum
+          moved_in_at: Placerningsdatum
 
       relationship:
         <<: *defaults
@@ -65,9 +66,10 @@ sv:
 
       placement:
         <<: *defaults
-        moved_in_at: Inskrivningsdatum
+        moved_in_at: Placerningsdatum
         moved_out_at: Utskrivningsdatum
         moved_out_reason: Anledning till utskrivning
+        specification: Placeringsspecifikation
 
       home:
         <<: *defaults
@@ -84,6 +86,7 @@ sv:
         movable_seats: Rörliga platser
         languages: Språk
         active: Aktivt
+        use_placement_specification: Använd placeringsspecifikation
 
     placeholders:
       home:
@@ -109,3 +112,4 @@ sv:
         deregistered_comment: *comment
       placement:
         comment: *comment
+        specification: "Namn på HVB samt namn på vårdföretag"

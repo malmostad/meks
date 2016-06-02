@@ -37,5 +37,14 @@ RSpec.describe TypeOfHousing, type: :model do
       expect { create(:type_of_housing, name: "Egen") }.to change(TypeOfHousing, :count).by(+1)
       expect { TypeOfHousing.where(name: "Egen").first.destroy }.to change(TypeOfHousing, :count).by(-1)
     end
+
+    it "should delete a type_of_housing reference for a home" do
+      type_of_housing = create(:type_of_housing)
+      home = create(:home, type_of_housing: type_of_housing)
+      expect(home.type_of_housing).to be_present
+      type_of_housing.destroy
+      home.reload
+      expect(home.type_of_housing).not_to be_present
+    end
   end
 end

@@ -1,0 +1,13 @@
+= show_attribute('Namn', @refugee.name)
+= f.association :home,
+                collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification }] },
+                input_html: { class: 'chosen', data: { foo: :bar } }
+
+= f.input :moved_in_at, as: :string, wrapper: :datepicker
+= f.input :specification
+
+- if @placement.moved_out_at.present?
+  = f.input :moved_out_at, as: :string, wrapper: :datepicker
+  = f.association :moved_out_reason
+
+= render 'application/submit', form: f, cancel_path: refugee_path(@refugee)

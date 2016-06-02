@@ -20,6 +20,7 @@
       = show_attribute('home.owner_type', @home.owner_type.present? ? @home.owner_type.name : '')
       = show_attribute('home.target_groups', @home.target_groups.map(&:name).join(', '))
       = show_attribute('home.languages', @home.languages.map(&:name).join(', '))
+      = show_attribute('home.use_placement_specification', @home.use_placement_specification? ? 'Ja' : 'Nej')
       = show_attribute('home.comment', @home.comment)
 
       %h2.group-title Tillgänglighet
@@ -50,8 +51,8 @@
             - @placements.each do |placement|
               %tr
                 %td= link_to placement.refugee.name, placement.refugee
-                %td= placement.refugee.dossier_numbers.map(&:name).join(', ')
-                %td= placement.refugee.ssns.map(&:full_ssn).join(', ')
+                %td= placement.refugee.dossier_number
+                %td= placement.refugee.ssn
                 %td
                   - if placement.refugee.gender.present?
                     = placement.refugee.gender.name

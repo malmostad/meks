@@ -1,6 +1,8 @@
 class Placement < ActiveRecord::Base
   attr_reader :placement_time
 
+  default_scope { order(:moved_in_at) }
+
   belongs_to :refugee, touch: true
   belongs_to :home, touch: true
   belongs_to :moved_out_reason
@@ -13,7 +15,6 @@ class Placement < ActiveRecord::Base
       errors.add :moved_out_at, 'måste vara senare än inskrivningen'
     end
   end
-
 
   def self.overlapping_by_refugee(options = {})
     # Within range
