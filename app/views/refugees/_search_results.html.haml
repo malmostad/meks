@@ -21,7 +21,7 @@
             - if refugee.current_placements.empty?
               = 'Ingen aktiv placering'
             - else
-              = link_to refugee.current_placements.last.home.name, home_path(refugee.current_placements.last.home.name)
+              = link_to refugee.current_placements.last.home.name, home_path(refugee.current_placements.last.home)
 
   - if @has_more
     .load-more
