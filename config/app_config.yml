@@ -22,7 +22,7 @@ development: &development
   cache_ttl: 1
   max_age: 0
   title_suffix: "MEKS (utveckling)"
-  auth_method: true
+  auth_method: stub
 
 local_test:
   <<: *development
