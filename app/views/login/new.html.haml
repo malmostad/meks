@@ -2,10 +2,10 @@
 %section#login.box
   %h1.box-title= h1
   .box-content
-    - if @login_failed.present?
+    - if @error_message.present?
       %ul
         %li.warning
-          = @login_failed
+          = @error_message
     = form_tag login_path, method: :post, class: 'login' do
       %fieldset
         = label_tag :username, 'Användarnamn:'
