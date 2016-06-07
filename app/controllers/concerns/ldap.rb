@@ -19,6 +19,7 @@ class Ldap
   end
 
   def authenticate(username, password)
+    username = username.strip.downcase
     return false if username.empty? || password.empty?
 
     bind_user = @client.bind_as(
@@ -53,27 +54,34 @@ class Ldap
   end
 
   # Update user attributes from the ldap user
-  def update_user_profile(username)
+  def update_user_profile(username, role, client_ip)
     # Fetch user attributes
-    ldap_user = @client.search(
+    ldap_entry = @client.search(
       base: @config['basedn'],
       filter: "cn=#{username.downcase}",
       attributes: ATTRIBUTES
     ).first
 
-    unless ldap_user.present?
-      Rails.logger.info "[LDAP_AUTH]: Couldn't find #{user.username}. #{@client.get_operation_result}"
+    unless ldap_entry.present?
+      Rails.logger.warning "[LDAP_AUTH]: Couldn't find #{username}. #{@client.get_operation_result}"
+      return false
     end
 
     begin
-      user.username    = username
-      user.displayname = ldap_user['displayname'].first
-      user.email       = ldap_user['mail'].first
-
+      username = username.strip.downcase
+      # Find or create user
+      user            = User.where(username: username).first_or_initialize
+      user.username   = username
+      user.name       = ldap_entry['displayname'].first || ldap_entry['cn'].first
+      user.email      = ldap_entry['mail'].first || "#{user.username}@malmo.se"
+      user.role       = role
+      user.last_login = Time.now
+      user.ip = client_ip
       user.save
+
       return user
-    rescue Exception => e
-      Rails.logger.error "[LDAP_AUTH]: Couldn't save user #{user.username}. #{e.message}"
+    rescue => e
+      Rails.logger.error "[LDAP_AUTH]: Couldn't save user #{username}. #{e.message}"
       return false
     end
   end

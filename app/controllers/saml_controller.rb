@@ -5,25 +5,46 @@ class SamlController < ApplicationController
 
   skip_before_action :verify_authenticity_token, only: [:consume, :logout]
 
+  layout 'login'
+
   def sso
-    auth_request = OneLogin::RubySaml::Authrequest.new
-    redirect_to(auth_request.create(saml_settings))
+    request = OneLogin::RubySaml::Authrequest.new
+    redirect_to(request.create(saml_settings))
   end
 
   def consume
-    response = OneLogin::RubySaml::Response.new(params[:SAMLResponse], settings: saml_settings)
+    begin
+      response = OneLogin::RubySaml::Response.new(params[:SAMLResponse], settings: saml_settings)
 
-    # debug_response(response)
+      if response.is_valid?
+        # Check if user belongs to a system group in the LDAP
+        @ldap = Ldap.new
+        cn = response.attributes[:cn]
+        role = @ldap.belongs_to_group(cn)
 
-    if response.is_valid?
-      session[:nameid] = response.nameid
-      logger.info "[SAML_AUTH] #{response.nameid} logged in from #{client_ip}"
-      redirect_after_login
-    else
-      logger.info "[SAML_AUTH] #{response.nameid} from #{client_ip} failed to log in"
-      logger.info "[SAML_AUTH] Response Invalid. Errors: #{response.errors}"
-      @errors = response.errors
-      # TODO: redirect user with a helpful message
+        if !role.present?
+          logger.info "[SAML_AUTH] #{cn} from #{client_ip} failed to log in: doesn't belong to a group."
+          @error_message = 'Du saknar behörighet till systemet.'
+          render :fail
+        else
+          # Update system information for user with LDAP data
+          user = @ldap.update_user_profile(cn, role, client_ip)
+
+          # Establish session and redirect to the page requested by user
+          session[:user_id] = user.id
+          logger.info "[SAML_AUTH] #{user.username} logged in from #{client_ip}"
+          redirect_after_login
+        end
+      else
+        logger.error "[SAML_AUTH] Response Invalid. Errors: #{response.errors}. IP: #{client_ip}. SAML response:"
+        @error_message = 'Inloggning med SAML misslyckades.'
+        render :fail
+      end
+    rescue => e
+      logger.fatal "[SAML_AUTH] SAML response for #{client_ip} failed. #{e.message}"
+      logger.fatal e
+      @error_message = 'Inloggning med SAML misslyckades.'
+      render :fail
     end
   end
 
@@ -31,6 +52,14 @@ class SamlController < ApplicationController
     meta = OneLogin::RubySaml::Metadata.new
     render xml: meta.generate(saml_settings, true)
   end
+
+  def logout
+    # Placeholder for SAML SLO implementation
+    reset_session
+    redirect_to root_path, notice: 'Nu är du utloggad från MEKS'
+  end
+
+  private
 
   def base_url
     "#{request.protocol}#{request.host}"
@@ -56,8 +85,8 @@ class SamlController < ApplicationController
 # -----END CERTIFICATE-----"
 
     settings.idp_cert_fingerprint           = @config['idp_cert_fingerprint']
-    settings.idp_cert_fingerprint_algorithm = "http://www.w3.org/2000/09/xmldsig#sha1"
-    settings.name_identifier_format         = "urn:oasis:names:tc:SAML:2.0:nameid-format:emailAddress"
+    settings.idp_cert_fingerprint_algorithm = 'http://www.w3.org/2000/09/xmldsig#sha1'
+    settings.name_identifier_format         = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
 
     # # Optional for most SAML IdPs
     # settings.authn_context = "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
@@ -68,24 +97,5 @@ class SamlController < ApplicationController
     # setting.security (signing) is documented at https://github.com/onelogin/ruby-saml#signing
 
     settings
-  end
-
-  def debug_response(response)
-    logger.debug '=' * 72
-    logger.debug 'SAML response:'
-
-    doc = Nokogiri::XML(Base64.decode64(response))
-    Base64.encode64(doc.root.to_s)
-
-    cert = doc.xpath('//ds:X509Certificate', 'ds' => 'http://www.w3.org/2000/09/xmldsig#')
-    cert.first.content = cert.first.content.gsub!(/\s/, '')
-
-    signature = doc.xpath('//ds:SignatureValue', 'ds' => 'http://www.w3.org/2000/09/xmldsig#')
-    signature.first.content = signature.first.content.gsub!(/\s/, '')
-
-    modulus = doc.xpath('//ds:Modulus', 'ds' => 'http://www.w3.org/2000/09/xmldsig#')
-    modulus.first.content = modulus.first.content.gsub!(/\s/, '')
-
-    logger.debug '=' * 72
   end
 end
