@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531114937) do
+ActiveRecord::Schema.define(version: 20160622133106) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20160531114937) do
     t.boolean  "draft",                                                    default: false
     t.string   "name",                                       limit: 191
     t.date     "date_of_birth"
-    t.integer  "ssn_extension",                              limit: 4
+    t.string   "ssn_extension",                              limit: 191
     t.string   "dossier_number",                             limit: 191
     t.date     "registered"
     t.date     "deregistered"
