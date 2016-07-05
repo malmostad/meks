@@ -93,8 +93,8 @@ module ReportGenerator
         'Aktuellt boende' => {
           query: 'record.current_placements.map(&:home).map(&:name).join(", ")'
         },
-        'Aktuell boendeform' => {
-          query: 'record.current_placements.map(&:home).map(&:owner_type).map(&:name).join(", ")'
+        'Aktuella boendeformer' => {
+          query: 'record.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name }}.join(", ")'
         },
         'Alla boende' => {
           query: 'record.homes.map(&:name).join(", ")'
