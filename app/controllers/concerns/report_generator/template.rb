@@ -91,7 +91,10 @@ module ReportGenerator
           query: 'record.deregistered_comment'
         },
         'Aktuellt boende' => {
-          query: 'record.placements.reject { |p| !p.moved_out_at.nil? }.map(&:home).map(&:name).join(", ")'
+          query: 'record.current_placements.map(&:home).map(&:name).join(", ")'
+        },
+        'Aktuell boendeform' => {
+          query: 'record.current_placements.map(&:home).map(&:owner_type).map(&:name).join(", ")'
         },
         'Alla boende' => {
           query: 'record.homes.map(&:name).join(", ")'
