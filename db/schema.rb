@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531114937) do
+ActiveRecord::Schema.define(version: 20160623082955) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 191
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20160531114937) do
     t.boolean  "draft",                                                    default: false
     t.string   "name",                                       limit: 191
     t.date     "date_of_birth"
-    t.integer  "ssn_extension",                              limit: 4
+    t.string   "ssn_extension",                              limit: 191
     t.string   "dossier_number",                             limit: 191
     t.date     "registered"
     t.date     "deregistered"
@@ -212,10 +212,10 @@ ActiveRecord::Schema.define(version: 20160531114937) do
 
   create_table "ssns", force: :cascade do |t|
     t.date     "date_of_birth"
-    t.integer  "extension",     limit: 4
+    t.string   "extension",     limit: 191
     t.integer  "refugee_id",    limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   add_index "ssns", ["refugee_id"], name: "index_ssns_on_refugee_id", using: :btree
