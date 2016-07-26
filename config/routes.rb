@@ -7,8 +7,8 @@ Rails.application.routes.draw do
 
   namespace :saml do
     get :sso
-    post :get # Not used
     post :consume
+    get :consume # Not used
     get :metadata
     get :logout
   end
