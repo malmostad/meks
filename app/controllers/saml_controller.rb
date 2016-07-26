@@ -78,7 +78,7 @@ class SamlController < ApplicationController
     settings.idp_slo_target_url             = @config['idp_slo_target_url']
 
     settings.assertion_consumer_service_url = "#{base_url}/saml/consume"
-    settings.issuer                         = "#{base_url}/saml/metadata"
+    settings.issuer                         = base_url
 
     # Non-metadata URI settings
     # settings.idp_cert                       = @config['idp_cert']
