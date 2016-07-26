@@ -81,11 +81,9 @@ class SamlController < ApplicationController
     settings.issuer                         = "#{base_url}/saml/metadata"
 
     # Non-metadata URI settings
-    settings.idp_cert                       = "-----BEGIN CERTIFICATE-----
-#{@config['idp_cert']}
------END CERTIFICATE-----"
+    # settings.idp_cert                       = @config['idp_cert']
 
-    # settings.idp_cert_fingerprint           = @config['idp_cert_fingerprint']
+    settings.idp_cert_fingerprint           = @config['idp_cert_fingerprint']
     # settings.idp_cert_fingerprint_algorithm = 'http://www.w3.org/2000/09/xmldsig#sha1'
     # settings.name_identifier_format         = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
 
