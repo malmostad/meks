@@ -74,24 +74,19 @@ class SamlController < ApplicationController
     # settings = idp_metadata_parser.parse_remote @config['idp_metadata']
 
     settings = OneLogin::RubySaml::Settings.new
-    settings.idp_sso_target_url             = @config['idp_sso_target_url']
-    settings.idp_slo_target_url             = @config['idp_slo_target_url']
-
-    settings.assertion_consumer_service_url = "#{base_url}/saml/consume"
     settings.issuer                         = base_url
+    settings.idp_sso_target_url             = @config['idp_sso_target_url']
+    settings.assertion_consumer_service_url = "#{base_url}/saml/consume"
+    # settings.idp_slo_target_url             = @config['idp_slo_target_url']
 
     # Non-metadata URI settings
-    settings.idp_cert                       = @config['idp_cert']
-
-    # settings.idp_cert_fingerprint           = @config['idp_cert_fingerprint']
-    # settings.idp_cert_fingerprint_algorithm = 'http://www.w3.org/2000/09/xmldsig#sha1'
-    settings.name_identifier_format         = "urn:oasis:names:tc:SAML:2.0:nameid-format:emailAddress"
-    settings.authn_context                  = "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
+    # settings.idp_cert                       = @config['idp_cert']
+    settings.idp_cert_fingerprint           = @config['idp_cert_fingerprint']
+    settings.idp_cert_fingerprint_algorithm = 'http://www.w3.org/2000/09/xmldsig#sha1'
+    # settings.name_identifier_format         = 'urn:oasis:names:tc:SAML:2.0:nameid-format:emailAddress'
+    settings.name_identifier_format         = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
+    settings.authn_context                  = 'urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport'
     settings.compress_request               = false
-
-    # settings.idp_cert_fingerprint           = @config['idp_cert_fingerprint']
-    # settings.idp_cert_fingerprint_algorithm = 'http://www.w3.org/2000/09/xmldsig#sha1'
-    # settings.name_identifier_format         = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
 
     # # Optional for most SAML IdPs
     # settings.authn_context = "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
