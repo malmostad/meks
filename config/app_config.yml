@@ -33,6 +33,7 @@ test:
   cache_ttl: 43200
   max_age: 14400
   title_suffix: "MEKS (test)"
+  auth_method: saml
 
 production: &production
   <<: *defaults
