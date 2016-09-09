@@ -7,12 +7,14 @@ module ReportGenerator
     end
 
     def heading
+      @axlsx.workbook.styles.add_style(heading_base_style)
+    end
+
+    def heading_with_tooltip
       @axlsx.workbook.styles.add_style(
-        font_name: @font,
-        bg_color: '000000',
-        fg_color: 'FFFFFF',
-        alignment: @align_top,
-        width: 10
+        heading_base_style.merge!(
+          border: { style: :thick, color: 'FF0000', edges: [:bottom] }
+        )
       )
     end
 
@@ -39,6 +41,18 @@ module ReportGenerator
         alignment: @align_top,
         format_code: 'yyyy-mm-dd'
       )
+    end
+
+    private
+
+    def heading_base_style
+      {
+        font_name: @font,
+        bg_color: '000000',
+        fg_color: 'FFFFFF',
+        alignment: @align_top,
+        width: 10
+      }
     end
   end
 end

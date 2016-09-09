@@ -8,10 +8,30 @@ module ReportGenerator
 
       template = Template.new.send(template_name.to_sym)
 
-      axlsx.workbook.add_worksheet(name: "Genererad #{Date.today.to_s}") do |sheet|
-        # Column headings
-        sheet.add_row template.keys.map { |key| col_heading(key) },
-          style: style.heading
+      axlsx.workbook.add_worksheet(name: "Genererad #{Date.today}") do |sheet|
+        # Add column headings
+        col_headings = sheet.add_row(template.keys.map { |key|
+          col_heading(key)
+        }, style: style.heading)
+
+        # Add tooltip to given col headings
+        # Axlsx has a bug for newer version of Excel comments
+        #   so we use a workaround with validation tooltips activated when
+        #   the user selects a cell. No real validate is performed
+        tooltip_style_id = style.heading_with_tooltip
+
+        col_headings.cells.each_with_index do |cell, index|
+          tooltip = template[template.keys[index]][:tooltip]
+
+          next unless tooltip
+
+          cell.style = tooltip_style_id
+          sheet.add_data_validation(cell.r,
+            type: :textLength,
+            showInputMessage: true,
+            # promptTitle: 'Tips:',
+            prompt: tooltip)
+        end
 
         # xlsx data rows
         # records can be and active record enumerator or an array of records

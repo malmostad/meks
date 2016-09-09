@@ -118,10 +118,12 @@ module ReportGenerator
     def homes
       {
         'home.name' => {
-          query: 'record.name'
+          query: 'record.name',
+          tooltip: 'A tooltip'
         },
         'home.phone' => {
-          query: 'record.phone'
+          query: 'record.phone',
+          tooltip: 'A longer tooltip explaining something different'
         },
         'home.fax' => {
           query: 'record.fax'
