@@ -16,11 +16,18 @@ class SamlController < ApplicationController
     begin
       response = OneLogin::RubySaml::Response.new(params[:SAMLResponse], settings: saml_settings)
 
+      debug_response(response)
+
       if response.is_valid?
         # Check if user belongs to a system group in the LDAP
         @ldap = Ldap.new
         cn = response.attributes[:cn]
+        logger.debug 'response.attributes'
+        logger.debug 'response.attributes[:cn]'
+        logger.debug response.attributes[:cn]
         role = @ldap.belongs_to_group(cn)
+        logger.debug 'role'
+        logger.debug role
 
         if !role.present?
           logger.info "[SAML_AUTH] #{cn} from #{client_ip} failed to log in: doesn't belong to a group."
@@ -97,5 +104,41 @@ class SamlController < ApplicationController
     # setting.security (signing) is documented at https://github.com/onelogin/ruby-saml#signing
 
     settings
+  end
+
+  def debug_response(response)
+    begin
+      logger.debug '=' * 72
+      logger.debug 'SAML response:'
+
+      doc = Nokogiri::XML(Base64.decode64(response))
+      doc_root = Base64.encode64(doc.root.to_s)
+      logger.debug 'doc_root ' + ('-' * 72)
+      logger.debug doc_root
+      logger.debug '-' * 72
+
+      cert = doc.xpath('//ds:X509Certificate', 'ds' => 'http://www.w3.org/2000/09/xmldsig#')
+      cert.first.content = cert.first.content.gsub!(/\s/, '')
+      logger.debug 'cert.first.content ' + ('-' * 72)
+      logger.debug cert.first.content
+      logger.debug '-' * 72
+
+      signature = doc.xpath('//ds:SignatureValue', 'ds' => 'http://www.w3.org/2000/09/xmldsig#')
+      signature.first.content = signature.first.content.gsub!(/\s/, '')
+      logger.debug 'signature.first.content ' + ('-' * 72)
+      logger.debug signature.first.content
+      logger.debug '-' * 72
+
+      modulus = doc.xpath('//ds:Modulus', 'ds' => 'http://www.w3.org/2000/09/xmldsig#')
+      modulus.first.content = modulus.first.content.gsub!(/\s/, '')
+      logger.debug 'modulus.first.content ' + ('-' * 72)
+      logger.debug modulus.first.content
+      logger.debug '-' * 72
+
+      logger.debug '=' * 72
+    rescue => e
+      logger.debug 'RESCUE'
+      logger.debug e
+    end
   end
 end
