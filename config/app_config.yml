@@ -26,6 +26,7 @@ development: &development
 
 local_test:
   <<: *development
+  auth_method: stub
 
 test:
   <<: *defaults
