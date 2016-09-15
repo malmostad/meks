@@ -14,7 +14,7 @@ gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
 
 gem 'net-ldap', '0.14.0'
-gem 'ruby-saml', '1.2.0'
+gem 'ruby-saml', '1.3.1'
 gem 'cancancan'
 
 gem 'axlsx', '2.0.1'
