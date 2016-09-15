@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-  before_action :redirect_if_saml
+  before_action :redirect_if_saml, except: :destroy
   skip_authorize_resource
   skip_authorization_check
   skip_before_action :authenticate
@@ -56,7 +56,12 @@ class LoginController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_path, notice: 'Nu är du utloggad från MEKS'
+
+    if APP_CONFIG['auth_method'] == 'saml'
+      redirect_to APP_CONFIG['idp_slo_target_url']
+    else
+      redirect_to root_path, notice: 'Nu är du utloggad från MEKS'
+    end
   end
 
   private
