@@ -20,8 +20,8 @@ class ReportsController < ApplicationController
       :refugee, :home, :moved_out_reason,
       refugee: [:countries, :languages, :ssns, :dossier_numbers,
                 :gender, :homes, :placements, :municipality,
-                :relateds, :inverse_relateds],
-      home: [:languages, :type_of_housings,
+                :relateds, :inverse_relateds, :deregistered_reason],
+      home: [:languages, :type_of_housings, :placements,
              :owner_type, :target_groups, :languages])
 
     # Been on the home during a given range
@@ -51,7 +51,7 @@ class ReportsController < ApplicationController
     records = Refugee.includes(
       :countries, :languages, :ssns, :dossier_numbers,
       :gender, :homes, :placements, :municipality,
-      :relateds, :inverse_relateds,
+      :relateds, :inverse_relateds, :deregistered_reason, :current_placements,
       placements: [:home])
 
     if params[:refugees_registered_from].present? && params[:refugees_registered_to].present?
