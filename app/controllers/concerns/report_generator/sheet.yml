@@ -8,33 +8,33 @@
 refugees:
   - heading: refugee.name
     query: record.name
-  - heading: Asylstatus
-    query: format_asylum_status(record.asylum_status)
-    tooltip: Ett exempel på en kolumnförklaring
   - heading: Personnummer
     query: record.ssn
-  - heading: Extra personnummer
-    query: record.ssns.map(&:full_ssn).join(", ")
-    tooltip: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.
-  - heading: Dossiernummer
-    query: record.dossier_number
-  - heading: Extra dossiernummer
-    query: record.dossier_numbers.map(&:name).join(", ")
   - heading: Ålder
     query: record.age
     type: :integer
+    tooltip: Ett exempel på en kolumnförklaring
+  - heading: Dossiernummer
+    query: record.dossier_number
   - heading: refugee.gender
     query: record.gender.name
-  - heading: refugee.languages
-    query: record.languages.map(&:name).join(", ")
   - heading: refugee.countries
     query: record.countries.map(&:name).join(", ")
-  - heading: refugee.special_needs
-    query: 'record.special_needs? ? "Ja" : "Nej"'
-  - heading: refugee.social_worker
-    query: record.social_worker
+  - heading: refugee.languages
+    query: record.languages.map(&:name).join(", ")
   - heading: refugee.registered
     query: record.registered
+  - heading: Aktuellt boende
+    query: record.current_placements.map(&:home).map(&:name).join(", ")
+  - heading: Aktuella boendeformer
+    query: record.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name }}.join(", ")
+  - heading: refugee.municipality
+    query: record.municipality.name
+  - heading: refugee.municipality_placement_migrationsverket_at
+    query: record.municipality_placement_migrationsverket_at
+    type: :date
+  - heading: refugee.municipality_placement_comment
+    query: record.municipality_placement_comment
   - heading: PUT
     query: record.residence_permit_at
     type: :date
@@ -50,16 +50,10 @@ refugees:
   - heading: refugee.citizenship_at
     query: record.citizenship_at
     type: :date
-  - heading: refugee.municipality
-    query: record.municipality.name
-  - heading: refugee.municipality_placement_migrationsverket_at
-    query: record.municipality_placement_migrationsverket_at
-    type: :date
-  - heading: refugee.municipality_placement_per_agreement_at
-    query: record.municipality_placement_per_agreement_at
-    type: :date
-  - heading: refugee.municipality_placement_comment
-    query: record.municipality_placement_comment
+  - heading: refugee.social_worker
+    query: record.social_worker
+  - heading: refugee.special_needs
+    query: 'record.special_needs? ? "Ja" : "Nej"'
   - heading: refugee.deregistered
     query: record.deregistered
     type: :date
@@ -67,10 +61,6 @@ refugees:
     query: record.deregistered_reason.name
   - heading: refugee.deregistered_comment
     query: record.deregistered_comment
-  - heading: Aktuellt boende
-    query: record.current_placements.map(&:home).map(&:name).join(", ")
-  - heading: Aktuella boendeformer
-    query: record.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name }}.join(", ")
   - heading: Alla boende
     query: record.homes.map(&:name).join(", ")
   - heading: Total placeringstid (dagar)
@@ -82,6 +72,15 @@ refugees:
     query: record.inverse_relateds.map(&:name).join(", ")
   - heading: Övriga anhöriga
     query: record.refugee.other_relateds
+  - heading: refugee.municipality_placement_per_agreement_at
+    query: record.municipality_placement_per_agreement_at
+    type: :date
+  - heading: Asylstatus
+    query: format_asylum_status(record.asylum_status)
+  - heading: Extra personnummer
+    query: record.ssns.map(&:full_ssn).join(", ")
+  - heading: Extra dossiernummer
+    query: record.dossier_numbers.map(&:name).join(", ")
 
 homes:
   - heading: name
