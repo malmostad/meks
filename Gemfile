@@ -38,11 +38,14 @@ group :development do
 end
 
 group :local_test do
-  gem 'rspec-rails', '~> 3.5.2'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'poltergeist'
   gem 'database_cleaner'
+end
+
+group :development, :test, :local_test do
+  gem 'rspec-rails', '~> 3.5.2'
 end
 
 group :development, :test do
