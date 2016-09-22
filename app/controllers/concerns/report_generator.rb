@@ -3,7 +3,7 @@ module ReportGenerator
 
   included do
     def generate_xlsx(template, records)
-      axlsx   = Axlsx::Package.new
+      axlsx = Axlsx::Package.new
       style = Style.new(axlsx)
 
       columns = YAML.load_file(
