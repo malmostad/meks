@@ -10,7 +10,7 @@ refugees:
     query: record.name
   - heading: Asylstatus
     query: format_asylum_status(record.asylum_status)
-    tooltip: Tipsextra
+    tooltip: Ett exempel på en kolumnförklaring
   - heading: Personnummer
     query: record.ssn
   - heading: Extra personnummer
@@ -86,10 +86,8 @@ refugees:
 homes:
   - heading: name
     query: record.name
-    tooltip: A tooltip
   - heading: phone
     query: record.phone
-    tooltip: A longer tooltip explaining something else
   - heading: fax
     query: record.fax
   - heading: address
@@ -121,7 +119,7 @@ homes:
     query: record.guaranteed_seats
     type: :integer
   - heading: Lediga platser
-    query: "(record.guaranteed_seats + record.movable_seats) - heading: record.placements.reject { |p| !p.moved_out_at.nil? }.size"
+    query: "(record.guaranteed_seats + record.movable_seats) - record.placements.reject { |p| !p.moved_out_at.nil? }.size"
     type: :integer
   - heading: movable_seats
     query: record.movable_seats
