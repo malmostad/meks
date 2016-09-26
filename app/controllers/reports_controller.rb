@@ -43,6 +43,16 @@ class ReportsController < ApplicationController
       records = Placement.overlapping_by_refugee(params)
     end
 
+    # Filter out each placement's refugee's other placements that do not fall within the given range.
+    #   Used for "All homes" column for each placement. The relation is:
+    #   placement (the record) => refugee => all that refugee's placements within range
+    refugees = records.map { |placement| placement.refugee }.uniq
+    refugees.each do |refugee|
+      refugee.placements = refugee.placements.reject do |placement|
+        false if placement.moved_in_at <= params[:placements_to].to_date && (placement.moved_out_at.nil? || placement.moved_out_at >= params[:placements_from].to_date)
+      end
+    end
+
     xlsx = generate_xlsx(:placements, records)
     send_xlsx xlsx, 'Placeringar'
   end
