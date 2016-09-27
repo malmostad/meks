@@ -3,6 +3,10 @@ class Placement < ActiveRecord::Base
 
   default_scope { order(:moved_in_at) }
 
+  scope :within_range, ->(from, to) {
+    where('moved_in_at <= ? and (moved_out_at is ? or moved_out_at >= ?)', to.to_date, nil, from.to_date)
+  }
+
   belongs_to :refugee, touch: true
   belongs_to :home, touch: true
   belongs_to :moved_out_reason

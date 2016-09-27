@@ -8,6 +8,12 @@ class Refugee < ActiveRecord::Base
 
   has_many :placements, dependent: :destroy
 
+  has_many :placements, dependent: :destroy do
+    def placements_within_range(from, to)
+      within_range(from, to)
+    end
+  end
+
   has_many :current_placements, -> {
     where(moved_out_at: nil)
     .where.not(moved_in_at: nil)
