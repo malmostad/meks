@@ -131,4 +131,8 @@ class ReportsController < ApplicationController
   def find_report(id)
     APP_CONFIG['pre_generated_reports'].detect { |r| r['id'] == id.to_i }
   end
+
+  def numshort_date(date)
+    I18n.l(date, format: :numshort) unless date.nil?
+  end
 end

@@ -146,7 +146,7 @@ placements:
   - heading: placement.specification
     query: record.specification
   - heading: Alla boenden inom angivet datumintervall
-    query: record.refugee.placements.map { |p| "#{p.home.name} (#{p.moved_in_at}–#{p.moved_out_at})" }.join(", ")
+    query: record.refugee.placements.map { |p| "#{p.home.name} (#{numshort_date p.moved_in_at}–#{numshort_date p.moved_out_at})" }.join(", ")
   - heading: refugee.registered
     query: record.refugee.registered
   - heading: placement.moved_in_at
