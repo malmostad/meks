@@ -8,11 +8,8 @@ class Refugee < ActiveRecord::Base
 
   has_many :placements, dependent: :destroy
 
-  has_many :current_placements, -> {
-    where(moved_out_at: nil)
-    .where.not(moved_in_at: nil)
-  }, class_name: 'Placement'
-
+  has_many :current_placements, -> { where(moved_out_at: nil).where.not(moved_in_at: nil) },
+    class_name: 'Placement'
 
   scope :with_current_placement, -> {
     includes(:placements)
