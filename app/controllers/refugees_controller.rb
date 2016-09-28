@@ -45,6 +45,11 @@ class RefugeesController < ApplicationController
     end
   end
 
+  def destroy
+    Refugee.find(params[:id]).destroy
+    redirect_to refugees_path, notice: 'Ärendet raderades'
+  end
+
   # Full search for refugees
   def search
     @q = params[:q].present? ? params[:q].dup : ''

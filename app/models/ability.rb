@@ -4,8 +4,8 @@ class Ability
   def initialize(user)
     if user.has_role? :admin
       can :manage, :all
+      can :destroy, Refugee
       cannot :destroy, Home
-      cannot :destroy, Refugee
 
     elsif user.has_role? :writer
       can :manage, Refugee
