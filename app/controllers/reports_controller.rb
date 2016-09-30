@@ -20,8 +20,8 @@ class ReportsController < ApplicationController
       :refugee, :home, :moved_out_reason,
       refugee: [:countries, :languages, :ssns, :dossier_numbers,
                 :gender, :homes, :placements, :municipality,
-                :relateds, :inverse_relateds],
-      home: [:languages, :type_of_housings,
+                :relateds, :inverse_relateds, :deregistered_reason],
+      home: [:languages, :type_of_housings, :placements,
              :owner_type, :target_groups, :languages])
 
     # Been on the home during a given range
@@ -43,6 +43,16 @@ class ReportsController < ApplicationController
       records = Placement.overlapping_by_refugee(params)
     end
 
+    # Filter out each placement's refugee's other placements that do not fall within the given range.
+    #   Used for "All homes" column for each placement. The relation is:
+    #   placement (the record) => refugee => all that refugee's placements within range
+    refugees = records.map { |placement| placement.refugee }.uniq
+    refugees.each do |refugee|
+      refugee.placements = refugee.placements.reject do |placement|
+        false if placement.moved_in_at <= params[:placements_to].to_date && (placement.moved_out_at.nil? || placement.moved_out_at >= params[:placements_from].to_date)
+      end
+    end
+
     xlsx = generate_xlsx(:placements, records)
     send_xlsx xlsx, 'Placeringar'
   end
@@ -50,9 +60,10 @@ class ReportsController < ApplicationController
   def refugees
     records = Refugee.includes(
       :countries, :languages, :ssns, :dossier_numbers,
-      :gender, :homes, :placements, :municipality,
-      :relateds, :inverse_relateds,
-      placements: [:home])
+      :gender, :homes, :municipality, :deregistered_reason,
+      relationships: [:type_of_relationship, :refugee],
+      inverse_relationships: [:type_of_relationship, :refugee],
+      current_placements: [home: :type_of_housings])
 
     if params[:refugees_registered_from].present? && params[:refugees_registered_to].present?
       records = records.where(registered: params[:refugees_registered_from]..params[:refugees_registered_to])
@@ -120,5 +131,9 @@ class ReportsController < ApplicationController
 
   def find_report(id)
     APP_CONFIG['pre_generated_reports'].detect { |r| r['id'] == id.to_i }
+  end
+
+  def numshort_date(date)
+    I18n.l(date, format: :numshort) unless date.nil?
   end
 end

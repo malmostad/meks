@@ -53,6 +53,7 @@ sv:
       default: "%Y-%m-%d"
       long: "%e %B %Y"
       short: "%e %b"
+      numshort: "%y%m%d"
     month_names:
     -
     - januari

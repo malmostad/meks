@@ -2,33 +2,53 @@ module ReportGenerator
   extend ActiveSupport::Concern
 
   included do
-    def generate_xlsx(template_name, records)
-      axlsx   = Axlsx::Package.new
+    def generate_xlsx(template, records)
+      axlsx = Axlsx::Package.new
       style = Style.new(axlsx)
 
-      template = Template.new.send(template_name.to_sym)
+      columns = YAML.load_file(
+        "#{Rails.root}/app/controllers/concerns/report_generator/sheet.yml"
+      )[template.to_s]
 
-      axlsx.workbook.add_worksheet(name: "Genererad #{Date.today.to_s}") do |sheet|
-        # Column headings
-        sheet.add_row template.keys.map { |key| col_heading(key) },
-          style: style.heading
+      axlsx.workbook.add_worksheet(name: "Genererad #{Date.today}") do |sheet|
+        # Add column headings
+        col_headings = sheet.add_row(columns.map { |col| col_heading(col['heading']) },
+          style: style.heading)
+
+        # Add tooltip to given col headings
+        # Axlsx has a bug for newer version of Excel comments
+        #   so we use a workaround with validation tooltips activated when
+        #   the user selects a cell. No real validate is performed.
+        tooltip_style_id = style.heading_with_tooltip
+
+        col_headings.cells.each_with_index do |cell, index|
+          tooltip = columns[index]['tooltip']
+          next unless tooltip
+
+          cell.style = tooltip_style_id
+          sheet.add_data_validation(cell.r,
+            type: :textLength,
+            showInputMessage: true,
+            promptTitle: 'Kolumnförklaring:',
+            prompt: tooltip)
+        end
 
         # xlsx data rows
         # records can be and active record enumerator or an array of records
         records.send(records.is_a?(Array) ? 'each' : 'find_each') do |record|
           sheet.add_row(
-            template.map do |_key, value|
+            columns.map do |column|
               begin
                 # Note: evaled queries are not based on user input,
-                # they are defined in the 'template' file
-                eval value[:query]
+                # they are defined in the 'columns.yml' file
+                eval column['query']
               rescue
                 ''
               end
             end,
             # Styling is very performance consuming for larger sets
             # style: template.map { |_key, value| value[:style].present? ? style.send(value[:style]) : style.normal },
-            types: template.map { |_key, value| value[:type] || :string }
+            types: columns.map { |column| column['type'] || :string }
           )
         end
       end

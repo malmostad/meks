@@ -109,6 +109,16 @@
   }
 }
 
+.danger-zone {
+  margin-bottom: 4em;
+  h1.box-title {
+    background: $danger-color;
+  }
+  p {
+    margin: 0 0 .5em;
+  }
+}
+
 // Copy of .warning, for cancan
 .alert {
     background: $warning-background;

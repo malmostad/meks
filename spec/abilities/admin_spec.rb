@@ -39,8 +39,8 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:read, Placement.new) }
     it { should be_able_to(:read, Relationship.new) }
     it { should be_able_to(:view, :statistics) }
+    it { should be_able_to(:destroy, Refugee.new) }
 
-    it { should_not be_able_to(:destroy, Refugee.new) }
     it { should_not be_able_to(:destroy, Home.new) }
   end
 end

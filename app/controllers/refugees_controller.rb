@@ -45,6 +45,11 @@ class RefugeesController < ApplicationController
     end
   end
 
+  def destroy
+    Refugee.find(params[:id]).destroy
+    redirect_to refugees_path, notice: 'Ärendet raderades'
+  end
+
   # Full search for refugees
   def search
     @q = params[:q].present? ? params[:q].dup : ''
@@ -115,6 +120,7 @@ class RefugeesController < ApplicationController
         :temporary_permit_starts_at,
         :temporary_permit_ends_at,
         :secrecy,
+        :sof_placement,
         :municipality_id,
         :municipality_placement_migrationsverket_at,
         :municipality_placement_per_agreement_at,

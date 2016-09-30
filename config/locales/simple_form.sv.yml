@@ -33,6 +33,7 @@ sv:
         dossier_number: Dossiernummer
         dossier_numbers: Extra dossiernummer
         secrecy: Sekretess
+        sof_placement: SoF-placering
         homes: Boenden
         deregistered: Avslutad
         deregistered_reason: Avslutsorsak
@@ -52,7 +53,7 @@ sv:
         other_relateds: Anhöriga utanför systemet
         social_worker: Socialsekreterare
         placements:
-          moved_in_at: Placerningsdatum
+          moved_in_at: Placeringsdatum
 
       relationship:
         <<: *defaults
@@ -66,7 +67,7 @@ sv:
 
       placement:
         <<: *defaults
-        moved_in_at: Placerningsdatum
+        moved_in_at: Placeringsdatum
         moved_out_at: Utskrivningsdatum
         moved_out_reason: Anledning till utskrivning
         specification: Placeringsspecifikation

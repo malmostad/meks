@@ -21,12 +21,14 @@ $ ->
   register_dob_cal()
 
 
-  # Do you want to leave this page confirm
+  # Do you want to leave this page prompt
   $form = $('form.simple_form.basic.refugee')
   if $form.length
-    $(window).bind 'beforeunload', (e) ->
+    $(window).bind 'beforeunload', (event) ->
       'Dina ändringar kommer att gå förlorade'
-    $form.bind 'submit', (e) ->
+    $form.bind 'submit', (event) ->
+      $(window).unbind 'beforeunload'
+    $('.btn-danger').bind 'click', (event) ->
       $(window).unbind 'beforeunload'
 
   # Add term

@@ -46,6 +46,11 @@ class PlacementsController < ApplicationController
     end
   end
 
+  def destroy
+    Placement.find(params[:id]).destroy
+    redirect_to @refugee, notice: 'Placeringen raderades'
+  end
+
   private
     def set_refugee
       @refugee = Refugee.find(params[:refugee_id])
