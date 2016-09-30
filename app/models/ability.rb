@@ -9,12 +9,13 @@ class Ability
 
     elsif user.has_role? :writer
       can :manage, Refugee
+      cannot :destroy, Refugee
       can :manage, Home
       cannot :destroy, Home
-      cannot :destroy, Refugee
       can :manage, User
       can :manage, Relationship
       can :manage, Placement
+      cannot :destroy, Placement
       can :generate, :reports
       can :view, :statistics
 
@@ -30,6 +31,7 @@ class Ability
       can [:edit, :update, :drafts], Refugee, draft: true
       can :manage, Relationship, refugee: { draft: true }
       can :manage, Placement, refugee: { draft: true }
+      cannot :destroy, Placement
 
        # Model less controllers
       can :view, :statistics
