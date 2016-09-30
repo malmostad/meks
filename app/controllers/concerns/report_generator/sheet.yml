@@ -14,7 +14,6 @@ refugees:
   - heading: Ålder
     query: record.age
     type: :integer
-    tooltip: Ett exempel på en kolumnförklaring
   - heading: Dossiernummer
     query: record.dossier_number
   - heading: refugee.gender
@@ -25,9 +24,10 @@ refugees:
     query: record.languages.map(&:name).join(", ")
   - heading: refugee.registered
     query: record.registered
+    tooltip: Anger det datum då barnet registreras i MEKS för första gången
   - heading: Aktuellt boende
     query: record.current_placements.map(&:home).map(&:name).join(", ")
-  - heading: Aktuella boendeformer
+  - heading: Aktuell boendeform
     query: record.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name }}.join(", ")
   - heading: refugee.municipality
     query: record.municipality.name
@@ -41,6 +41,7 @@ refugees:
     type: :date
   - heading: refugee.checked_out_to_our_city
     query: record.checked_out_to_our_city
+    tooltip: Det datum då barnet skrivs ut från Migrationsverket
     type: :date
   - heading: TUT startar
     query: record.temporary_permit_starts_at
@@ -57,12 +58,13 @@ refugees:
     query: 'record.special_needs? ? "Ja" : "Nej"'
   - heading: refugee.deregistered
     query: record.deregistered
+    tooltip: Anger datum för när socialtjänstansvaret för barnet är avslutat
     type: :date
   - heading: refugee.deregistered_reason
     query: record.deregistered_reason.name
   - heading: refugee.deregistered_comment
     query: record.deregistered_comment
-  - heading: Alla boende
+  - heading: Alla boenden
     query: record.homes.map(&:name).join(", ")
   - heading: Total placeringstid (dagar)
     query: record.total_placement_time
@@ -145,12 +147,16 @@ placements:
     query: record.home.name
   - heading: placement.specification
     query: record.specification
+    tooltip: Specificerar extern placering
   - heading: Alla boenden inom angivet datumintervall
     query: record.refugee.placements.map { |p| "#{p.home.name} (#{numshort_date p.moved_in_at}–#{numshort_date p.moved_out_at})" }.join(", ")
+    tooltip: Alla boenden som barnet varit placerat på under rapportens valda tidsintervall
   - heading: refugee.registered
     query: record.refugee.registered
+    tooltip: Anger det datum då barnet registreras i MEKS för första gången
   - heading: placement.moved_in_at
     query: record.moved_in_at
+    tooltip: Anger det datum då barnet placeras på ett specifikt boende
     type: :date
   - heading: placement.moved_out_at
     query: record.moved_out_at
@@ -159,6 +165,7 @@ placements:
     query: record.moved_out_reason.name
   - heading: refugee.deregistered
     query: record.refugee.deregistered
+    tooltip: Anger datum för när socialtjänstansvaret för barnet är avslutat
     type: :date
   - heading: home.type_of_housings
     query: record.home.type_of_housings.map(&:name).join(", ")
@@ -174,6 +181,7 @@ placements:
     type: :date
   - heading: refugee.checked_out_to_our_city
     query: record.refugee.checked_out_to_our_city
+    tooltip: Det datum då barnet skrivs ut från Migrationsverket
     type: :date
   - heading: TUT startar
     query: record.refugee.temporary_permit_starts_at
@@ -238,7 +246,7 @@ placements:
   - heading: home.movable_seats
     query: record.home.movable_seats
     type: :integer
-  - heading: Summa platser
+  - heading: Summa platser (garanti + rörliga)
     query: record.home.seats
     type: :integer
   - heading: home.active
