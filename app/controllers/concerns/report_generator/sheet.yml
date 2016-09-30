@@ -7,6 +7,8 @@
 # +tooltip+ is a text that can be added as a tooltip to the column heading
 # +type+ is the field data type. :string is default
 refugees:
+  - heading: refugee.sof_placement
+    query: 'record.sof_placement ? "Ja" : "Nej"'
   - heading: refugee.name
     query: record.name
   - heading: Personnummer
@@ -137,6 +139,8 @@ placements:
     query: record.refugee.dossier_number
   - heading: Extra dossiernummer
     query: record.refugee.dossier_numbers.map(&:name).join(", ")
+  - heading: refugee.sof_placement
+    query: 'record.refugee.sof_placement ? "Ja" : "Nej"'
   - heading: Namn
     query: record.refugee.name
   - heading: Personnummer
