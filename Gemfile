@@ -2,28 +2,27 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.7.1'
 gem 'haml-rails', '0.9.0'
-gem 'sass-rails', '~> 5.0.4'
-gem 'uglifier', '~> 3.0.0'
+gem 'sass-rails', '5.0.4'
+gem 'uglifier', '3.0.0'
 gem 'coffee-rails', '4.2.1'
 gem 'jquery-rails'
 
 gem 'simple_form', '3.3.1'
-gem 'mysql2', '~> 0.4.3'
+gem 'mysql2', '0.4.3'
 gem 'dalli', '2.7.6'
 gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
 
-gem 'net-ldap'
+gem 'net-ldap', '0.14.0'
 gem 'cancancan'
+gem 'ruby-saml', '1.3.1'
 
-gem 'axlsx'
+gem 'axlsx', '2.0.1'
 
 gem 'whenever', '0.9.7', require: false
 gem 'highline'
 gem 'execjs'
 gem 'faker'
-
-# gem 'jbuilder', '~> 2.3.2'
 
 gem 'bcrypt', '~> 3.1.11'
 
@@ -49,7 +48,6 @@ group :development, :test, :local_test do
 end
 
 group :development, :test do
-  gem 'thin'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 end
