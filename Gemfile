@@ -1,36 +1,34 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.7.1'
 gem 'haml-rails', '0.9.0'
 gem 'sass-rails', '5.0.4'
 gem 'uglifier', '3.0.0'
-gem 'coffee-rails', '4.1.1'
+gem 'coffee-rails', '4.2.1'
 gem 'jquery-rails'
 
-gem 'simple_form', '3.2.1'
-gem 'mysql2', '0.4.4'
+gem 'simple_form', '3.3.1'
+gem 'mysql2', '0.4.3'
 gem 'dalli', '2.7.6'
 gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
 
 gem 'net-ldap', '0.14.0'
-gem 'ruby-saml', '1.3.1'
 gem 'cancancan'
+gem 'ruby-saml', '1.3.1'
 
 gem 'axlsx', '2.0.1'
 
-gem 'whenever', '0.9.4', require: false
+gem 'whenever', '0.9.7', require: false
 gem 'highline', '1.7.8'
 gem 'execjs', '2.7.0'
 gem 'faker'
 
-# gem 'jbuilder', '~> 2.3.2'
-
-gem 'bcrypt', '3.1.11'
+gem 'bcrypt', '~> 3.1.11'
 
 group :development do
-  gem 'capistrano', '3.5.0'
-  gem 'capistrano-rails', '1.1.6'
+  gem 'capistrano', '3.6.1'
+  gem 'capistrano-rails', '1.1.7'
   gem 'capistrano-rbenv', '2.0.4'
   gem 'quiet_assets'
   gem 'pry-rails'
@@ -39,15 +37,17 @@ group :development do
 end
 
 group :local_test do
-  gem 'rspec-rails', '~> 3.4.0'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'poltergeist'
   gem 'database_cleaner'
 end
 
+group :development, :test, :local_test do
+  gem 'rspec-rails', '~> 3.5.2'
+end
+
 group :development, :test do
-  gem 'rb-readline'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 end
