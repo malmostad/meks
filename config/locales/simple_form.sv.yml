@@ -33,6 +33,7 @@ sv:
         dossier_number: Dossiernummer
         dossier_numbers: Extra dossiernummer
         secrecy: Sekretess
+        sof_placement: SoF-placering
         homes: Boenden
         deregistered: Avslutad
         deregistered_reason: Avslutsorsak

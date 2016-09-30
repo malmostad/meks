@@ -12,6 +12,7 @@
         .secrecy= 'Sekretess'
 
     = form_for @refugee, html: { class: 'basic' } do |f|
+      = show_attribute('refugee.sof_placement', @refugee.sof_placement ? 'Ja' : 'Nej')
       = show_attribute('refugee.name', @refugee.name)
       = show_attribute('Personnummer', @refugee.ssn)
       = show_attribute('Dossiernummer', @refugee.dossier_number)
