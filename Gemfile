@@ -20,8 +20,8 @@ gem 'ruby-saml', '1.3.1'
 gem 'axlsx', '2.0.1'
 
 gem 'whenever', '0.9.7', require: false
-gem 'highline'
-gem 'execjs'
+gem 'highline', '1.7.8'
+gem 'execjs', '2.7.0'
 gem 'faker'
 
 gem 'bcrypt', '~> 3.1.11'
