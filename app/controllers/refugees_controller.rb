@@ -1,6 +1,4 @@
 class RefugeesController < ApplicationController
-  protect_from_forgery except: :suggest
-
   def show
     @refugee = Refugee.includes(
       :placements,
