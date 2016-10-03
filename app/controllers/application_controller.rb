@@ -48,6 +48,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: 'Din roll saknar behörighet för detta'
   end
 
+  rescue_from ActionController::InvalidAuthenticityToken do |exception|
+    logger.debug { "#{exception.message}" }
+    logger.warn "ActionController::InvalidAuthenticityToken (maybe session expired) for the user from #{client_ip}"
+    redirect_to logout_path, notice: 'Du är utloggad från MEKS'
+  end
+
   rescue_from ActiveRecord::RecordNotFound,
               ActionController::RoutingError,
               ActionController::UnknownController,

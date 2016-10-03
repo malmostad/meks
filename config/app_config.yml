@@ -1,7 +1,7 @@
 defaults: &defaults
   base_url: "https://komin.malmo.se/"
   assets_url_base: "//assets.malmo.se/internal/v4-staging/"
-  auth_method: saml # ldap or stub
+  auth_method: saml # saml ldap or stub
   pre_generated_reports:
     - id: 1
       desc: 'Aktuella ärenden: Alla barn som inte är utskrivna'
@@ -22,7 +22,7 @@ development: &development
   cache_ttl: 1
   max_age: 0
   title_suffix: "MEKS (utveckling)"
-  auth_method: saml
+  auth_method: stub
 
 local_test:
   <<: *development
@@ -42,8 +42,10 @@ production: &production
   cache_ttl: 43200
   max_age: 14400
   title_suffix: "MEKS"
+  auth_method: saml
 
 staging:
   <<: *production
   title_suffix: "MEKS (staging)"
   assets_url_base: "//assets.malmo.se/internal/v4-staging/"
+  auth_method: saml
