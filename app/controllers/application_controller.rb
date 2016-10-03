@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
     logger.debug { "#{exception.message}" }
-    logger.warn "Session expired for the user from #{client_ip}"
+    logger.warn "InvalidAuthenticityToken (maybe session expired) for the user from #{client_ip}"
     respond_to do |format|
       format.html { render file: "#{Rails.root}/public/401", layout: false, status: 401 }
       format.all  { render nothing: true, status: 401 }
