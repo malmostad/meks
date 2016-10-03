@@ -48,6 +48,17 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: 'Din roll saknar behörighet för detta'
   end
 
+  rescue_from ActionController::InvalidAuthenticityToken do |exception|
+    logger.debug { "#{exception.message}" }
+    logger.warn "Session expired for the user from #{client_ip}"
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/401", layout: false, status: 401 }
+      format.all  { render nothing: true, status: 401 }
+    end
+    # redirect_to root_path,
+    #   alert: "Du har inte varit aktiv på #{Rails.configuration.session_options[:expire_after].to_i / 60} minuter och måste logga in igen."
+  end
+
   rescue_from ActiveRecord::RecordNotFound,
               ActionController::RoutingError,
               ActionController::UnknownController,
