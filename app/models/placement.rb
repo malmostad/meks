@@ -16,6 +16,11 @@ class Placement < ActiveRecord::Base
     end
   end
 
+  def self.within_range(from, to)
+    where('moved_in_at <= ?', to.to_date)
+      .where('moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
+  end
+
   def self.overlapping_by_refugee(options = {})
     # Within range
     range_from = begin; Date.parse(options[:placements_from]).to_s; rescue; (Date.today - 10.years).to_s; end
