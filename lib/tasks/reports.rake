@@ -1,4 +1,9 @@
 namespace :reports do
+  desc 'Cleanup reports directory'
+  task cleanup: :environment do |task|
+    FileUtils.rm_rf Dir.glob(File.join(reports_dir, '*'))
+  end
+
   desc 'Generate report with all refugees not deregistered'
   task active_refugees: :environment do |task|
     active_refugees = Refugee.includes(
@@ -58,7 +63,7 @@ namespace :reports do
   end
 
   desc 'Generate all reports'
-  task all: [:active_refugees, :refugees_this_year, :placements_this_quarter, :all_placements]
+  task all: [:cleanup, :active_refugees, :refugees_this_year, :placements_this_quarter, :all_placements]
 end
 
 def reports_dir
