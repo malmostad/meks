@@ -1,6 +1,3 @@
-require "#{Rails.root}/app/controllers/concerns/report_generator"
-include ReportGenerator
-
 namespace :reports do
   desc 'Generate report with all refugees not deregistered'
   task active_refugees: :environment do |task|
