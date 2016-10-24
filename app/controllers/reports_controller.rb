@@ -1,5 +1,4 @@
 class ReportsController < ApplicationController
-  # FIXME: set auth correctly in Ability
   skip_authorize_resource
   skip_authorization_check
   before_action { authorize! :generate, :reports }
