@@ -1,4 +1,4 @@
-= form_tag reports_placements_path, class: "basic" do
+= form_tag reports_generate_path, class: "basic" do
   %h2.group-title Placeringar
   .form-group
     %span.control-label
@@ -25,4 +25,5 @@
   .form-group
     %span.no-control-label
     .controls
+      = hidden_field_tag(:report_type, 'placements')
       = submit_tag t('actions.download'), name: nil, class: "btn btn-primary"

@@ -2,7 +2,7 @@ require 'report_generator/style'
 
 class ReportGenerator
   class << self
-    def generate_xlsx(template, records, file_id)
+    def generate_xlsx(template, records, file_name)
       axlsx = Axlsx::Package.new
       style = Style.new(axlsx)
 
@@ -52,7 +52,7 @@ class ReportGenerator
           )
         end
       end
-      axlsx.serialize File.join(Rails.root, 'reports', "#{file_id}.xlsx")
+      axlsx.serialize File.join(Rails.root, 'reports', file_name)
     end
 
     def numshort_date(date)

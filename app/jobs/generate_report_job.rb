@@ -3,11 +3,12 @@ require 'report_generator'
 class GenerateReportJob < ActiveJob::Base
   queue_as :default
 
-  def perform(report_type, params, file_id)
-    self.send(report_type, params, file_id)
+  def perform(params, file_id)
+    filename = "#{file_id}.xlsx"
+    self.send(params['report_type'], params, filename)
   end
 
-  def placements(params, file_id)
+  def placements(params, filename)
     records = Placement.includes(
       :refugee, :home, :moved_out_reason,
       refugee: [:countries, :languages, :ssns, :dossier_numbers,
@@ -27,10 +28,10 @@ class GenerateReportJob < ActiveJob::Base
       records = Placement.overlapping_by_refugee(params)
     end
 
-    ReportGenerator.generate_xlsx(:placements, records, file_id)
+    ReportGenerator.generate_xlsx(:placements, records, filename)
   end
 
-  def refugees(params, file_id)
+  def refugees(params, filename)
     records = Refugee.includes(
       :countries, :languages, :ssns, :dossier_numbers,
       :gender, :homes, :municipality, :deregistered_reason,
@@ -62,10 +63,10 @@ class GenerateReportJob < ActiveJob::Base
       records = records.where(query.join(' or '))
     end
 
-    ReportGenerator.generate_xlsx(:refugees, records, file_id)
+    ReportGenerator.generate_xlsx(:refugees, records, filename)
   end
 
-  def homes(params, file_id)
+  def homes(params, filename)
     records = Home.includes(
       :placements, :type_of_housings,
       :owner_type, :target_groups, :languages)
@@ -78,6 +79,6 @@ class GenerateReportJob < ActiveJob::Base
       records = records.each.reject { |r| r.free_seats <= 0 }
     end
 
-    ReportGenerator.generate_xlsx(:homes, records, file_id)
+    ReportGenerator.generate_xlsx(:homes, records, filename)
   end
 end

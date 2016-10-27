@@ -1,0 +1,17 @@
+- title "Status för din rapport"
+%section.box.show.reports.status
+  %h1.box-title= h1
+  .box-content.basic.form-data
+    - if !@status[:valid]
+      %p.warning
+        = 'Du har ingen rapport som kan laddas ned.'
+        = link_to 'Skapa en ny rapport', reports_path
+    - elsif @status[:finished]
+      .generating{ 'data': { generated_at: @status[:generated_at]} }
+        %p Det kan ta flera minuter att skapa din rapport. Stanna på denna sida så får du en nedladdningslänk när rapportern är klar.
+        %p= "Antal rapporter före i kön: #{@status[:queue_size] - 1}"
+        %p.timer= @status[:valid]
+    - else
+      .finished
+        %p.download= link_to 'Ladda ned rapport', reports_download_path(@status[:file_id])
+        %p.hint Tips: Högerklicka på länken och välj <em>Spara länk som</em> (eller liknande)
