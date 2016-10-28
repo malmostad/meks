@@ -10,29 +10,28 @@ class ReportsController < ApplicationController
 
   def generate
     file_id = SecureRandom.hex
-    GenerateReportJob.perform_later(params, file_id)
+    job = GenerateReportJob.perform_later(params, file_id)
+    delayed_job_id = Delayed::Job.find(job.provider_job_id).id
 
-    write_cookie(file_id)
-
-    redirect_to reports_status_path
+    redirect_to reports_status_path(delayed_job_id, file_id)
   end
 
   def status
-    report = read_cookie
+    job = Delayed::Job.where(id: params[:job_id]).first
 
-    if report.present? && report['file_id'].present?
-      valid = true
-      finished = File.exist?(file_path("#{report['file_id']}.xlsx"))
+    if !job && File.exist?(file_path("#{params[:file_id]}.xlsx"))
+      finished = true
     else
-      valid = false
+      finished = false
+      created_at = job.created_at.to_i
+      queue_size = Delayed::Job.where(last_error: nil).count
     end
 
     @status = {
-      file_id: report['file_id'],
-      created_at: report['created_at'],
+      file_id: params[:file_id],
+      created_at: created_at,
       finished: finished,
-      valid: valid,
-      queue_size: Delayed::Job.where(last_error: nil).count
+      queue_size: queue_size
     }
 
     respond_to do |format|
@@ -45,10 +44,10 @@ class ReportsController < ApplicationController
 
   def download
     filename = "#{params[:id]}.xlsx"
-    file = file_path(filename)
+    file_with_path = file_path(filename)
 
-    if File.exist? file
-      send_xlsx file, filename
+    if File.exist? file_with_path
+      send_xlsx file_with_path, filename
     else
       render :report_not_found
     end
@@ -56,9 +55,9 @@ class ReportsController < ApplicationController
 
   def download_pre_generated
     filename = pre_generated_report_name(params[:id])['filename']
-    file = file_path(filename)
+    file_with_path = file_path(filename)
 
-    send_xlsx send_xlsx file, filename
+    send_xlsx file_with_path, filename
   end
 
   private
@@ -76,31 +75,14 @@ class ReportsController < ApplicationController
     end
   end
 
-  def send_xlsx(xlsx, base_name)
-    send_data xlsx.to_stream.read, type: :xlsx, disposition: 'attachment',
+  def send_xlsx(file_with_path, base_name)
+    send_file file_with_path, type: :xlsx, disposition: 'attachment',
       filename: "#{base_name}.xlsx"
   end
 
   def file_path(filename)
     filename = sanitize_filename(filename)
     File.join(Rails.root, 'reports', filename)
-  end
-
-  def write_cookie(file_id)
-    cookies[:report] = {
-      value: JSON.generate(
-        file_id: file_id,
-        created_at: Time.now.to_i
-      ),
-      secure: Rails.env.production? || Rails.env.test?,
-      domain: request.host,
-      expires: 10.hour.from_now
-    }
-  end
-
-  def read_cookie
-    report = cookies[:report]
-    JSON.parse(report) if report
   end
 
   def pre_generated_report_name(id)

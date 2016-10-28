@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   get  'reports' => 'reports#index'
   post 'reports/generate'
-  get  'reports/status' => 'reports#status', as: 'reports_status'
+  get  'reports/status/:job_id/:file_id' => 'reports#status', as: 'reports_status'
   get  'reports/download/:id' => 'reports#download', as: 'reports_download'
   get  'reports/download_pre_generated/:id' => 'reports#download_pre_generated', as: 'reports_download_pre_generated'
 
