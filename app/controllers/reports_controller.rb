@@ -24,14 +24,16 @@ class ReportsController < ApplicationController
     else
       finished = false
       created_at = job.created_at.to_i
-      queue_size = Delayed::Job.where(last_error: nil).count
+      queue_size = Delayed::Job.where(last_error: nil).count - 1
+      queue_size = 0 if queue_size.nil? || queue_size < 0
     end
 
     @status = {
       file_id: params[:file_id],
       created_at: created_at,
       finished: finished,
-      queue_size: queue_size
+      queue_size: queue_size,
+      status_url: reports_status_url(params[:job_id], params[:file_id])
     }
 
     respond_to do |format|

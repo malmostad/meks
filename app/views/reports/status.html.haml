@@ -1,12 +1,16 @@
-- title "Status för din rapport"
+- title "Ladda ned rapport"
 %section.box.show.reports.status
   %h1.box-title= h1
   .box-content.basic.form-data
     - if !@status[:finished]
-      .generating{ 'data': { created_at: @status[:created_at]} }
+      .generating
         %p Det kan ta flera minuter att skapa din rapport. Stanna på denna sida så får du en nedladdningslänk när rapportern är klar.
-        %p= "Antal rapporter före i kön: #{@status[:queue_size] - 1}"
-        %p.timer= @status[:created_at]
+        %p.queue
+          Antal rapporter före i kön:
+          %span= @status[:queue_size]
+        %p.timer{ 'data': { created_at: @status[:created_at], status_url: @status[:status_url] } }
+          Du har väntat:
+          %span
     .download{ class: @status[:finished] ? 'finished' : '' }
-      %p.download= link_to 'Ladda ned rapport', reports_download_path(@status[:file_id])
+      %p= link_to 'Ladda ned rapport', reports_download_path(@status[:file_id])
       %p.hint Tips: Högerklicka på länken och välj <em>Spara länk som</em> (eller liknande)
