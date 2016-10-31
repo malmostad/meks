@@ -32,6 +32,7 @@ RSpec.describe "Deregistered reasons", type: :feature do
       visit "/deregistered_reasons"
       first("a.btn-danger").click
 
+      sleep 2
       page.evaluate_script("window.confirm()")
       expect(page).to have_selector(".notice", text: "raderades")
     end
