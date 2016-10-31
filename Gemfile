@@ -12,6 +12,7 @@ gem 'mysql2', '0.4.4'
 gem 'dalli', '2.7.6'
 gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
+gem 'daemons', '1.2.4'
 
 gem 'net-ldap', '0.15.0'
 gem 'cancancan', '1.15.0'
