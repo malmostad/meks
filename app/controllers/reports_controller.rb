@@ -80,7 +80,7 @@ class ReportsController < ApplicationController
 
   def send_xlsx(file_with_path, base_name)
     send_file file_with_path, type: :xlsx, disposition: 'attachment',
-      filename: "#{base_name}.xlsx"
+      filename: base_name
   end
 
   def file_path(filename)
