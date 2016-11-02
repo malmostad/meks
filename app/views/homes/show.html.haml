@@ -46,6 +46,8 @@
               %th Kön
               %th Land
               %th Placerad
+              %th Anvisningskommun
+              %th Anvisningsdatum
 
           %tbody
             - @placements.each do |placement|
@@ -57,4 +59,6 @@
                   - if placement.refugee.gender.present?
                     = placement.refugee.gender.name
                 %td= placement.refugee.countries.map(&:name).join(', ')
-                %td= placement.moved_in_at
+                %td.date= placement.moved_in_at
+                %td= placement.refugee.municipality.name if placement.refugee.municipality.present?
+                %td= placement.refugee.municipality_placement_migrationsverket_at

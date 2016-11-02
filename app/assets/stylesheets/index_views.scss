@@ -18,6 +18,9 @@ table {
   td.delete {
     text-align: right;
   }
+  td.date {
+    white-space: nowrap;
+  }
   tbody tr:last-child td {
     border-bottom: 0;
   }

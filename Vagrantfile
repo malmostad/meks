@@ -5,8 +5,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = 'www.local.malmo.se'
 
   config.vm.provider :virtualbox do |v|
-    v.memory = 1024
-    v.cpus = 1
+    v.memory = 1024 * 2
+    v.cpus = 2
   end
   config.vm.provider :vmware_fusion
   config.vm.provider :vmware_workstation

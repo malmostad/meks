@@ -151,11 +151,12 @@ placements:
     query: record.specification
     tooltip: Specificerar extern placering
   - heading: Alla boenden inom angivet datumintervall
-    query: record.refugee.placements.map { |p| "#{p.home.name} (#{numshort_date p.moved_in_at}–#{numshort_date p.moved_out_at})" }.join(", ")
+    query: records.map { |rs| next unless rs.refugee_id == record.refugee_id; "#{rs.home.name} (#{numshort_date rs.moved_in_at}–#{numshort_date rs.moved_out_at})" }.reject(&:blank?).join(", ")
     tooltip: Alla boenden som barnet varit placerat på under rapportens valda tidsintervall
   - heading: refugee.registered
     query: record.refugee.registered
     tooltip: Anger det datum då barnet registreras i MEKS för första gången
+    type: :date
   - heading: placement.moved_in_at
     query: record.moved_in_at
     tooltip: Anger det datum då barnet placeras på ett specifikt boende

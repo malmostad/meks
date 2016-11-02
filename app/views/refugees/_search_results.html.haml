@@ -8,8 +8,6 @@
         %th Kön
         %th Land
         %th Aktuellt boende
-        %th Anvisningskommun
-        %th Anvisningsdatum
 
     %tbody
       - @refugees.each do |refugee|
@@ -24,8 +22,6 @@
               = 'Ingen aktiv placering'
             - else
               = link_to refugee.current_placements.last.home.name, home_path(refugee.current_placements.last.home)
-          %td= refugee.municipality.name if refugee.municipality.present?
-          %td= refugee.municipality_placement_migrationsverket_at
 
   - if @has_more
     .load-more

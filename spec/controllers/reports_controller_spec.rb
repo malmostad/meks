@@ -25,7 +25,11 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       it "POST #placements creates a placements report as an Excel file" do
-        post :placements, { placements_home_id: nil }, valid_session
+        post :placements, {
+          placements_home_id: nil,
+          placements_from: Date.today,
+          placements_to: Date.today
+        }, valid_session
         expect(response).to have_http_status(200)
         expect(response['Content-Type']).to eq("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         expect(response.body[0...2]).to eq "PK" # An xlsx is packed as a zip file

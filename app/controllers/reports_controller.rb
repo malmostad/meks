@@ -22,16 +22,8 @@ class ReportsController < ApplicationController
                 :gender, :homes, :placements, :municipality,
                 :relateds, :inverse_relateds, :deregistered_reason],
       home: [:languages, :type_of_housings, :placements,
-             :owner_type, :target_groups, :languages])
-
-    # Been on the home during a given range
-    if params[:placements_from].present? && params[:placements_to].present?
-      records = records.where(
-        '(moved_out_at >= ? or moved_out_at is null)
-         and moved_in_at <= ?',
-        params[:placements_from],
-        params[:placements_to])
-    end
+             :owner_type, :target_groups, :languages]
+    ).within_range(params[:placements_from], params[:placements_to])
 
     # Selected one home or all
     if params[:placements_home_id].present? && params[:placements_home_id].reject(&:empty?).present?
@@ -41,16 +33,6 @@ class ReportsController < ApplicationController
     # Only overlapping placements in time per refugee
     if params[:placements_selection] == 'overlapping'
       records = Placement.overlapping_by_refugee(params)
-    end
-
-    # Filter out each placement's refugee's other placements that do not fall within the given range.
-    #   Used for "All homes" column for each placement. The relation is:
-    #   placement (the record) => refugee => all that refugee's placements within range
-    refugees = records.map { |placement| placement.refugee }.uniq
-    refugees.each do |refugee|
-      refugee.placements = refugee.placements.reject do |placement|
-        false if placement.moved_in_at <= params[:placements_to].to_date && (placement.moved_out_at.nil? || placement.moved_out_at >= params[:placements_from].to_date)
-      end
     end
 
     xlsx = generate_xlsx(:placements, records)
