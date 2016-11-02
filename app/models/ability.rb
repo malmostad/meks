@@ -33,7 +33,7 @@ class Ability
       can :manage, Placement, refugee: { draft: true }
       cannot :destroy, Placement
 
-       # Model-less controllers
+      # Model-less controllers
       can :view, :statistics
     end
 
