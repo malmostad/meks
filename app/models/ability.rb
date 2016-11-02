@@ -31,7 +31,7 @@ class Ability
       can :manage, Relationship, refugee: { draft: true }
       can :manage, Placement, refugee: { draft: true }
 
-       # Model-less controllers
+      # Model-less controllers
       can :view, :statistics
     end
 
