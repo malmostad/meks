@@ -1,4 +1,4 @@
-= form_tag reports_refugees_path, class: "basic" do
+= form_tag reports_generate_path, class: "basic" do
   %h2.group-title Ensamkommande barn
   .form-group
     %span.control-label
@@ -33,4 +33,5 @@
   .form-group
     %span.no-control-label
     .controls
-      = submit_tag t('actions.download'), name: nil, class: "btn btn-primary"
+      = hidden_field_tag(:report_type, 'refugees')
+      = submit_tag 'Skapa rapport', name: nil, class: "btn btn-primary"

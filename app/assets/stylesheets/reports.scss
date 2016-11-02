@@ -1,0 +1,8 @@
+section.box.show.reports.status {
+  .download {
+    display: none;
+    &.finished {
+      display: block;
+    }
+  }
+}

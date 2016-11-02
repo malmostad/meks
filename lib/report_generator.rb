@@ -1,13 +1,13 @@
-module ReportGenerator
-  extend ActiveSupport::Concern
+require 'report_generator/style'
 
-  included do
-    def generate_xlsx(template, records)
+class ReportGenerator
+  class << self
+    def generate_xlsx(template, records, filename)
       axlsx = Axlsx::Package.new
       style = Style.new(axlsx)
 
       columns = YAML.load_file(
-        "#{Rails.root}/app/controllers/concerns/report_generator/sheet.yml"
+        File.join(__dir__, 'report_generator', 'sheet.yml')
       )[template.to_s]
 
       axlsx.workbook.add_worksheet(name: "Genererad #{Date.today}") do |sheet|
@@ -52,18 +52,15 @@ module ReportGenerator
           )
         end
       end
-      axlsx
+      axlsx.serialize File.join(Rails.root, 'reports', filename)
     end
 
-    def send_xlsx(xlsx, base_name)
-      # xlsx = xlsx.encrypt("#{base_name}.xlsx", 'meks')
-      send_data xlsx.to_stream.read, type: :xlsx, disposition: 'attachment',
-        # filename: "#{base_name}_#{DateTime.now.strftime('%Y-%m-%d_%H%M%S')}.xlsx"
-        filename: "#{base_name}.xlsx"
+    def numshort_date(date)
+      I18n.l(date, format: :numshort) unless date.nil?
     end
-  end
 
-  def col_heading(name)
-    I18n.t("simple_form.labels.#{name}", default: name)
+    def col_heading(name)
+      I18n.t("simple_form.labels.#{name}", default: name)
+    end
   end
 end

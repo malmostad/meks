@@ -41,10 +41,10 @@ Rails.application.routes.draw do
   resources :statistics, only: :index
 
   get  'reports' => 'reports#index'
-  get  'reports/downloads/:id' => 'reports#downloads', as: 'reports_downloads'
-  post 'reports/refugees'
-  post 'reports/placements'
-  post 'reports/homes'
+  post 'reports/generate'
+  get  'reports/status/:job_id/:file_id' => 'reports#status', as: 'reports_status'
+  get  'reports/download/:id' => 'reports#download', as: 'reports_download'
+  get  'reports/download_pre_generated/:id' => 'reports#download_pre_generated', as: 'reports_download_pre_generated'
 
   match '*path', via: :all, to: 'errors#not_found'
 

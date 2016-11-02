@@ -1,4 +1,4 @@
-= form_tag reports_homes_path, class: "basic" do
+= form_tag reports_generate_path, class: "basic" do
   %h2.group-title Boenden
 
   .form-group
@@ -18,4 +18,5 @@
   .form-group
     %span.no-control-label
     .controls
-      = submit_tag t('actions.download'), name: nil, class: "btn btn-primary"
+      = hidden_field_tag(:report_type, 'homes')
+      = submit_tag 'Skapa rapport', name: nil, class: "btn btn-primary"

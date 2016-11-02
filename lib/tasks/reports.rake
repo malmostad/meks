@@ -1,7 +1,11 @@
-require "#{Rails.root}/app/controllers/concerns/report_generator"
-include ReportGenerator
+require 'report_generator'
 
 namespace :reports do
+  desc 'Cleanup reports directory'
+  task cleanup: :environment do |task|
+    FileUtils.rm_rf Dir.glob(File.join(reports_dir, '*'))
+  end
+
   desc 'Generate report with all refugees not deregistered'
   task active_refugees: :environment do |task|
     active_refugees = Refugee.includes(
@@ -10,8 +14,7 @@ namespace :reports do
       :relateds, :inverse_relateds,
       placements: :home).where(deregistered: nil)
 
-    xlsx = generate_xlsx(:refugees, active_refugees)
-    xlsx.serialize("#{reports_dir}/#{find_report(1)['filename']}")
+    ReportGenerator.generate_xlsx(:refugees, active_refugees, find_report(1)['filename'])
   end
 
   desc 'Generate report with refugees registered this year or with placement on first of january'
@@ -26,8 +29,7 @@ namespace :reports do
       and placements.moved_in_at <= ?)',
       january_first, january_first, january_first).uniq
 
-    xlsx = generate_xlsx(:refugees, refugees_this_year)
-    xlsx.serialize("#{reports_dir}/#{find_report(2)['filename']}")
+    ReportGenerator.generate_xlsx(:refugees, refugees_this_year, find_report(2)['filename'])
   end
 
   desc 'Placements for the current quarter'
@@ -42,8 +44,7 @@ namespace :reports do
         'moved_out_at is null or moved_out_at >= ?',
         Date.today.beginning_of_quarter)
 
-    xlsx = generate_xlsx(:placements, placements_this_quarter)
-    xlsx.serialize("#{reports_dir}/#{find_report(3)['filename']}")
+    ReportGenerator.generate_xlsx(:placements, placements_this_quarter, find_report(3)['filename'])
   end
 
   desc 'All placements'
@@ -56,8 +57,7 @@ namespace :reports do
       home: [:languages, :type_of_housings,
              :owner_type, :target_groups, :languages]).all
 
-    xlsx = generate_xlsx(:placements, all_placements)
-    xlsx.serialize("#{reports_dir}/#{find_report(4)['filename']}")
+    ReportGenerator.generate_xlsx(:placements, all_placements, find_report(4)['filename'])
   end
 
   desc 'Generate all reports'

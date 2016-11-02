@@ -7,7 +7,7 @@
       - @pre_generated_reports.each do |report|
         - if report[:filetime].present?
           %li
-            = link_to report['desc'], reports_downloads_path(report['id'])
+            = link_to report['desc'], reports_download_pre_generated_path(report['id'])
             = report[:filename]
             %br/
             = 'Skapad för'
