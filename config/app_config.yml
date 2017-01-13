@@ -34,7 +34,7 @@ test:
   cache_ttl: 43200
   max_age: 14400
   title_suffix: "MEKS (test)"
-  auth_method: ldap
+  auth_method: saml
 
 production: &production
   <<: *defaults
@@ -42,10 +42,10 @@ production: &production
   cache_ttl: 43200
   max_age: 14400
   title_suffix: "MEKS"
-  auth_method: ldap
+  auth_method: saml
 
 staging:
   <<: *production
   title_suffix: "MEKS (staging)"
   assets_url_base: "//assets.malmo.se/internal/v4-staging/"
-  auth_method: ldap
+  auth_method: saml
