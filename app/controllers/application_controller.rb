@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def update_session
+    # TODO: implement
+  end
+
   def redirect_after_login
     if session[:requested_url]
       requested_url = session[:requested_url]
