@@ -24,13 +24,18 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authenticate
-    if !current_user
-      if !request.xhr?
+    if !current_user || session_expired?
+      unless request.xhr?
         # Remember where the user was about to go
         session[:requested_url] = request.fullpath
       end
       redirect_to login_path
     end
+  end
+
+  def session_expired?
+    # TODO: implement
+    false
   end
 
   def redirect_after_login
