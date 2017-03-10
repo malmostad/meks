@@ -8,19 +8,19 @@ RSpec.describe GenerateReportJob, type: :job do
   describe 'queue a report' do
     it "creates a ActiveJob ID" do
       job = GenerateReportJob.perform_later(valid_attributes, 'test_file')
-      expect(job.provider_job_id).to be_a Fixnum
+      expect(job.provider_job_id).to be_a Integer
     end
 
     it "creates a delayed job id" do
       job = GenerateReportJob.perform_later(valid_attributes, 'test_file')
       delayed_job_id = Delayed::Job.find(job.provider_job_id).id
-      expect(delayed_job_id).to be_a Fixnum
+      expect(delayed_job_id).to be_a Integer
     end
 
     it "creates a delayed job id" do
       job = GenerateReportJob.perform_later(valid_attributes, 'test_file')
       delayed_job_id = Delayed::Job.find(job.provider_job_id).id
-      expect(delayed_job_id).to be_a Fixnum
+      expect(delayed_job_id).to be_a Integer
     end
 
     it "adds it to the queue" do
