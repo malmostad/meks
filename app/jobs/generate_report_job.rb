@@ -1,6 +1,6 @@
 require 'report_generator'
 
-class GenerateReportJob < ActiveJob::Base
+class GenerateReportJob < ApplicationJob
   queue_as :default
 
   def perform(params, file_id)
