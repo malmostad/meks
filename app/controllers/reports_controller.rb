@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
 
   def generate
     file_id = SecureRandom.hex
-    job = GenerateReportJob.perform_later(params, file_id)
+    job = GenerateReportJob.perform_later(params.to_h, file_id)
     delayed_job_id = Delayed::Job.find(job.provider_job_id).id
 
     redirect_to reports_status_path(delayed_job_id, file_id)
