@@ -15,7 +15,7 @@
     %tbody
       - @users.each do |user|
         %tr
-          %td= link_to user.name, "https://webapps06.malmo.se/dashboard/users/#{user.username}"
+          %td= link_to user.name, "https://minsida.malmo.se/users/#{user.username}"
           %td= user.email
           %td= user.role
           %td= user.last_login.to_s[0...20]
