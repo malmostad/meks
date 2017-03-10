@@ -1,4 +1,4 @@
-class Country < ActiveRecord::Base
+class Country < ApplicationRecord
   has_and_belongs_to_many :refugees
 
   validates_uniqueness_of :name, case_sensitive: false

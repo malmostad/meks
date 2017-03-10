@@ -1,4 +1,4 @@
-class Refugee < ActiveRecord::Base
+class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch
 

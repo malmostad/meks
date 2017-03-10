@@ -1,4 +1,4 @@
-class DeregisteredReason < ActiveRecord::Base
+class DeregisteredReason < ApplicationRecord
   has_many :refugees, dependent: :nullify
 
   validates_uniqueness_of :name, case_sensitive: false

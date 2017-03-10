@@ -1,4 +1,4 @@
-class Relationship < ActiveRecord::Base
+class Relationship < ApplicationRecord
   belongs_to :refugee, touch: true
   belongs_to :related, class_name: 'Refugee', touch: true
   belongs_to :type_of_relationship

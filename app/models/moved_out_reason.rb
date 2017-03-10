@@ -1,4 +1,4 @@
-class MovedOutReason < ActiveRecord::Base
+class MovedOutReason < ApplicationRecord
   has_many :placements, dependent: :nullify
 
   validates_uniqueness_of :name, case_sensitive: false

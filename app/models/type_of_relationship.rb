@@ -1,4 +1,4 @@
-class TypeOfRelationship < ActiveRecord::Base
+class TypeOfRelationship < ApplicationRecord
   has_many :relationships, dependent: :nullify
 
   validates_uniqueness_of :name, case_sensitive: false

@@ -1,5 +1,5 @@
 # Refugee has date_of_birth and ssn_extension attributes, `ssns` are additional ones
-class Ssn < ActiveRecord::Base
+class Ssn < ApplicationRecord
   belongs_to :refugee
 
   validates :date_of_birth, format: { with: /\A\d{4}\-\d{2}\-\d{2}\z/,

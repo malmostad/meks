@@ -1,4 +1,4 @@
-class OwnerType < ActiveRecord::Base
+class OwnerType < ApplicationRecord
   has_many :homes, dependent: :nullify
 
   validates_uniqueness_of :name, case_sensitive: false

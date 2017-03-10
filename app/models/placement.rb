@@ -1,4 +1,4 @@
-class Placement < ActiveRecord::Base
+class Placement < ApplicationRecord
   attr_reader :placement_time
 
   default_scope { order(:moved_in_at) }

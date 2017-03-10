@@ -1,4 +1,4 @@
-class TypeOfHousing < ActiveRecord::Base
+class TypeOfHousing < ApplicationRecord
   has_and_belongs_to_many :homes
 
   validates_uniqueness_of :name, case_sensitive: false
