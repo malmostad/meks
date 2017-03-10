@@ -20,7 +20,7 @@ namespace :elasticsearch do
     old_indices = has_alias ? client.indices.get_alias(name: aliaz).map {|k,v| k } : []
 
     # Creat new index, command line arguments are used
-    puts "Create new index [may through a 404 at you]"
+    puts "Create new index [may throw a 404 at you]"
     Rake::Task["elasticsearch:import:model"].invoke
 
     client.indices.delete_alias(index: "*", name: aliaz) if has_alias
