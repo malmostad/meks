@@ -18,7 +18,7 @@ gem 'net-ldap', '0.16.0'
 gem 'cancancan', '1.16.0'
 gem 'ruby-saml', '1.4.2'
 
-gem 'axlsx', '2.0.1'
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '05f3412'
 gem 'delayed_job_active_record', '4.1.1'
 
 gem 'whenever', '0.9.7', require: false
