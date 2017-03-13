@@ -28,6 +28,8 @@ gem 'faker'
 
 gem 'bcrypt', '~> 3.1.11'
 
+gem 'puma', '3.8.1'
+
 group :development do
   gem 'capistrano', '3.7.2'
   gem 'capistrano-rails', '1.2.3'
@@ -55,5 +57,5 @@ group :development, :test do
 end
 
 group :test, :production do
-  gem 'unicorn'
+  # gem 'unicorn'
 end
