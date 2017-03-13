@@ -23,6 +23,8 @@
       = show_attribute('home.use_placement_specification', @home.use_placement_specification? ? 'Ja' : 'Nej')
       = show_attribute('home.comment', @home.comment)
 
+      %h2.group-title Kostnad
+
       %h2.group-title Tillgänglighet
       = show_attribute('Aktuella placeringar', @placements.to_a.size)
       = show_attribute('Placeringar totalt', @home.placements.count)
