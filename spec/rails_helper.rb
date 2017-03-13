@@ -27,6 +27,7 @@ RSpec.configure do |config|
 
   config.include IntegrationMacros, type: :controller
   config.include IntegrationMacros, type: :view
+  config.include ApplicationHelper, type: :view
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
