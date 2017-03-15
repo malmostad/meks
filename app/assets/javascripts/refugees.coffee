@@ -8,19 +8,6 @@ $ ->
     orientation: 'auto'
     keyboardNavigation: false
 
-  register_dob_cal = () ->
-    $('.input-group.ssn.date input:first-child').datepicker
-      weekStart: 1
-      language: 'sv'
-      autoclose: true
-      todayHighlight: true
-      todayBtn: true
-      orientation: 'auto'
-      keyboardNavigation: false
-
-  register_dob_cal()
-
-
   # Do you want to leave this page prompt
   $form = $('form.simple_form.basic.refugee')
   if $form.length
@@ -30,20 +17,6 @@ $ ->
       $(window).unbind 'beforeunload'
     $('.btn-danger').bind 'click', (event) ->
       $(window).unbind 'beforeunload'
-
-  # Add term
-  $("form.refugee").on "click", ".add-term", (event) ->
-    event.preventDefault()
-    regexp = new RegExp($(@).data('id'), 'g')
-    $(@).closest(".form-group")
-      .before($(@).data('fields').replace(regexp, new Date().getTime()))
-    register_dob_cal()
-
-  # Remove term
-  $("form.refugee .terms").on "click", ".remove", (event) ->
-    event.preventDefault()
-    $(@).closest(".controls").find("input[type=hidden]").val(true)
-    $(@).closest(".form-group").hide()
 
   $("#query-refugee").focus()
 
