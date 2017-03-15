@@ -2,7 +2,7 @@
 %section.box.show
   %h1.box-title= h1
   .box-content.basic.form-data
-    - if can? :manage, Refugee
+    - if can? :manage, Home
       .form-group
         = link_to 'Redigera', edit_home_path(@home), class: 'btn btn-default'
     = form_for @home, html: { class: 'basic' } do |f|
@@ -24,8 +24,7 @@
       = show_attribute('home.comment', @home.comment)
 
       %h2.group-title Ekonomi
-      - @home.daily_fees.each do |daily_fee|
-        = show_attribute("Dygnskostnad", "#{daily_fee.fee} kr (#{daily_fee.start_date})")
+      = show_attribute('Dygnskostnader', @home.daily_fees.map { |df| "#{df.fee} kr (#{df.start_date})" }.join('<br>'))
 
       %h2.group-title Tillgänglighet
       = show_attribute('Aktuella placeringar', @placements.to_a.size)
