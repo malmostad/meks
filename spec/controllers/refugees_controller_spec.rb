@@ -162,7 +162,7 @@ RSpec.describe RefugeesController, type: :controller do
       {
         name: "Firstname Lastname updated",
         placements: {
-          home_id: 1,
+          home_id: home.id,
           moved_in_at: '2016-01-02'
         }
       }

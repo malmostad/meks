@@ -2,15 +2,11 @@ require 'rails_helper'
 
 RSpec.describe HomesController, type: :controller do
   let(:valid_attributes) {
-    {
-      name: 'Home'
-    }
+    { name: 'Home'}
   }
 
   let(:invalid_attributes) {
-    {
-      name: ''
-    }
+    { name: '' }
   }
 
   describe "GET #index" do
@@ -116,6 +112,22 @@ RSpec.describe HomesController, type: :controller do
         put :update, {:id => home.to_param, :home => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
+    end
+  end
+
+  describe 'Daily fee nested attributes' do
+    let(:home) {
+      Home.create!(name: "Valid home")
+    }
+
+    it "new home not to have a fee" do
+      attributes = {
+        name: "Firstname Lastname",
+        daily_fees_attributes: []
+      }
+      post :create, { :home => attributes }, valid_session
+      expect(assigns(:home)).to be_persisted
+      expect(Home.last.daily_fees.size).to eq(0)
     end
   end
 end

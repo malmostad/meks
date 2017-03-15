@@ -54,6 +54,7 @@ class HomesController < ApplicationController
         :owner_type_id,
         language_ids: [],
         target_group_ids: [],
+        daily_fee_ids: [],
         type_of_housing_ids: [])
     end
 end
