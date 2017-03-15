@@ -83,6 +83,8 @@ sv:
         owner_type: Ägarform
         target_groups: Målgrupp
         seats: Platser
+        daily_fees: Dygnskostnad
+        daily_fees_start_date: Dygnskostnad
         guaranteed_seats: Garantiplatser
         movable_seats: Rörliga platser
         languages: Språk
