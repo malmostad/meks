@@ -10,8 +10,7 @@ class HomesController < ApplicationController
   def show
     @home = Home.includes(:owner_type, :target_groups, :languages).find(params[:id])
 
-    @placements = Placement.includes(refugee: [:gender, :countries,
-      :dossier_numbers, :ssns]).where(home_id: params[:id], moved_out_at: nil)
+    @placements = Placement.includes(refugee: [:gender, :countries, :municipality]).where(home_id: params[:id], moved_out_at: nil)
   end
 
   def new
@@ -54,7 +53,7 @@ class HomesController < ApplicationController
         :owner_type_id,
         language_ids: [],
         target_group_ids: [],
-        daily_fee_ids: [],
+        daily_fees_attributes: [:id, :_destroy, :fee, :start_date],
         type_of_housing_ids: [])
     end
 end
