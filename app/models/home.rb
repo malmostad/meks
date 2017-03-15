@@ -1,7 +1,7 @@
 class Home < ApplicationRecord
   has_many :placements, dependent: :destroy
   has_many :refugees, through: :placements
-  has_many :daily_fees
+  has_many :daily_fees, dependent: :destroy
 
   has_and_belongs_to_many :type_of_housings
   has_and_belongs_to_many :target_groups
