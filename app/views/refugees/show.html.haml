@@ -21,10 +21,10 @@
 
       %h2.group-title Personuppgifter
       = show_attribute('Personnummer', @refugee.ssn)
-      = show_attribute('Extra personnummer', @refugee.ssns.map(&:full_ssn).join(', '))
+      = show_attribute('Extra personnummer', @refugee.ssns.map(&:full_ssn).join('<br>'))
 
       = show_attribute('Dossiernummer', @refugee.dossier_number)
-      = show_attribute('Extra dossiernummer', @refugee.dossier_numbers.map(&:name).join(', '))
+      = show_attribute('Extra dossiernummer', @refugee.dossier_numbers.map(&:name).join('<br>'))
       = show_attribute('Ålder', @refugee.age)
 
       = show_attribute('refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
