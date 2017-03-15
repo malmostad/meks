@@ -56,6 +56,14 @@
         width: 6em;
       }
     }
+    .input-group.daily_fee {
+      input.numeric.fee {
+        width: 6em;
+      }
+      input {
+        min-width: 9em;
+      }
+    }
 
     .remove {
       .m-icon-close-0 {

@@ -1,5 +1,5 @@
 .box-content
-  = simple_form_for @home, html: { class: "basic" } do |f|
+  = simple_form_for @home, html: { class: "basic home" } do |f|
     = f.error_notification class: "warning"
 
     %h2.group-title Kontaktuppgifter
@@ -18,7 +18,14 @@
     = f.input :use_placement_specification, wrapper: :vertical_radio_and_checkboxes
     = f.input :comment
 
-    %h2.group-title Kostnad
+    %h2.group-title Ekonomi
+    .terms
+      = f.simple_fields_for :daily_fees do |s|
+        = render "fields_for_daily_fee", s: s
+      .form-group
+        %span.control-label
+        .controls
+          = add_daily_fees_button "Lägg till dygnskostnad", f
 
     %h2.group-title Tillgänglighet
     = f.input :guaranteed_seats
