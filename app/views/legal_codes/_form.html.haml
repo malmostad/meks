@@ -1,0 +1,7 @@
+.box-content
+  = simple_form_for @legal_code, html: { class: "basic" } do |f|
+    = f.error_notification class: "warning"
+
+    = f.input :name
+
+    = render 'application/submit', form: f, cancel_path: legal_codes_path

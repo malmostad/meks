@@ -66,7 +66,7 @@ class PlacementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def placement_params
-      allowed = [:home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id]
+      allowed = [:home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id, :legal_code_id]
       begin
         home = @homes.find(params[:placement][:home_id])
         allowed += [:specification] if home && home.use_placement_specification

@@ -8,6 +8,7 @@
       = show_attribute('refugee.home', (link_to placement.home.name, home_path(placement.home)))
       - if placement.home.use_placement_specification?
         = show_attribute('placement.specification', placement.specification)
+      = show_attribute('placement.legal_code', placement.legal_code.present? ? placement.legal_code.name : '')
       = show_attribute('Boendetid', "#{placement.placement_time} dagar")
       = show_attribute('placement.moved_in_at', placement.moved_in_at)
       - if placement.moved_out_at.present?

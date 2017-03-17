@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313144358) do
+ActiveRecord::Schema.define(version: 20170317133019) do
 
   create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string   "name"
@@ -137,6 +137,13 @@ ActiveRecord::Schema.define(version: 20170313144358) do
     t.index ["refugee_id"], name: "index_languages_refugees_on_refugee_id", using: :btree
   end
 
+  create_table "legal_codes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_legal_codes_on_name", unique: true, using: :btree
+  end
+
   create_table "moved_out_reasons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -167,7 +174,9 @@ ActiveRecord::Schema.define(version: 20170313144358) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.text     "specification",       limit: 65535
+    t.integer  "legal_code_id"
     t.index ["home_id"], name: "index_placements_on_home_id", using: :btree
+    t.index ["legal_code_id"], name: "index_placements_on_legal_code_id", using: :btree
     t.index ["moved_out_reason_id"], name: "index_placements_on_moved_out_reason_id", using: :btree
     t.index ["refugee_id"], name: "index_placements_on_refugee_id", using: :btree
   end
@@ -260,6 +269,7 @@ ActiveRecord::Schema.define(version: 20170313144358) do
 
   add_foreign_key "daily_fees", "homes"
   add_foreign_key "homes", "owner_types"
+  add_foreign_key "placements", "legal_codes"
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "refugees", "deregistered_reasons"
   add_foreign_key "refugees", "genders"

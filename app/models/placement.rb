@@ -10,6 +10,7 @@ class Placement < ApplicationRecord
 
   validates_presence_of :home
   validates_presence_of :moved_in_at
+  validates_presence_of :legal_code
 
   before_validation do
     if moved_out_at.present? && moved_in_at > moved_out_at

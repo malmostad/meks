@@ -71,6 +71,7 @@ sv:
         moved_out_at: Utskrivningsdatum
         moved_out_reason: Anledning till utskrivning
         specification: Placeringsspecifikation
+        legal_code: Lagrum
 
       home:
         <<: *defaults
