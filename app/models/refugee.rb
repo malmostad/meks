@@ -1,6 +1,7 @@
 class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch
+  include Economy
 
   belongs_to :gender
   belongs_to :municipality
