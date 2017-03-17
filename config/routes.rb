@@ -27,16 +27,17 @@ Rails.application.routes.draw do
   end
 
   resources :homes
-  resources :moved_out_reasons
-  resources :deregistered_reasons
-  resources :target_groups
-  resources :type_of_housings
-  resources :owner_types
-  resources :type_of_relationships
-  resources :municipalities
-  resources :countries
-  resources :languages
-  resources :genders
+  resources :moved_out_reasons, except: :show
+  resources :legal_codes, except: :show
+  resources :deregistered_reasons, except: :show
+  resources :target_groups, except: :show
+  resources :type_of_housings, except: :show
+  resources :owner_types, except: :show
+  resources :type_of_relationships, except: :show
+  resources :municipalities, except: :show
+  resources :countries, except: :show
+  resources :languages, except: :show
+  resources :genders, except: :show
   resources :users, only: :index
   resources :statistics, only: :index
 
