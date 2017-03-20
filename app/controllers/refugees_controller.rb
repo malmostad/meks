@@ -132,7 +132,7 @@ class RefugeesController < ApplicationController
         language_ids: [],
         ssns_attributes: [:id, :_destroy, :date_of_birth, :extension],
         dossier_numbers_attributes: [:id, :_destroy, :name],
-        placements_attributes: [:home_id, :moved_in_at]
+        placements_attributes: [:home_id, :moved_in_at, :legal_code_id]
       ]
       permitted_params.unshift(:draft) if can? :manage, Refugee
       params.require(:refugee).permit(*permitted_params)
