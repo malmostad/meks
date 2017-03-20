@@ -4,8 +4,7 @@ class Home < ApplicationRecord
 
   has_many :daily_fees, dependent: :destroy
   accepts_nested_attributes_for :daily_fees,
-    allow_destroy: true,
-    reject_if: proc { |attr| attr[:fee].blank? }
+    allow_destroy: true
   validates_associated :daily_fees
 
   has_and_belongs_to_many :type_of_housings

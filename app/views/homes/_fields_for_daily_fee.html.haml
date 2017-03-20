@@ -1,10 +1,14 @@
-= s.input :fee, required: false, label: 'Dygnskostnad', wrapper: :addon do
-  = s.input_field :_destroy, as: :hidden
-  .input-group.daily_fee.date
-    = s.input_field :fee, as: :numeric, class: "form-control fee", placeholder: 'kronor'
-    .input-group-addon= 'kr, gäller från:'
-    = s.input_field :start_date, as: :string, class: "form-control date", placeholder: 'startdatum'
+.fields_for_group
+  = s.input :fee, required: false, label: 'Dygnskostnad', wrapper: :addon do
+    = s.input_field :_destroy, as: :hidden
 
-    %span.input-group-btn
-      %button.btn.btn-default.remove{ type: :button }
-        %span.m-icon-close-0
+    .input-group.daily_fee.date
+      = s.input_field :fee, class: "form-control", placeholder: 'kronor'
+      .input-group-addon= 'kr'
+      = s.input_field :start_date, as: :string, class: "form-control date", placeholder: 'startdatum'
+      .input-group-addon= 'till'
+      = s.input_field :end_date, as: :string, class: "form-control date", placeholder: 'slutdatum'
+
+      %span.input-group-btn
+        %button.btn.btn-default.remove{ type: :button }
+          %span.m-icon-close-0

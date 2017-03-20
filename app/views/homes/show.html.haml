@@ -24,7 +24,7 @@
       = show_attribute('home.comment', @home.comment)
 
       %h2.group-title Ekonomi
-      = show_attribute('Dygnskostnader', @home.daily_fees.map { |df| "#{df.fee} kr (#{df.start_date})" }.join('<br>'))
+      = show_attribute('Dygnskostnader', @home.daily_fees.map { |df| "#{df.fee} kr (#{df.start_date} till #{df.end_date})" }.join('<br>'))
 
       %h2.group-title Tillgänglighet
       = show_attribute('Aktuella placeringar', @placements.to_a.size)

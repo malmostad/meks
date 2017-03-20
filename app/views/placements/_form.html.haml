@@ -3,7 +3,7 @@
                 collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification }] },
                 input_html: { class: 'chosen', data: { foo: :bar } }
 
-= f.association :legal_code, include_blank: false
+= f.association :legal_code, include_blank: false, selected: 1
 = f.input :moved_in_at, as: :string, wrapper: :datepicker
 = f.input :specification
 

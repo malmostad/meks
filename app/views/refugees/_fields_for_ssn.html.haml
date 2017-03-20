@@ -1,9 +1,11 @@
 = s.input :date_of_birth, label: 'Extra personnummer', wrapper: :addon do
   = s.input_field :_destroy, as: :hidden
+
   .input-group.ssn.date
     = s.input_field :date_of_birth, as: :string, class: "form-control", placeholder: 'födelsedatum'
     .input-group-addon= '-'
     = s.input_field :extension, class: "form-control ssn-extension", placeholder: 'fyra sista'
+
     %span.input-group-btn
       %button.btn.btn-default.remove{ type: :button }
         %span.m-icon-close-0
