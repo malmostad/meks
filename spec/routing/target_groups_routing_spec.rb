@@ -11,10 +11,6 @@ RSpec.describe TargetGroupsController, type: :routing do
       expect(:get => "/target_groups/new").to route_to("target_groups#new")
     end
 
-    it "routes to #show" do
-      expect(:get => "/target_groups/1").to route_to("target_groups#show", :id => "1")
-    end
-
     it "routes to #edit" do
       expect(:get => "/target_groups/1/edit").to route_to("target_groups#edit", :id => "1")
     end

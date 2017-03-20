@@ -11,10 +11,6 @@ RSpec.describe LanguagesController, type: :routing do
       expect(:get => "/languages/new").to route_to("languages#new")
     end
 
-    it "routes to #show" do
-      expect(:get => "/languages/1").to route_to("languages#show", :id => "1")
-    end
-
     it "routes to #edit" do
       expect(:get => "/languages/1/edit").to route_to("languages#edit", :id => "1")
     end

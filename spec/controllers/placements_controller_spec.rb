@@ -10,7 +10,7 @@ RSpec.describe PlacementsController, type: :controller do
     }
 
     let(:legal_code) {
-      Home.create!(name: "Valid legal code")
+      LegalCode.create!(name: "Valid legal code")
     }
 
     let(:valid_attributes) {

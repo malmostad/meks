@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe LegalCode, type: :controller do
+RSpec.describe LegalCodesController, type: :controller do
   let(:valid_attributes) {
-    { name: 'Sol' }
+    { name: 'SoL' }
   }
 
   let(:invalid_attributes) {

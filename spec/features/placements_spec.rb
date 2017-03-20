@@ -19,14 +19,14 @@ RSpec.describe "Placements", type: :feature do
         expect(current_path).to eq new_refugee_placement_path(refugee)
 
         select(homes[1].name, from: "placement_home_id")
-        select(legal_codes[1].name, from: "legal_code_id")
+        select(legal_codes[1].name, from: "placement_legal_code_id")
         fill_in "placement_moved_in_at", with: Date.today.to_s
         click_button "Spara"
 
         expect(current_path).to eq refugee_path(refugee)
         expect(page).to have_selector(".notice", text: "Placeringen registrerades")
         expect(page).to have_selector(".placement a", text: homes[1].name)
-        expect(page).to have_selector(".placement .controls", text: legal_code[1].name)
+        expect(page).to have_selector(".placement .controls", text: legal_codes[1].name)
       end
 
       scenario "show and hide specification field", js: true do
@@ -59,7 +59,7 @@ RSpec.describe "Placements", type: :feature do
         expect(current_path).to eq edit_refugee_placement_path(refugee, refugee.placements.first)
 
         select(homes[3].name, from: "placement_home_id")
-        select(legal_codes[3].name, from: "legal_code_id")
+        select(legal_codes[3].name, from: "placement_legal_code_id")
         fill_in "placement_moved_in_at", with: Date.today.to_s
         click_button "Spara"
 

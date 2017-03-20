@@ -158,11 +158,16 @@ RSpec.describe RefugeesController, type: :controller do
       Home.create!(name: "Valid home")
     }
 
+    let(:legal_code) {
+      LegalCode.create!(name: "Valid code")
+    }
+
     let(:placement_attributes) {
       {
         name: "Firstname Lastname updated",
         placements: {
           home_id: home.id,
+          legal_code_id: legal_code.id,
           moved_in_at: '2016-01-02'
         }
       }
@@ -173,6 +178,7 @@ RSpec.describe RefugeesController, type: :controller do
         name: "Firstname Lastname",
         placements_attributes: [{
           home_id: home.id,
+          legal_code_id: legal_code.id,
           moved_in_at: '2016-01-02'
         }]
       }
@@ -195,6 +201,7 @@ RSpec.describe RefugeesController, type: :controller do
       attributes = {
         name: "Firstname Lastname",
         placements_attributes: [{
+          legal_code_id: legal_code.id,
           home_id: home.id
         }]
       }
@@ -202,10 +209,23 @@ RSpec.describe RefugeesController, type: :controller do
       expect(response).to render_template("new")
     end
 
-    it "re-renders the 'new' template if placement home_id is abscent but moved_in_at is present" do
+    it "re-renders the 'new' template if placement legal_code is abscent" do
       attributes = {
         name: "Firstname Lastname",
         placements_attributes: [{
+          moved_in_at: '2016-01-02',
+          home_id: home.id
+        }]
+      }
+      post :create, { refugee: attributes }, valid_session
+      expect(response).to render_template("new")
+    end
+
+    it "re-renders the 'new' template if placement home_id is abscent" do
+      attributes = {
+        name: "Firstname Lastname",
+        placements_attributes: [{
+          legal_code_id: legal_code.id,
           moved_in_at: '2016-01-02'
         }]
       }
