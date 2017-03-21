@@ -4,6 +4,7 @@ class DailyFee < ApplicationRecord
 
   default_scope { order(:start_date) }
 
+  validates :home, presence: true
   validates :fee, presence: true, numericality: true
   validate :validate_dates
 

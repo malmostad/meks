@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320105525) do
+ActiveRecord::Schema.define(version: 20170321140230) do
 
   create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string   "name"
@@ -182,6 +182,26 @@ ActiveRecord::Schema.define(version: 20170320105525) do
     t.index ["refugee_id"], name: "index_placements_on_refugee_id", using: :btree
   end
 
+  create_table "rate_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+    t.string   "name"
+    t.integer  "from_age"
+    t.integer  "to_age"
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["name"], name: "index_rate_categories_on_name", unique: true, using: :btree
+  end
+
+  create_table "rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+    t.integer  "amount"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "rate_category_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["rate_category_id"], name: "index_rates_on_rate_category_id", using: :btree
+  end
+
   create_table "refugees", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.boolean  "draft",                                                    default: false
     t.string   "name"
@@ -272,6 +292,7 @@ ActiveRecord::Schema.define(version: 20170320105525) do
   add_foreign_key "homes", "owner_types"
   add_foreign_key "placements", "legal_codes"
   add_foreign_key "placements", "moved_out_reasons"
+  add_foreign_key "rates", "rate_categories"
   add_foreign_key "refugees", "deregistered_reasons"
   add_foreign_key "refugees", "genders"
   add_foreign_key "refugees", "municipalities"
