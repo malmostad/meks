@@ -23,7 +23,7 @@ RSpec.describe DailyFee, type: :model do
     end
 
     it "should belong to a home" do
-      expect(build(:daily_fee, home_id: nil)).not_to be_valid
+      expect(build(:daily_fee, home: nil)).not_to be_valid
     end
   end
 
