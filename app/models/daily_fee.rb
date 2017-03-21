@@ -1,4 +1,4 @@
-# Fee per day for homes. Different fees for different periods
+# Fee per day for homes. Different fees for different periods.
 class DailyFee < ApplicationRecord
   belongs_to :home
 
