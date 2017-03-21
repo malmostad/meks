@@ -1,13 +1,19 @@
-# Fee per day for homes. Different fees for different periods (typical a year)
+# Fee per day for homes. Different fees for different periods
 class DailyFee < ApplicationRecord
   belongs_to :home
 
   default_scope { order(:start_date) }
 
-  validates :home, :fee, :start_date, :end_date, presence: true
-  validates :fee, numericality: true
-  validates :start_date, format: { with: /\A\d{4}\-\d{2}\-\d{2}\z/,
-      message: "Ogiltigt datumformat, måste vara yyyy-mm-dd" }
-  validates :end_date, format: { with: /\A\d{4}\-\d{2}\-\d{2}\z/,
-      message: "Ogiltigt datumformat, måste vara yyyy-mm-dd" }
+  validates :fee, presence: true, numericality: true
+  validate :validate_dates
+
+  def validate_dates
+    unless start_date.is_a?(Date) && end_date.is_a?(Date)
+      return errors.add(:fee, 'Ogiltigt datumformat, ska vara yyyy-mm-dd')
+    end
+
+    if start_date >= end_date
+      errors.add(:fee, 'Startdatum måste infalla innan slutdataum')
+    end
+  end
 end
