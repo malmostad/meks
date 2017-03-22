@@ -6,6 +6,9 @@ class Ability
       can :manage, :all
       can :destroy, Refugee
       cannot :destroy, Home
+      cannot :create, RateCategory
+      cannot :destroy, RateCategory
+      cannot :manage, Rate
 
     elsif user.has_role? :writer
       can :manage, Refugee

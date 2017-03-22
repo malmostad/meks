@@ -19,6 +19,7 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:manage, TargetGroup.new) }
     it { should_not be_able_to(:manage, TypeOfHousing.new) }
     it { should_not be_able_to(:manage, TypeOfRelationship.new) }
+    it { should_not be_able_to(:manage, RateCategory.new) }
     it { should_not be_able_to(:read, Country.new) }
     it { should_not be_able_to(:read, Gender.new) }
     it { should_not be_able_to(:read, Language.new) }
