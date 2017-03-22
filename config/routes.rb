@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   resources :countries, except: :show
   resources :languages, except: :show
   resources :genders, except: :show
+  resources :rate_categories, only: [:index, :edit, :update]
   resources :users, only: :index
   resources :statistics, only: :index
 

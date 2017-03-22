@@ -1,0 +1,20 @@
+.box-content
+  = simple_form_for @rate_category, html: { class: "basic home" } do |f|
+    = f.error_notification class: "warning"
+
+    %h2.group-title Schablon
+    = f.input :name
+    = f.input :from_age
+    = f.input :to_age
+    = f.association :legal_code
+
+    %h2.group-title Belopp
+    .terms
+      = f.simple_fields_for :rates do |s|
+        = render "fields_for_rate", s: s
+      .form-group
+        %span.control-label
+        .controls
+          = add_rates_button "Lägg till belopp", f
+
+    = render 'application/submit', form: f, cancel_path: rate_categories_path
