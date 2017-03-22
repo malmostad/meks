@@ -21,7 +21,6 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:manage, TargetGroup.new) }
     it { should be_able_to(:manage, TypeOfHousing.new) }
     it { should be_able_to(:manage, TypeOfRelationship.new) }
-    it { should be_able_to(:manage, Rate.new) }
     it { should be_able_to(:read, Refugee.new) }
     it { should be_able_to(:read, Home.new) }
     it { should be_able_to(:read, Placement.new) }
@@ -38,7 +37,6 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:read, TargetGroup.new) }
     it { should be_able_to(:read, TypeOfHousing.new) }
     it { should be_able_to(:read, TypeOfRelationship.new) }
-    it { should be_able_to(:read, Rate.new) }
     it { should be_able_to(:view, :statistics) }
 
     it { should be_able_to(:generate, :reports) }
@@ -46,6 +44,5 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:destroy, Refugee.new) }
 
     it { should_not be_able_to(:destroy, Home.new) }
-    it { should_not be_able_to(:manage, RateCategory.new) }
   end
 end
