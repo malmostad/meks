@@ -3,7 +3,7 @@
     = s.input_field :_destroy, as: :hidden
 
     .input-group.daily_rate.date
-      = s.input_field :rate, class: "form-control", placeholder: 'kronor'
+      = s.input_field :amount, class: "form-control", placeholder: 'kronor'
       .input-group-addon= 'kr'
       = s.input_field :start_date, as: :string, class: "form-control date", placeholder: 'startdatum'
       .input-group-addon= 'till'
