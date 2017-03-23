@@ -26,6 +26,10 @@ RSpec.describe RateCategory, type: :model do
       expect(build(:rate_category, to_age: nil)).not_to be_valid
     end
 
+    it "should require a legal code" do
+      expect(build(:rate_category, legal_code: nil)).not_to be_valid
+    end
+
     it "from age should be an integer" do
       expect(rate_category.from_age).to be_a Integer
     end
