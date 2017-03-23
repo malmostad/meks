@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321140230) do
+ActiveRecord::Schema.define(version: 20170323085927) do
 
   create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string   "name"
@@ -186,9 +186,11 @@ ActiveRecord::Schema.define(version: 20170321140230) do
     t.string   "name"
     t.integer  "from_age"
     t.integer  "to_age"
-    t.text     "description", limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "description",   limit: 65535
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "legal_code_id"
+    t.index ["legal_code_id"], name: "index_rate_categories_on_legal_code_id", using: :btree
     t.index ["name"], name: "index_rate_categories_on_name", unique: true, using: :btree
   end
 
@@ -292,6 +294,7 @@ ActiveRecord::Schema.define(version: 20170321140230) do
   add_foreign_key "homes", "owner_types"
   add_foreign_key "placements", "legal_codes"
   add_foreign_key "placements", "moved_out_reasons"
+  add_foreign_key "rate_categories", "legal_codes"
   add_foreign_key "rates", "rate_categories"
   add_foreign_key "refugees", "deregistered_reasons"
   add_foreign_key "refugees", "genders"
