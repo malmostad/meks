@@ -1,5 +1,6 @@
 class LegalCode < ApplicationRecord
   has_many :placements, dependent: :nullify
+  has_many :rate_categories, dependent: :nullify
 
   default_scope { order(:name) }
 

@@ -4,7 +4,9 @@ class RateCategory < ApplicationRecord
     allow_destroy: true
   validates_associated :rates
 
-  validates :name, presence: true
+  belongs_to :legal_code
+
+  validates :name, :legal_code, presence: true
   validates :from_age, :to_age, presence: true, numericality: true
   validate :age_range
 

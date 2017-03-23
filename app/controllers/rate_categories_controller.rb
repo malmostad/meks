@@ -25,7 +25,7 @@ class RateCategoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def rate_category_params
       params.require(:rate_category).permit(
-        :name, :from_age, :to_age,
+        :name, :from_age, :to_age, :legal_code_id,
         rates_attributes: [:id, :_destroy, :amount, :start_date, :end_date]
       )
     end
