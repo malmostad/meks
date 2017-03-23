@@ -6,7 +6,7 @@
     = f.input :name
     = f.input :from_age
     = f.input :to_age
-    = f.association :legal_code
+    = f.association :legal_code, include_blank: false, selected: 1
 
     %h2.group-title Belopp
     .terms

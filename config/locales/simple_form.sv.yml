@@ -91,6 +91,12 @@ sv:
         active: Aktivt
         use_placement_specification: Använd placeringsspecifikation
 
+      rate_category:
+        <<: *defaults
+        legal_code: Lagrum
+        from_age: Från ålder
+        to_age: Till och med ålder
+
     placeholders:
       home:
         name: Ange namnet på boendet
