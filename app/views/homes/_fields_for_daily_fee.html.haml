@@ -1,7 +1,6 @@
 .fields_for_group
   = s.input :fee, required: false, label: 'Dygnskostnad', wrapper: :addon do
     = s.input_field :_destroy, as: :hidden
-
     .input-group.date
       = s.input_field :fee, class: "form-control", placeholder: 'kronor'
       .input-group-addon= 'kr'
