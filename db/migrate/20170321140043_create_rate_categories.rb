@@ -8,6 +8,5 @@ class CreateRateCategories < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_index :rate_categories, :name, unique: true
   end
 end

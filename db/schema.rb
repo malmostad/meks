@@ -191,7 +191,6 @@ ActiveRecord::Schema.define(version: 20170323085927) do
     t.datetime "updated_at",                  null: false
     t.integer  "legal_code_id"
     t.index ["legal_code_id"], name: "index_rate_categories_on_legal_code_id", using: :btree
-    t.index ["name"], name: "index_rate_categories_on_name", unique: true, using: :btree
   end
 
   create_table "rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
