@@ -1,3 +1,4 @@
+# a.k.a. 'Schablon'
 class RateCategory < ApplicationRecord
   has_many :rates, dependent: :destroy
   accepts_nested_attributes_for :rates,

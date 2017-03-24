@@ -1,5 +1,8 @@
+# Amount for RateCategory (Schablon)
 class Rate < ApplicationRecord
   belongs_to :rate_category
+
+  default_scope { order(:start_date) }
 
   validates :rate_category, presence: true
   validates :amount, presence: true, numericality: true
