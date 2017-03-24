@@ -59,7 +59,18 @@
     .form-group.home_daily_fees_fee,
     .form-group.rate_category_rates_amount {
       input {
-        min-width: 9em;
+        width: 9em;
+      }
+    }
+
+    .form-group.total-fee {
+      margin-bottom: 0;
+      .control-label {
+        float: none;
+        display: block;
+      }
+      input {
+        // width: 9em;
       }
     }
 

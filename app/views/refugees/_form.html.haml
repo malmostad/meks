@@ -13,7 +13,7 @@
     .terms
       = f.input :date_of_birth, label: 'Personnummer', wrapper: :addon do
         .input-group.ssn.date
-          = f.input_field :date_of_birth, as: :string, class: "form-control", placeholder: 'födelsedatum'
+          = f.input_field :date_of_birth, as: :string, class: "form-control date", placeholder: 'födelsedatum'
           .input-group-addon= '-'
           = f.input_field :ssn_extension, class: "form-control ssn-extension", placeholder: 'fyra sista'
 
