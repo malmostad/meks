@@ -4,6 +4,7 @@
 
     %h2.group-title Schablon
     = f.input :name
+    = show_attribute('rate_category.description', @rate_category.description)
     = f.input :from_age
     = f.input :to_age
     = f.association :legal_code, include_blank: false, selected: 1

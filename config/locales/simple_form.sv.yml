@@ -12,6 +12,7 @@ sv:
     labels:
       defaults: &defaults
         name: Namn
+        description: Beskrivning
         home: Boende
         refugee: Ensamkommande barn
         comment: Kommentar
