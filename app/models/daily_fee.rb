@@ -1,5 +1,7 @@
 # Fee per day for homes. Different fees for different periods.
 class DailyFee < ApplicationRecord
+  attr_accessor :total_fee
+
   belongs_to :home
 
   default_scope { order(:start_date) }
