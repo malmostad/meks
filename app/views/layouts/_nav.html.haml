@@ -13,6 +13,7 @@
       %li.type_of_housings= link_to "Boendeformer", type_of_housings_path
       %li.target_groups= link_to "Boenden, målgrupper", target_groups_path
       %li.owner_types= link_to "Boenden, ägarformer", owner_types_path
+      %li.moved_out_reasons= link_to "Schabloner", rate_categories_path
       %li.moved_out_reasons= link_to "Lagrum", legal_codes_path
       %li.moved_out_reasons= link_to "Utflyttningsorsaker", moved_out_reasons_path
       %li.moved_out_reasons= link_to "Avslutsorsak", deregistered_reasons_path
@@ -26,3 +27,4 @@
   %ul
     %li.users= link_to "Handläggare", users_path
     %li= link_to "Logga ut #{current_user.name}", logout_path
+    

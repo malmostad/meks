@@ -8,8 +8,8 @@ $ ->
       allow_single_deselect: true
 
   # Datepicker
-  register_dob_cal = () ->
-    $('.input-group.ssn.date input:first-child, .home_daily_fees_fee input.date').datepicker
+  add_calendar = () ->
+    $('.input-group.date .date').datepicker
       weekStart: 1
       language: 'sv'
       autoclose: true
@@ -18,20 +18,19 @@ $ ->
       orientation: 'auto'
       keyboardNavigation: false
 
-  register_dob_cal()
+  add_calendar()
 
   # Fields for form parts
-
   # Add term
-  $("form.refugee, form.home").on "click", ".add-term", (event) ->
+  $("form").on "click", ".terms .add-term", (event) ->
     event.preventDefault()
     regexp = new RegExp($(@).data('id'), 'g')
     $(@).closest(".form-group")
       .before($(@).data('fields').replace(regexp, new Date().getTime()))
-    register_dob_cal()
+    add_calendar()
 
   # Remove term
-  $("form.refugee .terms, form.home .terms").on "click", ".remove", (event) ->
+  $("body").on "click", ".terms .remove", (event) ->
     event.preventDefault()
     $(@).closest(".controls").find("input[type=hidden]").val(true)
     $(@).closest(".form-group").hide()

@@ -1,13 +1,4 @@
 $ ->
-  $('.datepicker .input-group.date').datepicker
-    weekStart: 1
-    language: 'sv'
-    autoclose: true
-    todayHighlight: true
-    todayBtn: true
-    orientation: 'auto'
-    keyboardNavigation: false
-
   # Do you want to leave this page prompt
   $form = $('form.simple_form.basic.refugee')
   if $form.length
