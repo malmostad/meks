@@ -9,7 +9,7 @@ $ ->
 
   # Datepicker
   add_calendar = () ->
-    $('.input-group.date .date').datepicker
+    $('.input-group.date .date, .input-group.date .m-icon-calendar').datepicker
       weekStart: 1
       language: 'sv'
       autoclose: true

@@ -17,8 +17,11 @@ $ ->
   setSpecificationField = ->
     $specification = $form.find('.placement_specification')
 
+  setTotalFee = ->
+    # 'TODO'
+
   $dailyFees.find('input').change ->
     recalculate()
 
   $(window).load ->
-    setTotalFees()
+    setTotalFee()
