@@ -9,7 +9,7 @@
     = f.input :to_age
     = f.association :legal_code, include_blank: false, selected: 1
 
-    %h2.group-title Belopp
+    %h2.group-title Ekonomi
     .terms
       = f.simple_fields_for :rates do |s|
         = render "fields_for_rate", s: s
