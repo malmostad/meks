@@ -10,6 +10,7 @@
       - if @placement.home.use_placement_specification?
         = show_attribute('placement.specification', @placement.specification)
 
+      = show_attribute('Lagrum', (@placement.legal_code.name if @placement.legal_code.present?))
       = show_attribute('Inflyttning', @placement.moved_in_at)
       = f.input :moved_out_at, as: :string, wrapper: :datepicker
       = f.association :moved_out_reason
