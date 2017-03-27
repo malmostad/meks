@@ -1,15 +1,7 @@
 $ ->
-  # Chosen field
-  $('select.chosen')
-    .attr 'data-placeholder', 'Skriv och välj'
-    .chosen
-      no_results_text: 'Ingen träff på'
-      width: '100%'
-      allow_single_deselect: true
-
   # Datepicker
   add_calendar = () ->
-    $('.input-group.date .date, .input-group.date .m-icon-calendar').datepicker
+    $('input.date').datepicker
       weekStart: 1
       language: 'sv'
       autoclose: true
@@ -35,5 +27,13 @@ $ ->
     $(@).closest(".controls").find("input[type=hidden]").val(true)
     $(@).closest(".form-group").hide()
 
+
+  # Chosen field (multi tags)
+  $('select.chosen')
+    .attr 'data-placeholder', 'Skriv och välj'
+    .chosen
+      no_results_text: 'Ingen träff på'
+      width: '100%'
+      allow_single_deselect: true
 
   $('body.login #username').focus()

@@ -20,6 +20,9 @@ $ ->
   setTotalFee = ->
     # 'TODO'
 
+  recalculate = ->
+    # 'TODO'
+
   $dailyFees.find('input').change ->
     recalculate()
 
