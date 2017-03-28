@@ -12,6 +12,16 @@
 
 ActiveRecord::Schema.define(version: 20170323085927) do
 
+  create_table "costs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+    t.integer  "amount"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "home_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["home_id"], name: "index_costs_on_home_id", using: :btree
+  end
+
   create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -33,16 +43,6 @@ ActiveRecord::Schema.define(version: 20170323085927) do
     t.datetime "updated_at", null: false
     t.index ["country_id"], name: "index_countries_refugees_on_country_id", using: :btree
     t.index ["refugee_id"], name: "index_countries_refugees_on_refugee_id", using: :btree
-  end
-
-  create_table "daily_fees", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
-    t.integer  "fee"
-    t.date     "start_date"
-    t.integer  "home_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.date     "end_date"
-    t.index ["home_id"], name: "index_daily_fees_on_home_id", using: :btree
   end
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(version: 20170323085927) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
-  add_foreign_key "daily_fees", "homes"
+  add_foreign_key "costs", "homes"
   add_foreign_key "homes", "owner_types"
   add_foreign_key "placements", "legal_codes"
   add_foreign_key "placements", "moved_out_reasons"

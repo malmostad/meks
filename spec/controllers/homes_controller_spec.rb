@@ -115,19 +115,19 @@ RSpec.describe HomesController, type: :controller do
     end
   end
 
-  describe 'Daily fee nested attributes' do
+  describe 'Cost nested attributes' do
     let(:home) {
       Home.create!(name: "Valid home")
     }
 
-    it "new home not to have a fee" do
+    it "new home not to have a cost" do
       attributes = {
         name: "Firstname Lastname",
-        daily_fees_attributes: []
+        costs_attributes: []
       }
       post :create, { :home => attributes }, valid_session
       expect(assigns(:home)).to be_persisted
-      expect(Home.last.daily_fees.size).to eq(0)
+      expect(Home.last.costs.size).to eq(0)
     end
   end
 end

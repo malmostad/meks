@@ -53,7 +53,7 @@ class HomesController < ApplicationController
         :owner_type_id,
         language_ids: [],
         target_group_ids: [],
-        daily_fees_attributes: [:id, :_destroy, :fee, :start_date, :end_date],
+        costs_attributes: [:id, :_destroy, :amount, :start_date, :end_date],
         type_of_housing_ids: [])
     end
 end

@@ -6,25 +6,25 @@ $ ->
     days = Math.round(Math.abs((startDate.getTime() - endDate.getTime())/(oneDay)))
     days++ # includes both start and end date
 
-  toDailyFee = (group) ->
+  toCost = (group) ->
     days = daysInRange(startDate, endData)
     x = [startDate, endData, seats]
     days / seats
 
   $form = $('body.homes form')
-  $dailyFees = $form.find('.home_daily_fees_fee')
+  $cost = $form.find('.home_costs_amount')
 
   setSpecificationField = ->
     $specification = $form.find('.placement_specification')
 
-  setTotalFee = ->
+  setTotalCost = ->
     # 'TODO'
 
   recalculate = ->
     # 'TODO'
 
-  $dailyFees.find('input').change ->
+  $cost.find('input').change ->
     recalculate()
 
   $(window).load ->
-    setTotalFee()
+    setTotalCost()

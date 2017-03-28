@@ -1,8 +1,8 @@
 .fields_for_group
-  = s.input :fee, required: false, label: 'Dygnskostnad', wrapper: :addon do
+  = s.input :amount, required: false, label: 'Dygnskostnad', wrapper: :addon do
     = s.input_field :_destroy, as: :hidden
     .input-group.date
-      = s.input_field :fee, class: "form-control", placeholder: 'kronor'
+      = s.input_field :amount, class: "form-control", placeholder: 'kronor'
       .input-group-addon= 'kr'
       = s.input_field :start_date, as: :string, class: "form-control date", placeholder: 'startdatum'
       .input-group-addon= 'till'
@@ -12,5 +12,5 @@
         %button.btn.btn-default.remove{ type: :button }
           %span.m-icon-close-0
 
-    .form-group.total-fee
-      = s.input :total_fee, label: 'Totalkostnad för perioden', class: "form-control", placeholder: 'kronor'
+    .form-group.total-cost
+      = s.input :total_cost, label: 'Totalkostnad för perioden', class: "form-control", placeholder: 'kronor'

@@ -2,10 +2,10 @@ class Home < ApplicationRecord
   has_many :placements, dependent: :destroy
   has_many :refugees, through: :placements
 
-  has_many :daily_fees, dependent: :destroy
-  accepts_nested_attributes_for :daily_fees,
+  has_many :costs, dependent: :destroy
+  accepts_nested_attributes_for :costs,
     allow_destroy: true
-  validates_associated :daily_fees
+  validates_associated :costs
 
   has_and_belongs_to_many :type_of_housings
   has_and_belongs_to_many :target_groups

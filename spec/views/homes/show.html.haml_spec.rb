@@ -27,6 +27,6 @@ RSpec.describe "homes/show", type: :view do
     expect(rendered).to match(/#{@home.movable_seats}/)
     expect(rendered).to match(/#{@home.seats}/)
     expect(rendered).to match(/#{@home.active? ? 'Ja' : 'Nej'}/)
-    expect(rendered).to match(/#{@home.daily_fees.map(&:daily_fees).join(', ')}/)
+    expect(rendered).to match(/#{@home.costs.map(&:costs).join(', ')}/)
   end
 end

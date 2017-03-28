@@ -20,12 +20,12 @@
 
     %h2.group-title Ekonomi
     .terms
-      = f.simple_fields_for :daily_fees do |s|
-        = render "fields_for_daily_fee", s: s
+      = f.simple_fields_for :costs do |s|
+        = render "fields_for_cost", s: s
       .form-group
         %span.control-label
         .controls
-          = add_daily_fees_button "Lägg till dygnskostnad", f
+          = add_costs_button "Lägg till dygnskostnad", f
 
     %h2.group-title Tillgänglighet
     = f.input :guaranteed_seats
