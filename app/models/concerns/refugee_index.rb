@@ -11,13 +11,8 @@ module RefugeeIndex
     index_name "refugees_#{Rails.env}"
     document_type 'refugee'
 
-    after_commit do
-      __elasticsearch__.index_document
-    end
-
-    after_destroy do
-      delete_document
-    end
+    after_commit -> { __elasticsearch__.index_document  },  on: [:create, :update]
+    after_commit -> { __elasticsearch__.delete_document },  on: :destroy
 
     mappings dynamic: 'false' do
       indexes :name, analyzer: 'simple'
@@ -27,15 +22,6 @@ module RefugeeIndex
       indexes :ssns, analyzer: 'nmbr_letters', search_analyzer: 'standard'
       indexes :dossier_number, analyzer: 'nmbr', search_analyzer: 'standard'
       indexes :dossier_numbers, analyzer: 'nmbr_letters', search_analyzer: 'standard'
-    end
-
-    def delete_document
-      # ES document might already be deleted, so we do not log errors unless debug
-      begin
-        __elasticsearch__.delete_document
-      rescue Exception => e
-        logger.debug { "Document could not be deleted: #{e}" }
-      end
     end
   end
 
