@@ -12,7 +12,6 @@ set :application, 'meks'
 set :repo_url, "https://github.com/malmostad/#{fetch(:application)}.git"
 set :user, 'app_runner'
 set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:application)}"
-set :scm, :git
 set :deploy_via, :remote_cache
 
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
