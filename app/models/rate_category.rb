@@ -9,7 +9,6 @@ class RateCategory < ApplicationRecord
 
   default_scope { order(:name, :from_age) }
 
-
   validates :name, :legal_code, presence: true
   validates :from_age, :to_age, presence: true, numericality: true
   validate :age_range
