@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '5.0.2'
 gem 'haml-rails', '0.9.0'
 gem 'sass-rails', '5.0.6'
-gem 'uglifier', '3.1.9'
+gem 'uglifier', '3.1.12'
 gem 'coffee-rails', '4.2.1'
 gem 'jquery-rails', '4.3.1'
 
@@ -28,12 +28,10 @@ gem 'faker'
 
 gem 'bcrypt', '~> 3.1.11'
 
-gem 'puma', '3.8.2'
-
 group :development do
-  gem 'capistrano', '3.8.0'
-  gem 'capistrano-rails', '1.2.3'
-  gem 'capistrano-rbenv', '2.1.0'
+  gem 'capistrano', '3.8.0', require: false
+  gem 'capistrano-rails', '1.2.3', require: false
+  gem 'capistrano-rbenv', '2.1.0', require: false
   gem 'pry-rails'
   gem 'web-console'
   gem 'bullet'
@@ -57,5 +55,5 @@ group :development, :test do
 end
 
 group :test, :production do
-  # gem 'unicorn'
+  gem 'unicorn', '5.3.0'
 end
