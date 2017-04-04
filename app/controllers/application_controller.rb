@@ -34,6 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def session_expired?
+    logger.debug "session: #{session}"
     # TODO: implement
     false
   end

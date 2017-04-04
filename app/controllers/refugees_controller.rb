@@ -104,7 +104,7 @@ class RefugeesController < ApplicationController
   private
 
     def load_more_query
-      { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
+      { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page).to_h)
     end
 
     def refugee_params
