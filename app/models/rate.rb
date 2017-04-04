@@ -4,7 +4,7 @@ class Rate < ApplicationRecord
 
   default_scope { order(:start_date) }
 
-  validates :rate_category, presence: true
+  validates :rate_category, :start_date, :end_date, presence: true
   validates :amount, presence: true, numericality: true
   validate :date_format, :date_range, :no_overlaps
 

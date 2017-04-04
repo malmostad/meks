@@ -18,12 +18,8 @@ RSpec.describe Rate, type: :model do
       expect(build(:rate, amount: nil)).not_to be_valid
     end
 
-    it "should require a start date" do
-      expect(build(:rate, start_date: nil)).not_to be_valid
-    end
-
-    it "should require an end date" do
-      expect(build(:rate, end_date: nil)).not_to be_valid
+    it "should have a start date earlier than the end date" do
+      expect(build(:rate, start_date: '2018-04-01', end_date: '2018-03-01')).not_to be_valid
     end
 
     it "start date should be a Date" do

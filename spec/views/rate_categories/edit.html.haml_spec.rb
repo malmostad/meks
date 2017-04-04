@@ -8,10 +8,7 @@ RSpec.describe "rate_categories/edit", type: :view do
   it "renders the edit rate_category form" do
     render
     assert_select "form[action=?][method=?]", rate_category_path(@rate_category), "post" do
-      assert_select "input#rate_category_name[name=?]", "rate_category[name]"
-      assert_select "input#rate_category_from_age[name=?]", "rate_category[from_age]"
-      assert_select "input#rate_category_to_age[name=?]", "rate_category[to_age]"
-      assert_select "select#rate_category_legal_code_id[name=?]", "rate_category[legal_code_id]"
+      assert_select "button.add-term", text: "Lägg till belopp", count: 1
     end
   end
 end

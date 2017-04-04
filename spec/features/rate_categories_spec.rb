@@ -6,18 +6,13 @@ RSpec.describe "Rate Category", type: :feature do
       login_user(:admin)
     end
 
-    scenario "updates a rate_category" do
+    scenario "updates a rate_category", js: true do
       rate_category = create(:rate_category, name: 'Foo')
       visit edit_rate_category_path(rate_category)
-      fill_in "rate_category_name", with: "Bar"
-      fill_in "rate_category_from_age", with: 18
-      fill_in "rate_category_to_age", with: 20
-      click_button "Spara"
-
-      expect(current_path).to eq rate_categories_path
-      expect(page).to have_selector(".notice", text: "uppdaterades")
-      expect(page).not_to have_selector("td", text: "Foo")
-      expect(page).to have_selector("td", text: "Bar")
+      click_button "Lägg till belopp"
+      expect(page).to have_selector("input.integer[placeholder=kronor]")
+      expect(page).to have_selector("input.date[placeholder=startdatum]")
+      expect(page).to have_selector("input.date[placeholder=slutdatum]")
     end
   end
 
