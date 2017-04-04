@@ -28,7 +28,7 @@ RSpec.describe "Owner types", type: :feature do
     end
 
     scenario "deletes a owner_type", js: true do
-      owner_type = create(:owner_type, name: "Fox")
+      create(:owner_type, name: "Fox")
       visit "/owner_types"
       first("a.btn-danger").click
 
