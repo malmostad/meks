@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
+  SESSION_TIME = 30 # minutes
+
   def log_user_on_request
     logger.info "[REQUESTED_BY]   #{current_user.present? ? current_user.username : 'Not authenticated'}"
     logger.info "[REQUESTED_FROM] #{client_ip}"
@@ -29,21 +31,22 @@ class ApplicationController < ActionController::Base
         # Remember where the user was about to go
         session[:requested_url] = request.fullpath
       end
+      flash[:warning] = "Du har varit inaktiv i #{SESSION_TIME} minuter och har loggats ut från MEKS" if session_expired?
       redirect_to login_path
     end
+    update_session
   end
 
   def session_expired?
-    logger.debug "session: #{session}"
-    # TODO: implement
-    false
+    return true if session[:expires_at].nil? || session[:expires_at] < Time.now
   end
 
   def update_session
-    # TODO: implement
+    session[:expires_at] = Time.now + SESSION_TIME.minutes
   end
 
   def redirect_after_login
+    update_session
     if session[:requested_url]
       requested_url = session[:requested_url]
       session[:requested_url] = nil
