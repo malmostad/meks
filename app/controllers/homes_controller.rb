@@ -51,6 +51,7 @@ class HomesController < ApplicationController
         :postal_town, :guaranteed_seats, :movable_seats, :active, :comment,
         :use_placement_specification,
         :owner_type_id,
+        :cost_category,
         language_ids: [],
         target_group_ids: [],
         costs_attributes: [:id, :_destroy, :amount, :start_date, :end_date],

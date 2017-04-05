@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323085927) do
+ActiveRecord::Schema.define(version: 20170405114143) do
 
   create_table "costs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer  "amount"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20170323085927) do
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.boolean  "use_placement_specification",               default: false
+    t.string   "cost_category"
     t.index ["name"], name: "index_homes_on_name", unique: true, using: :btree
     t.index ["owner_type_id"], name: "index_homes_on_owner_type_id", using: :btree
   end
