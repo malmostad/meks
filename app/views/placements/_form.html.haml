@@ -5,6 +5,8 @@
 
 = f.association :legal_code, include_blank: false, selected: 1
 = f.input :moved_in_at, as: :string, wrapper: :datepicker
+- if @home.cost_category.present? && Home::COST_CATEGORIES[@home.cost_category.to_sym] == 'not_hvb'
+  = f.input :cost
 = f.input :specification
 
 - if @placement.moved_out_at.present?

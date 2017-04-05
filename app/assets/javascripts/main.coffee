@@ -27,7 +27,6 @@ $ ->
     $(@).closest(".controls").find("input[type=hidden]").val(true)
     $(@).closest(".form-group").hide()
 
-
   # Chosen field (multi tags)
   $('select.chosen')
     .attr 'data-placeholder', 'Skriv och välj'
