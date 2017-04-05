@@ -18,11 +18,6 @@ class Home < ApplicationRecord
 
   default_scope { order(:name) }
 
-  COST_CATEGORIES = {
-    hvb: 'Kommunala och privata HVB (SRF)',
-    not_hvb: 'Övriga'
-  }.freeze
-
   def current_placements
     placements.where(moved_out_at: nil)
   end

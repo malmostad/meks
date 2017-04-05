@@ -1,10 +1,11 @@
 $ ->
-  # Remove costs when cost category is 'not_hvb'
-  # Add button when cost category is 'hvb'
-  $("body").on "change", "#home_cost_category", (event) ->
-    event.preventDefault()
+  # Remove costs use_placement_cost
+  # Add button when changed touse_placement_cost
+  $("body").on "change", "#home_use_placement_cost", (event) ->
     $terms = $(@).closest(".form-group").next('.terms')
-    if $(@).val() is 'not_hvb'
+    console.log $(@).selected
+    console.log $("#home_use_placement_cost").selected
+    if $(@).selected
       $terms.find(".form-group.home_costs_amount input[type=hidden]").val(true)
       $terms.find(".form-group.home_costs_amount").hide()
       $terms.find("button.add-term").hide()
@@ -12,9 +13,9 @@ $ ->
       $terms.find(".add-term").show()
 
   # Hide the add cost button on load if category is 'not_hvb'
-  $costCategory = $("#home_cost_category")
-  if $costCategory.val() is 'not_hvb'
-    $costCategory.closest(".form-group").next('.terms').find(".add-term").hide()
+  $usePlacementCost = $("#home_use_placement_cost")
+  if $usePlacementCost.selected
+    $usePlacementCost.closest(".form-group").next('.terms').find(".add-term").hide()
 
 
   daysInRange = (startDate, endData)  ->

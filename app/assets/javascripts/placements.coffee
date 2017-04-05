@@ -4,7 +4,6 @@ $ ->
 
   setSpecificationField = ->
     $specification = $form.find('.placement_specification')
-
     if $homeSelect.find(':selected').attr('data-use-specification') is 'true'
       $specification.show()
     else
@@ -15,3 +14,9 @@ $ ->
 
   $(window).load ->
     setSpecificationField()
+
+  $specification = $form.find('.placement_cost')
+  if $homeSelect.find(':selected').attr('data-use-specification') is 'true'
+    $specification.show()
+  else
+    $specification.hide()

@@ -42,10 +42,12 @@
     margin-bottom: .3em;
   }
 
-  .placement_moved_in_at .date {
-    input {
-      max-width: 10em;
-    }
+  .placement_moved_in_at .date input {
+    max-width: 9em;
+  }
+
+  .placement_cost input.integer {
+    width: 9em;
   }
 
   div.terms {

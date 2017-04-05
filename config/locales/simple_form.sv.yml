@@ -55,6 +55,7 @@ sv:
         social_worker: Socialsekreterare
         placements:
           moved_in_at: Placeringsdatum
+          cost: Dygnskostnad
 
       relationship:
         <<: *defaults
@@ -73,6 +74,7 @@ sv:
         moved_out_reason: Anledning till utskrivning
         specification: Placeringsspecifikation
         legal_code: Lagrum
+        cost: Dygnskostnad
 
       home:
         <<: *defaults
@@ -91,6 +93,7 @@ sv:
         languages: Språk
         active: Aktivt
         use_placement_specification: Använd placeringsspecifikation
+        use_placement_cost: Använd placeringskostnad
 
       rate_category:
         <<: *defaults
@@ -111,6 +114,8 @@ sv:
         name: Ange språknamn
       country:
         name: Ange landets namn
+      placement:
+        cost: kr
 
     hints:
       refugee:

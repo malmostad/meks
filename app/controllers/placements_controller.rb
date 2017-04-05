@@ -70,6 +70,7 @@ class PlacementsController < ApplicationController
       begin
         home = @homes.find(params[:placement][:home_id])
         allowed += [:specification] if home && home.use_placement_specification
+        allowed += [:cost] if home && home.use_placement_cost
       rescue
       end
       params.require(:placement).permit(allowed)

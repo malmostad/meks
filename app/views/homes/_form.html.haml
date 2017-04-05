@@ -19,9 +19,7 @@
     = f.input :comment
 
     %h2.group-title Ekonomi
-    .form-group
-      = label_tag 'home_cost_category', "Kostnadskategori:", class: "control-label"
-      .controls= select(:home, :cost_category,  Home::COST_CATEGORIES.map { |key, val| [val, key] }, {}, { class: "form-control" } )
+    = f.input :use_placement_cost, wrapper: :vertical_radio_and_checkboxes
     .terms
       = f.simple_fields_for :costs do |s|
         = render "fields_for_cost", s: s

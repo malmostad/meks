@@ -1,13 +1,13 @@
 = show_attribute('Namn', @refugee.name)
 = f.association :home,
-                collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification }] },
+                collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification,
+                'data-use-placement-cost' => h.data_use_placement_cost }] },
                 input_html: { class: 'chosen', data: { foo: :bar } }
 
 = f.association :legal_code, include_blank: false, selected: 1
 = f.input :moved_in_at, as: :string, wrapper: :datepicker
-- if @home.cost_category.present? && Home::COST_CATEGORIES[@home.cost_category.to_sym] == 'not_hvb'
-  = f.input :cost
 = f.input :specification
+= f.input :cost
 
 - if @placement.moved_out_at.present?
   = f.input :moved_out_at, as: :string, wrapper: :datepicker

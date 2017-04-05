@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405114143) do
+ActiveRecord::Schema.define(version: 20170405133802) do
 
   create_table "costs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer  "amount"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20170405114143) do
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.boolean  "use_placement_specification",               default: false
-    t.string   "cost_category"
+    t.boolean  "use_placement_cost",                        default: false
     t.index ["name"], name: "index_homes_on_name", unique: true, using: :btree
     t.index ["owner_type_id"], name: "index_homes_on_owner_type_id", using: :btree
   end
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(version: 20170405114143) do
     t.datetime "updated_at",                        null: false
     t.text     "specification",       limit: 65535
     t.integer  "legal_code_id"
+    t.integer  "cost"
     t.index ["home_id"], name: "index_placements_on_home_id", using: :btree
     t.index ["legal_code_id"], name: "index_placements_on_legal_code_id", using: :btree
     t.index ["moved_out_reason_id"], name: "index_placements_on_moved_out_reason_id", using: :btree
