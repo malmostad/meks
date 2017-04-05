@@ -6,25 +6,10 @@ class Rate < ApplicationRecord
 
   validates :rate_category, :start_date, :end_date, presence: true
   validates :amount, presence: true, numericality: true
-  validate :date_format, :date_range, :no_overlaps
-
-  def date_format
-    unless start_date.is_a?(Date) && end_date.is_a?(Date)
-      return errors.add(:amount, 'Ogiltigt datumformat, ska vara yyyy-mm-dd')
-    end
-  end
-
-  def date_range
-    if start_date >= end_date
-      errors.add(:amount, 'Startdatum måste infalla innan slutdatum')
-    end
-  end
-
-  # A rate period must not overlap with another
-  def no_overlaps
-    if siblings.where("? <= end_date AND ? >= start_date", start_date, end_date).present?
-      errors.add(:amount, 'Intervallet överlappar med ett annat')
-    end
+  validate do
+     date_format(:amount)
+     date_range(:amount)
+     no_overlaps(:amount)
   end
 
   def siblings
