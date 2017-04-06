@@ -128,3 +128,5 @@ sv:
       placement:
         comment: *comment
         specification: "Namn på HVB samt namn på vårdföretag"
+      home:
+        comment: *comment

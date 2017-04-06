@@ -20,10 +20,10 @@
 
     %h2.group-title Ekonomi
     = f.input :use_placement_cost, wrapper: :vertical_radio_and_checkboxes
-    .terms
+    .terms.cost
       = f.simple_fields_for :costs do |s|
         = render "fields_for_cost", s: s
-      .form-group
+      .form-group.add-cost
         %span.control-label
         .controls
           = add_costs_button "Lägg till dygnskostnad", f

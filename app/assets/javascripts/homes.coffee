@@ -1,22 +1,17 @@
 $ ->
-  # Remove costs use_placement_cost
-  # Add button when changed touse_placement_cost
-  $("body").on "change", "#home_use_placement_cost", (event) ->
-    $terms = $(@).closest(".form-group").next('.terms')
-    console.log $(@).selected
-    console.log $("#home_use_placement_cost").selected
-    if $(@).selected
-      $terms.find(".form-group.home_costs_amount input[type=hidden]").val(true)
-      $terms.find(".form-group.home_costs_amount").hide()
-      $terms.find("button.add-term").hide()
+  $addPlacementCost = $('.form-group.add-cost')
+
+  # Remove home costs if use_placement_cost
+  $("form").on "click", "#home_use_placement_cost", (event) ->
+    if $(@).is(':checked')
+      $('.terms.cost').find('.fields_for_group').hide().find("input[type=hidden]").val(true)
+      $addPlacementCost.hide()
     else
-      $terms.find(".add-term").show()
+      $addPlacementCost.show()
 
-  # Hide the add cost button on load if category is 'not_hvb'
-  $usePlacementCost = $("#home_use_placement_cost")
-  if $usePlacementCost.selected
-    $usePlacementCost.closest(".form-group").next('.terms').find(".add-term").hide()
-
+  $(window).load ->
+    if $('#home_use_placement_cost').is(':checked')
+      $addPlacementCost.hide()
 
   daysInRange = (startDate, endData)  ->
     oneDay = 24*60*60*1000
