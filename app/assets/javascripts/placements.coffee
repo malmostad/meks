@@ -14,6 +14,7 @@ $ ->
     if $homeSelect.find(':selected').attr('data-use-placement-cost') is 'true'
       $placementCost.show()
     else
+      $('#placement_cost').val('')
       $placementCost.hide()
 
   $homeSelect.change ->
