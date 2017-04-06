@@ -55,7 +55,7 @@ sv:
         social_worker: Socialsekreterare
         placements:
           moved_in_at: Placeringsdatum
-          cost: Dygnskostnad
+          cost: Placeringskostnad
 
       relationship:
         <<: *defaults
@@ -74,7 +74,7 @@ sv:
         moved_out_reason: Anledning till utskrivning
         specification: Placeringsspecifikation
         legal_code: Lagrum
-        cost: Dygnskostnad
+        cost: Placeringskostnad
 
       home:
         <<: *defaults

@@ -66,13 +66,12 @@ class PlacementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def placement_params
-      allowed = [:home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id, :legal_code_id]
-      begin
-        home = @homes.find(params[:placement][:home_id])
-        allowed += [:specification] if home && home.use_placement_specification
-        allowed += [:cost] if home && home.use_placement_cost
-      rescue
-      end
-      params.require(:placement).permit(allowed)
+      home = @homes.find(params[:placement][:home_id])
+      params[:specification] == '' if home && home.use_placement_specification
+      params[:cost] == nil if home && home.use_placement_cost
+
+      params.require(:placement).permit(
+        :home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id,
+        :legal_code_id, :specification, :cost)
     end
 end
