@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
 
   def generate
     file_id = SecureRandom.hex
-    job = GenerateReportJob.perform_later(params.to_h, file_id)
+    job = GenerateReportJob.perform_later(report_params.to_h, file_id)
     delayed_job_id = Delayed::Job.find(job.provider_job_id).id
 
     redirect_to reports_status_path(delayed_job_id, file_id)
@@ -64,6 +64,24 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def report_params
+    params.permit(:report_type,
+      :homes_free_seats,
+      :homes_owner_type,
+      :placements_from,
+      :placements_home_id,
+      :placements_to,
+      :placements_selection,
+      :placements_home_id,
+      :refugees_registered_to,
+      :refugees_registered_from,
+      :refugees_born_after,
+      :refugees_born_before,
+      :refugees_include_without_date_of_birth,
+      :refugees_asylum
+    )
+  end
 
   def pre_generated_reports
     APP_CONFIG['pre_generated_reports'].each do |report|
