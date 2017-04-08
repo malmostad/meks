@@ -88,6 +88,15 @@ refugees:
     query: record.dossier_numbers.map(&:name).join(", ")
 
 homes:
+  - heading: Foo
+    query: 'SUM(1+3)'
+    formula: true
+  - heading: Bar
+    query: 'SUM(1+3)'
+    formula: true
+  - heading: Form
+    query: 'SUM(A2:B2)'
+    formula: true
   - heading: name
     query: record.name
   - heading: phone

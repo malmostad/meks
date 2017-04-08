@@ -1,4 +1,5 @@
 require 'report_generator/style'
+require 'report_generator/workbooks'
 
 class ReportGenerator
   class << self
@@ -41,7 +42,8 @@ class ReportGenerator
               begin
                 # Note: evaled queries are not based on user input,
                 # they are defined in the 'columns.yml' file
-                eval column['query']
+                # column['query']
+                'TODO: implement query'
               rescue
                 ''
               end
