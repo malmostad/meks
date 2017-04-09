@@ -27,6 +27,8 @@ refugees:
     tooltip: Anger det datum då barnet registreras i MEKS för första gången
   - heading: Aktuellt boende
     query: record.current_placements.map(&:home).map(&:name).join(", ")
+  - heading: Lagrum
+    query: record.current_placements.map(&:legal_code).map(&:name).join(", ")
   - heading: Aktuell boendeform
     query: 'record.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name }}.join(", ")'
   - heading: refugee.municipality
@@ -87,16 +89,68 @@ refugees:
   - heading: Extra dossiernummer
     query: record.dossier_numbers.map(&:name).join(", ")
 
+economy:
+  - heading: Dossiernummer
+    query: record.dossier_number
+  - heading: Extra dossiernummer
+    query: record.dossier_numbers.map(&:name).join(', ')
+  - heading: refugee.name
+    query: record.name
+  - heading: Personnummer
+    query: record.ssn
+  - heading: Extra personnummer
+    query: record.ssns.map(&:full_ssn).join(", ")
+  - heading: Alla boenden inom angivet datumintervall
+    query: 'records.map { |rs| next unless rs.refugee_id == record.refugee_id; "#{rs.home.name} (#{numshort_date(rs.moved_in_at)}–#{numshort_date(rs.moved_out_at)})" }.reject(&:blank?).join(", ")'
+  - heading: refugee.registered
+    query: record.registered
+    tooltip: Anger det datum då barnet registreras i MEKS för första gången
+  - heading: Placeringsdatum
+    query: record.current_placements.first.moved_in_at
+  - heading: Utskrivningsdatum
+    query: record.current_placements.first.moved_out_at
+  - heading: refugee.deregistered
+    query: record.deregistered
+    tooltip: Anger datum för när socialtjänstansvaret för barnet är avslutat
+    type: :date
+  - heading: Boendeformer
+    query: 'record.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name }}.join(", ")'
+  - heading: refugee.municipality
+    query: record.municipality.name
+  - heading: refugee.municipality_placement_migrationsverket_at
+    query: record.municipality_placement_migrationsverket_at
+    type: :date
+  - heading: PUT
+    query: record.residence_permit_at
+    type: :date
+  - heading: refugee.checked_out_to_our_city
+    query: record.checked_out_to_our_city
+    tooltip: Det datum då barnet skrivs ut från Migrationsverket
+    type: :date
+  - heading: TUT startar
+    query: record.temporary_permit_starts_at
+    type: :date
+  - heading: TUT slutar
+    query: record.temporary_permit_ends_at
+    type: :date
+  - heading: refugee.citizenship_at
+    query: record.citizenship_at
+    type: :date
+
+  - heading: Budgeterad kostnad
+    query: record.expected_cost
+  - heading: Förväntad schablon
+    query: record.expected_rate
+  - heading: Utbetald schablon
+    query: record.paid_amount
+
+  - heading: Ålder
+    query: record.age
+    type: :integer
+  - heading: refugee.gender
+    query: record.gender.name
+
 homes:
-  - heading: Foo
-    query: 'SUM(1+3)'
-    formula: true
-  - heading: Bar
-    query: 'SUM(1+3)'
-    formula: true
-  - heading: Form
-    query: 'SUM(A2:B2)'
-    formula: true
   - heading: name
     query: record.name
   - heading: phone
@@ -154,6 +208,8 @@ placements:
     query: record.refugee.ssn
   - heading: Extra personnummer
     query: record.refugee.ssns.map(&:full_ssn).join(", ")
+  - heading: Lagrum
+    query: record.legal_code.name
   - heading: Boende
     query: record.home.name
   - heading: placement.specification

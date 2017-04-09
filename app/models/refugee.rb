@@ -1,7 +1,10 @@
 class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch
-  include Economy
+  # include Economy
+
+  # TODO: implement
+  attr_reader :expected_cost, :expected_rate, :paid_amount
 
   belongs_to :gender
   belongs_to :municipality
@@ -94,5 +97,20 @@ class Refugee < ApplicationRecord
 
     # Get the event with the latest date
     dates.sort_by { |_k, v| v }.last
+  end
+
+  # TODO: implement
+  def expected_cost
+    '=(13*1775)+(18*1698)'
+  end
+
+  # TODO: implement
+  def expected_rate
+    '=31*1350'
+  end
+
+  # TODO: implement
+  def paid_amount
+    '=31*1350'
   end
 end

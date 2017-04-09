@@ -66,6 +66,18 @@ class GenerateReportJob < ApplicationJob
     ReportGenerator.generate_xlsx(:refugees, records, filename)
   end
 
+  def economy(params, filename)
+    records = Refugee.includes(
+      :dossier_numbers, :ssns,
+      :municipality,
+      :gender, :homes, :municipality,
+      current_placements: [home: :type_of_housings]).where(
+      registered: params[:refugees_registered_from]..params[:refugees_registered_to]
+    )
+
+    ReportGenerator.generate_xlsx(:economy, records, filename)
+  end
+
   def homes(params, filename)
     records = Home.includes(
       :placements, :type_of_housings,

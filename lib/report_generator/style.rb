@@ -43,6 +43,15 @@ class ReportGenerator
       )
     end
 
+    def currency
+      @axlsx.workbook.styles.add_style(
+        font_name: @font,
+        fg_color: '000000',
+        alignment: @align_top,
+        format_code: '# ##0'
+      )
+    end
+
     private
 
     def heading_base_style
