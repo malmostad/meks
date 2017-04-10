@@ -101,7 +101,7 @@ economy:
   - heading: Extra personnummer
     query: record.ssns.map(&:full_ssn).join(", ")
   - heading: Alla boenden inom angivet datumintervall
-    query: 'records.map { |rs| next unless rs.refugee_id == record.refugee_id; "#{rs.home.name} (#{numshort_date(rs.moved_in_at)}–#{numshort_date(rs.moved_out_at)})" }.reject(&:blank?).join(", ")'
+    query: 'record.placements.map { |p| next unless p.refugee_id == record.id; "#{p.home.name} (#{numshort_date(p.moved_in_at)}–#{numshort_date(p.moved_out_at)})" }.reject(&:blank?).join(", ")'
   - heading: refugee.registered
     query: record.registered
     tooltip: Anger det datum då barnet registreras i MEKS för första gången
