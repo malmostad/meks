@@ -31,8 +31,7 @@ class ApplicationController < ActionController::Base
         # Remember where the user was about to go
         session[:requested_url] = request.fullpath
       end
-      flash[:warning] = "Du har varit inaktiv i #{SESSION_TIME} minuter och har loggats ut från MEKS" if session_expired?
-      redirect_to login_path
+      redirect_to login_path, notice: "Du har varit inaktiv i #{SESSION_TIME} minuter och har loggats ut från MEKS" if session_expired?
     end
     update_session
   end
