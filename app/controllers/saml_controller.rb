@@ -33,6 +33,7 @@ class SamlController < ApplicationController
           # Establish session and redirect to the page requested by user
           session[:user_id] = user.id
           logger.info "[SAML_AUTH] #{user.username} logged in from #{client_ip}"
+          update_session
           redirect_after_login
         end
       else
