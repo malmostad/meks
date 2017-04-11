@@ -44,8 +44,8 @@ Rails.application.routes.draw do
 
   get  'reports' => 'reports#index'
   post 'reports/generate'
-  get  'reports/status/:job_id/:file_id' => 'reports#status', as: 'reports_status'
-  get  'reports/download/:id' => 'reports#download', as: 'reports_download'
+  get  'reports/status/:job_id/:file_id/:report_type' => 'reports#status', as: 'reports_status'
+  get  'reports/download/:id/:report_type' => 'reports#download', as: 'reports_download'
 
   match '*path', via: :all, to: 'errors#not_found'
 end

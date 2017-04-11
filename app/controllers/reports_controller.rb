@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
     job = GenerateReportJob.perform_later(report_params.to_h, file_id)
     delayed_job_id = Delayed::Job.find(job.provider_job_id).id
 
-    redirect_to reports_status_path(delayed_job_id, file_id)
+    redirect_to reports_status_path(delayed_job_id, file_id, params[:report_type])
   end
 
   def status
@@ -34,7 +34,8 @@ class ReportsController < ApplicationController
       created_at: created_at || 0,
       finished: finished,
       queue_size: queue_size,
-      status_url: reports_status_url(params[:job_id], params[:file_id])
+      status_url: reports_status_url(params[:job_id], params[:file_id]),
+      report_type: params[:report_type]
     }
 
     respond_to do |format|
@@ -49,7 +50,7 @@ class ReportsController < ApplicationController
     file_with_path = file_path("#{params[:id]}.xlsx")
 
     if File.exist? file_with_path
-      send_xlsx file_with_path, "#{current_user.username}_#{Time.now.to_formatted_s(:number)}.xlsx"
+      send_xlsx file_with_path, "#{report_type}_#{Time.now.to_formatted_s(:number)}.xlsx"
     else
       render :report_not_found
     end
@@ -83,6 +84,19 @@ class ReportsController < ApplicationController
   def file_path(filename)
     filename = sanitize_filename(filename)
     File.join(Rails.root, 'reports', filename)
+  end
+
+  def report_type
+    case params[:report_type]
+    when 'economy'
+      'Ekonomi'
+    when 'homes'
+      'Boenden'
+    when 'placements'
+      'Placeringar'
+    when 'refugees'
+      'Ensamkommande'
+    end
   end
 
   # From http://guides.rubyonrails.org/security.html

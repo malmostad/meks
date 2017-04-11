@@ -12,5 +12,5 @@
           Du har väntat:
           %span
     .download{ class: @status[:finished] ? 'finished' : '' }
-      %p= link_to 'Ladda ned rapport', reports_download_path(@status[:file_id])
+      %p= link_to 'Ladda ned rapport', reports_download_path(@status[:file_id], @status[:report_type])
       %p.hint Tips: Högerklicka på länken och välj <em>Spara länk som</em> (eller liknande)
