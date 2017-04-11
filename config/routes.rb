@@ -46,7 +46,6 @@ Rails.application.routes.draw do
   post 'reports/generate'
   get  'reports/status/:job_id/:file_id' => 'reports#status', as: 'reports_status'
   get  'reports/download/:id' => 'reports#download', as: 'reports_download'
-  get  'reports/download_pre_generated/:id' => 'reports#download_pre_generated', as: 'reports_download_pre_generated'
 
   match '*path', via: :all, to: 'errors#not_found'
 end

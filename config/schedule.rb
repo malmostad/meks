@@ -7,8 +7,3 @@
 
 set :output,  "#{path}/log/cron.log"
 job_type :rake, "cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:environment bundle exec rake :task --silent :output"
-
-every :day, :at => '5:00am', roles: [:app] do
-  rake "reports:cleanup"
-  rake "reports:all"
-end

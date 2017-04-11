@@ -5,7 +5,6 @@ class ReportsController < ApplicationController
 
   def index
     @homes = Home.order(:name)
-    @pre_generated_reports = pre_generated_reports
   end
 
   def generate
@@ -56,13 +55,6 @@ class ReportsController < ApplicationController
     end
   end
 
-  def download_pre_generated
-    filename = pre_generated_report_name(params[:id])['filename']
-    file_with_path = file_path(filename)
-
-    send_xlsx file_with_path, filename
-  end
-
   private
 
   def report_params
@@ -83,19 +75,6 @@ class ReportsController < ApplicationController
     )
   end
 
-  def pre_generated_reports
-    APP_CONFIG['pre_generated_reports'].each do |report|
-      file = file_path(report['filename'])
-
-      if File.exist?(file)
-        report.merge!(
-          filetime: File.mtime(file).localtime,
-          filesize: File.size(file)
-        )
-      end
-    end
-  end
-
   def send_xlsx(file_with_path, base_name)
     send_file file_with_path, type: :xlsx, disposition: 'attachment',
       filename: base_name
@@ -104,10 +83,6 @@ class ReportsController < ApplicationController
   def file_path(filename)
     filename = sanitize_filename(filename)
     File.join(Rails.root, 'reports', filename)
-  end
-
-  def pre_generated_report_name(id)
-    APP_CONFIG['pre_generated_reports'].detect { |r| r['id'] == id.to_i }
   end
 
   # From http://guides.rubyonrails.org/security.html
