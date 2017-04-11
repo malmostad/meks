@@ -100,6 +100,8 @@ economy:
     query: record.ssn
   - heading: Extra personnummer
     query: record.ssns.map(&:full_ssn).join(", ")
+  - heading: Lagrum
+    query: record.current_placements.map(&:legal_code).map(&:name).join(", ")
   - heading: Alla boenden inom angivet datumintervall
     query: 'record.placements.map { |p| next unless p.refugee_id == record.id; "#{p.home.name} (#{numshort_date(p.moved_in_at)}–#{numshort_date(p.moved_out_at)})" }.reject(&:blank?).join(", ")'
   - heading: refugee.registered
