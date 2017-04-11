@@ -3,7 +3,7 @@ require 'report_generator/style'
 
 class ReportGenerator
   class << self
-    def generate_xlsx(template, records, filename)
+    def generate_xlsx(template, records, filename, range_from=nil, range_to=nil)
       axlsx = Axlsx::Package.new
       style = Style.new(axlsx)
 
@@ -11,7 +11,13 @@ class ReportGenerator
         File.join(__dir__, 'report_generator', 'sheet.yml')
       )[template.to_s]
 
-      axlsx.workbook.add_worksheet(name: "Genererad #{Date.today}") do |sheet|
+      if range_from && range_to
+        range = "#{range_from}–#{range_to}"
+      else
+        range = "Inget intervall"
+      end
+
+      axlsx.workbook.add_worksheet(name: range) do |sheet|
         # Add column headings
         col_headings = sheet.add_row(columns.map { |col| col_heading(col['heading']) },
           style: style.heading)

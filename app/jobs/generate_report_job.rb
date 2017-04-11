@@ -28,7 +28,7 @@ class GenerateReportJob < ApplicationJob
       records = Placement.overlapping_by_refugee(params)
     end
 
-    ReportGenerator.generate_xlsx(:placements, records, filename)
+    ReportGenerator.generate_xlsx(:placements, records, filename, params[:placements_from], params[:placements_to])
   end
 
   def refugees(params, filename)
@@ -63,7 +63,7 @@ class GenerateReportJob < ApplicationJob
       records = records.where(query.join(' or '))
     end
 
-    ReportGenerator.generate_xlsx(:refugees, records, filename)
+    ReportGenerator.generate_xlsx(:refugees, records, filename, params[:refugees_registered_from], params[:refugees_registered_to])
   end
 
   def economy(params, filename)
@@ -75,7 +75,7 @@ class GenerateReportJob < ApplicationJob
       registered: params[:refugees_registered_from]..params[:refugees_registered_to]
     )
 
-    ReportGenerator.generate_xlsx(:economy, records, filename)
+    ReportGenerator.generate_xlsx(:economy, records, filename, params[:refugees_registered_from], params[:refugees_registered_to])
   end
 
   def homes(params, filename)
