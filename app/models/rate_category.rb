@@ -11,7 +11,14 @@ class RateCategory < ApplicationRecord
 
   validates :name, :legal_code, presence: true
   validates :from_age, :to_age, presence: true, numericality: true
-  validate :age_range
+  validate do
+    date_range(:from_age, from_age, to_age)
+  end
+
+  after_save do
+    # Rollback transaction if cost date ranges overlaps
+    validate_associated_date_overlaps(rates, :amount)
+  end
 
   def age_range
     if from_age && to_age && from_age >= to_age

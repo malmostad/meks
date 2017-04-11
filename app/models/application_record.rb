@@ -8,18 +8,21 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
-  def date_range(field_name)
+  def date_range(field_name, from, to)
     return unless errors.blank?
-    if start_date >= end_date
+    if from >= to
       errors.add(field_name, 'Startdatum måste infalla innan slutdatum')
     end
   end
 
-  # A rate period must not overlap with another
-  def no_overlaps(field_name)
-    return unless errors.blank?
-    if siblings.where("? <= end_date AND ? >= start_date", start_date, end_date).present?
-      errors.add(field_name, 'Intervallet överlappar med ett annat')
+  # Rollback transaction if any record date ranges overlaps
+  def validate_associated_date_overlaps(records, field_name)
+    records.each do |r|
+      if records.where.not(id: r.id).where("? <= end_date AND ? >= start_date", r.start_date, r.end_date).present?
+        r.errors.add(field_name, 'Intervallet överlappar med ett annat')
+        errors.add(:base)
+        raise ActiveRecord::Rollback
+      end
     end
   end
 end

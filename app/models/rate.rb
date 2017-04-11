@@ -8,11 +8,6 @@ class Rate < ApplicationRecord
   validates :amount, presence: true, numericality: true
   validate do
      date_format(:amount)
-     date_range(:amount)
-     no_overlaps(:amount)
-  end
-
-  def siblings
-    rate_category.rates.where.not(id: id)
+     date_range(:amount, start_date, end_date)
   end
 end

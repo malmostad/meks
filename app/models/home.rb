@@ -16,6 +16,11 @@ class Home < ApplicationRecord
   validates_presence_of :name
   validates_length_of :name, maximum: 191
 
+  after_save do
+    # Rollback transaction if cost date ranges overlaps
+    validate_associated_date_overlaps(costs, :amount)
+  end
+
   default_scope { order(:name) }
 
   def current_placements
