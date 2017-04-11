@@ -2,7 +2,7 @@
   %h2.group-title Ekonomi
   .form-group
     %span.control-label
-      %label{for: 'refugees_registered_from'} Inskrivna mellan:
+      %label{for: 'refugees_registered_from'} Placerade mellan:
     .controls
       .input-group.input-daterange
         = text_field_tag 'refugees_registered_from', DateTime.now.beginning_of_quarter.to_date, class: 'form-control'
