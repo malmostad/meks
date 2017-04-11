@@ -33,7 +33,6 @@ group :development do
   gem 'capistrano-rails', '1.2.3', require: false
   gem 'capistrano-rbenv', '2.1.0', require: false
   gem 'pry-rails'
-  gem 'web-console'
   gem 'bullet'
 end
 
