@@ -4,9 +4,19 @@
     %h1.box-title= h1
     .box-content.basic
       %h2.group-title= 'Aktuella ärenden'
-      - @refugees.each do |r|
-        %p= r
+      %p.first= "#{registered.count} barn är i ankomst i väntan på anvisning"
+      %p= "Malmö SRF ansvarar för #{srf.count} barn, varav #{srf_men.count} är pojkar och #{srf_women.count} är flickor"
+      %p= "Vanligaste nationaliteterna är #{top_countries}"
+      %p= "#{waiting_for_verdict.count} är asylsökande och väntar på beslut i asylärendet"
+      %p= "#{residence_permit.count} har PUT"
+      %p= "#{temporary_permit.count} har TUT"
+      %p= "#{citizenship.count} har erhållit svenskt medborgarskap"
 
       %h2.group-title Placeringar och boenden
-      - @placements_homes.each do |r|
-        %p= r
+      %p= "X antal barn är placerade på kommunala HVB"
+      %p= "X antal barn är externt placerade"
+      %p= "X antal barn är placerade i jourhem"
+      %p= "X antal barn är placerade i familjehem"
+      %p= "X antal barn är placerade på utslussboende"
+      %p= "X antal barn tillhörande Malmös stadsområden är placerade på SRF:s boenden"
+      %p= "Det finns X boenden med X antal boendeplatser. På samtliga boenden finns det totalt X antal tomma platser"

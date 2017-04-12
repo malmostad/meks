@@ -4,34 +4,10 @@ class StatisticsController < ApplicationController
   before_action { authorize! :view, :statistics }
 
   def index
-    @refugees = Rails.cache.fetch("queries-#{cache_key_for_status}") do
-      [
-        "#{registered.count} antal barn är i ankomst i väntan på anvisning",
-        "Malmö SRF ansvarar för #{refugees_srf.count} antal barn, varav #{refugees_srf_men.count} är pojkar och #{refugees_srf_women.count} är flickor",
-        "Vanligaste nationaliteterna (10 barn eller fler, visa de 3 vanligaste nationaliteterna)",
-        "X antal är asylsökande och väntar på beslut i asylärendet",
-        "X antal har PUT",
-        "X antal har TUT",
-        "X antal har erhållit svenskt medborgarskap"
-      ]
-    end
-
-    @placements_homes = Rails.cache.fetch("queries-#{cache_key_for_status}") do
-      [
-        "X antal barn är placerade på kommunala HVB",
-        "X antal barn är externt placerade",
-        "X antal barn är placerade i jourhem",
-        "X antal barn är placerade i familjehem",
-        "X antal barn är placerade på utslussboende",
-        "X antal barn tillhörande Malmös stadsområden är placerade på SRF:s boenden",
-        "Det finns X boenden med X antal boendeplatser. På samtliga boenden finns det totalt X antal tomma platser"
-      ]
-    end
   end
 
   private
 
-  # "I ankomst i väntan på anvisning"
   def registered
     Refugee.where.not(registered: nil)
       .where(deregistered: nil)
@@ -40,20 +16,57 @@ class StatisticsController < ApplicationController
       .where(sof_placement: false)
       .where.not(municipality_id: 135) # 135 is hardcoded "Malmö kommun, Srf"
   end
+  helper_method :registered
 
-  # "Malmö SRF ansvarar för X antal barn"
-  def refugees_srf
-    Refugee.where.not(municipality_id: 135)
-      .where(deregistered: nil) # 135 is hardcoded "Malmö kommun, Srf"
+  def srf
+    Refugee.where(municipality_id: 135) # 135 is hardcoded "Malmö kommun, Srf"
+      .where(deregistered: nil)
   end
+  helper_method :srf
 
-  def refugees_srf_women
-    refugees_srf.where(gender_id: 1) # 1 is hardcoded women
+  def srf_women
+    srf.where(gender_id: 1) # 1 is hardcoded women
   end
+  helper_method :srf_women
 
-  def refugees_srf_men
-    refugees_srf.where(gender_id: 2) # 2 is hardcoded men
+  def srf_men
+    srf.where(gender_id: 2) # 2 is hardcoded men
   end
+  helper_method :srf_men
+
+  def top_countries
+    srf.joins(:countries).select('countries.name')
+      .group('countries.name')
+      .count('countries.name')
+      .sort_by{ |key, value| value }.reject { |k, v| v <= 10  }.reverse[0...3].map(&:first).join(', ')
+  end
+  helper_method :top_countries
+
+  def waiting_for_verdict
+    srf.where(temporary_permit_starts_at: nil)
+      .where(residence_permit_at: nil)
+      .where(citizenship_at: nil)
+  end
+  helper_method :waiting_for_verdict
+
+  def residence_permit
+    srf.where(temporary_permit_starts_at: nil)
+      .where(citizenship_at: nil)
+  end
+  helper_method :residence_permit
+
+  def temporary_permit
+    srf.where(residence_permit_at: nil)
+      .where(citizenship_at: nil)
+  end
+  helper_method :temporary_permit
+
+  def citizenship
+    srf.where.not(citizenship_at: nil)
+  end
+  helper_method :citizenship
+
+
 
   def cache_key_for_status
     @cache_key_for_status ||=
