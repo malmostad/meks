@@ -7,6 +7,8 @@
 
       = show_attribute('Namn', @refugee.name)
       = show_attribute('Boende', @placement.home.name)
+      = f.hidden_field :home_id, value: @placement.home.id
+
       - if @placement.home.use_placement_specification?
         = show_attribute('placement.specification', @placement.specification)
 
