@@ -97,11 +97,6 @@ RSpec.describe PlacementsController, type: :controller do
           }
         }
 
-        it "don't save non-allowed attribute" do
-          post :create, {refugee_id: valid_refugee.id, :placement => attributes_with_specification}, valid_session
-          expect(assigns(:placement).specification).to be_nil
-        end
-
         it "save placement.specification when allowed " do
           valid_home.update_attribute(:use_placement_specification, true)
           post :create, {refugee_id: valid_refugee.id, :placement => attributes_with_specification}, valid_session
