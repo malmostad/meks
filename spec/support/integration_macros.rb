@@ -24,6 +24,7 @@ module IntegrationMacros
 
   def valid_session(role: :admin)
     current_user = get_or_create_user(role)
+    session[:expires_at] = Time.now + 1.day
     { user_id: current_user.id }
   end
 end
