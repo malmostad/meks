@@ -49,7 +49,7 @@ class ReportGenerator
                 # Note: evaled queries are not based on user input,
                 # they are defined in the 'columns.yml' file
                 eval column['query']
-                # 'TODO: implement query'
+                # 'TODO: implement rb query'
               rescue
                 ''
               end

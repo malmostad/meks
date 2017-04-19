@@ -100,8 +100,21 @@ class Refugee < ApplicationRecord
   end
 
   # TODO: implement
-  def expected_cost
-    '=(13*1775)+(18*1698)'
+  def home_costs(placements_from = '2016-01-01', placements_to = '2017-04-01')
+    formulas = placements.includes(home: :costs).map do |p|
+      moved_out_at = p[:moved_out_at] || Date.today
+      moved_in_at  = p[:moved_in_at]
+
+      count_from = [moved_in_at, placements_from.to_date].max_by(&:to_date)
+      count_to   = [moved_out_at, placements_to.to_date].max_by(&:to_date)
+
+      days = (count_to - count_from).to_i
+      cost = p.home.costs.empty? ? 0 : p.home.costs.first.amount
+
+      "(#{cost}*#{days})"
+    end
+
+    "=#{formulas.join('+')}"
   end
 
   # TODO: implement

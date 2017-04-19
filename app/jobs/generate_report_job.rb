@@ -72,10 +72,10 @@ class GenerateReportJob < ApplicationJob
       :municipality,
       :gender, :homes, :municipality,
       current_placements: [home: :type_of_housings]).where(
-      registered: params[:refugees_registered_from]..params[:refugees_registered_to]
+      registered: params[:placements_from]..params[:placements_to]
     )
 
-    ReportGenerator.generate_xlsx(:economy, records, filename, params[:refugees_registered_from], params[:refugees_registered_to])
+    ReportGenerator.generate_xlsx(:economy, records, filename, params[:placements_from], params[:placements_from])
   end
 
   def homes(params, filename)

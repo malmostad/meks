@@ -140,7 +140,7 @@ economy:
     type: :date
 
   - heading: Budgeterad kostnad
-    query: record.expected_cost
+    query: 'record.home_costs(params[:placements_from], params[:placements_to])'
   - heading: Förväntad schablon
     query: record.expected_rate
   - heading: Utbetald schablon

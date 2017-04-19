@@ -67,6 +67,8 @@ class ReportsController < ApplicationController
       :placements_to,
       :placements_selection,
       :placements_home_id,
+      :placements_from,
+      :placements_to,
       :refugees_registered_to,
       :refugees_registered_from,
       :refugees_born_after,
