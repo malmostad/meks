@@ -12,9 +12,8 @@ module RefugeeCosts
 
   included do
     def total_cost
-      costs_and_days = home_costs(starts: '1900-01-01', ends: '2100-01-01')
       cost = 0
-      costs_and_days.each do |cd|
+      home_costs.each do |cd|
         cost += cd[:cost] * cd[:days]
       end
       cost
@@ -25,8 +24,7 @@ module RefugeeCosts
     #  * the placement range
     #  * each placement.home cost ranges
     # Returns a string for spreadsheet formula
-    # FIXME: remove params defaults
-    def home_costs(report_range = { starts: '2016-01-01', ends: '2017-04-01' })
+    def home_costs(report_range = { starts: '1900-01-01', ends: '2100-01-01' })
       placements.includes(home: :costs).map do |placement|
         moved_out_at = placement.moved_out_at || Date.today
         moved_in_at  = placement.moved_in_at
@@ -53,16 +51,6 @@ module RefugeeCosts
 
         { cost: cost.amount, days: days }
       end
-    end
-
-    # TODO: implement
-    def expected_rate
-      '=(31*1350)'
-    end
-
-    # TODO: implement
-    def paid_amount
-      '=(31*1350)'
     end
   end
 end
