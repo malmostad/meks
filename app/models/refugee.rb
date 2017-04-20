@@ -1,7 +1,8 @@
 class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch
-  # include Economy
+  include RefugeeCosts
+  include RefugeeRates
 
   # TODO: implement
   attr_reader :expected_cost, :expected_rate, :paid_amount
@@ -97,54 +98,5 @@ class Refugee < ApplicationRecord
 
     # Get the event with the latest date
     dates.sort_by { |_k, v| v }.last
-  end
-
-  # TODO: implement
-  def home_costs(placements_from = '2016-01-01', placements_to = '2017-04-01')
-    formulas = placements.includes(home: :costs).map do |placement|
-      logger.debug ''
-      logger.debug "placement.home.name: #{placement.home.name}"
-      moved_out_at = placement.moved_out_at || Date.today
-      moved_in_at  = placement.moved_in_at
-
-      # Count days from the latest start date and the earliest end date
-      #   by comparing the placements range and the range for the report
-      count_from = [moved_in_at, placements_from.to_date].max_by(&:to_date)
-      count_to   = [moved_out_at, placements_to.to_date].min_by(&:to_date)
-
-      # logger.debug "moved_in_at: #{moved_in_at}, placements_from.to_date: #{placements_from.to_date}, count_from: #{count_from}"
-      # logger.debug "moved_out_at: #{moved_out_at}, placements_to.to_date: #{placements_to.to_date}, count_to #{count_to}"
-
-      # TODO: use the home cost that falls into the range. Not the first cost!
-      # Use 0 if no amount is added to the home within the range
-      placement.home.costs.map do |cost|
-        starts_at = [count_from, cost.start_date].max_by(&:to_date)
-        ends_at = [count_to, cost.end_date].min_by(&:to_date)
-
-        days = (ends_at - starts_at).to_i
-
-        logger.debug "starts_at: #{starts_at}"
-        logger.debug "ends_at: #{ends_at}"
-        logger.debug "cost.amount: #{cost.amount}"
-        logger.debug "days: #{days}"
-        next if days.zero? || days.negative?
-
-        "(#{cost.amount}*#{days})"
-      end
-    end
-
-    formulas.flatten!.reject!(&:nil?)
-
-    "=#{formulas.flatten.join('+')}"
-  end
-
-  # TODO: implement
-  def expected_rate
-    '=31*1350'
-  end
-
-  # TODO: implement
-  def paid_amount
-    '=31*1350'
   end
 end
