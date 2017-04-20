@@ -8,17 +8,18 @@ module RefugeeCosts
       end
       "=#{formulas.join('+')}"
     end
+  end
 
-    def total_cost(costs_and_days)
+  included do
+    def total_cost
+      costs_and_days = home_costs(starts: '1900-01-01', ends: '2100-01-01')
       cost = 0
       costs_and_days.each do |cd|
         cost += cd[:cost] * cd[:days]
       end
       cost
     end
-  end
 
-  included do
     # Calculate the refugees placements costs based on
     #  * the report range
     #  * the placement range
