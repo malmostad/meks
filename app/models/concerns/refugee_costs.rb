@@ -23,9 +23,9 @@ module RefugeeCosts
     #  * the report range
     #  * the placement range
     #  * each placement.home cost ranges
-    # Returns a string for spreadsheet formula
+    # Returns an array of hashes
     def home_costs(report_range = { starts: '1900-01-01', ends: '2100-01-01' })
-      placements.includes(home: :costs).map do |placement|
+      costs = placements.includes(home: :costs).map do |placement|
         moved_out_at = placement.moved_out_at || Date.today
         moved_in_at  = placement.moved_in_at
 
@@ -36,7 +36,8 @@ module RefugeeCosts
 
         # One home has many non-overlapping costs
         placement_costs(placement, count_from, count_to)
-      end.flatten!.reject!(&:nil?)
+      end
+      costs.flatten.reject!(&:nil?) || []
     end
 
     def placement_costs(placement, count_from, count_to)

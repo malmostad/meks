@@ -90,7 +90,7 @@ class Refugee < ApplicationRecord
         :temporary_permit_ends_at,
         :deregistered]
 
-    # Create a k: v hash from the array
+    # Create a key/value hash from the array
     Hash[dates.map! { |k| [k.to_s, send(k)] }]
 
     # Delete blanks

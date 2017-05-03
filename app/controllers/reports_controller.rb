@@ -50,7 +50,7 @@ class ReportsController < ApplicationController
     file_with_path = file_path("#{params[:id]}.xlsx")
 
     if File.exist? file_with_path
-      send_xlsx file_with_path, "#{report_type}_#{Time.now.to_formatted_s(:number)}.xlsx"
+      send_xlsx file_with_path, "#{report_name_prefix}_#{Time.now.to_formatted_s(:number)}.xlsx"
     else
       render :report_not_found
     end
@@ -59,7 +59,8 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.permit(:report_type,
+    params.permit(
+      :report_type,
       :homes_free_seats,
       :homes_owner_type,
       :placements_from,
@@ -79,8 +80,7 @@ class ReportsController < ApplicationController
   end
 
   def send_xlsx(file_with_path, base_name)
-    send_file file_with_path, type: :xlsx, disposition: 'attachment',
-      filename: base_name
+    send_file file_with_path, type: :xlsx, disposition: 'attachment', filename: base_name
   end
 
   def file_path(filename)
@@ -88,7 +88,7 @@ class ReportsController < ApplicationController
     File.join(Rails.root, 'reports', filename)
   end
 
-  def report_type
+  def report_name_prefix
     case params[:report_type]
     when 'economy'
       'Ekonomi'

@@ -1,4 +1,4 @@
-class ReportGenerator
+class Report
   class Style
     def initialize(axlsx)
       @axlsx = axlsx

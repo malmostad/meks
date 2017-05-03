@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GenerateReportJob, type: :job do
   let(:valid_attributes) {
-    { "homes_free_seats"=>"", "homes_owner_type"=>"", "report_type"=>"homes" }
+    { "homes_free_seats" => "", "homes_owner_type" => "", "report_type" => "homes" }
   }
 
   describe 'queue a report' do
