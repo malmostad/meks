@@ -74,12 +74,12 @@ RSpec.describe "Placements", type: :feature do
         homes = create_list(:home, 10)
         homes << create(:home, use_placement_specification: true)
 
-        placement = create(:placement, refugee: refugee, home: homes.last)
+        create(:placement, refugee: refugee, home: homes.last)
 
         visit "/refugees/#{refugee.id}"
         click_link("Redigera placeringen")
 
-        expect(page).to have_selector('.placement_specification', visible: true)
+        expect(page).to have_selector('.placement_specification', visible: false)
 
         page.execute_script("$('#placement_home_id').val(#{homes.last.id}).change()")
         expect(page).to have_selector('.placement_specification', visible: true)
