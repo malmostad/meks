@@ -91,13 +91,13 @@ class ReportsController < ApplicationController
   def generate_report_job(file_id)
     case params['report_type']
     when 'economy'
-      GenerateReportEconomyJob.perform_later(report_params.to_h, file_id)
+      GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
     when 'homes'
-      GenerateReportHomesJob.perform_later(report_params.to_h, file_id)
+      GenerateReportJob::Homes.perform_later(report_params.to_h, file_id)
     when 'placements'
-      GenerateReportPlacementsJob.perform_later(report_params.to_h, file_id)
+      GenerateReportJob::Placements.perform_later(report_params.to_h, file_id)
     when 'refugees'
-      GenerateReportRefugeesJob.perform_later(report_params.to_h, file_id)
+      GenerateReportJob::Refugees.perform_later(report_params.to_h, file_id)
     end
   end
 

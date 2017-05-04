@@ -1,8 +1,8 @@
 require 'report'
+require 'generate_report_job/economy'
+require 'generate_report_job/homes'
+require 'generate_report_job/placements'
+require 'generate_report_job/refugees'
 
-class GenerateReportJob < ApplicationJob
-  queue_as :default
-
-  def perform(params, file_id)
-  end
+class GenerateReportJob
 end
