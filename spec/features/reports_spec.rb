@@ -34,7 +34,7 @@ RSpec.describe "Reports", type: :feature do
       visit "/reports"
 
       expect(current_path).to eq reports_path
-      expect(page).to have_selector("h1", text: "Färdiggenererade rapporter")
+      expect(page).to have_selector("h1", text: "Generera rapporter")
     end
   end
 end
