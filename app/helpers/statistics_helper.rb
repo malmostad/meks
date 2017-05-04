@@ -20,11 +20,11 @@ module StatisticsHelper
   end
 
   def srf_women
-    srf_refuges.where(gender_id: 1) # 1 is hardcoded women
+    srf_refuges.where(gender_id: 1) # 1 is hard wired women
   end
 
   def srf_men
-    srf_refuges.where(gender_id: 2) # 2 is hardcoded men
+    srf_refuges.where(gender_id: 2) # 2 is hard wired men
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
