@@ -58,7 +58,7 @@ class Report
     def add_data_rows
       # xlsx data rows
       # records can be and active record enumerator or an array of records
-      @records.send(@records.is_a?(Array) ? 'each' : 'find_each') do |record|
+      @records.find_each do |record|
         @workbook.record = record
         @sheet.add_row(
           @workbook.columns.map { |column| column[:query] },

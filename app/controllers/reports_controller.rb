@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
 
   def generate
     file_id = SecureRandom.hex
-    job = GenerateReportJob.perform_later(report_params.to_h, file_id)
+    job = generate_report_job(file_id)
     delayed_job_id = Delayed::Job.find(job.provider_job_id).id
 
     redirect_to reports_status_path(delayed_job_id, file_id, params[:report_type])
@@ -86,6 +86,19 @@ class ReportsController < ApplicationController
   def file_path(filename)
     filename = sanitize_filename(filename)
     File.join(Rails.root, 'reports', filename)
+  end
+
+  def generate_report_job(file_id)
+    case params['report_type']
+    when 'economy'
+      GenerateReportEconomyJob.perform_later(report_params.to_h, file_id)
+    when 'homes'
+      GenerateReportHomesJob.perform_later(report_params.to_h, file_id)
+    when 'placements'
+      GenerateReportPlacementsJob.perform_later(report_params.to_h, file_id)
+    when 'refugees'
+      GenerateReportRefugeesJob.perform_later(report_params.to_h, file_id)
+    end
   end
 
   def report_name_prefix
