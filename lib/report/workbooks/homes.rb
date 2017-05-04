@@ -56,7 +56,7 @@ class Report::Workbooks
         },
         {
           heading: 'Aktuella placeringar',
-          query: @record.placements.select { |p| p.moved_out_at.nil?  }.size,
+          query: @record.placements.select { |p| p.moved_out_at.nil? }.size,
           type: :integer
         },
         {

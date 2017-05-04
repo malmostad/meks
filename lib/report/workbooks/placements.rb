@@ -172,7 +172,7 @@ class Report::Workbooks
         },
         {
           heading: 'Asylstatus',
-          query: Report.format_asylum_status(record.refugee.asylum_status)
+          query: Report.format_asylum_status(@record.refugee.asylum_status)
         },
         {
           heading: 'refugee.municipality_placement_per_agreement_at',

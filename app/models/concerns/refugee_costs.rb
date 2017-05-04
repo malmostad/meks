@@ -4,7 +4,7 @@ module RefugeeCosts
   module ClassMethods
     def spreadsheet_formula(costs_and_days)
       formulas = costs_and_days.map do |cd|
-        "(#{cd[:cost]}*#{cd[:days]})"
+        "(#{cd[:days]}*#{cd[:cost]})"
       end
       "=#{formulas.join('+')}"
     end
@@ -24,15 +24,15 @@ module RefugeeCosts
     #  * the placement range
     #  * each placement.home cost ranges
     # Returns an array of hashes
-    def home_costs(report_range = { starts: '1900-01-01', ends: '2100-01-01' })
+    def home_costs(report_range = { from: '1900-01-01', to: '2100-01-01' }) # Introducing the 2100 problem!
       costs = placements.includes(home: :costs).map do |placement|
         moved_out_at = placement.moved_out_at || Date.today
         moved_in_at  = placement.moved_in_at
 
         # Count days from the latest start date and the earliest end date
         #   by comparing the placements range and the range for the report
-        count_from = [moved_in_at, report_range[:starts].to_date].max_by(&:to_date)
-        count_to   = [moved_out_at, report_range[:ends].to_date].min_by(&:to_date)
+        count_from = [moved_in_at, report_range[:from].to_date].max_by(&:to_date)
+        count_to   = [moved_out_at, report_range[:to].to_date].min_by(&:to_date)
 
         # One home has many non-overlapping costs
         placement_costs(placement, count_from, count_to)

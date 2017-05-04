@@ -2,8 +2,10 @@ class Report::Workbooks
   class Economy
     attr_accessor :record
 
-    def initialize
+    def initialize(range = {})
       @record = Refugee.new
+      @range_from = range[:from]
+      @range_to = range[:to]
     end
 
     # The strucure is built to make it easy to re-arrange columns
@@ -62,7 +64,7 @@ class Report::Workbooks
         },
         {
           heading: 'Boendeformer',
-          query: record.current_placements.map { |cp| cp.home.type_of_housings.map(&:name) }.join(', ')
+          query: @record.current_placements.map { |cp| cp.home.type_of_housings.map(&:name) }.join(', ')
         },
         {
           heading: 'refugee.municipality',
@@ -101,7 +103,7 @@ class Report::Workbooks
         },
         {
           heading: 'Budgeterad kostnad',
-          query: 'record.home_costs(params[:placements_from], params[:placements_to])'
+          query: Refugee.spreadsheet_formula(@record.home_costs(from: @range_from, to: @range_to))
         },
         {
           heading: 'Förväntad schablon',

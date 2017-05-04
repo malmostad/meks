@@ -1,9 +1,11 @@
 class Report
   class Generator
-    def initialize(workbook, records, sheet_name = {})
+    def initialize(workbook, records, range = {})
       @workbook = workbook
       @records = records
-      @sheet_name = format_sheet_name(sheet_name)
+      @range_from = range[:from]
+      @range_to = range[:to]
+      @sheet_name = format_sheet_name(range)
 
       @axlsx = Axlsx::Package.new
       @style = Style.new(@axlsx)
