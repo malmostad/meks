@@ -24,8 +24,7 @@ module RefugeeCosts
     #  * the placement range
     #  * each placement.home cost ranges
     # Returns an array of hashes
-    # Introducing the 2100 problem!
-    def home_costs(report_range = { from: '1900-01-01', to: '2100-01-01' })
+    def home_costs(report_range = { from: '1900-01-01', to: Date.today })
       costs = placements.includes(home: :costs).map do |placement|
         moved_out_at = placement.moved_out_at || Date.today
         moved_in_at  = placement.moved_in_at

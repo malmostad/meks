@@ -64,12 +64,6 @@ class Placement < ApplicationRecord
 
   def placement_time
     return 0 if moved_in_at.blank?
-
-    if moved_out_at.present?
-      diff = moved_out_at - moved_in_at
-    else
-      diff = DateTime.now.to_date - moved_in_at
-    end
-    diff.to_i
+    moved_out_at.present? ? (moved_out_at - moved_in_at).to_i : (Date.today - moved_in_at).to_i
   end
 end

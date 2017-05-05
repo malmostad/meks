@@ -6,7 +6,7 @@ module RefugeeRates
 
   included do
     # TODO: implement
-    def expected_rate(report_range = { from: '1900-01-01', to: '2100-01-01' }) # Introducing the 2100 problem!
+    def expected_rate(report_range = { from: '1900-01-01', to: Date.today })
       'todo'
     end
 
