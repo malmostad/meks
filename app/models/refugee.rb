@@ -4,9 +4,6 @@ class Refugee < ApplicationRecord
   include RefugeeCosts
   include RefugeeRates
 
-  # TODO: implement
-  attr_reader :expected_cost, :expected_rate, :paid_amount
-
   belongs_to :gender
   belongs_to :municipality
   belongs_to :deregistered_reason
