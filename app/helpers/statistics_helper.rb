@@ -3,7 +3,7 @@ module StatisticsHelper
   # Samtliga barn med inskrivningsdatum, med eller utan datum för anvisningskommun ifyllt.
   # Anvisningskommun måste vara annan än Malmö SRF.
   # Datum för avslut får inte vara ifyllt.
-  def registered_refuges
+  def registered_refugees
     Refugee.where.not(registered: nil)
       .where(deregistered: nil)
       .where(temporary_permit_starts_at: nil)
@@ -14,23 +14,23 @@ module StatisticsHelper
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # men som saknar datum för avslut
-  def srf_refuges
+  def srf_refugees
     Refugee.where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
       .where(deregistered: nil)
   end
 
   def srf_women
-    srf_refuges.where(gender_id: 1) # 1 is hard wired women
+    srf_refugees.where(gender_id: 1) # 1 is hard wired women
   end
 
   def srf_men
-    srf_refuges.where(gender_id: 2) # 2 is hard wired men
+    srf_refugees.where(gender_id: 2) # 2 is hard wired men
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # men som saknar datum för avslut
   def top_countries
-    srf_refuges.joins(:countries).select('countries.name')
+    srf_refugees.joins(:countries).select('countries.name')
       .group('countries.name')
       .count('countries.name')
       .sort_by{ |key, value| value }.reject { |k, v| v <= 10  }.reverse[0...3].map(&:first).join(', ')
@@ -40,7 +40,7 @@ module StatisticsHelper
   # men som saknar datum för PUT, TUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_waiting_for_verdict
-    srf_refuges.where(temporary_permit_starts_at: nil)
+    srf_refugees.where(temporary_permit_starts_at: nil)
       .where(residence_permit_at: nil)
       .where(citizenship_at: nil)
   end
@@ -49,7 +49,7 @@ module StatisticsHelper
   # men som saknar datum för TUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_residence_permit
-    srf_refuges.where(temporary_permit_starts_at: nil)
+    srf_refugees.where(temporary_permit_starts_at: nil)
       .where(citizenship_at: nil)
   end
 
@@ -57,7 +57,7 @@ module StatisticsHelper
   #  men som saknar datum för PUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_temporary_permit
-    srf_refuges.where(residence_permit_at: nil)
+    srf_refugees.where(residence_permit_at: nil)
       .where(citizenship_at: nil)
   end
 
@@ -65,7 +65,7 @@ module StatisticsHelper
   # och som har datum för medborgarskap ifyllt.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_citizenship
-    srf_refuges.where.not(citizenship_at: nil)
+    srf_refugees.where.not(citizenship_at: nil)
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
