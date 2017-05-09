@@ -4,7 +4,8 @@ module StatisticsHelper
   # Anvisningskommun måste vara annan än Malmö SRF.
   # Datum för avslut får inte vara ifyllt.
   def registered_refugees
-    Refugee.where.not(registered: nil)
+    Refugee
+      .where.not(registered: nil)
       .where(deregistered: nil)
       .where(temporary_permit_starts_at: nil)
       .where(residence_permit_at: nil)
@@ -15,7 +16,8 @@ module StatisticsHelper
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # men som saknar datum för avslut
   def srf_refugees
-    Refugee.where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
+    Refugee
+      .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
       .where(deregistered: nil)
   end
 
@@ -30,7 +32,8 @@ module StatisticsHelper
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # men som saknar datum för avslut
   def top_countries
-    srf_refugees.joins(:countries).select('countries.name')
+    srf_refugees
+      .joins(:countries).select('countries.name')
       .group('countries.name')
       .count('countries.name')
       .sort_by{ |key, value| value }.reject { |k, v| v <= 10  }.reverse[0...3].map(&:first).join(', ')
@@ -40,7 +43,8 @@ module StatisticsHelper
   # men som saknar datum för PUT, TUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_waiting_for_verdict
-    srf_refugees.where(temporary_permit_starts_at: nil)
+    srf_refugees
+      .where(temporary_permit_starts_at: nil)
       .where(residence_permit_at: nil)
       .where(citizenship_at: nil)
   end
@@ -49,15 +53,19 @@ module StatisticsHelper
   # men som saknar datum för TUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_residence_permit
-    srf_refugees.where(temporary_permit_starts_at: nil)
+    srf_refugees
+      .where(temporary_permit_starts_at: nil)
+      .where.not(residence_permit_at: nil)
       .where(citizenship_at: nil)
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
-  #  men som saknar datum för PUT eller medborgarskap.
+  #   men som saknar datum för PUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_temporary_permit
-    srf_refugees.where(residence_permit_at: nil)
+    srf_refugees
+      .where.not(temporary_permit_starts_at: nil)
+      .where(residence_permit_at: nil)
       .where(citizenship_at: nil)
   end
 
@@ -70,12 +78,12 @@ module StatisticsHelper
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # och som har aktuell placering på boende ägarform "Kommunala SRF" och "Privata SRF".
-  # Datum för avslut får inte vara ifyllt.
   def refugees_on_hvb
-    Placement.current_placements
+    Placement
+      .current_placements
       .includes(:refugee, home: :owner_type)
-      .where(homes: { owner_type: 1  })
-      .where(refugees: { municipality_id: 135, deregistered: nil }) # 135 is hard wired to "Malmö kommun, Srf"
+      .where(homes: { owner_type: [1, 2]  })
+      .where(refugees: { municipality_id: 135 }) # 135 is hard wired to "Malmö kommun, Srf"
       .select(:refugee_id).distinct.count
   end
 
@@ -125,9 +133,10 @@ module StatisticsHelper
   private
 
   def refugees_on_type_of_housing(id)
-    Placement.current_placements
+    Placement
+      .current_placements
       .includes(:refugee, home: :type_of_housings)
-      .where(home: { type_of_housings: { id: id }}) # 4 is hard wired to type_of_housing with "boendeform Utsluss".
+      .where(home: { type_of_housings: { id: id } }) # 4 is hard wired to type_of_housing with "boendeform Utsluss".
       .where(refugees: { municipality_id: 135, deregistered: nil }) # 135 is hard wired to "Malmö kommun, Srf"
       .select(:refugee_id).distinct.count
   end
