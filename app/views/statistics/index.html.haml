@@ -4,7 +4,7 @@
     %h1.box-title= h1
     .box-content.basic
       %h2.group-title= 'Aktuella ärenden'
-      %p.first= "#{registered_refugees.count} barn är i ankomst i väntan på anvisning"
+      %p= "#{registered_refugees.count} barn är i ankomst i väntan på anvisning"
       %p
         = "Malmö SRF ansvarar för #{srf_refugees.count} barn,"
         = "varav #{srf_men.count} är pojkar och #{srf_women.count} är flickor"
