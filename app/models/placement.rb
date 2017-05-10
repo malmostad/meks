@@ -62,6 +62,21 @@ class Placement < ApplicationRecord
     where('moved_out_at = ? or moved_in_at >= ?', nil, Date.today.beginning_of_quarter)
   end
 
+  def cost_sum
+    costs = []
+    if home.use_placement_cost
+      costs << refugee.placement_cost(self)
+    else
+      costs << refugee.placement_home_costs(self)
+    end
+
+    cost = 0
+    costs.flatten.each do |c|
+      cost += c[:cost] * c[:days]
+    end
+    cost
+  end
+
   def placement_time
     return 0 if moved_in_at.blank?
     moved_out_at.present? ? (moved_out_at - moved_in_at).to_i : (Date.today - moved_in_at).to_i
