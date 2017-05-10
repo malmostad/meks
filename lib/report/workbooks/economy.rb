@@ -34,7 +34,7 @@ class Report::Workbooks
         },
         {
           heading: 'Lagrum',
-          query: @record.current_placements.map(&:legal_code).map(&:name).join(', ')
+          query: @record.current_placements.map(&:legal_code).map { |lc| lc.try(:name) }.reject(&:nil?).join(', ')
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
