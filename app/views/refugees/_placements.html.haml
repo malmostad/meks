@@ -1,7 +1,7 @@
 .placements
   %h2.group-title Boendeplaceringar
   .placement
-    = show_attribute('Total boendetid', "#{@refugee.total_placement_time} dagar")
+    = show_attribute('Total boendetid', "#{number_with_delimiter(@refugee.total_placement_time, delimiter: ' ')} dagar")
 
   - @refugee.placements.each do |placement|
     .placement

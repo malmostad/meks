@@ -103,7 +103,7 @@ class Report::Workbooks
         },
         {
           heading: 'Budgeterad kostnad',
-          query: Refugee.spreadsheet_formula(@record.home_costs(from: @range_from, to: @range_to))
+          query: Report::Workbooks.spreadsheet_formula(@record.placements_costs_and_days(from: @range_from, to: @range_to))
         },
         {
           heading: 'Förväntad schablon',
