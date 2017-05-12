@@ -45,4 +45,12 @@ class Home < ApplicationRecord
   def total_placement_time
     placements.map(&:placement_time).inject(&:+)
   end
+
+  def current_cost?
+    return true if use_placement_cost?
+    costs.each do |cost|
+      return true if cost.end_date >= Date.today
+    end
+    false
+  end
 end

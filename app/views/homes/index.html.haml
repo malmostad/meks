@@ -16,6 +16,7 @@
         %th.num Garantiplatser
         %th.num Lediga platser
         %th.num Placeringar
+        %th Har kostnad
         %th Aktivt
 
     %tbody
@@ -33,9 +34,10 @@
           %td.num
             - if @current_placements.present?
               = @current_placements[home.id].to_i
+          %td= home.current_cost? ? 'Ja' : 'Nej'
           %td= home.active? ? 'Ja' : 'Nej'
 
       - if can? :manage, Refugee
         %tr
-          %td{ colspan: 9 }
+          %td{ colspan: 10 }
             .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"
