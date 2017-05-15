@@ -3,14 +3,13 @@ module StatisticsHelper
   # Samtliga barn med inskrivningsdatum, med eller utan datum för anvisningskommun ifyllt.
   # Anvisningskommun måste vara annan än Malmö SRF.
   # Datum för avslut får inte vara ifyllt.
+  # 135 is hard wired to "Malmö kommun, Srf"
   def registered_refugees
     Refugee
       .where.not(registered: nil)
       .where(deregistered: nil)
-      .where(temporary_permit_starts_at: nil)
-      .where(residence_permit_at: nil)
-      .where(sof_placement: false)
-      .where('municipality_id != ? or municipality_id = ?', 135, nil) # 135 is hard wired to "Malmö kommun, Srf"
+      .where('municipality_id != ? or municipality_id is ?', 135, nil)
+      .count
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
@@ -32,14 +31,6 @@ module StatisticsHelper
       end.reject(&:nil?)
   end
 
-  def srf_women
-    srf_refugees.where(gender_id: 1) # 1 is hard wired women
-  end
-
-  def srf_men
-    srf_refugees.where(gender_id: 2) # 2 is hard wired men
-  end
-
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # men som saknar datum för avslut
   def top_countries
@@ -58,6 +49,7 @@ module StatisticsHelper
       .where(temporary_permit_starts_at: nil)
       .where(residence_permit_at: nil)
       .where(citizenship_at: nil)
+      .count
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
@@ -68,6 +60,7 @@ module StatisticsHelper
       .where(temporary_permit_starts_at: nil)
       .where.not(residence_permit_at: nil)
       .where(citizenship_at: nil)
+      .count
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
@@ -78,13 +71,14 @@ module StatisticsHelper
       .where.not(temporary_permit_starts_at: nil)
       .where(residence_permit_at: nil)
       .where(citizenship_at: nil)
+      .count
   end
 
   # Samtliga barn som Malmö SRF angivet som anvisningskommun
   # och som har datum för medborgarskap ifyllt.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_citizenship
-    srf_refugees.where.not(citizenship_at: nil)
+    srf_refugees.where.not(citizenship_at: nil).count
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
@@ -129,12 +123,16 @@ module StatisticsHelper
       .includes(:municipality)
       .where("municipalities.name like ?", "malmö%")
       .where.not(municipalities: { name: 'Malmö kommun, Srf' })
+      .count
   end
 
   # Samtliga aktiva boenden med boendeform "Institution" samt "Utsluss".
   # Antalet boendeplatser räknas endast utifrån garantiplatser (ej inkluera rörliga platser).
   def homes_of_types
-    Home.includes(:type_of_housings).where(active: true).where(type_of_housings: { id: [2, 4] })
+    Home
+      .includes(:type_of_housings)
+      .where(active: true)
+      .where(type_of_housings: { id: [2, 4] })
   end
 
   def guaranteed_seats_on_homes_of_types
