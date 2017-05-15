@@ -10,7 +10,7 @@ module StatisticsHelper
       .where(temporary_permit_starts_at: nil)
       .where(residence_permit_at: nil)
       .where(sof_placement: false)
-      .where.not(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
+      .where('municipality_id != ? or municipality_id = ?', 135, nil) # 135 is hard wired to "Malmö kommun, Srf"
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
@@ -19,6 +19,17 @@ module StatisticsHelper
     Refugee
       .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
       .where(deregistered: nil)
+  end
+
+  def srf_genders
+    return [] if srf_refugees.blank?
+
+    srf_refugees
+      .group(:gender)
+      .count.map do |key, value|
+        next if key.blank?
+        "#{value} är #{key.name.downcase}"
+      end.reject(&:nil?)
   end
 
   def srf_women

@@ -7,7 +7,7 @@
       %p= "#{registered_refugees.count} barn är i ankomst i väntan på anvisning"
       %p
         = "Malmö SRF ansvarar för #{srf_refugees.count} barn,"
-        = "varav #{srf_men.count} är pojkar och #{srf_women.count} är flickor"
+        = "varav #{srf_genders.join(', ')}"
       %p= "Vanligaste nationaliteterna är #{top_countries}"
       %p= "#{refugees_waiting_for_verdict.count} barn är asylsökande och väntar på beslut i asylärendet"
       %p= "#{refugees_with_residence_permit.count} barn har PUT"
