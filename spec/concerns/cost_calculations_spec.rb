@@ -6,6 +6,8 @@ RSpec.describe 'Cost calculation' do
   let(:refugee) { create(:refugee) }
   let(:cost) { create(:cost, home: home, start_date: Date.today - 30, end_date: Date.today, amount: amount) }
   let(:placement) { create(:placement, moved_in_at: Date.today - 60, refugee: refugee, home: home) }
+  let(:home_without_cost) { create(:home, use_placement_cost: true) }
+  let(:placement_with_cost) { create(:placement, cost: amount, moved_in_at: Date.today - 60, refugee: refugee, home: home_without_cost) }
 
   before(:each) do
     home.reload
@@ -44,18 +46,18 @@ RSpec.describe 'Cost calculation' do
     it "should get the first placements days for a refugee" do
       expect(refugee.placement_home_costs(placement).first[:days]).to eq 31
     end
+
+    it "should not get the a cost directly from a placement" do
+      expect(refugee.placement_cost(placement)[:cost]).to eq 0
+    end
   end
 
   describe 'Cost calculations for a home with use_placement_cost' do
-    let(:amount) { 4321 }
-    let(:home_without_cost) { create(:home, use_placement_cost: true) }
-    let(:placement_with_cost) { create(:placement, cost: amount, moved_in_at: Date.today - 60, refugee: refugee, home: home_without_cost) }
-
-    it "should not get the a cost for a home with its own costs" do
+    it "should not get the a cost for a home" do
       expect(refugee.placement_cost(placement)[:cost]).to eq 0
     end
 
-    it "should not get the a cost for a home with its own costs" do
+    it "should get the a cost for a placement" do
       expect(refugee.placement_cost(placement_with_cost)[:cost]).to eq amount
     end
 
