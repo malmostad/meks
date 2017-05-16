@@ -61,8 +61,10 @@ module RefugeeCosts
       end
     end
 
+    private
+
     def default_range
-      { from: '1900-01-01', to: Date.today }
+      { from: Date.new(0), to: Date.today }
     end
   end
 end
