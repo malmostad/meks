@@ -25,4 +25,11 @@ class RateCategory < ApplicationRecord
       errors.add(:from_age, '"Från och med ålder" måste infalla före "till-ålder"')
     end
   end
+
+  def current_rate?
+    rates.each do |rate|
+      return true if rate.end_date >= Date.today
+    end
+    false
+  end
 end
