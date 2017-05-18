@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405133802) do
+ActiveRecord::Schema.define(version: 20170518152931) do
 
-  create_table "costs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+  create_table "costs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
     t.integer  "amount"
     t.date     "start_date"
     t.date     "end_date"
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 20170405133802) do
     t.index ["refugee_id"], name: "index_languages_refugees_on_refugee_id", using: :btree
   end
 
-  create_table "legal_codes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+  create_table "legal_codes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -167,6 +167,28 @@ ActiveRecord::Schema.define(version: 20170405133802) do
     t.index ["name"], name: "index_owner_types_on_name", unique: true, using: :btree
   end
 
+  create_table "payment_imports", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+    t.integer  "user_id"
+    t.datetime "imported_at"
+    t.integer  "number_of_records"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["user_id"], name: "index_payment_imports_on_user_id", using: :btree
+  end
+
+  create_table "payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+    t.integer  "refugee_id"
+    t.string   "diarie"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.float    "amount",            limit: 24
+    t.integer  "payment_import_id"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["payment_import_id"], name: "index_payments_on_payment_import_id", using: :btree
+    t.index ["refugee_id"], name: "index_payments_on_refugee_id", using: :btree
+  end
+
   create_table "placements", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer  "home_id"
     t.integer  "refugee_id"
@@ -184,7 +206,7 @@ ActiveRecord::Schema.define(version: 20170405133802) do
     t.index ["refugee_id"], name: "index_placements_on_refugee_id", using: :btree
   end
 
-  create_table "rate_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+  create_table "rate_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
     t.string   "name"
     t.integer  "from_age"
     t.integer  "to_age"
@@ -195,7 +217,7 @@ ActiveRecord::Schema.define(version: 20170405133802) do
     t.index ["legal_code_id"], name: "index_rate_categories_on_legal_code_id", using: :btree
   end
 
-  create_table "rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
+  create_table "rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
     t.integer  "amount"
     t.date     "start_date"
     t.date     "end_date"
@@ -293,6 +315,9 @@ ActiveRecord::Schema.define(version: 20170405133802) do
 
   add_foreign_key "costs", "homes"
   add_foreign_key "homes", "owner_types"
+  add_foreign_key "payment_imports", "users"
+  add_foreign_key "payments", "payment_imports"
+  add_foreign_key "payments", "refugees"
   add_foreign_key "placements", "legal_codes"
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "rate_categories", "legal_codes"
