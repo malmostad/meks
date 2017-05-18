@@ -8,9 +8,9 @@ module StatisticsHelper
   #   - ska inte ha medborgarskap
   #   - anvisningskommun ska inte vara angiven
   #   - anvisningdatum ska inte vara angivet
-
-  #   - anvisningsdatum ska vara senare än inskriviningsdatum
-  #   - anvisningsdatum ska ligga i framtiden
+  #
+  #   - anvisningsdatum ska vara senare än inskriviningsdatum (FIXME: excluded by previous?)
+  #   - anvisningsdatum ska ligga i framtiden (FIXME: see abouve)
   def refugees_in_arrival
     Refugee
       .where(deregistered: nil)

@@ -96,4 +96,26 @@ class Refugee < ApplicationRecord
     # Get the event with the latest date
     dates.sort_by { |_k, v| v }.last
   end
+
+  # Comment in Swedish are from project specifications
+  # * Måstevillkor för att vara ankomsbarn, alla ska uppfyllas:
+  #   - ska inte ha status avslutad
+  #   - ska inte ha SoF
+  #   - ska inte ha PUT
+  #   - ska inte ha TUT
+  #   - ska inte ha medborgarskap
+  #   - anvisningskommun ska inte vara angiven
+  #   - anvisningdatum ska inte vara angivet
+
+  #   - anvisningsdatum ska vara senare än inskriviningsdatum
+  #   - anvisningsdatum ska ligga i framtiden
+  def self.in_arrival
+    where(deregistered: nil)
+      .where(sof_placement: false)
+      .where(residence_permit_at: nil)
+      .where(temporary_permit_starts_at: nil)
+      .where(citizenship_at: nil)
+      .where(municipality: nil)
+      .where(municipality_placement_migrationsverket_at: nil)
+  end
 end
