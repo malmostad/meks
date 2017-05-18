@@ -4,7 +4,7 @@
     %h1.box-title= h1
     .box-content.basic
       %h2.group-title= 'Aktuella ärenden'
-      %p= "#{registered_refugees} barn är i ankomst i väntan på anvisning"
+      %p= "#{refugees_in_arrival} barn är i ankomst i väntan på anvisning"
       %p
         = "Malmö SRF ansvarar för #{srf_refugees.count} barn,"
         = "varav #{srf_genders.join(', ')}"
@@ -15,10 +15,10 @@
       %p= "#{refugees_with_citizenship} barn har erhållit svenskt medborgarskap"
 
       %h2.group-title Placeringar och boenden
-      %p= "#{refugees_on_hvb} barn är placerade på kommunala och upphandlade boenden"
+      %p= "#{refugees_on_hvb} barn är placerade på boendeformen Institution"
       %p= "#{externaly_placed_refugees} barn är externt placerade"
       %p= "#{refugees_on_emergency_home} barn är placerade i jourhem"
       %p= "#{refugees_on_family_home} barn är placerade i familjehem"
       %p= "#{refugees_on_outward_home} barn är placerade på utslussboende"
       %p= "#{refugees_in_malmo_sof_with_placement} barn tillhörande Malmös stadsområden är placerade på SRF:s boenden"
-      %p= "Det finns #{homes_of_types.count} boenden med #{guaranteed_seats_on_homes_of_types} boendeplatser."
+      %p= "Det finns #{homes_of_types} boenden med #{guaranteed_seats} boendeplatser."

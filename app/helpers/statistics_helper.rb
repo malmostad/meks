@@ -1,14 +1,25 @@
 # Comments in Swedish are from project specifications
 module StatisticsHelper
-  # Samtliga barn med inskrivningsdatum, med eller utan datum för anvisningskommun ifyllt.
-  # Anvisningskommun måste vara annan än Malmö SRF.
-  # Datum för avslut får inte vara ifyllt.
-  # 135 is hard wired to "Malmö kommun, Srf"
-  def registered_refugees
+  # * Måstevillkor för att vara ankomsbarn, alla ska uppfyllas:
+  #   - ska inte ha status avslutad
+  #   - ska inte ha SoF
+  #   - ska inte ha PUT
+  #   - ska inte ha TUT
+  #   - ska inte ha medborgarskap
+  #   - anvisningskommun ska inte vara angiven
+  #   - anvisningdatum ska inte vara angivet
+
+  #   - anvisningsdatum ska vara senare än inskriviningsdatum
+  #   - anvisningsdatum ska ligga i framtiden
+  def refugees_in_arrival
     Refugee
-      .where.not(registered: nil)
       .where(deregistered: nil)
-      .where('municipality_id != ? or municipality_id is ?', 135, nil)
+      .where(sof_placement: false)
+      .where(residence_permit_at: nil)
+      .where(temporary_permit_starts_at: nil)
+      .where(citizenship_at: nil)
+      .where(municipality: nil)
+      .where(municipality_placement_migrationsverket_at: nil)
       .count
   end
 
@@ -82,13 +93,13 @@ module StatisticsHelper
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
-  # och som har aktuell placering på boende ägarform "Kommunala SRF" och "Privata SRF".
+  # och som har aktuell placering på boendeform somm heter Institution.
   def refugees_on_hvb
     Placement
       .current_placements
-      .includes(:refugee, home: :owner_type)
-      .where(homes: { owner_type: [1, 2]  })
-      .where(refugees: { municipality_id: 135 }) # 135 is hard wired to "Malmö kommun, Srf"
+      .includes(:refugee, home: :type_of_housings)
+      .where(refugees: { municipality_id: 135 })
+      .where(home: { type_of_housings: { name: 'Institution' } })
       .select(:refugee_id).distinct.count
   end
 
@@ -129,14 +140,15 @@ module StatisticsHelper
   # Samtliga aktiva boenden med boendeform "Institution" samt "Utsluss".
   # Antalet boendeplatser räknas endast utifrån garantiplatser (ej inkluera rörliga platser).
   def homes_of_types
-    Home
-      .includes(:type_of_housings)
-      .where(active: true)
-      .where(type_of_housings: { id: [2, 4] })
+    # Home
+    #   .includes(:type_of_housings)
+    #   .where(active: true)
+    #   .where(type_of_housings: { id: [2, 4] })
+    '[TODO]'
   end
 
-  def guaranteed_seats_on_homes_of_types
-    homes_of_types.sum(:guaranteed_seats)
+  def guaranteed_seats
+    Home.where(active: true).sum(:guaranteed_seats)
   end
 
   private
