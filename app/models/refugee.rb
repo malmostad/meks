@@ -9,6 +9,7 @@ class Refugee < ApplicationRecord
   belongs_to :deregistered_reason
 
   has_many :placements, dependent: :destroy
+  has_many :payments
 
   has_many :current_placements, -> { where(moved_out_at: nil).where.not(moved_in_at: nil) },
     class_name: 'Placement'
