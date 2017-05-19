@@ -7,7 +7,7 @@ class Rate < ApplicationRecord
   validates :rate_category, :start_date, :end_date, presence: true
   validates :amount, presence: true, numericality: true
   validate do
-     date_format(:amount)
-     date_range(:amount, start_date, end_date)
+    date_format(:amount)
+    date_range(:amount, start_date, end_date)
   end
 end
