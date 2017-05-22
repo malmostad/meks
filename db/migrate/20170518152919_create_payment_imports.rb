@@ -3,8 +3,10 @@ class CreatePaymentImports < ActiveRecord::Migration[5.0]
     create_table :payment_imports do |t|
       t.references :user, index: true, foreign_key: true
       t.datetime :imported_at
-      t.integer :number_of_records
-
+      t.text :warnings
+      t.string :content_type
+      t.string :original_filename
+      t.binary :raw, limit: 15.megabyte
       t.timestamps
     end
   end
