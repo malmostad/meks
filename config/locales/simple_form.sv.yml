@@ -101,6 +101,10 @@ sv:
         from_age: Från ålder
         to_age: Till och med ålder
 
+      payment_import:
+        <<: *defaults
+        file: Fil
+
     placeholders:
       home:
         name: Ange namnet på boendet

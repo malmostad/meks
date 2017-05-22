@@ -9,6 +9,12 @@ section.box.show .box-content {
     font-size: emize(14, 14);
     margin-bottom: .4em;
   }
+
+  .raw {
+    font-family: $monospace;
+    overflow-x: scroll;
+    white-space: pre;
+  }
 }
 
 abbr {

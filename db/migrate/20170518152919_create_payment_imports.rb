@@ -7,6 +7,7 @@ class CreatePaymentImports < ActiveRecord::Migration[5.0]
       t.string :content_type
       t.string :original_filename
       t.binary :raw, limit: 15.megabyte
+      t.text :raw, limit: 1.megabyte
       t.timestamps
     end
   end

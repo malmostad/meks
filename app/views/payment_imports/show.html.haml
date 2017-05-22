@@ -1,0 +1,24 @@
+- title 'Utbetalda schabloner'
+%section.box.show
+  %h1.box-title= h1
+  .box-content.basic.form-data
+    = form_for @payment_import, html: { class: 'basic' } do |f|
+
+      %h2.group-title Importerad fil
+      = show_attribute('Importerad av', @payment_import.user.name)
+      = show_attribute('Importerad', @payment_import.imported_at.to_s[0...20])
+      = show_attribute('Ursprungligt filnamn', @payment_import.original_filename)
+      = show_attribute('Filtyp', @payment_import.content_type)
+      = show_attribute('Antal utbetalningar', @payment_import.payments.count)
+
+      %h2.group-title Ursprungligt innehåll filen
+      %pre.raw= @payment_import.raw
+
+- if @payment_import.id.present? && can?(:destroy, PaymentImport)
+  %section.box.show.danger-zone
+    %h1.box-title Riskområde
+    .box-content.basic.form-data
+      %section.misc
+        %p= "Om du raderar importen kommer alla fält för utbetald schablon som skapats av importen att raderas permanent."
+        %p= "Detta går inte att ångra. Du kan efter detta ladda upp filen på nytt."
+        .delete= link_to "Radera permanent", @payment_import, data: { confirm: 'Är du säker på att du vill radera importen och utbetalda schabloner permanent?', method: :delete }, class: "btn btn-danger btn-default"
