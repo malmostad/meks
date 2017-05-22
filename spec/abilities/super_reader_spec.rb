@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe User, type: :ability do
   describe "with super_writer role" do
+    subject(:ability) { Ability.new(user) }
+
     let(:user) { build(:user, role: 'super_reader') }
     let(:refugee) { create(:refugee, name: 'bar') }
     let(:drafted_refugee) { create(:refugee, name: 'foo', draft: true) }
-    subject(:ability) { Ability.new(user) }
 
     it { should_not be_able_to(:manage, Country.new) }
     it { should_not be_able_to(:manage, Gender.new) }
@@ -20,6 +21,8 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:manage, TypeOfHousing.new) }
     it { should_not be_able_to(:manage, TypeOfRelationship.new) }
     it { should_not be_able_to(:manage, RateCategory.new) }
+    it { should_not be_able_to(:manage, PaymentImport.new) }
+    it { should_not be_able_to(:manage, Payment.new) }
     it { should_not be_able_to(:read, Country.new) }
     it { should_not be_able_to(:read, Gender.new) }
     it { should_not be_able_to(:read, Language.new) }
@@ -46,7 +49,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:edit, drafted_refugee) }
     it { should be_able_to(:update, drafted_refugee) }
     it { should be_able_to(:drafts, drafted_refugee) }
-    it { should be_able_to(:manage, build(:placement, refugee: drafted_refugee))}
+    it { should be_able_to(:manage, build(:placement, refugee: drafted_refugee)) }
     it { should be_able_to(:manage, build(:relationship, refugee_id: drafted_refugee.id)) }
   end
 end

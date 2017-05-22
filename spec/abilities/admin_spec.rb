@@ -2,8 +2,11 @@ require 'rails_helper'
 
 RSpec.describe User, type: :ability do
   describe "with admin role" do
-    let(:user) { build(:user, role: 'admin') }
     subject(:ability) { Ability.new(user) }
+
+    let(:user) { build(:user, role: 'admin') }
+    let(:payment_import) { create(:payment_import) }
+    let(:payment) { create(:payment) }
 
     it { should be_able_to(:manage, Refugee.new) }
     it { should be_able_to(:manage, Home.new) }
@@ -42,11 +45,21 @@ RSpec.describe User, type: :ability do
 
     it { should be_able_to(:generate, :reports) }
 
+    it { should be_able_to(:create, :payment_imports) }
+    it { should be_able_to(:read, :payment_imports) }
+    it { should be_able_to(:destroy, :payment_imports) }
+
     it { should be_able_to(:destroy, Refugee.new) }
 
     it { should_not be_able_to(:destroy, Home.new) }
     it { should_not be_able_to(:create, RateCategory.new) }
     it { should_not be_able_to(:destroy, RateCategory.new) }
-    it { should_not be_able_to(:managey, Rate.new) }
+    it { should_not be_able_to(:manage, Rate.new) }
+    it { should_not be_able_to(:edit, Rate.new) }
+
+    it { should_not be_able_to(:edit, payment_import) }
+    it { should_not be_able_to(:update, payment_import) }
+    it { should_not be_able_to(:edit, payment) }
+    it { should_not be_able_to(:update, payment) }
   end
 end
