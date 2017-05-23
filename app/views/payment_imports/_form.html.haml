@@ -1,9 +1,18 @@
 .box-content
   = simple_form_for @payment_import, html: { class: "basic" } do |f|
-    = f.error_notification class: "warning"
+    - if @payment_import.errors.any?
+      .warning
+        %p= 'Filen kunde inte sparas. Följande fel upptäcktes:'
+        %ul
+          - @payment_import.errors.full_messages.each do |msg|
+            %li= msg
+          - @payment_import.payments.each do |payment|
+            - payment.errors.full_messages.each do |msg|
+              %li= msg
 
     .help-block.file_instructions
-      = 'Exportera en fil från Excel och semikolon-separerad textfil med följande kolumnordning:'
+      = 'Välj ”Spara som...” i Excel och välj filformatet CSV med semikolon- eller tab-separerade fält.'
+      = 'Använd följande kolumnordning:'
       %ol
         %li Dossiernummer (måste matcha ett befintligt dossiernummer exakt)
         %li Period (exakt formaterat som '2018-10-01--2018-12-31')
@@ -13,4 +22,3 @@
     = f.input :file, as: :file
 
     = render 'application/submit', form: f, cancel_path: payment_imports_path
-§
