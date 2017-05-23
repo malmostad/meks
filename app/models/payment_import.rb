@@ -9,10 +9,8 @@ class PaymentImport < ApplicationRecord
 
   def parse(file, user)
     self.user = user
-    # Uploaded text file might be in some ascii format
-    raw_file = file.read.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
-    # Convert Windows line endings
-    self.raw = raw_file.gsub(/\r\n?/, "\n")
+    # Change encoding and replace line linefeeds.
+    self.raw = file.read.encode('UTF-8', universal_newline: true, invalid: :replace, undef: :replace, replace: '')
     self.content_type = file.content_type
     self.original_filename = file.original_filename
     self.imported_at = DateTime.now

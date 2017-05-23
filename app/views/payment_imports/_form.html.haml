@@ -11,13 +11,14 @@
               %li= msg
 
     .help-block.file_instructions
-      = 'Välj ”Spara som...” i Excel och välj filformatet CSV med semikolon- eller tab-separerade fält.'
-      = 'Använd följande kolumnordning:'
+      %p= 'Välj ”Spara som...” i Excel och välj filformatet CSV med semikolon- eller tab-separerade fält.'
+      %p= 'Använd inga kolumnrubriker och använd följande kolumnordning:'
       %ol
-        %li Dossiernummer (måste matcha ett befintligt dossiernummer exakt)
-        %li Period (exakt formaterat som '2018-10-01--2018-12-31')
-        %li Belopp
+        %li Dossiernummer, måste matcha ett befintligt dossiernummer exakt
+        %li Period, exakt formaterat som '2018-10-01--2018-12-31', dvs. med två bindestreck som avskiljare
+        %li Utbetalt belopp
         %li Diarienummer
+      %p= 'Övriga kolumner ignoreras.'
 
     = f.input :file, as: :file
 
