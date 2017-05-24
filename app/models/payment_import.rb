@@ -24,7 +24,7 @@ class PaymentImport < ApplicationRecord
       period_start, period_end = columns[1].split(/\s*--\s*/)
 
       payments << Payment.new(
-        refugee: Refugee.where(dossier_number: '123').first,
+        refugee: Refugee.where(dossier_number: columns[0]).first,
         period_start: period_start,
         period_end: period_end,
         amount_as_string: columns[2],

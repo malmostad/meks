@@ -111,7 +111,7 @@ class Report::Workbooks
         },
         {
           heading: 'Utbetald schablon',
-          query: @record.paid_amount
+          query: @record.total_payments
         },
         {
           heading: 'Ålder',

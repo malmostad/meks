@@ -53,5 +53,6 @@
       = render 'relateds'
 
       %h2.group-title Ekonomi
-      = show_attribute('Budgeterad dygnskostnad', "#{number_with_delimiter(@refugee.total_cost, delimiter: ' ')} kr")
-      = show_attribute('Förväntad schblonkonstnad', "todo")
+      = show_attribute('Budgeterad dygnskostnad', "#{number_to_currency(@refugee.total_cost, delimiter: ' ')}")
+      = show_attribute('Förväntad schablonkonstnad', "todo")
+      = show_attribute('Total utbetald schablon', "#{number_to_currency(@refugee.total_payments, delimiter: ' ')}")
