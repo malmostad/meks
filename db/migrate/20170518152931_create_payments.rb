@@ -5,7 +5,7 @@ class CreatePayments < ActiveRecord::Migration[5.0]
       t.string :diarie
       t.date :period_start
       t.date :period_end
-      t.float :amount
+      t.decimal :amount, precision: 8, scale: 2
       t.references :payment_import, index: true, foreign_key: true
 
       t.timestamps

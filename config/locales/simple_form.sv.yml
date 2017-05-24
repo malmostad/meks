@@ -101,9 +101,28 @@ sv:
         from_age: Från ålder
         to_age: Till och med ålder
 
-      payment_import:
+      payment_import: &payment_import
         <<: *defaults
+        user: Importerad av
+        imported_at: Importerad
         file: Fil
+        refugee: Barn
+        refugee_id: Barn
+        payments: Utbetalda schabloner
+        parse_errors: Tolkningsfel
+        original_filename: Ursprungligt filnamn
+        content_type: Filtyp
+
+      payment: &payment
+        <<: *payment_import
+        refugee_id: Barn
+        amount: Belopp
+        period_start: Startdatum
+        period_end: Slutdatum
+
+      payments:
+        <<: *payment
+        refugee_id: Barn
 
     placeholders:
       home:

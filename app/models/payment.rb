@@ -8,7 +8,7 @@ class Payment < ApplicationRecord
   validates :amount, presence: true, numericality: true
 
   before_validation do
-    # Convert Swedish float format to US
+    # Convert Swedish format to US
     self.amount = amount_as_string.tr(',', '.').to_f
   end
 end

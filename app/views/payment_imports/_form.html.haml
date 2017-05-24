@@ -2,13 +2,10 @@
   = simple_form_for @payment_import, html: { class: "basic" } do |f|
     - if @payment_import.errors.any?
       .warning
-        %p= 'Filen kunde inte sparas. Följande fel upptäcktes:'
+        %p= 'Utbetalningarna kunde inte sparas. Följande fel upptäcktes:'
         %ul
-          - @payment_import.errors.full_messages.each do |msg|
+          - @payment_import.errors.messages[:parse].each do |msg|
             %li= msg
-          - @payment_import.payments.each do |payment|
-            - payment.errors.full_messages.each do |msg|
-              %li= msg
 
     .help-block.file_instructions
       %p= 'Välj ”Spara som...” i Excel och välj filformatet CSV med semikolon- eller tab-separerade fält.'

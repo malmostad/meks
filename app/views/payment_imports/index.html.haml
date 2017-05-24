@@ -21,7 +21,3 @@
           %td= payment_import.payments.size
           %td= payment_import.original_filename
           %td= link_to 'Visa', payment_import_path(payment_import)
-
-      %tr
-        %td{ colspan: 5 }
-          .actions= link_to t('actions.new'), new_payment_import_path, class: "btn btn-primary"
