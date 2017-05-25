@@ -15,7 +15,7 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'should require a amount' do
-      expect(build(:payment, amount: nil)).not_to be_valid
+      expect(build(:payment, amount_as_string: nil)).not_to be_valid
     end
 
     it 'period_start should be a Date' do

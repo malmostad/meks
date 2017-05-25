@@ -9,6 +9,6 @@ class Payment < ApplicationRecord
 
   before_validation do
     # Convert Swedish format to US
-    self.amount = amount_as_string.tr(',', '.').to_f
+    self.amount = amount_as_string.tr(',', '.').to_f if amount_as_string
   end
 end

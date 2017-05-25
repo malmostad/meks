@@ -15,7 +15,7 @@ RSpec.describe PaymentImport, type: :model do
     end
 
     it 'should have a imported_at' do
-      expect(build(:payment_import, imported_at: nil)).not_to be_valid
+      expect(build(:payment_import, user: nil)).not_to be_valid
     end
 
     it 'imported_at should be a Time' do

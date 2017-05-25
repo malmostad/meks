@@ -80,7 +80,6 @@ class PaymentImport < ApplicationRecord
     end
   end
 
-  # Set parse_errors
   def pre_validation_errors
     number_of_errors = @parse_errors.try(:size) || 0
 
@@ -91,6 +90,7 @@ class PaymentImport < ApplicationRecord
 
     errors[:parse] << @parse_errors
     errors[:parse].flatten!
+    errors[:parse].reject!(&:nil?)
   end
 
   def parse_error(msg)
