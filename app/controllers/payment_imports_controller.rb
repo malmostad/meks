@@ -35,4 +35,8 @@ class PaymentImportsController < ApplicationController
   def payment_import_params
     params.require(:payment_import).permit(:file)
   end
+
+  rescue_from ActionController::ParameterMissing do
+    redirect_to new_payment_import_path, alert: 'Glömde du välja fil?'
+  end
 end
