@@ -2,6 +2,20 @@ class Report::Workbooks
   class Economy
     attr_accessor :record
 
+    def self.costs_formula(costs_and_days)
+      calculation = costs_and_days.map do |cad|
+        "(#{cad[:days]}*#{cad[:cost]})"
+      end
+      "=#{calculation.join('+')}"
+    end
+
+    def self.payments_formula(days_and_daily_amounts)
+      calculation = days_and_daily_amounts.map do |dada|
+        "(#{dada[:days]}*#{dada[:daily_amount]})"
+      end
+      "=#{calculation.join('+')}"
+    end
+
     def initialize(range = {})
       @record = Refugee.new
       @range_from = range[:from]
@@ -103,7 +117,7 @@ class Report::Workbooks
         },
         {
           heading: 'Budgeterad kostnad',
-          query: Report::Workbooks.spreadsheet_formula(@record.placements_costs_and_days(from: @range_from, to: @range_to))
+          query: self.class.costs_formula(@record.placements_costs_and_days(from: @range_from, to: @range_to))
         },
         {
           heading: 'Förväntad schablon',
@@ -111,7 +125,7 @@ class Report::Workbooks
         },
         {
           heading: 'Utbetald schablon',
-          query: @record.total_payments
+          query: self.class.payments_formula(@record.amount_and_days(from: @range_from, to: @range_to))
         },
         {
           heading: 'Ålder',

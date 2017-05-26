@@ -50,6 +50,7 @@ class ReportsController < ApplicationController
     file_with_path = file_path("#{params[:id]}.xlsx")
 
     if File.exist? file_with_path
+      response.headers['Content-Length'] = File.size(file_with_path).to_s
       send_xlsx file_with_path, "#{report_name_prefix}_#{Time.now.to_formatted_s(:number)}.xlsx"
     else
       render :report_not_found

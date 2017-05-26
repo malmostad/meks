@@ -55,9 +55,9 @@ module RefugeeCosts
         starts_at = [range[:from], placement.moved_in_at, cost.start_date].max_by(&:to_date)
         ends_at = [range[:to], moved_out_at, cost.end_date].min_by(&:to_date)
         days = (ends_at - starts_at).to_i + 1
-        days = 0 if days.negative?
+        days = 0 if days.negative? || days.nil?
 
-        { cost: cost.amount, days: days, home: placement.home.name }
+        { cost: cost.amount || 0, days: days, home: placement.home.name }
       end
     end
 
