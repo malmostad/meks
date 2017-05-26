@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  SESSION_TIME = 30 # minutes
+  SESSION_TIME = APP_CONFIG['session_time']
 
   def log_user_on_request
     logger.info "[REQUESTED_BY]   #{current_user.present? ? current_user.username : 'Not authenticated'}"
