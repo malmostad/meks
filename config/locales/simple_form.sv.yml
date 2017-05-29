@@ -74,7 +74,8 @@ sv:
         moved_out_reason: Anledning till utskrivning
         specification: Placeringsspecifikation
         legal_code: Lagrum
-        cost: Placeringskostnad
+        cost: Total kostnad
+        cost_per_day: Genomsnittlig dygnskostnad
 
       home:
         <<: *defaults
