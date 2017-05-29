@@ -101,6 +101,10 @@ sv:
         from_age: Från ålder
         to_age: Till och med ålder
 
+      legal_code:
+        <<: *defaults
+        pre_selected: Förvald
+
       payment_import: &payment_import
         <<: *defaults
         user: Importerad av

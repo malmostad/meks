@@ -2,9 +2,9 @@
 = f.association :home,
                 collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification,
                 'data-use-placement-cost' => h.use_placement_cost }] },
-                input_html: { class: 'chosen', data: { foo: :bar } }
+                input_html: { class: 'chosen' }
 
-= f.association :legal_code, include_blank: false, selected: 1
+= f.association :legal_code, include_blank: false, selected: @pre_selected
 = f.input :moved_in_at, as: :string, wrapper: :datepicker
 = f.input :specification
 = f.input :cost

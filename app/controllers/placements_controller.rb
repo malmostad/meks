@@ -6,10 +6,12 @@ class PlacementsController < ApplicationController
 
   def new
     @placement = @refugee.placements.new
+    @pre_selected = LegalCode.where(pre_selected: true).first.try(:id)
     authorize! :create, @placement
   end
 
   def edit
+    @pre_selected = @placement.legal_code_id
     authorize! :edit, @placement
   end
 
