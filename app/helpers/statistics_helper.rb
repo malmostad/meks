@@ -1,28 +1,5 @@
 # Comments in Swedish are from project specifications
 module StatisticsHelper
-  # * Måstevillkor för att vara ankomsbarn, alla ska uppfyllas:
-  #   - ska inte ha status avslutad
-  #   - ska inte ha SoF
-  #   - ska inte ha PUT
-  #   - ska inte ha TUT
-  #   - ska inte ha medborgarskap
-  #   - anvisningskommun ska inte vara angiven
-  #   - anvisningdatum ska inte vara angivet
-  #
-  #   - anvisningsdatum ska vara senare än inskriviningsdatum (FIXME: excluded by previous?)
-  #   - anvisningsdatum ska ligga i framtiden (FIXME: see abouve)
-  def refugees_in_arrival
-    Refugee
-      .where(deregistered: nil)
-      .where(sof_placement: false)
-      .where(residence_permit_at: nil)
-      .where(temporary_permit_starts_at: nil)
-      .where(citizenship_at: nil)
-      .where(municipality: nil)
-      .where(municipality_placement_migrationsverket_at: nil)
-      .count
-  end
-
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # men som saknar datum för avslut
   def srf_refugees

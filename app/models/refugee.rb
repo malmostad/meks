@@ -100,24 +100,38 @@ class Refugee < ApplicationRecord
   end
 
   # Comment in Swedish are from project specifications
-  # * Måstevillkor för att vara ankomsbarn, alla ska uppfyllas:
-  #   - ska inte ha status avslutad
-  #   - ska inte ha SoF
-  #   - ska inte ha PUT
-  #   - ska inte ha TUT
-  #   - ska inte ha medborgarskap
-  #   - anvisningskommun ska inte vara angiven
-  #   - anvisningdatum ska inte vara angivet
-
-  #   - anvisningsdatum ska vara senare än inskriviningsdatum
-  #   - anvisningsdatum ska ligga i framtiden
+  # Ankomstbarn typ 1:
+  # - ska ha inskrivningsdatum
+  # - ska inte ha anvisningskommun
+  # - ska inte ha anvisningsdatum
+  # - ska inte ha status avslutat
+  # - ska inte datum för PUT
+  # - ska inte datum för TUT
+  # - ska inte datum för medborgarskap
+  # - ska inte ha SoF-placering
+  #
+  # Ankomstbarn typ 2:
+  # - ska ha inskrivningsdatum
+  # - ska ha anvisningskommun
+  # - ska ha anvisningsdatum där anvisningsdatumet ligger i framtiden
+  # - ska inte ha status avslutat
   def self.in_arrival
-    where(deregistered: nil)
-      .where(sof_placement: false)
-      .where(residence_permit_at: nil)
-      .where(temporary_permit_starts_at: nil)
-      .where(citizenship_at: nil)
-      .where(municipality: nil)
-      .where(municipality_placement_migrationsverket_at: nil)
+    type1 = Refugee
+            .where.not(registered: nil)
+            .where(deregistered: nil)
+            .where(municipality: nil)
+            .where(municipality_placement_migrationsverket_at: nil)
+            .where(residence_permit_at: nil)
+            .where(temporary_permit_starts_at: nil)
+            .where(citizenship_at: nil)
+            .where(sof_placement: false)
+
+    type2 = Refugee
+            .where.not(registered: nil)
+            .where.not(municipality: nil)
+            .where('municipality_placement_migrationsverket_at > ?', Date.today)
+            .where(deregistered: nil)
+
+    (type1 + type2).uniq
   end
 end
