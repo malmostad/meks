@@ -139,12 +139,9 @@ module StatisticsHelper
 
   # Samtliga aktiva boenden med boendeform "Institution" samt "Utsluss".
   # Antalet boendeplatser räknas endast utifrån garantiplatser (ej inkluera rörliga platser).
-  def homes_of_types
-    # Home
-    #   .includes(:type_of_housings)
-    #   .where(active: true)
-    #   .where(type_of_housings: { id: [2, 4] })
-    '[TODO]'
+  # Fetch from manual settings
+  def number_of_homes
+    Setting.where(key: 'number_of_homes').first.try(:value)
   end
 
   def guaranteed_seats

@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   resources :users, only: :index
   resources :statistics, only: :index
   resources :payment_imports, except: [:edit, :update]
+  resources :settings, only: [:index, :edit, :update]
 
   get  'reports' => 'reports#index'
   post 'reports/generate'

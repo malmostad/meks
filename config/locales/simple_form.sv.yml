@@ -128,6 +128,14 @@ sv:
         <<: *payment
         refugee_id: Barn
 
+      settings: &settings
+        <<: *defaults
+        human_name: Namn
+        value: Värde
+
+      setting:
+        <<: *settings
+
     placeholders:
       home:
         name: Ange namnet på boendet
