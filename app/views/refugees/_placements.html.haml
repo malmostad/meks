@@ -16,7 +16,7 @@
         = show_attribute('placement.moved_out_at', placement.moved_out_at)
         - if placement.moved_out_reason.present?
           = show_attribute('placement.moved_out_reason', placement.moved_out_reason.name)
-      = show_attribute('placement.cost_per_day', "#{number_to_currency(placement.cost_sum / placement.placement_time, delimiter: ' ')}")
+      = show_attribute('placement.cost_per_day', "#{number_to_currency(placement.cost_per_day, delimiter: ' ')}")
       = show_attribute('placement.cost', "#{number_to_currency(placement.cost_sum, delimiter: ' ')}")
 
       - if can? :edit, @refugee
