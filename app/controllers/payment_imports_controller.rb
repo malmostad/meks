@@ -1,10 +1,10 @@
 class PaymentImportsController < ApplicationController
   def index
-    @payment_imports = PaymentImport.includes(:user, :payments).order('imported_at desc')
+    @payment_imports = PaymentImport.includes(:user).order('imported_at desc')
   end
 
   def show
-    @payment_import = PaymentImport.includes(:user, :payments).find(params[:id])
+    @payment_import = PaymentImport.includes(:user).find(params[:id])
   end
 
   def new

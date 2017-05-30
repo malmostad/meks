@@ -11,4 +11,12 @@ class Payment < ApplicationRecord
     # Convert Swedish format to US
     self.amount = amount_as_string.tr(',', '.').to_f if amount_as_string
   end
+
+  def days
+    (period_end - period_start).to_i
+  end
+
+  def per_day
+    amount / days
+  end
 end
