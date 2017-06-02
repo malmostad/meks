@@ -28,11 +28,12 @@ gem 'faker'
 
 gem 'bcrypt', '~> 3.1.11'
 
+gem 'pry-rails'
+
 group :development do
   gem 'capistrano', '3.8.0', require: false
   gem 'capistrano-rails', '1.2.3', require: false
   gem 'capistrano-rbenv', '2.1.0', require: false
-  gem 'pry-rails'
   gem 'bullet'
 end
 
