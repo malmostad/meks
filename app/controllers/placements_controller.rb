@@ -6,12 +6,12 @@ class PlacementsController < ApplicationController
 
   def new
     @placement = @refugee.placements.new
-    @pre_selected = LegalCode.where(pre_selected: true).first.try(:id)
+    @pre_selected = default_legal_code
     authorize! :create, @placement
   end
 
   def edit
-    @pre_selected = @placement.legal_code_id
+    @pre_selected = @placement.legal_code_id || default_legal_code
     authorize! :edit, @placement
   end
 
@@ -67,6 +67,10 @@ class PlacementsController < ApplicationController
       id = params[:id] || params[:placement_id]
       @placement = @refugee.placements.find(id)
       @homes = Home.where(active: true)
+    end
+
+    def default_legal_code
+      LegalCode.where(pre_selected: true).first.try(:id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
