@@ -25,7 +25,8 @@ class PaymentImport < ApplicationRecord
   def parse(file, user)
     self.user = user
     # Change encoding and replace line linefeeds.
-    self.raw = file.read.encode('UTF-8', universal_newline: true, invalid: :replace, undef: :replace, replace: '')
+    # self.raw = file.read.encode('UTF-8', universal_newline: true, invalid: :replace, undef: :replace, replace: '')
+    self.raw = File.open(file.path, 'r:bom|utf-8') { |f| f.read.gsub(/\r\n*/, "\n") }
     self.content_type = file.content_type
     self.original_filename = file.original_filename
     self.imported_at = DateTime.now
