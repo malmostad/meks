@@ -46,6 +46,13 @@ class Home < ApplicationRecord
     placements.map(&:placement_time).inject(&:+)
   end
 
+  def current_cost
+    costs.each do |cost|
+      return cost.amount if cost.end_date >= Date.today
+    end
+    nil
+  end
+
   def current_cost?
     return true if use_placement_cost?
     costs.each do |cost|
