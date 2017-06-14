@@ -26,7 +26,8 @@ module RefugeePayments
     def days_for_payment(payment, range)
       count_from = [payment.period_start, range[:from]].max_by(&:to_date)
       count_to   = [payment.period_end, range[:to]].min_by(&:to_date)
-      days = (count_to - count_from).to_i
+
+      days = (count_to.to_date - count_from.to_date).to_i
       days = 0 if days.negative? || days.nil?
       days
     end

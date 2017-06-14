@@ -25,7 +25,7 @@ module RefugeeCosts
         count_from = [moved_in_at, report_range[:from].to_date].max_by(&:to_date)
         count_to   = [moved_out_at, report_range[:to].to_date].min_by(&:to_date)
 
-        args = [placement, from: count_from, to: count_to]
+        args = [placement, from: count_from.to_date, to: count_to.to_date]
         placement.home.use_placement_cost ? placement_cost(*args) : placement_home_costs(*args)
       end
       costs.flatten # .reject(&:nil?) || []
@@ -38,7 +38,7 @@ module RefugeeCosts
       starts_at = [range[:from], placement.moved_in_at].max_by(&:to_date)
       ends_at   = placement.moved_out_at ? [range[:to], placement.moved_out_at].min_by(&:to_date) : range[:to]
 
-      days = (ends_at - starts_at).to_i + 1
+      days = (ends_at.to_date - starts_at.to_date).to_i + 1
       days = 0 if days.negative? || days.nil?
       cost = placement.cost.to_i
 
@@ -54,7 +54,7 @@ module RefugeeCosts
         #   by comparing the count_* with the cost's dates
         starts_at = [range[:from], placement.moved_in_at, cost.start_date].max_by(&:to_date)
         ends_at = [range[:to], moved_out_at, cost.end_date].min_by(&:to_date)
-        days = (ends_at - starts_at).to_i + 1
+        days = (ends_at.to_date - starts_at.to_date).to_i + 1
         days = 0 if days.negative? || days.nil?
 
         { cost: cost.amount || 0, days: days, home: placement.home.name }
