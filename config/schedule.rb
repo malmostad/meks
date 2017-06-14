@@ -10,5 +10,4 @@ job_type :rake, 'cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:environment bu
 
 every :day, at: '4:00am', roles: [:app] do
   rake 'reports:cleanup'
-  rake 'reports:all'
 end
