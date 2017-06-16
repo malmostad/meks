@@ -20,13 +20,8 @@ module RefugeeRates
   end
 
   included do
-
-    def expected_rate(report_range = default_range)
+    def expected_rate(report_range = DEFAULT_RANGE)
       'todo'
-    end
-
-    def default_range
-      { from: Date.new(0), to: Date.today }
     end
   end
 end
