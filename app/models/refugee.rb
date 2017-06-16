@@ -132,6 +132,6 @@ class Refugee < ApplicationRecord
             .where('municipality_placement_migrationsverket_at > ?', Date.today)
             .where(deregistered: nil)
 
-    (type1 + type2).uniq
+    type1.or(type2).uniq
   end
 end
