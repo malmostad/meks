@@ -14,7 +14,7 @@ module RefugeeCosts
           end.sum
         end.sum
 
-        { status: status[:name], cost: status_cost }
+        { name: status[:name], cost: status_cost }
       end
     end
   end
