@@ -50,7 +50,7 @@ module Reports
         :municipality,
         :gender, :homes, :municipality,
         current_placements: [home: :type_of_housings]
-      ).where(registered: @from..@to).limit(10)
+      ).where(registered: @from..@to)
     end
 
     # The strucure is built to make it easy to re-arrange columns
