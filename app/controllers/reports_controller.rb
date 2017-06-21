@@ -90,7 +90,7 @@ class ReportsController < ApplicationController
   end
 
   def generate_report_job(file_id)
-    case params['report_type']
+    case params[:report_type]
     when 'economy'
       GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
     when 'homes'

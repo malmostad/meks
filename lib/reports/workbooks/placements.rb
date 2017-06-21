@@ -1,5 +1,5 @@
-class Report::Workbooks
-  class Placements
+module Reports
+  class Placements < Workbooks
     attr_accessor :record
 
     def initialize

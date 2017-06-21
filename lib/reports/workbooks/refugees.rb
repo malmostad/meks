@@ -1,5 +1,5 @@
-class Report::Workbooks
-  class Refugees
+module Reports
+  class Refugees < Workbooks
     attr_accessor :record
 
     def initialize

@@ -1,6 +1,8 @@
 module RefugeeRates
   extend ActiveSupport::Concern
 
+  DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
+
   module ClassMethods
     def refugees_in_arrival_0_17
       in_arrival.age_0_17

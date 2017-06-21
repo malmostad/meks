@@ -1,8 +1,7 @@
-require 'report/generator'
-require 'report/style'
-require 'report/workbooks'
+require 'reports/style'
+require 'reports/workbooks'
 
-class Report
+module Reports
   def self.format_asylum_status(h)
     return 'Ingen status' if h.blank?
     I18n.t('simple_form.labels.refugee.' + h.first) + ' ' + h.second.to_s

@@ -1,4 +1,4 @@
-class Report
+module Reports
   class Style
     def initialize(axlsx)
       @axlsx = axlsx

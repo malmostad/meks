@@ -1,5 +1,5 @@
-class Report::Workbooks
-  class EconomyPerRefugeeStatus
+module Reports
+  class EconomyPerRefugeeStatus < Workbooks
     attr_accessor :record
 
     def self.costs_formula(costs_per_status)

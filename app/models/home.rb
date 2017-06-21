@@ -1,6 +1,4 @@
 class Home < ApplicationRecord
-  include HomeCosts
-
   has_many :placements, dependent: :destroy
   has_many :refugees, through: :placements
 
