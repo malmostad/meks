@@ -1,4 +1,4 @@
-require 'report'
+require 'reports'
 require 'generate_report_job/economy'
 require 'generate_report_job/homes'
 require 'generate_report_job/placements'

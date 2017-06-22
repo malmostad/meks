@@ -11,7 +11,7 @@ class GenerateReportJob
     private
 
     def create_workbook(placements, params, filename)
-      workbook = Report::Workbooks::Placements.new
+      workbook = Reports::Placements.new
       report = Report::Generator.new(workbook, placements, from: params[:placements_from], to: params[:placements_to])
       report.to_xlsx(filename)
     end

@@ -9,7 +9,7 @@ module Reports
     DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
     def initialize(options = {})
-      @filename   = options[:filename] || 'Utan titel'
+      @filename   = options[:filename] || 'Utan titel.xlsx'
       @from       = options[:from]     || DEFAULT_RANGE[:from]
       @to         = options[:to]       || DEFAULT_RANGE[:to]
       @sheet_name = format_sheet_name

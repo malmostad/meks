@@ -7,7 +7,7 @@ class GenerateReportJob
       from     = params[:placements_from]
       to       = params[:placements_to]
 
-      workbook = Report::Workbooks::Economy.new(filename: filename, from: from, to: to)
+      workbook = Reports::Economy.new(filename: filename, from: from, to: to)
       workbook.create
     end
   end

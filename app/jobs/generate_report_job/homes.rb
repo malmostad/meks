@@ -11,7 +11,7 @@ class GenerateReportJob
     private
 
     def create_workbook(homes, filename)
-      workbook = Report::Workbooks::Homes.new
+      workbook = Reports::Homes.new
       report = Report::Generator.new(workbook, homes)
       report.to_xlsx(filename)
     end

@@ -13,7 +13,7 @@ class GenerateReportJob
     def create_workbook(refugees, params, filename)
       from = params[:placements_from]
       to = params[:placements_to]
-      workbook = Report::Workbooks::EconomyPerRefugeeStatus.new(from: from, to: to)
+      workbook = Reports::EconomyPerRefugeeStatus.new(from: from, to: to)
       report = Report::Generator.new(workbook, refugees, from: from, to: to)
       report.to_xlsx(filename)
     end
