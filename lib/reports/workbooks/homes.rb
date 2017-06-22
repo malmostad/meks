@@ -2,96 +2,136 @@ module Reports
   class Homes < Workbooks
     attr_accessor :record
 
-    def initialize
-      @record = Home.new
+    def initialize(options = {})
+      super(options)
+      @owner_type = options[:owner_type]
+      @free_seats = options[:free_seats]
+    end
+
+    def header_row
+      columns.map do |cell|
+        { title: cell[:heading], tooltip: cell[:tooltip] }
+      end
+    end
+
+    def data_rows
+      homes.map do |home|
+        columns(home).map do |cell|
+          cell[:query]
+        end
+      end
+    end
+
+    def cell_data_types
+      columns.map do |cell|
+        cell[:type] || :string
+      end
+    end
+
+    private
+
+    def homes
+      homes = Home.includes(
+        :placements, :type_of_housings,
+        :owner_type, :target_groups, :languages
+      )
+
+      if @owner_type.present?
+        homes = homes.where(owner_type: @owner_type)
+      end
+
+      if @free_seats == 'with'
+        homes = homes.each.reject { |r| r.free_seats <= 0 }
+      end
+      homes
     end
 
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
-    def columns
+    def columns(home = Home.new)
       [
         {
           heading: 'home.name',
-          query: @record.name
+          query: home.name
         },
         {
           heading: 'home.phone',
-          query: @record.phone
+          query: home.phone
         },
         {
           heading: 'home.fax',
-          query: @record.fax
+          query: home.fax
         },
         {
           heading: 'home.address',
-          query: @record.address
+          query: home.address
         },
         {
           heading: 'home.post_code',
-          query: @record.post_code
+          query: home.post_code
         },
         {
           heading: 'home.postal_town',
-          query: @record.postal_town
+          query: home.postal_town
         },
         {
           heading: 'home.type_of_housings',
-          query: @record.type_of_housings.map(&:name).join(', ')
+          query: home.type_of_housings.map(&:name).join(', ')
         },
         {
           heading: 'home.owner_type',
-          query: @record.owner_type.try(:name)
+          query: home.owner_type.try(:name)
         },
         {
           heading: 'home.target_groups',
-          query: @record.target_groups.map(&:name).join(', ')
+          query: home.target_groups.map(&:name).join(', ')
         },
         {
           heading: 'home.languages',
-          query: @record.languages.map(&:name).join(', ')
+          query: home.languages.map(&:name).join(', ')
         },
         {
           heading: 'home.comment',
-          query: @record.comment
+          query: home.comment
         },
         {
           heading: 'Aktuella placeringar',
-          query: @record.placements.select { |p| p.moved_out_at.nil? }.size,
+          query: home.placements.select { |p| p.moved_out_at.nil? }.size,
           type: :integer
         },
         {
           heading: 'Placeringar totalt',
-          query: @record.placements.count,
+          query: home.placements.size,
           type: :integer
         },
         {
           heading: 'Total placeringstid (dagar)',
-          query: @record.total_placement_time,
+          query: home.total_placement_time,
           type: :integer
         },
         {
           heading: 'home.guaranteed_seats',
-          query: @record.guaranteed_seats,
+          query: home.guaranteed_seats,
           type: :integer
         },
         {
           heading: 'Lediga platser',
-          query: (@record.guaranteed_seats.to_i + @record.movable_seats.to_i) - @record.placements.select { |p| p.moved_out_at.nil?  }.size,
+          query: (home.guaranteed_seats.to_i + home.movable_seats.to_i) - home.placements.select { |p| p.moved_out_at.nil?  }.size,
           type: :integer
         },
         {
           heading: 'home.movable_seats',
-          query: @record.movable_seats,
+          query: home.movable_seats,
           type: :integer
         },
         {
           heading: 'Summa platser',
-          query: @record.seats,
+          query: home.seats,
           type: :integer
         },
         {
           heading: 'home.active',
-          query: @record.active? ? 'Ja' : 'Nej'
+          query: home.active? ? 'Ja' : 'Nej'
         }
       ]
     end

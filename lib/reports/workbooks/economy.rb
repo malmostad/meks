@@ -22,12 +22,6 @@ module Reports
       end
     end
 
-    def header_tooltips
-      columns.map do |cell|
-        cell[:tooltip]
-      end
-    end
-
     def data_rows
       refugees.map do |refugee|
         columns(refugee).map do |cell|

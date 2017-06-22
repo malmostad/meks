@@ -2,9 +2,9 @@ module Reports
   class Workbooks
     require 'reports/workbooks/economy'
     require 'reports/workbooks/homes'
-    require 'reports/workbooks/placements'
-    require 'reports/workbooks/refugees'
-    require 'reports/workbooks/economy_per_refugee_status'
+    # require 'reports/workbooks/placements'
+    # require 'reports/workbooks/refugees'
+    # require 'reports/workbooks/economy_per_refugee_status'
 
     DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
@@ -40,7 +40,6 @@ module Reports
 
     def fill_sheet
       add_header_row
-      # add_header_tooltips
       add_data_rows
     end
 
