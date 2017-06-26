@@ -32,7 +32,7 @@ module RefugeeCosts
     #  * each placement.home cost ranges
     # Returns an array of hashes
     def placements_costs_and_days(report_range = DEFAULT_RANGE)
-      costs = placements.includes(home: :costs).map do |placement|
+      costs = placements.map do |placement|
         moved_out_at = placement.moved_out_at || Date.today
         moved_in_at  = placement.moved_in_at
 
@@ -44,7 +44,7 @@ module RefugeeCosts
         args = [placement, from: count_from.to_date, to: count_to.to_date]
         placement.home.use_placement_cost ? placement_cost(*args) : placement_home_costs(*args)
       end
-      costs.flatten # .reject(&:nil?) || []
+      costs.flatten
     end
 
     # Used when placement.home.use_placement_cost

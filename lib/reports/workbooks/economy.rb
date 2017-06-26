@@ -43,7 +43,9 @@ module Reports
         :dossier_numbers, :ssns,
         :municipality,
         :gender, :homes, :municipality,
-        current_placements: [home: :type_of_housings]
+        :payments,
+        placements: { home: :costs },
+        current_placements: [:legal_code, home: :type_of_housings]
       ).where(registered: @from..@to)
     end
 
