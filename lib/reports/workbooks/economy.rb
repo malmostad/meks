@@ -16,29 +16,9 @@ module Reports
       end
     end
 
-    def header_row
-      columns.map do |cell|
-        { title: cell[:heading], tooltip: cell[:tooltip] }
-      end
-    end
+    protected
 
-    def data_rows
-      refugees.map do |refugee|
-        columns(refugee).map do |cell|
-          cell[:query]
-        end
-      end
-    end
-
-    def cell_data_types
-      columns.map do |cell|
-        cell[:type] || :string
-      end
-    end
-
-    private
-
-    def refugees
+    def records
       Refugee.includes(
         :dossier_numbers, :ssns,
         :municipality,

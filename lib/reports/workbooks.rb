@@ -26,6 +26,26 @@ module Reports
       axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
 
+    def header_row
+      columns.map do |cell|
+        { title: cell[:heading], tooltip: cell[:tooltip] }
+      end
+    end
+
+    def data_rows
+      records.map do |refugee|
+        columns(refugee).map do |cell|
+          cell[:query]
+        end
+      end
+    end
+
+    def cell_data_types
+      columns.map do |cell|
+        cell[:type] || :string
+      end
+    end
+
     protected
 
     def format_sheet_name

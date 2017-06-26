@@ -8,29 +8,9 @@ module Reports
       @free_seats = options[:free_seats]
     end
 
-    def header_row
-      columns.map do |cell|
-        { title: cell[:heading], tooltip: cell[:tooltip] }
-      end
-    end
+    protected
 
-    def data_rows
-      homes.map do |home|
-        columns(home).map do |cell|
-          cell[:query]
-        end
-      end
-    end
-
-    def cell_data_types
-      columns.map do |cell|
-        cell[:type] || :string
-      end
-    end
-
-    private
-
-    def homes
+    def records
       homes = Home.includes(
         :placements, :type_of_housings,
         :owner_type, :target_groups, :languages
