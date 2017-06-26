@@ -23,14 +23,14 @@ class Placement < ApplicationRecord
       .where('moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
   end
 
-  def self.overlapping_by_refugee(options = {})
+  def self.overlapping_by_refugee(from, to, home_id)
     # Within range
-    range_from = begin; Date.parse(options[:placements_from]).to_s; rescue; (Date.today - 10.years).to_s; end
-    range_to   = begin; Date.parse(options[:placements_to]).to_s; rescue; Date.today.to_s; end
+    range_from = begin; Date.parse(from).to_s; rescue; (Date.today - 10.years).to_s; end
+    range_to   = begin; Date.parse(to).to_s; rescue; Date.today.to_s; end
 
     # Single home or all
-    select_home = options[:home_id].present? && options[:home_id].reject(&:empty?).present? ?
-        "(A.home_id = #{options[:home_id].first} or B.home_id = #{options[:home_id].first})" : '1 = 1'
+    select_home = home_id.present? && home_id.reject(&:empty?).present? ?
+        "(A.home_id = #{home_id.first} or B.home_id = #{home_id.first})" : '1 = 1'
 
     # Select overlapping placements per refugee, within range, for home
     records = find_by_sql(["
