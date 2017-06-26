@@ -2,158 +2,201 @@ module Reports
   class Refugees < Workbooks
     attr_accessor :record
 
-    def initialize
-      @record = Refugee.new
+    def initialize(options = {})
+      super(options)
+      @registered_from = options[:registered_from]
+      @registered_to = options[:registered_to]
+      @born_after = options[:born_after]
+      @born_before = options[:born_before]
+      @include_without_date_of_birth = options[:include_without_date_of_birth]
+      @asylum = options[:asylum]
     end
+
+    def records
+      refugees = Refugee.includes(
+        :countries, :languages, :ssns, :dossier_numbers,
+        :gender, :homes, :municipality, :deregistered_reason,
+        relationships: %i[type_of_relationship refugee],
+        inverse_relationships: %i[type_of_relationship refugee],
+        current_placements: [home: :type_of_housings]
+      )
+
+      if @refugees_registered_from.present? && @refugees_registered_to.present?
+        refugees = refugees.where(registered: @refugees_registered_from..@refugees_registered_to)
+      end
+
+      query = [(@refugees_born_after..@refugees_born_before)]
+      query << nil if @refugees_include_without_date_of_birth
+
+      if @refugees_born_after.present? && @refugees_born_before.present?
+        refugees = refugees.where(date_of_birth: query)
+      end
+
+      if @refugees_asylum.present?
+        query = []
+        if @refugees_asylum.include? 'put'
+          query << 'refugees.residence_permit_at is not null'
+        end
+        if @refugees_asylum.include? 'tut'
+          query << 'refugees.temporary_permit_starts_at is not null'
+        end
+        if @refugees_asylum.include? 'municipality'
+          query << 'refugees.municipality_id is not null'
+        end
+        refugees = refugees.where(query.join(' or '))
+      end
+      refugees
+    end
+
 
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
-    def columns
+    def columns(refugee = Refugee.new)
       [
         {
           heading: 'refugee.name',
-          query: @record.name
+          query: refugee.name
         },
         {
           heading: 'Personnummer',
-          query: @record.ssn
+          query: refugee.ssn
         },
         {
           heading: 'Ålder',
-          query: @record.age,
+          query: refugee.age,
           type: :integer
         },
         {
           heading: 'Dossiernummer',
-          query: @record.dossier_number
+          query: refugee.dossier_number
         },
         {
           heading: 'refugee.gender',
-          query: @record.gender.try(:name)
+          query: refugee.gender.try(:name)
         },
         {
           heading: 'refugee.countries',
-          query: @record.countries.map(&:name).join(', ')
+          query: refugee.countries.map(&:name).join(', ')
         },
         {
           heading: 'refugee.languages',
-          query: @record.languages.map(&:name).join(', ')
+          query: refugee.languages.map(&:name).join(', ')
         },
         {
           heading: 'refugee.registered',
-          query: @record.registered,
+          query: refugee.registered,
           tooltip: 'Anger det datum då barnet registreras i MEKS för första gången'
         },
         {
           heading: 'Aktuellt boende',
-          query: @record.current_placements.map(&:home).map(&:name).join(', ')
+          query: refugee.current_placements.map(&:home).map(&:name).join(', ')
         },
         {
           heading: 'Aktuell boendeform',
-          query: @record.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name  } }.join(', ')
+          query: refugee.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name  } }.join(', ')
         },
         {
           heading: 'refugee.municipality',
-          query: @record.municipality.try(:name)
+          query: refugee.municipality.try(:name)
         },
         {
           heading: 'refugee.municipality_placement_migrationsverket_at',
-          query: @record.municipality_placement_migrationsverket_at,
+          query: refugee.municipality_placement_migrationsverket_at,
           type: :date
         },
         {
           heading: 'refugee.sof_placement',
-          query: @record.sof_placement ? 'Ja' : 'Nej'
+          query: refugee.sof_placement ? 'Ja' : 'Nej'
         },
         {
           heading: 'refugee.municipality_placement_comment',
-          query: @record.municipality_placement_comment
+          query: refugee.municipality_placement_comment
         },
         {
           heading: 'PUT',
-          query: @record.residence_permit_at,
+          query: refugee.residence_permit_at,
           type: :date
         },
         {
           heading: 'refugee.checked_out_to_our_city',
-          query: @record.checked_out_to_our_city,
+          query: refugee.checked_out_to_our_city,
           tooltip: 'Det datum då barnet skrivs ut från Migrationsverket',
           type: :date
         },
         {
           heading: 'TUT startar',
-          query: @record.temporary_permit_starts_at,
+          query: refugee.temporary_permit_starts_at,
           type: :date
         },
         {
           heading: 'TUT slutar',
-          query: @record.temporary_permit_ends_at,
+          query: refugee.temporary_permit_ends_at,
           type: :date
         },
         {
           heading: 'refugee.citizenship_at',
-          query: @record.citizenship_at,
+          query: refugee.citizenship_at,
           type: :date
         },
         {
           heading: 'refugee.social_worker',
-          query: @record.social_worker
+          query: refugee.social_worker
         },
         {
           heading: 'refugee.special_needs',
-          query: @record.special_needs? ? 'Ja' : 'Nej'
+          query: refugee.special_needs? ? 'Ja' : 'Nej'
         },
         {
           heading: 'refugee.deregistered',
-          query: @record.deregistered,
+          query: refugee.deregistered,
           tooltip: 'Anger datum för när socialtjänstansvaret för barnet är avslutat',
           type: :date
         },
         {
           heading: 'refugee.deregistered_reason',
-          query: @record.deregistered_reason.try(:name)
+          query: refugee.deregistered_reason.try(:name)
         },
         {
           heading: 'refugee.deregistered_comment',
-          query: @record.deregistered_comment
+          query: refugee.deregistered_comment
         },
         {
           heading: 'Alla boenden',
-          query: @record.homes.map(&:name).join(', ')
+          query: refugee.homes.map(&:name).join(', ')
         },
         {
           heading: 'Total placeringstid (dagar)',
-          query: @record.total_placement_time,
+          query: refugee.total_placement_time,
           type: :integer
         },
         {
           heading: 'refugee.relateds',
-          query: @record.relationships.map { |r| "#{r.refugee.name } (#{r.type_of_relationship.name })" }.join(', ')
+          query: refugee.relationships.map { |r| "#{r.refugee.name} (#{r.type_of_relationship.name})" }.join(', ')
         },
         {
           heading: 'Angiven som anhöriga till',
-          query: @record.inverse_relationships.map { |r| "#{r.refugee.name } (#{r.type_of_relationship.name })"  }.join(', ')
+          query: refugee.inverse_relationships.map { |r| "#{r.refugee.name} (#{r.type_of_relationship.name})" }.join(', ')
         },
         {
           heading: 'Övriga anhöriga',
-          query: @record.other_relateds
+          query: refugee.other_relateds
         },
         {
           heading: 'refugee.municipality_placement_per_agreement_at',
-          query: @record.municipality_placement_per_agreement_at,
+          query: refugee.municipality_placement_per_agreement_at,
           type: :date
         },
-        {
-          heading: 'Asylstatus',
-          query: Report.format_asylum_status(@record.asylum_status)
-        },
+        # {
+        #   heading: 'Asylstatus',
+        #   query: Reports.format_asylum_status(refugee.asylum_status)
+        # },
         {
           heading: 'Extra personnummer',
-          query: @record.ssns.map(&:full_ssn).join(', ')
+          query: refugee.ssns.map(&:full_ssn).join(', ')
         },
         {
           heading: 'Extra dossiernummer',
-          query: @record.dossier_numbers.map(&:name).join(', ')
+          query: refugee.dossier_numbers.map(&:name).join(', ')
         }
       ]
     end

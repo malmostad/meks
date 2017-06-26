@@ -2,8 +2,8 @@ module Reports
   class Workbooks
     require 'reports/workbooks/economy'
     require 'reports/workbooks/homes'
+    require 'reports/workbooks/refugees'
     # require 'reports/workbooks/placements'
-    # require 'reports/workbooks/refugees'
     # require 'reports/workbooks/economy_per_refugee_status'
 
     DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
@@ -13,6 +13,13 @@ module Reports
       @from       = options[:from]     || DEFAULT_RANGE[:from]
       @to         = options[:to]       || DEFAULT_RANGE[:to]
       @sheet_name = format_sheet_name
+    end
+
+    def hash_to_instance_variables(options = {})
+      options.each_pair do |key, value|
+        instance_variable_set("@#{key}", value)
+        self.class.instance_eval { attr_accessor key.to_sym }
+      end
     end
 
     def create
