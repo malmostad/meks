@@ -2,33 +2,23 @@ module Reports
   class EconomyPerRefugeeStatus < Workbooks
     attr_accessor :record
 
-    def self.costs_formula(costs_per_status)
-      calculation = costs_and_days.map do |cad|
-        "(#{cad[:days]}*#{cad[:cost]})"
-      end
-      "=#{calculation.join('+')}"
-    end
+    @statuses = Refugee.statuses
 
-    def initialize(range = {})
-      statuses = Refugee.costs_per_status
-      i = 0
-      statuses.map do |status|
-        i += 1
-        columns(status, i)
-      end
+    def records
+      Refugee.in_arrival
     end
 
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
-    def columns(status, i)
+    def columns(i = 1)
       [
         {
           heading: 'Barnets status',
-          query: status[:name]
+          query: '@statuses.first[:name]'
         },
         {
           heading: 'Budgeterad kostnad',
-          query: status[:cost]
+          query: '@statuses.first[:refugees].size'
         },
         {
           heading: 'Förväntad schablon',

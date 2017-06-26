@@ -4,7 +4,7 @@ module Reports
     require 'reports/workbooks/homes'
     require 'reports/workbooks/refugees'
     require 'reports/workbooks/placements'
-    # require 'reports/workbooks/economy_per_refugee_status'
+    require 'reports/workbooks/economy_per_refugee_status'
 
     DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
