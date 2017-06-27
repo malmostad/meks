@@ -1,40 +1,61 @@
 module Reports
   class EconomyPerRefugeeStatus < Workbooks
-    attr_accessor :record
-
-    @statuses = Refugee.statuses
-
-    def records
-      Refugee.in_arrival
+    def initialize(options = {})
+      super(options)
+      @statuses = Refugee.statuses
     end
 
-    # The strucure is built to make it easy to re-arrange columns
-    #   and still keep headings and data cells in sync with each other
-    def columns(i = 1)
+    def records
+      @statuses.map do |status|
+        send(status[:refugees])
+        status[:name]
+      end
+    end
+
+    def data_rows
+      @statuses.each_with_index.map do |status, i|
+        columns(status, i).map do |cell|
+          cell[:query]
+        end
+      end
+    end
+
+    # def data_rows
+    #   records.map do |status|
+    #     status[:refugees].map do |refugee|
+    #       columns.each_with_index(refugee, i).map do |cell|
+    #         cell[:query]
+    #       end
+    #     end
+    #   end
+    # end
+
+    def columns(status = nil, row = 1)
+      row += 2
       [
         {
           heading: 'Barnets status',
-          query: '@statuses.first[:name]'
+          query: i18n_name(status)
         },
         {
           heading: 'Budgeterad kostnad',
-          query: '@statuses.first[:refugees].size'
+          query: 'status[:refugees]',
         },
         {
           heading: 'Förväntad schablon',
-          query: 'x'
+          query: 200_000
         },
         {
           heading: 'Avvikelse',
-          query: "=C#{i}-B#{i}"
+          query: "=C#{row}-B#{row}"
         },
         {
           heading: 'Utbetald schablon',
-          query: 'x'
+          query: 190_000
         },
         {
           heading: 'Avvikelse mellan förväntad och utbetald schablon',
-          query: "=E#{i}-C#{i}"
+          query: "=E#{row}-C#{row}"
         }
       ]
     end
