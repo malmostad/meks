@@ -1,7 +1,5 @@
 module Reports
   class Refugees < Workbooks
-    attr_accessor :record
-
     def initialize(options = {})
       super(options)
       @registered_from = options[:registered_from]

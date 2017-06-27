@@ -1,7 +1,5 @@
 module Reports
   class Placements < Workbooks
-    attr_accessor :record
-
     def initialize(options = {})
       super(options)
       @owner_type = options[:owner_type]
