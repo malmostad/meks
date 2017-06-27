@@ -38,18 +38,38 @@ module RefugeeStatuses
       type1.or(type2).distinct
     end
 
+    def temporary_permit
+      where.not(temporary_permit_starts_at: nil)
+    end
+
+    def residence_permit
+      where.not(residence_permit_at: nil)
+    end
+
+    def designated
+      # TODO: implement
+      # Lagrum SoL. Schablonen ska beräknas för barn som ej har fyllt 18 år
+      # samt från och med anvisningsdatum till Malmö och
+      # avslutas samma dag som står i kolumnen "Utskriven till Malmö".
+      # Om datum för "Utskriven till Malmö" är inte ifylld, då
+      # är det datum i raden "Avslutad" som avgör när schablonen upphör.
+      find(1, 2)
+    end
+
+    # def statuses
+    #   [
+    #     'refugee.in_arrival',
+    #     'refugee.designated',
+    #     'refugee.temporary_permit',
+    #     'refugee.residence_permit'
+    #   ]
+    # end
     def statuses
       [
-        { name: 'refugee.in_arrival', refugees: in_arrival },
-        { name: 'refugee.temporary_permit', refugees: where.not(temporary_permit_starts_at: nil) },
-        { name: 'refugee.residence_permit', refugees: where.not(residence_permit_at: nil) },
-
-        # Lagrum SoL. Schablonen ska beräknas för barn som ej har fyllt 18 år
-        # samt från och med anvisningsdatum till Malmö och
-        # avslutas samma dag som  står i kolumnen "Utskriven till Malmö".
-        # Om datum för "Utskriven till Malmö" är inte ifylld, då
-        # är det datum i raden "Avslutad" som avgör när schablonen upphör.
-        { name: 'refugee.designated', refugees: first }
+        { name: 'refugee.in_arrival', refugees: :in_arrival },
+        { name: 'refugee.temporary_permit', refugees: :temporary_permit },
+        { name: 'refugee.residence_permit', refugees: :residence_permit },
+        { name: 'refugee.designated', refugees: :designated }
       ]
     end
   end
