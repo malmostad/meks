@@ -15,13 +15,6 @@ module Reports
       @sheet_name = format_sheet_name
     end
 
-    def hash_to_instance_variables(options = {})
-      options.each_pair do |key, value|
-        instance_variable_set("@#{key}", value)
-        self.class.instance_eval { attr_accessor key.to_sym }
-      end
-    end
-
     def create
       axlsx     = Axlsx::Package.new
       @workbook = axlsx.workbook
@@ -53,13 +46,11 @@ module Reports
       end
     end
 
-    protected
-
     def format_sheet_name
       @from && @to ? "#{@from}–#{@to}" : 'Inget intervall'
     end
 
-    def heading_name(name)
+    def i18n_name(name)
       I18n.t("simple_form.labels.#{name}", default: name)
     end
 
@@ -72,7 +63,7 @@ module Reports
 
     def add_header_row
       headings = @sheet.add_row(
-        header_row.map { |heading| heading_name(heading[:title]) },
+        header_row.map { |heading| i18n_name(heading[:title]) },
         style: @style.heading
       )
       add_header_tooltips(headings)
