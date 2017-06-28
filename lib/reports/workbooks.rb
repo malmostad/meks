@@ -54,7 +54,7 @@ module Reports
       I18n.t("simple_form.labels.#{name}", default: name)
     end
 
-    private
+    protected
 
     def fill_sheet
       add_header_row
@@ -99,6 +99,15 @@ module Reports
           types: cell_data_types
         )
       end
+    end
+
+    def cell_style(style)
+      style ||= :normal
+      @style.send(style)
+    end
+
+    def cell_type(type = :string)
+      type
     end
   end
 end

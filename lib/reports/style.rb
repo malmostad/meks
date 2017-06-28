@@ -26,6 +26,14 @@ module Reports
       )
     end
 
+    def link
+      @axlsx.workbook.styles.add_style(
+        font_name: @font,
+        fg_color: '007896',
+        alignment: @align_top
+      )
+    end
+
     def wrap
       @axlsx.workbook.styles.add_style(
         font_name: @font,
