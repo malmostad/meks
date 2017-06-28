@@ -21,16 +21,6 @@ module Reports
       fill_sheet
     end
 
-    def add_sibling_sheets
-      @type_of_housings.each_with_index do |type, i|
-        name = type[:name]
-        @workbook.add_worksheet(name: name)
-
-        # Add link in the first columns cells to the created sheet
-        @sheet.add_hyperlink(location: "'#{name}'!A1", ref: "A#{i + 2}", target: :sheet)
-      end
-    end
-
     def data_rows
       @type_of_housings.each_with_index.map do |type, i|
         columns(type, i).map do |cell|
@@ -51,7 +41,17 @@ module Reports
       end
     end
 
-    private
+    def add_sibling_sheets
+      @type_of_housings.each_with_index do |type, i|
+        name = type[:name]
+        @workbook.add_worksheet(name: name)
+
+        # Add link in the first columns cells to the created sheet
+        @sheet.add_hyperlink(location: "'#{name}'!A1", ref: "A#{i + 2}", target: :sheet)
+      end
+    end
+
+    # private
 
     def columns(type = {}, i = 0)
       row = i + 2
@@ -81,6 +81,39 @@ module Reports
         {
           heading: 'Avvikelse mellan förväntad och utbetald schablon',
           query: "=E#{row}-C#{row}"
+        }
+      ]
+    end
+
+    def refugees(type_of_housing)
+      Refugee
+        .includes(:payments, placements: { home: :type_of_housings })
+        .where(placements: { home: { type_of_housings: { id: type_of_housing.id } } })
+        .where(registered: @from..@to)
+    end
+
+    def sibling_sheet_columns(refugee = Refugee.new, i = 0)
+      row = i + 2
+      [
+        {
+          heading: 'Budgeterad kostnad',
+          query: self.class.costs_formula(refugee.placements_costs_and_days(from: @from, to: @to))
+        },
+        {
+          heading: 'Förväntad schablon',
+          query: refugee.expected_rate
+        },
+        {
+          heading: 'Avvikelse',
+          query: "=D#{row}-C#{row}"
+        },
+        {
+          heading: 'Utbetald schablon',
+          query: self.class.payments_formula(refugee.amount_and_days(from: @from, to: @to))
+        },
+        {
+          heading: 'Avvikelse',
+          query: "=D#{row}-C#{row}"
         }
       ]
     end

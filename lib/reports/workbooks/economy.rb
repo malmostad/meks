@@ -1,20 +1,5 @@
 module Reports
   class Economy < Workbooks
-    class << self
-      def costs_formula(costs_and_days)
-        calculation = costs_and_days.map do |cad|
-          "(#{cad[:days]}*#{cad[:cost]})"
-        end
-        "=#{calculation.join('+')}"
-      end
-
-      def payments_formula(days_and_daily_amounts)
-        calculation = days_and_daily_amounts.map do |dada|
-          "(#{dada[:days]}*#{dada[:daily_amount]})"
-        end
-        "=#{calculation.join('+')}"
-      end
-    end
 
     private
 

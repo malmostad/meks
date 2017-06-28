@@ -9,6 +9,24 @@ module Reports
 
     DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
+    class << self
+      def costs_formula(costs_and_days)
+        calculation = costs_and_days.map do |cad|
+          "(#{cad[:days]}*#{cad[:cost]})"
+        end
+        return unless calculation.present?
+        "=#{calculation.join('+')}"
+      end
+
+      def payments_formula(days_and_daily_amounts)
+        calculation = days_and_daily_amounts.map do |dada|
+          "(#{dada[:days]}*#{dada[:daily_amount]})"
+        end
+        return unless calculation.present?
+        "=#{calculation.join('+')}"
+      end
+    end
+
     def initialize(options = {})
       @filename   = options[:filename] || 'Utan titel.xlsx'
       @from       = options[:from]     || DEFAULT_RANGE[:from]
