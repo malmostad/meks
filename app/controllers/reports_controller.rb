@@ -93,6 +93,8 @@ class ReportsController < ApplicationController
     case params[:report_type]
     when 'economy'
       GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
+    when 'economy_per_refugee_status'
+      GenerateReportJob::EconomyPerRefugeeStatus.perform_later(report_params.to_h, file_id)
     when 'homes'
       GenerateReportJob::Homes.perform_later(report_params.to_h, file_id)
     when 'placements'
@@ -108,6 +110,8 @@ class ReportsController < ApplicationController
     case params[:report_type]
     when 'economy'
       'Ekonomi'
+    when 'economy_per_refugee_status'
+      'Per barns asylsstatus'
     when 'homes'
       'Boenden'
     when 'placements'

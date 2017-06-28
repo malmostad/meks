@@ -12,6 +12,8 @@ module Reports
       @axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
 
+    private
+
     def add_sheet(name = @sheet_name)
       @sheet = @workbook.add_worksheet(name: name)
       fill_sheet
@@ -21,6 +23,7 @@ module Reports
       @statuses.each_with_index do |status, i|
         name = i18n_name(status[:name])
         @workbook.add_worksheet(name: name)
+
         # Add link in the first columns cells to the created sheet
         @sheet.add_hyperlink(location: "'#{name}'!A1", ref: "A#{i + 2}", target: :sheet)
       end
