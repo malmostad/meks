@@ -2,7 +2,7 @@ class RateCategoriesController < ApplicationController
   before_action :set_rate_category, only: [:edit, :update]
 
   def index
-    @rate_categories = RateCategory.order(:name)
+    @rate_categories = RateCategory.includes(:rates, :legal_code).order(:name)
   end
 
   def edit
