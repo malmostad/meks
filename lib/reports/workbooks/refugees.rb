@@ -10,6 +10,8 @@ module Reports
       @asylum = options[:asylum]
     end
 
+    private
+
     def records
       refugees = Refugee.includes(
         :countries, :languages, :ssns, :dossier_numbers,

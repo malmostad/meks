@@ -1,9 +1,8 @@
 module Reports
-  class EconomyPerRefugeeStatus < Workbooks
+  class EconomyPerTypeOfHousing < Workbooks
     def initialize(options = {})
       super(options)
       @type_of_housings = TypeOfHousing.all
-      @statuses = Refugee.statuses
     end
 
     def create
@@ -23,8 +22,8 @@ module Reports
     end
 
     def add_sibling_sheets
-      @statuses.each_with_index do |status, i|
-        name = i18n_name(status[:name])
+      @type_of_housings.each_with_index do |type, i|
+        name = type[:name]
         @workbook.add_worksheet(name: name)
 
         # Add link in the first columns cells to the created sheet
@@ -33,8 +32,8 @@ module Reports
     end
 
     def data_rows
-      @statuses.each_with_index.map do |status, i|
-        columns(status, i).map do |cell|
+      @type_of_housings.each_with_index.map do |type, i|
+        columns(type, i).map do |cell|
           cell
         end
       end
@@ -54,12 +53,12 @@ module Reports
 
     private
 
-    def columns(status = {}, i = 0)
+    def columns(type = {}, i = 0)
       row = i + 2
       [
         {
           heading: 'Barnets status',
-          query: i18n_name(status[:name]),
+          query: type[:name],
           style: :link
         },
         {

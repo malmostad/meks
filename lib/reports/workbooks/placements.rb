@@ -8,6 +8,8 @@ module Reports
       @home_id =    options[:home_id]
     end
 
+    private
+
     def records
       placements = Placement.includes(
         :refugee, :home, :moved_out_reason,

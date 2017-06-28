@@ -6,7 +6,7 @@ module Reports
       @free_seats = options[:free_seats]
     end
 
-    protected
+    private
 
     def records
       homes = Home.includes(

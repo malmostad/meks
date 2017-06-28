@@ -16,7 +16,7 @@ module Reports
       end
     end
 
-    protected
+    private
 
     def records
       Refugee.includes(
