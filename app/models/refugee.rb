@@ -2,6 +2,7 @@ class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch
   include RefugeeStatuses
+  include RefugeeSelections
   include RefugeeCosts
   include RefugeeRates
   include RefugeePayments

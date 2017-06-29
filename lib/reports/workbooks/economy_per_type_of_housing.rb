@@ -85,13 +85,6 @@ module Reports
       ]
     end
 
-    def refugees(type_of_housing)
-      Refugee
-        .includes(:payments, placements: { home: :type_of_housings })
-        .where(placements: { home: { type_of_housings: { id: type_of_housing.id } } })
-        .where(registered: @from..@to)
-    end
-
     def sibling_sheet_columns(refugee = Refugee.new, i = 0)
       row = i + 2
       [
