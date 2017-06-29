@@ -29,7 +29,7 @@ module Reports
     def link
       @axlsx.workbook.styles.add_style(
         font_name: @font,
-        fg_color: '007896',
+        fg_color: '0066cc',
         alignment: @align_top
       )
     end

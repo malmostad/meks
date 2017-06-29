@@ -34,7 +34,7 @@ module Reports
 
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
-    def columns(record = Placement.new(refugee: Refugee.new, home: Home.new))
+    def columns(record = Placement.new(refugee: Refugee.new, home: Home.new), i)
       [
         {
           heading: 'Dossiernummer',

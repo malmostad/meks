@@ -5,7 +5,9 @@ module Reports
     require 'reports/workbooks/refugees'
     require 'reports/workbooks/placements'
     require 'reports/workbooks/economy_per_refugee_status'
+    require 'reports/workbooks/economy_per_refugee_status_sub_sheets'
     require 'reports/workbooks/economy_per_type_of_housing'
+    require 'reports/workbooks/economy_per_type_of_housing_sub_sheets'
 
     DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
@@ -52,16 +54,10 @@ module Reports
     end
 
     def data_rows
-      records.map do |refugee|
-        columns(refugee).map do |cell|
-          cell[:query]
+      records.each_with_index.map do |refugee, i|
+        columns(refugee, i).map do |cell|
+          cell
         end
-      end
-    end
-
-    def cell_data_types
-      columns.map do |cell|
-        cell[:type] || :string
       end
     end
 
@@ -114,8 +110,9 @@ module Reports
       # records can be and active record enumerator or an array of records
       data_rows.each do |row|
         @sheet.add_row(
-          row.map { |data| data },
-          types: cell_data_types
+          row.map { |cell| cell[:query] },
+          style: row.map { |cell| cell_style(cell[:style]) },
+          types: row.map { |cell| cell_type(cell[:type]) }
         )
       end
     end

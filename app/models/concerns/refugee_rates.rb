@@ -23,7 +23,7 @@ module RefugeeRates
 
   included do
     def expected_rate(report_range = DEFAULT_RANGE)
-      'todo'
+      0
     end
   end
 end

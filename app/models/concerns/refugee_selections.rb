@@ -1,5 +1,6 @@
 module RefugeeSelections
   extend ActiveSupport::Concern
+  DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
   module ClassMethods
     def per_type_of_housing(type_of_housing, registered = DEFAULT_RANGE)

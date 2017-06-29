@@ -2,6 +2,16 @@ module RefugeeStatuses
   extend ActiveSupport::Concern
 
   module ClassMethods
+    def statuses
+      [
+        { name: 'refugee.in_arrival', refugees: :in_arrival },
+        { name: 'refugee.temporary_permit', refugees: :temporary_permit },
+        { name: 'refugee.residence_permit', refugees: :residence_permit },
+        { name: 'refugee.designated', refugees: :designated }
+      ]
+    end
+  end
+
     # Comment in Swedish are from project specifications
     # Ankomstbarn typ 1:
     # - ska ha inskrivningsdatum
@@ -38,10 +48,12 @@ module RefugeeStatuses
       type1.or(type2).distinct
     end
 
+    # TODO: Change to spec def
     def temporary_permit
       where.not(temporary_permit_starts_at: nil)
     end
 
+    # TODO: Change to spec def
     def residence_permit
       where.not(residence_permit_at: nil)
     end
@@ -55,24 +67,6 @@ module RefugeeStatuses
       # är det datum i raden "Avslutad" som avgör när schablonen upphör.
       find(1, 2)
     end
-
-    # def statuses
-    #   [
-    #     'refugee.in_arrival',
-    #     'refugee.designated',
-    #     'refugee.temporary_permit',
-    #     'refugee.residence_permit'
-    #   ]
-    # end
-    def statuses
-      [
-        { name: 'refugee.in_arrival', refugees: :in_arrival },
-        { name: 'refugee.temporary_permit', refugees: :temporary_permit },
-        { name: 'refugee.residence_permit', refugees: :residence_permit },
-        { name: 'refugee.designated', refugees: :designated }
-      ]
-    end
-  end
 
   included do
     # Get the asylum event with latest date

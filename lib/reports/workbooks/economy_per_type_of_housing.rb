@@ -1,17 +1,12 @@
 module Reports
   class EconomyPerTypeOfHousing < Workbooks
-    def initialize(options = {})
-      super(options)
-      @type_of_housings = TypeOfHousing.all
-    end
-
     def create
       @axlsx    = Axlsx::Package.new
       @workbook = @axlsx.workbook
       @style    = Style.new(@axlsx)
 
       add_sheet
-      add_sibling_sheets
+      add_sub_sheets
 
       @axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
@@ -21,37 +16,17 @@ module Reports
       fill_sheet
     end
 
-    def data_rows
-      @type_of_housings.each_with_index.map do |type, i|
-        columns(type, i).map do |cell|
-          cell
-        end
+    def add_sub_sheets
+      records.each_with_index do |type_of_housing, i|
+        sheet = Reports::EconomyPerTypeOfHousingSubSheets.new(type_of_housing: type_of_housing, axlsx: @axlsx)
+        sheet.create
+        @sheet.add_hyperlink(location: "'#{type_of_housing.name}'!A1", ref: "A#{i + 2}", target: :sheet)
       end
     end
 
-    def add_data_rows
-      # xlsx data rows
-      # records can be and active record enumerator or an array of records
-      data_rows.each do |row|
-        @sheet.add_row(
-          row.map { |cell| cell[:query] },
-          style: row.map { |cell| cell_style(cell[:style]) },
-          types: row.map { |cell| cell_type(cell[:type]) }
-        )
-      end
+    def records
+      TypeOfHousing.includes(homes: :costs).all
     end
-
-    def add_sibling_sheets
-      @type_of_housings.each_with_index do |type, i|
-        name = type[:name]
-        @workbook.add_worksheet(name: name)
-
-        # Add link in the first columns cells to the created sheet
-        @sheet.add_hyperlink(location: "'#{name}'!A1", ref: "A#{i + 2}", target: :sheet)
-      end
-    end
-
-    # private
 
     def columns(type = {}, i = 0)
       row = i + 2
@@ -85,7 +60,7 @@ module Reports
       ]
     end
 
-    def sibling_sheet_columns(refugee = Refugee.new, i = 0)
+    def sub_sheet_columns(refugee = Refugee.new, i = 0)
       row = i + 2
       [
         {
