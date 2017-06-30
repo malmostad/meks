@@ -115,6 +115,15 @@ module Reports
           types: row.map { |cell| cell_type(cell[:type]) }
         )
       end
+      add_last_row
+    end
+
+    def add_last_row
+      row = last_row(records.size + 1)
+      return unless row
+      @sheet.add_row(
+        row.map { |cell| cell }
+      )
     end
 
     def cell_style(style)
@@ -124,6 +133,18 @@ module Reports
 
     def cell_type(type = :string)
       type
+    end
+
+    def records
+      raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"
+    end
+
+    def last_row(row_number)
+      # Optional
+    end
+
+    def columns
+      raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"
     end
   end
 end

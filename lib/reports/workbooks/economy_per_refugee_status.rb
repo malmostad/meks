@@ -60,15 +60,15 @@ module Reports
       ]
     end
 
-    def refugees
-      Refugee.includes(
-        :dossier_numbers, :ssns,
-        :municipality,
-        :gender, :homes, :municipality,
-        :payments,
-        placements: { home: :costs },
-        current_placements: [:legal_code, home: :type_of_housings]
-      ).where(registered: @from..@to)
+    def last_row(row_number)
+      [
+        '',
+        "=SUM(B2:B#{row_number})",
+        "=SUM(C2:C#{row_number})",
+        "=SUM(D2:D#{row_number})",
+        "=SUM(E2:E#{row_number})",
+        "=SUM(F2:F#{row_number})"
+      ]
     end
   end
 end
