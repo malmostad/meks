@@ -24,7 +24,7 @@ class Refugee < ApplicationRecord
 
   has_many :homes, through: :placements
   accepts_nested_attributes_for :placements,
-    reject_if: proc { |attr| attr[:home].blank? || attr[:moved_in_at].blank? }
+    reject_if: proc { |attr| puts attr.inspect; attr[:home_id].blank? }
 
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
