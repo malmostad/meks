@@ -16,7 +16,7 @@ module Reports
     end
 
     def records
-      Refugee.send(@status)
+      Refugee.includes(:payments, placements: { home: :costs }).send(@status[:refugees])
     end
 
     def columns(refugee = Refugee.new, i = 0)
@@ -36,7 +36,7 @@ module Reports
         },
         {
           heading: 'Avvikelse',
-          query: "=D#{row}-C#{row}"
+          query: "=C#{row}-B#{row}"
         },
         {
           heading: 'Utbetald schablon',
@@ -44,7 +44,7 @@ module Reports
         },
         {
           heading: 'Avvikelse',
-          query: "=D#{row}-C#{row}"
+          query: "=E#{row}-C#{row}"
         }
       ]
     end

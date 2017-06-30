@@ -10,7 +10,6 @@ module RefugeeStatuses
         { name: 'refugee.designated', refugees: :designated }
       ]
     end
-  end
 
     # Comment in Swedish are from project specifications
     # Ankomstbarn typ 1:
@@ -30,6 +29,7 @@ module RefugeeStatuses
     # - ska inte ha status avslutat
     def in_arrival
       type1 = Refugee
+              .includes(placements: { home: :costs })
               .where.not(registered: nil)
               .where(deregistered: nil)
               .where(municipality: nil)
@@ -40,6 +40,7 @@ module RefugeeStatuses
               .where(sof_placement: false)
 
       type2 = Refugee
+              .includes(placements: { home: :costs })
               .where.not(registered: nil)
               .where.not(municipality: nil)
               .where('municipality_placement_migrationsverket_at > ?', Date.today)
@@ -67,6 +68,7 @@ module RefugeeStatuses
       # är det datum i raden "Avslutad" som avgör när schablonen upphör.
       find(1, 2)
     end
+  end
 
   included do
     # Get the asylum event with latest date

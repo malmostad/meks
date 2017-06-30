@@ -1,6 +1,8 @@
 module RefugeePayments
   extend ActiveSupport::Concern
 
+  DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
+
   included do
     def total_payments
       payments.sum(:amount)

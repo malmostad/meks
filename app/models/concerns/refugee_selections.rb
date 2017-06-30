@@ -1,5 +1,6 @@
 module RefugeeSelections
   extend ActiveSupport::Concern
+
   DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
   module ClassMethods
