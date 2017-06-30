@@ -17,6 +17,16 @@ sv:
         refugee: Ensamkommande barn
         comment: Kommentar
 
+      placement: &placement
+        <<: *defaults
+        moved_in_at: Placeringsdatum
+        moved_out_at: Utskrivningsdatum
+        moved_out_reason: Anledning till utskrivning
+        specification: Placeringsspecifikation
+        legal_code: Lagrum
+        cost: Placeringskostnad
+        cost_per_day: Genomsnittlig dygnskostnad
+
       refugee: &refugee
         <<: *defaults
         draft: Utkast
@@ -54,8 +64,7 @@ sv:
         other_relateds: Anhöriga utanför systemet
         social_worker: Socialsekreterare
         placements:
-          moved_in_at: Placeringsdatum
-          cost: Placeringskostnad
+          <<: *placement
 
       relationship:
         <<: *defaults
@@ -66,16 +75,6 @@ sv:
         related_id: Anhörig-id
         type_of_relationship: Anhörigform
         other_relateds: Anhöriga utanför systemet
-
-      placement:
-        <<: *defaults
-        moved_in_at: Placeringsdatum
-        moved_out_at: Utskrivningsdatum
-        moved_out_reason: Anledning till utskrivning
-        specification: Placeringsspecifikation
-        legal_code: Lagrum
-        cost: Total kostnad
-        cost_per_day: Genomsnittlig dygnskostnad
 
       home:
         <<: *defaults
@@ -152,6 +151,9 @@ sv:
         name: Ange landets namn
       placement:
         cost: kr
+      refugee:
+        placements:
+          cost: kr
 
     hints:
       refugee:

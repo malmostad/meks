@@ -42,10 +42,17 @@
 
     - if @refugee.new_record? && @refugee.placements.present?
       %h2.group-title Boendeplacering
-      .help-block Ange boende och inskrivningsdatum eller lämna båda blanka
+      .help-block Ange boende, lagrum och inskrivningsdatum eller lämna alla blanka
       = f.simple_fields_for :placements do |placement|
-        = placement.association :home, collection: @homes, include_blank: ' ', input_html: { class: 'chosen' }
+        = placement.association :home,
+            collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification,
+            'data-use-placement-cost' => h.use_placement_cost }] },
+            input_html: { class: 'chosen' }
+        = placement.association :legal_code, include_blank: false, selected: @pre_selected
         = placement.input :moved_in_at, as: :string, wrapper: :datepicker
+        = placement.input :specification
+        = placement.input :cost
+
 
     %h2.group-title Asylstatus
     = f.input :registered, as: :string, wrapper: :datepicker

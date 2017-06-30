@@ -12,6 +12,7 @@ class RefugeesController < ApplicationController
     @refugee = Refugee.new
     @refugee.placements.build
     @homes = Home.where(active: true)
+    @pre_selected = default_legal_code
   end
 
   def edit

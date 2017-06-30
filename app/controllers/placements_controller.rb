@@ -69,10 +69,6 @@ class PlacementsController < ApplicationController
       @homes = Home.where(active: true)
     end
 
-    def default_legal_code
-      LegalCode.where(pre_selected: true).first.try(:id)
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def placement_params
       home = @homes.where(id: params[:placement][:home_id]).first
