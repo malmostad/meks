@@ -4,7 +4,10 @@
                 'data-use-placement-cost' => h.use_placement_cost }] },
                 input_html: { class: 'chosen' }
 
-= f.association :legal_code, include_blank: false, selected: @pre_selected
+- if @pre_selected.present?
+  = f.association :legal_code, include_blank: false, selected: @pre_selected
+- else
+  = f.association :legal_code, include_blank: false
 = f.input :moved_in_at, as: :string, wrapper: :datepicker
 = f.input :specification
 = f.input :cost

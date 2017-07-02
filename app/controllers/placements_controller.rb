@@ -7,6 +7,7 @@ class PlacementsController < ApplicationController
   def new
     @placement = @refugee.placements.new
     @pre_selected = default_legal_code
+
     authorize! :create, @placement
   end
 
@@ -22,9 +23,6 @@ class PlacementsController < ApplicationController
   def create
     @placement = @refugee.placements.new(placement_params)
     authorize! :create, @placement
-
-    logger.debug params
-    logger.debug placement_params
 
     if @placement.save
       redirect_to @refugee, notice: 'Placeringen registrerades'

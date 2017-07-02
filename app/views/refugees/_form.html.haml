@@ -48,7 +48,10 @@
             collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification,
             'data-use-placement-cost' => h.use_placement_cost }] },
             input_html: { class: 'chosen' }
-        = placement.association :legal_code, include_blank: false, selected: @pre_selected
+        - if @pre_selected.present?
+          = placement.association :legal_code, include_blank: false, selected: @pre_selected
+        - else
+          = placement.association :legal_code, include_blank: false
         = placement.input :moved_in_at, as: :string, wrapper: :datepicker
         = placement.input :specification
         = placement.input :cost
