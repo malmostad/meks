@@ -21,10 +21,6 @@ RSpec.describe Cost, type: :model do
     it "should require a start date" do
       expect(build(:cost, start_date: nil)).not_to be_valid
     end
-
-    it "should belong to a home" do
-      expect(build(:cost, home: nil)).not_to be_valid
-    end
   end
 
   describe 'destroy' do

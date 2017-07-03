@@ -220,17 +220,5 @@ RSpec.describe RefugeesController, type: :controller do
       post :create, { refugee: attributes }, valid_session
       expect(response).to render_template("new")
     end
-
-    it "re-renders the 'new' template if placement home_id is abscent" do
-      attributes = {
-        name: "Firstname Lastname",
-        placements_attributes: [{
-          legal_code_id: legal_code.id,
-          moved_in_at: '2016-01-02'
-        }]
-      }
-      post :create, { refugee: attributes }, valid_session
-      expect(response).to render_template("new")
-    end
   end
 end
