@@ -8,7 +8,7 @@ namespace :db do
     lc_id = LegalCode.where(name: 'SoL').first.id
 
     [{ name: 'Ankomstbarn', from_age: 0, to_age: 17,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen ska beräknas från och med inskrivningsdatum och avslutas samma dag som anvisningsdatum till en annan kommun.',
+        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen ska beräknas från och med inskrivningsdatum och avslutas samma dag som anvisningsdatum till en annan kommun eller genom att datum i raden för avslut är ifyllt.',
         rate: { amount: 3_000, start_date: '2017-01-01', end_date: '2017-12-31' }
       },
       { name: 'Ankomstbarn', from_age: 18, to_age: 20,
