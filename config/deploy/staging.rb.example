@@ -1,7 +1,7 @@
 set :rails_env, :test
 set :stage, :staging
 
-set :branch, 'saml'
+set :branch, 'master'
 
 role :app, %w{app_runner@example.com}
 role :web, %w{app_runner@example.com}

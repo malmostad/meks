@@ -96,7 +96,6 @@ namespace :deploy do
       on roles(:app) do |server|
         puts ''
         puts '     NOTE: You need to restart delayed job manually in the server:'
-        puts ''
         puts '     sudo monit restart delayed_job'
         puts ''
       end
