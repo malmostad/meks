@@ -4,6 +4,7 @@ class StatisticsController < ApplicationController
   before_action { authorize! :view, :statistics }
 
   def index
+    @cache_key_for_status = cache_key_for_status
   end
 
   private
