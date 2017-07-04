@@ -27,24 +27,27 @@ Rails.application.routes.draw do
   end
 
   resources :homes
-  resources :moved_out_reasons
-  resources :deregistered_reasons
-  resources :target_groups
-  resources :type_of_housings
-  resources :owner_types
-  resources :type_of_relationships
-  resources :municipalities
-  resources :countries
-  resources :languages
-  resources :genders
+  resources :moved_out_reasons, except: :show
+  resources :legal_codes, except: :show
+  resources :deregistered_reasons, except: :show
+  resources :target_groups, except: :show
+  resources :type_of_housings, except: :show
+  resources :owner_types, except: :show
+  resources :type_of_relationships, except: :show
+  resources :municipalities, except: :show
+  resources :countries, except: :show
+  resources :languages, except: :show
+  resources :genders, except: :show
+  resources :rate_categories, only: [:index, :edit, :update]
   resources :users, only: :index
   resources :statistics, only: :index
+  resources :payment_imports, except: [:edit, :update]
+  resources :settings, only: [:index, :edit, :update]
 
   get  'reports' => 'reports#index'
   post 'reports/generate'
-  get  'reports/status/:job_id/:file_id' => 'reports#status', as: 'reports_status'
-  get  'reports/download/:id' => 'reports#download', as: 'reports_download'
-  get  'reports/download_pre_generated/:id' => 'reports#download_pre_generated', as: 'reports_download_pre_generated'
+  get  'reports/status/:job_id/:file_id/:report_type' => 'reports#status', as: 'reports_status'
+  get  'reports/download/:id/:report_type' => 'reports#download', as: 'reports_download'
 
   match '*path', via: :all, to: 'errors#not_found'
 end

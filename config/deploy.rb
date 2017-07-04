@@ -4,7 +4,6 @@ require 'erb'
 I18n.config.enforce_available_locales = false
 
 set :rbenv_type, :user
-set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 
 set :application, 'meks'
@@ -91,9 +90,23 @@ namespace :deploy do
     end
   end
 
+  namespace :monit do
+    desc "Restart delayed job"
+    task :restart_delayed_job do
+      on roles(:app) do |server|
+        puts ''
+        puts '     NOTE: You need to restart delayed job manually in the server:'
+        puts ''
+        puts '     sudo monit restart delayed_job'
+        puts ''
+      end
+    end
+  end
+
   before :starting,       'deploy:are_you_sure'
   before :starting,       'deploy:check_revision'
   before :compile_assets, 'deploy:copy_vendor_statics'
   after  :publishing,     'unicorn:restart'
   after  :finishing,      'deploy:cleanup'
+  after  :finishing,      'monit:restart_delayed_job'
 end

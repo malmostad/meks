@@ -43,5 +43,17 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   config.log_formatter = ::Logger::Formatter.new
-  config.log_tags = [:uuid]
+  config.log_tags = [:subdomain, :uuid]
+
+  # Use the lowest log level to ensure availability of diagnostic information
+  # when problems arise.
+
+  config.log_level = :debug
+
+  # Prepend all log lines with the following tags.
+  # config.log_tags = [ :request_id ]
+
+  # Use a different cache store in production.
+  # config.cache_store = :mem_cache_store
+  config.cache_store = :dalli_store, '127.0.0.1:11211', { namespace: "meks-#{Rails.env}" }
 end

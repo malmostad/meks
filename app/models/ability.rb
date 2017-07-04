@@ -6,6 +6,11 @@ class Ability
       can :manage, :all
       can :destroy, Refugee
       cannot :destroy, Home
+      cannot :create, RateCategory
+      cannot :destroy, RateCategory
+      cannot :manage, Rate
+      cannot [:edit, :update], PaymentImport
+      cannot [:edit, :update], Payment
 
     elsif user.has_role? :writer
       can :manage, Refugee

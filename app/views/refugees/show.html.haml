@@ -21,10 +21,10 @@
 
       %h2.group-title Personuppgifter
       = show_attribute('Personnummer', @refugee.ssn)
-      = show_attribute('Extra personnummer', @refugee.ssns.map(&:full_ssn).join(', '))
+      = show_attribute('Extra personnummer', @refugee.ssns.map(&:full_ssn).join('<br>'))
 
       = show_attribute('Dossiernummer', @refugee.dossier_number)
-      = show_attribute('Extra dossiernummer', @refugee.dossier_numbers.map(&:name).join(', '))
+      = show_attribute('Extra dossiernummer', @refugee.dossier_numbers.map(&:name).join('<br>'))
       = show_attribute('Ålder', @refugee.age)
 
       = show_attribute('refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
@@ -51,3 +51,34 @@
 
       = render 'placements'
       = render 'relateds'
+
+      %h2.group-title Ekonomi
+      = show_attribute('Budgeterad dygnskostnad', "#{number_to_currency(@refugee.total_cost, delimiter: ' ')}")
+      = show_attribute('Förväntad schablonkonstnad', "todo")
+      = show_attribute('Total utbetald schablon', "#{number_to_currency(@refugee.total_payments, delimiter: ' ')}")
+
+      = show_attribute('Utbetalda schabloner', '')
+      - if @refugee.blank?
+        %p Inga schabloner har betalts ut
+      - else
+        %table.full.wrap
+          %thead
+            %tr
+              %th Import
+              %th Startdatum
+              %th Slutdatum
+              %th Dagar
+              %th Belopp
+              %th Belopp per dag
+              %th Diarienummer
+
+          %tbody
+            - @refugee.payments.each do |payment|
+              %tr
+                %td= link_to 'Visa', payment.payment_import
+                %td= payment.period_start
+                %td= payment.period_end
+                %td= payment.days
+                %td= "#{number_to_currency(payment.amount, delimiter: ' ')}"
+                %td= "#{number_to_currency(payment.per_day, delimiter: ' ')}"
+                %td= payment.diarie

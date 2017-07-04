@@ -4,5 +4,8 @@ section.box.show.statistics {
     font-size: emize(14);
     line-height: 1.5;
     margin: 0 0 .5em;
+    &.first {
+      margin-bottom: 2em;
+    }
   }
 }

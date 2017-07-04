@@ -1,0 +1,8 @@
+.box-content
+  = simple_form_for @legal_code, html: { class: "basic" } do |f|
+    = f.error_notification class: "warning"
+
+    = f.input :name, wrapper: :vertical_radio_and_checkboxes
+    = f.input :pre_selected, wrapper: :vertical_radio_and_checkboxes
+
+    = render 'application/submit', form: f, cancel_path: legal_codes_path

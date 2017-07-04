@@ -42,6 +42,15 @@
     margin-bottom: .3em;
   }
 
+  .placement_moved_in_at .date input {
+    max-width: 9em;
+  }
+
+  .placement_cost input.integer,
+  .refugee_placements_cost input.integer {
+    width: 9em;
+  }
+
   div.terms {
     padding-bottom: 1em;
     margin-bottom: 1em;
@@ -54,6 +63,23 @@
       }
       input.numeric.ssn-extension {
         width: 6em;
+      }
+    }
+    .form-group.home_costs_amount,
+    .form-group.rate_category_rates_amount {
+      input {
+        width: 9em;
+      }
+    }
+
+    .form-group.total-cost {
+      margin-bottom: 0;
+      .control-label {
+        float: none;
+        display: block;
+      }
+      input {
+        // width: 9em;
       }
     }
 
@@ -104,6 +130,20 @@
 
   .form-group.datepicker.warning {
     .input-group.date {
+      font-size: 14px;
+    }
+  }
+  .help-block.file_instructions {
+    ol {
+      list-style-type: upper-latin;
+    }
+    li, p {
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+  }
+  .warning {
+    ul li, p {
       font-size: 14px;
     }
   }

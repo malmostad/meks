@@ -35,6 +35,10 @@ section.refugee {
     margin: 1em 0;
   }
 
+  .placement {
+    margin-bottom: 2em;
+  }
+
   .secrecy {
     float: right;
     border: 2px dotted $warning-color;
@@ -48,7 +52,8 @@ section.refugee {
   }
 }
 
-.placement_specification {
+.placement_specification,
+.refugee_placements_specification {
   display: none;
 }
 

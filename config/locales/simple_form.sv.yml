@@ -12,9 +12,20 @@ sv:
     labels:
       defaults: &defaults
         name: Namn
+        description: Beskrivning
         home: Boende
         refugee: Ensamkommande barn
         comment: Kommentar
+
+      placement: &placement
+        <<: *defaults
+        moved_in_at: Placeringsdatum
+        moved_out_at: Utskrivningsdatum
+        moved_out_reason: Anledning till utskrivning
+        specification: Placeringsspecifikation
+        legal_code: Lagrum
+        cost: Placeringskostnad
+        cost_per_day: Genomsnittlig dygnskostnad
 
       refugee: &refugee
         <<: *defaults
@@ -38,10 +49,10 @@ sv:
         deregistered: Avslutad
         deregistered_reason: Avslutsorsak
         deregistered_comment: Avslutsorsak, kommentar
-        residence_permit_at: <abbr title='Permanent uppehållstillstånd'>PUT</abbr>
+        residence_permit_at: PUT
         checked_out_to_our_city: Utskriven till Malmö
-        temporary_permit_starts_at: <abbr title='Tillfälligt uppehållstillstånd startar'>TUT startar</abbr>
-        temporary_permit_ends_at: <abbr title='Tillfälligt uppehållstillstånd slutar'>TUT slutar</abbr>
+        temporary_permit_starts_at: TUT startar
+        temporary_permit_ends_at: TUT slutar
         citizenship_at: Medborgarskap erhölls
         municipality: Anvisningskommun
         municipality_placement_migrationsverket_at: Anvisningsdatum
@@ -53,7 +64,7 @@ sv:
         other_relateds: Anhöriga utanför systemet
         social_worker: Socialsekreterare
         placements:
-          moved_in_at: Placeringsdatum
+          <<: *placement
 
       relationship:
         <<: *defaults
@@ -64,13 +75,6 @@ sv:
         related_id: Anhörig-id
         type_of_relationship: Anhörigform
         other_relateds: Anhöriga utanför systemet
-
-      placement:
-        <<: *defaults
-        moved_in_at: Placeringsdatum
-        moved_out_at: Utskrivningsdatum
-        moved_out_reason: Anledning till utskrivning
-        specification: Placeringsspecifikation
 
       home:
         <<: *defaults
@@ -83,11 +87,54 @@ sv:
         owner_type: Ägarform
         target_groups: Målgrupp
         seats: Platser
+        costs: Dygnskostnad
         guaranteed_seats: Garantiplatser
         movable_seats: Rörliga platser
         languages: Språk
         active: Aktivt
         use_placement_specification: Använd placeringsspecifikation
+        use_placement_cost: Använd placeringskostnad
+
+      rate_category:
+        <<: *defaults
+        legal_code: Lagrum
+        from_age: Från ålder
+        to_age: Till och med ålder
+
+      legal_code:
+        <<: *defaults
+        pre_selected: Förvald
+
+      payment_import: &payment_import
+        <<: *defaults
+        user: Importerad av
+        imported_at: Importerad
+        file: Fil
+        refugee: Barn
+        refugee_id: Barn
+        payments: Utbetalda schabloner
+        parse_errors: Tolkningsfel
+        original_filename: Ursprungligt filnamn
+        content_type: Filtyp
+
+      payment: &payment
+        <<: *payment_import
+        refugee_id: Barn
+        amount: Belopp
+        period_start: Startdatum
+        period_end: Slutdatum
+
+      payments:
+        <<: *payment
+        refugee_id: Barn
+
+      settings: &settings
+        <<: *defaults
+        human_name: Namn
+        value: Värde
+
+      setting:
+        <<: *settings
 
     placeholders:
       home:
@@ -102,6 +149,11 @@ sv:
         name: Ange språknamn
       country:
         name: Ange landets namn
+      placement:
+        cost: kr
+      refugee:
+        placements:
+          cost: kr
 
     hints:
       refugee:
@@ -114,3 +166,5 @@ sv:
       placement:
         comment: *comment
         specification: "Namn på HVB samt namn på vårdföretag"
+      home:
+        comment: *comment

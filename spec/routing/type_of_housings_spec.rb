@@ -11,10 +11,6 @@ RSpec.describe TypeOfHousingsController, type: :routing do
       expect(:get => "/type_of_housings/new").to route_to("type_of_housings#new")
     end
 
-    it "routes to #show" do
-      expect(:get => "/type_of_housings/1").to route_to("type_of_housings#show", :id => "1")
-    end
-
     it "routes to #edit" do
       expect(:get => "/type_of_housings/1/edit").to route_to("type_of_housings#edit", :id => "1")
     end

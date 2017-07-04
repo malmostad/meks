@@ -10,20 +10,23 @@ RSpec.describe "Placements", type: :feature do
 
     describe "Adds placement" do
       scenario "for a refugee" do
-        refugee = create(:refugee)
-        homes   = create_list(:home, 10)
+        refugee     = create(:refugee)
+        homes       = create_list(:home, 10)
+        legal_codes = create_list(:legal_code, 10)
 
         visit "/refugees/#{refugee.id}"
         click_on "Ny placering"
         expect(current_path).to eq new_refugee_placement_path(refugee)
 
         select(homes[1].name, from: "placement_home_id")
+        select(legal_codes[1].name, from: "placement_legal_code_id")
         fill_in "placement_moved_in_at", with: Date.today.to_s
         click_button "Spara"
 
         expect(current_path).to eq refugee_path(refugee)
         expect(page).to have_selector(".notice", text: "Placeringen registrerades")
         expect(page).to have_selector(".placement a", text: homes[1].name)
+        expect(page).to have_selector(".placement .controls", text: legal_codes[1].name)
       end
 
       scenario "show and hide specification field", js: true do
@@ -46,21 +49,24 @@ RSpec.describe "Placements", type: :feature do
 
     describe "Edit placement" do
       scenario "for a refugee" do
-        refugee   = create(:refugee)
-        homes     = create_list(:home, 10)
-        placement = create(:placement, refugee: refugee, home: homes.first)
+        refugee     = create(:refugee)
+        homes       = create_list(:home, 10)
+        legal_codes = create_list(:legal_code, 10)
+        placement   = create(:placement, refugee: refugee, home: homes.first, legal_code: legal_codes.first)
 
         visit "/refugees/#{refugee.id}"
         click_link("Redigera placeringen")
         expect(current_path).to eq edit_refugee_placement_path(refugee, refugee.placements.first)
 
         select(homes[3].name, from: "placement_home_id")
+        select(legal_codes[3].name, from: "placement_legal_code_id")
         fill_in "placement_moved_in_at", with: Date.today.to_s
         click_button "Spara"
 
         expect(current_path).to eq refugee_path(refugee)
         expect(page).to have_selector(".notice", text: "Placeringen uppdaterades")
         expect(page).to have_selector(".placement a", text: homes[3].name)
+        expect(page).to have_selector(".placement .controls", text: legal_codes[3].name)
       end
 
       scenario "show and hide specification field", js: true do
@@ -68,12 +74,12 @@ RSpec.describe "Placements", type: :feature do
         homes = create_list(:home, 10)
         homes << create(:home, use_placement_specification: true)
 
-        placement = create(:placement, refugee: refugee, home: homes.last)
+        create(:placement, refugee: refugee, home: homes.last)
 
         visit "/refugees/#{refugee.id}"
         click_link("Redigera placeringen")
 
-        expect(page).to have_selector('.placement_specification', visible: true)
+        expect(page).to have_selector('.placement_specification', visible: false)
 
         page.execute_script("$('#placement_home_id').val(#{homes.last.id}).change()")
         expect(page).to have_selector('.placement_specification', visible: true)
@@ -82,9 +88,10 @@ RSpec.describe "Placements", type: :feature do
 
     describe "Ends placement" do
       scenario "for a refugee" do
-        refugee   = create(:refugee)
-        homes     = create_list(:home, 10)
-        placement = create(:placement, refugee: refugee, home: homes.first)
+        refugee     = create(:refugee)
+        homes       = create_list(:home, 10)
+        legal_codes = create_list(:legal_code, 10)
+        placement   = create(:placement, refugee: refugee, home: homes.first, legal_code: legal_codes.first)
         moved_out_reasons = create_list(:moved_out_reason, 5)
 
         visit "/refugees/#{refugee.id}"
@@ -100,9 +107,10 @@ RSpec.describe "Placements", type: :feature do
       end
 
       scenario "can't end before it was started" do
-        refugee   = create(:refugee)
-        homes     = create_list(:home, 10)
-        placement = create(:placement, refugee: refugee, home: homes.first)
+        refugee     = create(:refugee)
+        homes       = create_list(:home, 10)
+        legal_codes = create_list(:legal_code, 10)
+        placement   = create(:placement, refugee: refugee, home: homes.first, legal_code: legal_codes.first)
         moved_out_reasons = create_list(:moved_out_reason, 5)
 
         visit "/refugees/#{refugee.id}"

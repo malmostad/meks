@@ -10,8 +10,8 @@ gem 'jquery-rails', '4.3.1'
 gem 'simple_form', '3.4.0'
 gem 'mysql2', '0.4.5'
 gem 'dalli', '2.7.6'
-gem 'elasticsearch-model' #, '0.1.9'
-gem 'elasticsearch-rails' #, '0.1.9'
+gem 'elasticsearch-model', '0.1.9'
+gem 'elasticsearch-rails', '0.1.9'
 gem 'daemons', '1.2.4'
 
 gem 'net-ldap', '0.16.0'
@@ -28,12 +28,12 @@ gem 'faker'
 
 gem 'bcrypt', '~> 3.1.11'
 
+gem 'pry-rails'
+
 group :development do
   gem 'capistrano', '3.8.0', require: false
   gem 'capistrano-rails', '1.2.3', require: false
   gem 'capistrano-rbenv', '2.1.0', require: false
-  gem 'pry-rails'
-  gem 'web-console'
   gem 'bullet'
 end
 

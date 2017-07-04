@@ -1,4 +1,4 @@
-class ReportGenerator
+class Report
   class Style
     def initialize(axlsx)
       @axlsx = axlsx
@@ -40,6 +40,15 @@ class ReportGenerator
         fg_color: '000000',
         alignment: @align_top,
         format_code: 'yyyy-mm-dd'
+      )
+    end
+
+    def currency
+      @axlsx.workbook.styles.add_style(
+        font_name: @font,
+        fg_color: '000000',
+        alignment: @align_top,
+        format_code: '# ##0'
       )
     end
 

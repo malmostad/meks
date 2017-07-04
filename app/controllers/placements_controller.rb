@@ -6,10 +6,13 @@ class PlacementsController < ApplicationController
 
   def new
     @placement = @refugee.placements.new
+    @pre_selected = default_legal_code
+
     authorize! :create, @placement
   end
 
   def edit
+    @pre_selected = @placement.legal_code_id || default_legal_code
     authorize! :edit, @placement
   end
 
@@ -66,12 +69,12 @@ class PlacementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def placement_params
-      allowed = [:home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id]
-      begin
-        home = @homes.find(params[:placement][:home_id])
-        allowed += [:specification] if home && home.use_placement_specification
-      rescue
-      end
-      params.require(:placement).permit(allowed)
+      home = @homes.where(id: params[:placement][:home_id]).first
+      params[:specification] == '' if home.present? && home.use_placement_specification
+      params[:cost] == nil if home.present? && home.use_placement_cost
+
+      params.require(:placement).permit(
+        :home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id,
+        :legal_code_id, :specification, :cost)
     end
 end

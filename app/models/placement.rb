@@ -6,9 +6,11 @@ class Placement < ApplicationRecord
   belongs_to :refugee, touch: true
   belongs_to :home, touch: true
   belongs_to :moved_out_reason
+  belongs_to :legal_code
 
   validates_presence_of :home
   validates_presence_of :moved_in_at
+  validates_presence_of :legal_code
 
   before_validation do
     if moved_out_at.present? && moved_in_at > moved_out_at
@@ -60,14 +62,29 @@ class Placement < ApplicationRecord
     where('moved_out_at = ? or moved_in_at >= ?', nil, Date.today.beginning_of_quarter)
   end
 
+  def cost_sum
+    costs = []
+    if home.use_placement_cost
+      costs << refugee.placement_cost(self)
+    else
+      costs << refugee.placement_home_costs(self)
+    end
+
+    cost = 0
+    costs.flatten.each do |c|
+      cost += c[:cost] * c[:days]
+    end
+    cost
+  end
+
   def placement_time
     return 0 if moved_in_at.blank?
+    days = moved_out_at.present? ? (moved_out_at - moved_in_at).to_i : (Date.today - moved_in_at).to_i
+    days + 1
+  end
 
-    if moved_out_at.present?
-      diff = moved_out_at - moved_in_at + 1
-    else
-      diff = DateTime.now.to_date - moved_in_at + 1
-    end
-    diff.to_i
+  def cost_per_day
+    return 0 unless placement_time.positive?
+    cost_sum / placement_time
   end
 end

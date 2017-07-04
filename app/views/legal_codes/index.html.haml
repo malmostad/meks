@@ -1,0 +1,18 @@
+- title "Lagrum"
+%section.box.index
+  %h1.box-title= h1
+  %table.full.wrap
+    %thead
+      %tr
+        %th Namn
+        %th
+
+    %tbody
+      - @legal_codes.each do |legal_code|
+        %tr
+          %td= link_to legal_code.name, edit_legal_code_path(legal_code)
+          %td.delete= link_to t('actions.delete'), legal_code, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_legal_code_path, class: "btn btn-primary"

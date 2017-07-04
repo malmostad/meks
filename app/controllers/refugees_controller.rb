@@ -3,7 +3,8 @@ class RefugeesController < ApplicationController
     @refugee = Refugee.includes(
       :placements,
       relationships: [:type_of_relationship, :related],
-      placements: [:home, :moved_out_reason]
+      placements: [:home, :moved_out_reason, :legal_code],
+      payments: :payment_import
     ).find(params[:id])
   end
 
@@ -11,6 +12,7 @@ class RefugeesController < ApplicationController
     @refugee = Refugee.new
     @refugee.placements.build
     @homes = Home.where(active: true)
+    @pre_selected = default_legal_code
   end
 
   def edit
@@ -132,7 +134,8 @@ class RefugeesController < ApplicationController
         language_ids: [],
         ssns_attributes: [:id, :_destroy, :date_of_birth, :extension],
         dossier_numbers_attributes: [:id, :_destroy, :name],
-        placements_attributes: [:home_id, :moved_in_at]
+        placements_attributes: [:home_id, :refugee_id, :moved_in_at,
+        :legal_code_id, :specification, :cost]
       ]
       permitted_params.unshift(:draft) if can? :manage, Refugee
       params.require(:refugee).permit(*permitted_params)

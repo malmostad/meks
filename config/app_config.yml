@@ -2,19 +2,7 @@ defaults: &defaults
   base_url: "https://komin.malmo.se/"
   assets_url_base: "//assets.malmo.se/internal/v4-staging/"
   auth_method: ldap # saml ldap or stub
-  pre_generated_reports:
-    - id: 1
-      desc: 'Aktuella ärenden: Alla barn som inte är utskrivna'
-      filename: 'aktuella_arenden.xlsx'
-    - id: 2
-      desc: 'Aktuellt år: Barn som varit inskrivna i år eller har en placering första januari detta år'
-      filename: 'aktuellt_ar.xlsx'
-    - id: 3
-      desc: 'Placeringar aktuellt kvartal'
-      filename: 'placeringar_aktuellt_kvartal.xlsx'
-    - id: 4
-      desc: 'Alla placeringar'
-      filename: 'alla_placeringar.xlsx'
+  session_time: 30 # minutes
 
 development: &development
   <<: *defaults
@@ -22,6 +10,7 @@ development: &development
   cache_ttl: 1
   max_age: 0
   title_suffix: "MEKS (utveckling)"
+  session_time: 1440
   auth_method: stub
 
 local_test:

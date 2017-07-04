@@ -1,12 +1,16 @@
 class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch
+  include RefugeeCosts
+  include RefugeeRates
+  include RefugeePayments
 
   belongs_to :gender
   belongs_to :municipality
   belongs_to :deregistered_reason
 
   has_many :placements, dependent: :destroy
+  has_many :payments
 
   has_many :current_placements, -> { where(moved_out_at: nil).where.not(moved_in_at: nil) },
     class_name: 'Placement'
@@ -19,7 +23,8 @@ class Refugee < ApplicationRecord
   }
 
   has_many :homes, through: :placements
-  accepts_nested_attributes_for :placements, reject_if: :all_blank
+  accepts_nested_attributes_for :placements,
+    reject_if: proc { |attr| attr[:home_id].blank? }
 
   has_and_belongs_to_many :countries
   has_and_belongs_to_many :languages
@@ -85,7 +90,7 @@ class Refugee < ApplicationRecord
         :temporary_permit_ends_at,
         :deregistered]
 
-    # Create a k: v hash from the array
+    # Create a key/value hash from the array
     Hash[dates.map! { |k| [k.to_s, send(k)] }]
 
     # Delete blanks
@@ -93,5 +98,41 @@ class Refugee < ApplicationRecord
 
     # Get the event with the latest date
     dates.sort_by { |_k, v| v }.last
+  end
+
+  # Comment in Swedish are from project specifications
+  # Ankomstbarn typ 1:
+  # - ska ha inskrivningsdatum
+  # - ska inte ha anvisningskommun
+  # - ska inte ha anvisningsdatum
+  # - ska inte ha status avslutat
+  # - ska inte datum för PUT
+  # - ska inte datum för TUT
+  # - ska inte datum för medborgarskap
+  # - ska inte ha SoF-placering
+  #
+  # Ankomstbarn typ 2:
+  # - ska ha inskrivningsdatum
+  # - ska ha anvisningskommun
+  # - ska ha anvisningsdatum där anvisningsdatumet ligger i framtiden
+  # - ska inte ha status avslutat
+  def self.in_arrival
+    type1 = Refugee
+            .where.not(registered: nil)
+            .where(deregistered: nil)
+            .where(municipality: nil)
+            .where(municipality_placement_migrationsverket_at: nil)
+            .where(residence_permit_at: nil)
+            .where(temporary_permit_starts_at: nil)
+            .where(citizenship_at: nil)
+            .where(sof_placement: false)
+
+    type2 = Refugee
+            .where.not(registered: nil)
+            .where.not(municipality: nil)
+            .where('municipality_placement_migrationsverket_at > ?', Date.today)
+            .where(deregistered: nil)
+
+    (type1 + type2).uniq
   end
 end

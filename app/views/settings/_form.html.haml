@@ -1,0 +1,8 @@
+.box-content
+  = simple_form_for @setting, html: { class: "basic" } do |f|
+    = f.error_notification class: "warning"
+
+    = show_attribute('settings.human_name', @setting.human_name)
+    = f.input :value
+
+    = render 'application/submit', form: f, cancel_path: settings_path

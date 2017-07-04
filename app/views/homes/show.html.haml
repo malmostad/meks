@@ -2,7 +2,7 @@
 %section.box.show
   %h1.box-title= h1
   .box-content.basic.form-data
-    - if can? :manage, Refugee
+    - if can? :manage, Home
       .form-group
         = link_to 'Redigera', edit_home_path(@home), class: 'btn btn-default'
     = form_for @home, html: { class: 'basic' } do |f|
@@ -22,6 +22,10 @@
       = show_attribute('home.languages', @home.languages.map(&:name).join(', '))
       = show_attribute('home.use_placement_specification', @home.use_placement_specification? ? 'Ja' : 'Nej')
       = show_attribute('home.comment', @home.comment)
+
+      %h2.group-title Ekonomi
+      = show_attribute('Använd placeringskostnad', @home.use_placement_cost? ? 'Ja' : 'Nej')
+      = show_attribute('Dygnskostnader (kr)', @home.costs.map { |cost| "#{cost.amount} kr (#{cost.start_date} till #{cost.end_date})" }.join('<br>'))
 
       %h2.group-title Tillgänglighet
       = show_attribute('Aktuella placeringar', @placements.to_a.size)

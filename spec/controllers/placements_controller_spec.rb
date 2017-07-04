@@ -9,9 +9,14 @@ RSpec.describe PlacementsController, type: :controller do
       Home.create!(name: "Valid home")
     }
 
+    let(:legal_code) {
+      LegalCode.create!(name: "Valid legal code")
+    }
+
     let(:valid_attributes) {
       {
         home_id: valid_home.id,
+        legal_code_id: legal_code.id,
         refugee_id: valid_refugee.id,
         moved_in_at: "2016-01-01"
       }
@@ -20,6 +25,7 @@ RSpec.describe PlacementsController, type: :controller do
     let(:invalid_attributes) {
       {
         home_id: valid_home.id + 1,
+        legal_code_id: legal_code.id + 1,
         refugee_id: valid_refugee.id + 1,
         moved_in_at: "2016-01-01"
       }
@@ -84,16 +90,12 @@ RSpec.describe PlacementsController, type: :controller do
         let(:attributes_with_specification) {
           {
             home_id: valid_home.id,
+            legal_code: legal_code.id,
             refugee_id: valid_refugee.id,
             moved_in_at: "2016-01-01",
             specification: 'foo'
           }
         }
-
-        it "don't save non-allowed attribute" do
-          post :create, {refugee_id: valid_refugee.id, :placement => attributes_with_specification}, valid_session
-          expect(assigns(:placement).specification).to be_nil
-        end
 
         it "save placement.specification when allowed " do
           valid_home.update_attribute(:use_placement_specification, true)

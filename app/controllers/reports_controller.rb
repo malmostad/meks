@@ -5,15 +5,14 @@ class ReportsController < ApplicationController
 
   def index
     @homes = Home.order(:name)
-    @pre_generated_reports = pre_generated_reports
   end
 
   def generate
     file_id = SecureRandom.hex
-    job = GenerateReportJob.perform_later(params.to_h, file_id)
+    job = generate_report_job(file_id)
     delayed_job_id = Delayed::Job.find(job.provider_job_id).id
 
-    redirect_to reports_status_path(delayed_job_id, file_id)
+    redirect_to reports_status_path(delayed_job_id, file_id, params[:report_type])
   end
 
   def status
@@ -35,7 +34,8 @@ class ReportsController < ApplicationController
       created_at: created_at || 0,
       finished: finished,
       queue_size: queue_size,
-      status_url: reports_status_url(params[:job_id], params[:file_id])
+      status_url: reports_status_url(params[:job_id], params[:file_id]),
+      report_type: params[:report_type]
     }
 
     respond_to do |format|
@@ -50,37 +50,38 @@ class ReportsController < ApplicationController
     file_with_path = file_path("#{params[:id]}.xlsx")
 
     if File.exist? file_with_path
-      send_xlsx file_with_path, "#{current_user.username}_#{Time.now.to_formatted_s(:number)}.xlsx"
+      response.headers['Content-Length'] = File.size(file_with_path).to_s
+      send_xlsx file_with_path, "#{report_name_prefix}_#{Time.now.to_formatted_s(:number)}.xlsx"
     else
       render :report_not_found
     end
   end
 
-  def download_pre_generated
-    filename = pre_generated_report_name(params[:id])['filename']
-    file_with_path = file_path(filename)
-
-    send_xlsx file_with_path, filename
-  end
-
   private
 
-  def pre_generated_reports
-    APP_CONFIG['pre_generated_reports'].each do |report|
-      file = file_path(report['filename'])
-
-      if File.exist?(file)
-        report.merge!(
-          filetime: File.mtime(file).localtime,
-          filesize: File.size(file)
-        )
-      end
-    end
+  def report_params
+    params.permit(
+      :report_type,
+      :homes_free_seats,
+      :homes_owner_type,
+      :placements_from,
+      :placements_home_id,
+      :placements_to,
+      :placements_selection,
+      :placements_home_id,
+      :placements_from,
+      :placements_to,
+      :refugees_registered_to,
+      :refugees_registered_from,
+      :refugees_born_after,
+      :refugees_born_before,
+      :refugees_include_without_date_of_birth,
+      :refugees_asylum
+    )
   end
 
   def send_xlsx(file_with_path, base_name)
-    send_file file_with_path, type: :xlsx, disposition: 'attachment',
-      filename: base_name
+    send_file file_with_path, type: :xlsx, disposition: 'attachment', filename: base_name
   end
 
   def file_path(filename)
@@ -88,8 +89,30 @@ class ReportsController < ApplicationController
     File.join(Rails.root, 'reports', filename)
   end
 
-  def pre_generated_report_name(id)
-    APP_CONFIG['pre_generated_reports'].detect { |r| r['id'] == id.to_i }
+  def generate_report_job(file_id)
+    case params['report_type']
+    when 'economy'
+      GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
+    when 'homes'
+      GenerateReportJob::Homes.perform_later(report_params.to_h, file_id)
+    when 'placements'
+      GenerateReportJob::Placements.perform_later(report_params.to_h, file_id)
+    when 'refugees'
+      GenerateReportJob::Refugees.perform_later(report_params.to_h, file_id)
+    end
+  end
+
+  def report_name_prefix
+    case params[:report_type]
+    when 'economy'
+      'Ekonomi'
+    when 'homes'
+      'Boenden'
+    when 'placements'
+      'Placeringar'
+    when 'refugees'
+      'Ensamkommande'
+    end
   end
 
   # From http://guides.rubyonrails.org/security.html

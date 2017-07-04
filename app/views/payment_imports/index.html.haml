@@ -1,0 +1,23 @@
+- title "Utbetalda schabloner"
+%section.box.index
+  %h1.box-title= h1
+  %table.full.wrap
+    %thead
+      %tr
+        %td{ colspan: 5 }
+          .actions= link_to t('actions.new'), new_payment_import_path, class: "btn btn-primary"
+      %tr
+        %th Uppladdad av
+        %th Uppladdad
+        %th Antal utbetalningar
+        %th Ursprungligt filnamn
+        %th Detaljer
+
+    %tbody
+      - @payment_imports.each do |payment_import|
+        %tr
+          %td= payment_import.user.name
+          %td= payment_import.imported_at.to_s[0...20]
+          %td= payment_import.payments.size
+          %td= payment_import.original_filename
+          %td= link_to 'Visa', payment_import_path(payment_import)

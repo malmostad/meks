@@ -11,10 +11,6 @@ RSpec.describe OwnerTypesController, type: :routing do
       expect(:get => "/owner_types/new").to route_to("owner_types#new")
     end
 
-    it "routes to #show" do
-      expect(:get => "/owner_types/1").to route_to("owner_types#show", :id => "1")
-    end
-
     it "routes to #edit" do
       expect(:get => "/owner_types/1/edit").to route_to("owner_types#edit", :id => "1")
     end

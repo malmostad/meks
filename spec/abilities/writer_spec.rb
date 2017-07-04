@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe User, type: :ability do
   describe "with writer role" do
-    let(:user) { build(:user, role: 'writer') }
     subject(:ability) { Ability.new(user) }
+
+    let(:user) { build(:user, role: 'writer') }
 
     it { should be_able_to(:manage, Refugee.new) }
     it { should be_able_to(:manage, Home.new) }
@@ -16,6 +17,7 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:manage, Gender.new) }
     it { should_not be_able_to(:manage, Language.new) }
     it { should_not be_able_to(:manage, MovedOutReason.new) }
+    it { should_not be_able_to(:manage, LegalCode.new) }
     it { should_not be_able_to(:manage, DeregisteredReason.new) }
     it { should_not be_able_to(:manage, Municipality.new) }
     it { should_not be_able_to(:manage, OwnerType.new) }
@@ -23,10 +25,14 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:manage, TargetGroup.new) }
     it { should_not be_able_to(:manage, TypeOfHousing.new) }
     it { should_not be_able_to(:manage, TypeOfRelationship.new) }
+    it { should_not be_able_to(:manage, RateCategory.new) }
+    it { should_not be_able_to(:manage, PaymentImport.new) }
+    it { should_not be_able_to(:manage, Payment.new) }
     it { should_not be_able_to(:read, Country.new) }
     it { should_not be_able_to(:read, Gender.new) }
     it { should_not be_able_to(:read, Language.new) }
     it { should_not be_able_to(:read, MovedOutReason.new) }
+    it { should_not be_able_to(:read, LegalCode.new) }
     it { should_not be_able_to(:read, DeregisteredReason.new) }
     it { should_not be_able_to(:read, Municipality.new) }
     it { should_not be_able_to(:read, OwnerType.new) }
