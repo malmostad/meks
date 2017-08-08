@@ -53,7 +53,7 @@ On a fresh server running a base install of Ubuntu 14.04:
 1. Add `app_runner` as a sudo user.
 2. Log on to the server as `app_runner` and download the two provisioning files needed:
 
-        $ wget https://raw.githubusercontent.com/malmostad/puppet-mcommons/master/bootstrap.sh
+        $ wget https://raw.githubusercontent.com/malmostad/meks/master/puppet/bootstrap.sh
         $ wget https://raw.githubusercontent.com/malmostad/meks/master/puppet/server.pp
 
 3. Run the provisioning:
