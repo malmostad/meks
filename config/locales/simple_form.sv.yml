@@ -17,6 +17,16 @@ sv:
         refugee: Ensamkommande barn
         comment: Kommentar
 
+      placement: &placement
+        <<: *defaults
+        moved_in_at: Placeringsdatum
+        moved_out_at: Utskrivningsdatum
+        moved_out_reason: Anledning till utskrivning
+        specification: Placeringsspecifikation
+        legal_code: Lagrum
+        cost: Placeringskostnad
+        cost_per_day: Genomsnittlig dygnskostnad
+
       refugee: &refugee
         <<: *defaults
         draft: Utkast
@@ -39,11 +49,11 @@ sv:
         deregistered: Avslutad
         deregistered_reason: Avslutsorsak
         deregistered_comment: Avslutsorsak, kommentar
-        residence_permit_at: <abbr title='Permanent uppehållstillstånd'>PUT</abbr>
+        residence_permit_at: PUT
         residence_permit: PUT
         checked_out_to_our_city: Utskriven till Malmö
-        temporary_permit_starts_at: <abbr title='Tillfälligt uppehållstillstånd startar'>TUT startar</abbr>
-        temporary_permit_ends_at: <abbr title='Tillfälligt uppehållstillstånd slutar'>TUT slutar</abbr>
+        temporary_permit_starts_at: TUT startar
+        temporary_permit_ends_at: TUT slutar
         temporary_permit: TUT
         designated: Anvisad
         citizenship_at: Medborgarskap erhölls
@@ -58,8 +68,7 @@ sv:
         social_worker: Socialsekreterare
         in_arrival: I ankomst
         placements:
-          moved_in_at: Placeringsdatum
-          cost: Placeringskostnad
+          <<: *placement
 
       relationship:
         <<: *defaults
@@ -70,16 +79,6 @@ sv:
         related_id: Anhörig-id
         type_of_relationship: Anhörigform
         other_relateds: Anhöriga utanför systemet
-
-      placement:
-        <<: *defaults
-        moved_in_at: Placeringsdatum
-        moved_out_at: Utskrivningsdatum
-        moved_out_reason: Anledning till utskrivning
-        specification: Placeringsspecifikation
-        legal_code: Lagrum
-        cost: Total kostnad
-        cost_per_day: Genomsnittlig dygnskostnad
 
       home:
         <<: *defaults
@@ -156,6 +155,9 @@ sv:
         name: Ange landets namn
       placement:
         cost: kr
+      refugee:
+        placements:
+          cost: kr
 
     hints:
       refugee:

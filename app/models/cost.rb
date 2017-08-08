@@ -6,10 +6,9 @@ class Cost < ApplicationRecord
 
   default_scope { order(:start_date) }
 
-  validates :home, presence: true
   validates :amount, presence: true, numericality: true
   validate do
-     date_format(:amount)
-     date_range(:amount, start_date, end_date)
+    date_format(:amount)
+    date_range(:amount, start_date, end_date)
   end
 end

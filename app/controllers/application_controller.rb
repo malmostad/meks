@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def default_legal_code
+    LegalCode.where(pre_selected: true).first.try(:id)
+  end
+
   def authenticate
     if !current_user || session_expired?
       unless request.xhr?

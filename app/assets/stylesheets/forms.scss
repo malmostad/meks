@@ -46,7 +46,8 @@
     max-width: 9em;
   }
 
-  .placement_cost input.integer {
+  .placement_cost input.integer,
+  .refugee_placements_cost input.integer {
     width: 9em;
   }
 
