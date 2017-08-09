@@ -35,6 +35,10 @@ class Report::Workbooks
           query: @record.home.name
         },
         {
+          heading: 'Aktuellt lagrum',
+          query: @record.legal_code.try(:name)
+        },
+        {
           heading: 'placement.specification',
           query: @record.specification,
           tooltip: 'Specificerar extern placering'
