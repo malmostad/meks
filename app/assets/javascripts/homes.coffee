@@ -24,21 +24,3 @@ $ ->
     days = daysInRange(startDate, endData)
     x = [startDate, endData, seats]
     days / seats
-
-  $form = $('body.homes form')
-  $cost = $form.find('.home_costs_amount')
-
-  setSpecificationField = ->
-    $specification = $form.find('.placement_specification')
-
-  setTotalCost = ->
-    # 'TODO'
-
-  recalculate = ->
-    # 'TODO'
-
-  $cost.find('input').change ->
-    recalculate()
-
-  $(window).load ->
-    setTotalCost()
