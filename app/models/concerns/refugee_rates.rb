@@ -20,7 +20,6 @@ module RefugeeRates
   end
 
   included do
-
     def expected_rate(report_range = default_range)
       'todo'
     end
