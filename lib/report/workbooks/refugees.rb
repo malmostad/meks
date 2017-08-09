@@ -53,6 +53,10 @@ class Report::Workbooks
           query: @record.current_placements.map { |cp| cp.home.type_of_housings.map  { |toh| toh.name  } }.join(', ')
         },
         {
+          heading: 'Aktuellt lagrum',
+          query: @record.current_placements.last.try(:legal_code).try(:name)
+        },
+        {
           heading: 'refugee.municipality',
           query: @record.municipality.try(:name)
         },
