@@ -3,7 +3,7 @@ class HomesController < ApplicationController
 
   def index
     @homes = Home.includes(:type_of_housings, :owner_type,
-      :target_groups).unscope(:order).order('active desc, name asc')
+      :target_groups, :costs).unscope(:order).order('active desc, name asc')
     @current_placements = Placement.joins(:home).where(moved_out_at: nil).select('home_id').group('home_id').count('home_id')
   end
 
