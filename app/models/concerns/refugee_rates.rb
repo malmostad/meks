@@ -21,7 +21,7 @@ module RefugeeRates
 
   included do
     def expected_rate(report_range = default_range)
-      'todo'
+      'ej klart'
     end
 
     def default_range
