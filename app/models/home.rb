@@ -15,17 +15,9 @@ class Home < ApplicationRecord
   validates_presence_of :name
   validates_length_of :name, maximum: 191
 
-  validate do
-    costs.each do |cost1|
-      costs.each do |cost2|
-        next if cost1.invalid? || cost2.invalid?
-        next unless overlapping_cost(cost1, cost2)
-
-        cost1.errors.add(:amount, 'Intervallet överlappar med ett annat')
-        cost2.errors.add(:amount, 'Intervallet överlappar med ett annat')
-        errors.add(:base)
-      end
-    end
+  after_save do
+    # Rollback transaction if cost date ranges overlaps
+    validate_associated_date_overlaps(costs, :amount)
   end
 
   default_scope { order(:name) }

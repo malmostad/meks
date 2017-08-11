@@ -1,5 +1,5 @@
 .box-content
-  = simple_form_for @home, html: { class: "basic home" } do |f|
+  = simple_form_for @home, method: @method, url: { action: @action }, html: { class: "basic home" } do |f|
     = f.error_notification class: "warning"
 
     %h2.group-title Kontaktuppgifter
