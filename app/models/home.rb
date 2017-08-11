@@ -3,8 +3,7 @@ class Home < ApplicationRecord
   has_many :refugees, through: :placements
 
   has_many :costs, dependent: :destroy
-  accepts_nested_attributes_for :costs,
-    allow_destroy: true
+  accepts_nested_attributes_for :costs, allow_destroy: true
   validates_associated :costs
 
   has_and_belongs_to_many :type_of_housings
@@ -16,16 +15,18 @@ class Home < ApplicationRecord
   validates_presence_of :name
   validates_length_of :name, maximum: 191
 
-
   validate do
-    logger.debug 'COSTS'
-    logger.debug costs
-    logger.debug costs.inspect
+    costs.each do |cost1|
+      costs.each do |cost2|
+        next if cost1.invalid? || cost2.invalid?
+        next unless overlapping_cost(cost1, cost2)
+
+        cost1.errors.add(:amount, 'Intervallet överlappar med ett annat')
+        cost2.errors.add(:amount, 'Intervallet överlappar med ett annat')
+        errors.add(:base)
+      end
+    end
   end
-  # after_save do
-  #   # Rollback transaction if cost date ranges overlaps
-  #   validate_associated_date_overlaps(costs, :amount)
-  # end
 
   default_scope { order(:name) }
 
@@ -35,9 +36,6 @@ class Home < ApplicationRecord
 
   def number_of_current_placements
     current_placements.count
-
-    # Pure Ruby to prevent n+1 in certain cases
-    # placements.reject { |p| p.moved_out_at.present? }.size
   end
 
   def seats
@@ -65,5 +63,13 @@ class Home < ApplicationRecord
       return true if cost.end_date >= Date.today
     end
     false
+  end
+
+  private
+
+  def overlapping_cost(cost1, cost2)
+    return if cost1 == cost2
+
+    (cost1.start_date..cost1.end_date).overlaps?(cost2.start_date..cost2.end_date)
   end
 end
