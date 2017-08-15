@@ -17,10 +17,13 @@ class Report::Workbooks
     end
 
     def initialize(range = {})
-      @record = Refugee.new # Used when getting the headings
       @from = range[:from]
       @to = range[:to]
-      @selected_placements = @record.placements_within(@from, @to)
+      @record = Refugee.new # Used when getting the headings
+    end
+
+    def selected_placements
+      @record.placements_within(@from, @to)
     end
 
     # The strucure is built to make it easy to re-arrange columns
@@ -49,11 +52,11 @@ class Report::Workbooks
         },
         {
           heading: 'Lagrum',
-          query: @selected_placements.map(&:legal_code).map { |lc| lc.try(:name) }.reject(&:nil?).join(', ')
+          query: selected_placements.map(&:legal_code).map { |lc| lc.try(:name) }.reject(&:nil?).join(', ')
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: @selected_placements.map do |placement|
+          query: selected_placements.map do |placement|
             "#{placement.home.name} (#{placement.moved_in_at}–#{placement.moved_out_at})"
           end.join(', ')
         },
@@ -64,11 +67,11 @@ class Report::Workbooks
         },
         {
           heading: 'Placeringsdatum',
-          query: @selected_placements.map(&:moved_in_at).compact.join(', ')
+          query: selected_placements.map(&:moved_in_at).compact.join(', ')
         },
         {
           heading: 'Utskrivningsdatum',
-          query: @selected_placements.map(&:moved_out_at).compact.join(', ')
+          query: selected_placements.map(&:moved_out_at).compact.join(', ')
         },
         {
           heading: 'refugee.deregistered',
@@ -78,7 +81,7 @@ class Report::Workbooks
         },
         {
           heading: 'Boendeformer',
-          query: @selected_placements.map { |placement| placement.home.type_of_housings.map(&:name) }.join(', ')
+          query: selected_placements.map { |placement| placement.home.type_of_housings.map(&:name) }.join(', ')
         },
         {
           heading: 'refugee.municipality',
