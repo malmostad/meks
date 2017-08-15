@@ -135,4 +135,28 @@ class Refugee < ApplicationRecord
 
     (type1 + type2).uniq
   end
+
+  # Return refugees with placements within a give range
+  def self.with_placements_within(from, to)
+    joins(:placements)
+      .where('placements.moved_in_at <= ?', to.to_date)
+      .where('placements.moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
+  end
+
+  # Return a refugees placements within a give range
+  # Example:
+  #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')
+  #   refugees.first.placements_within('2017-05-01', '2017-07-01').first.home.name
+  def placements_within(from, to)
+    placements.map do |placement|
+      from = from.to_date
+      to = to.to_date
+
+      # Default values assigned if nil
+      moved_in_at = placement.moved_in_at || from
+      moved_out_at = placement.moved_out_at || to
+
+      next placement if (moved_in_at..moved_out_at).overlaps?((from - 1)..to)
+    end.compact
+  end
 end
