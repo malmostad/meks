@@ -6,7 +6,7 @@ class GenerateReportJob
       @from = params[:placements_from]
       @to = params[:placements_to]
       filename = "#{file_id}.xlsx"
-      refugees = refugees_query(params)
+      refugees = refugees_query
       create_workbook(refugees, filename)
     end
 
@@ -19,7 +19,12 @@ class GenerateReportJob
     end
 
     def refugees_query
-      Refugee.includes(placements: { home: :type_of_housings }).with_placements_within(@from, @to)
+      Refugee.includes(
+        :dossier_numbers, :ssns,
+        :municipality, :payments, :gender,
+        placements: :legal_codes,
+        placements: { home: [:type_of_housings, :costs] }
+      ).with_placements_within(@from, @to)
     end
   end
 end
