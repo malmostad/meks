@@ -137,6 +137,8 @@ class Refugee < ApplicationRecord
   end
 
   # Return refugees with placements within a give range
+  # Example:
+  #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')
   def self.with_placements_within(from, to)
     joins(:placements)
       .where('placements.moved_in_at <= ?', to.to_date)
@@ -145,7 +147,6 @@ class Refugee < ApplicationRecord
 
   # Return a refugees placements within a give range
   # Example:
-  #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')
   #   refugees.first.placements_within('2017-05-01', '2017-07-01').first.home.name
   def placements_within(from, to)
     placements.map do |placement|
