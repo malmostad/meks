@@ -25,3 +25,4 @@ $ ->
 
   $(window).load ->
     setCostField()
+    setSpecificationField()
