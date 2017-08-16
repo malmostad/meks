@@ -33,6 +33,7 @@ class PlacementsController < ApplicationController
 
   def update
     authorize! :update, @placement
+
     if @placement.update(placement_params)
       redirect_to @refugee, notice: 'Placeringen uppdaterades'
     else
@@ -69,10 +70,6 @@ class PlacementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def placement_params
-      home = @homes.where(id: params[:placement][:home_id]).first
-      params[:specification] == '' if home.present? && home.use_placement_specification
-      params[:cost] == nil if home.present? && home.use_placement_cost
-
       params.require(:placement).permit(
         :home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id,
         :legal_code_id, :specification, :cost)
