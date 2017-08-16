@@ -23,7 +23,7 @@ class GenerateReportJob
         :dossier_numbers, :ssns,
         :municipality, :payments, :gender,
         placements: [:legal_code, { home: %i[type_of_housings costs] }]
-      ).with_placements_within(@from, @to).first.placements.first.legal_code.name
+      ).with_placements_within(@from, @to)
     end
   end
 end
