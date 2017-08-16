@@ -28,30 +28,25 @@ class Placement < ApplicationRecord
     range_from = begin; Date.parse(options[:placements_from]).to_s; rescue; (Date.today - 10.years).to_s; end
     range_to   = begin; Date.parse(options[:placements_to]).to_s; rescue; Date.today.to_s; end
 
-    # Single home or all
-    select_home = options[:home_id].present? && options[:home_id].reject(&:empty?).present? ?
-        "(A.home_id = #{options[:home_id].first} or B.home_id = #{options[:home_id].first})" : '1 = 1'
-
-    # Select overlapping placements per refugee, within range, for home
+    # Get and array of overlapping placements per refugee, within range, for home
     records = find_by_sql(["
-      select A.* from placements A
+      select A.id from placements A
       inner join placements B on
         (B.moved_in_at <= A.moved_out_at or A.moved_out_at is null)
         and (B.moved_out_at >= A.moved_in_at or B.moved_out_at is null)
       and ((B.moved_in_at  between ? and ?) or (A.moved_in_at between ? and ?))
       and ((A.moved_out_at between ? and ?) or A.moved_out_at is null)
       and ((B.moved_out_at between ? and ?) or B.moved_out_at is null)
-      and ?
       and A.refugee_id = B.refugee_id
       and A.id <> B.id
       order by A.refugee_id",
       range_from, range_to, range_from, range_to,
-      range_from, range_to, range_from, range_to, select_home])
+      range_from, range_to, range_from, range_to])
 
-    ActiveRecord::Associations::Preloader.new.preload(records,
-      [:refugee, :home, :moved_out_reason, refugee: [:dossier_numbers, :ssns, :gender, :homes, :municipality, :countries, :languages, :relateds, :inverse_relateds],
-      home: [:languages, :target_groups, :owner_type, :type_of_housings]])
-    records
+    # Return an ActiveRecord Relation
+    where(id: records.map(&:id).uniq)
+      .includes(:refugee, :home, :moved_out_reason, refugee: [:dossier_numbers, :ssns, :gender, :homes, :municipality, :countries, :languages, :relateds, :inverse_relateds],
+      home: [:languages, :target_groups, :owner_type, :type_of_housings])
   end
 
   def self.current_placements
