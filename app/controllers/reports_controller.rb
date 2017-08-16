@@ -61,22 +61,19 @@ class ReportsController < ApplicationController
 
   def report_params
     params.permit(
-      :report_type,
       :homes_free_seats,
       :homes_owner_type,
       :placements_from,
-      :placements_home_id,
-      :placements_to,
       :placements_selection,
-      :placements_home_id,
-      :placements_from,
       :placements_to,
-      :refugees_registered_to,
-      :refugees_registered_from,
       :refugees_born_after,
       :refugees_born_before,
       :refugees_include_without_date_of_birth,
-      :refugees_asylum
+      :refugees_registered_from,
+      :refugees_registered_to,
+      :report_type,
+      placements_home_id: [],
+      refugees_asylum: []
     )
   end
 
