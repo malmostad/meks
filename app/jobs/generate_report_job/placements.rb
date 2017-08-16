@@ -31,10 +31,11 @@ class GenerateReportJob
         placements = placements.where(home_id: params[:placements_home_id])
       end
 
-      # Only overlapping placements in time per refugee
+      # Select overlapping placements per refugee
       if params[:placements_selection] == 'overlapping'
-        placements = Placement.overlapping_by_refugee(params)
+        placements = placements.overlapping_by_refugee(params)
       end
+
       placements
     end
   end
