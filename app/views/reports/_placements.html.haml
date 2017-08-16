@@ -13,7 +13,7 @@
     %span.control-label
       %label{for: 'placements_selection'} Urval:
     .controls
-      = select_tag('placements_selection', options_for_select("Alla" => 'all', "Överlapppande per barn" => 'overlapping'),
+      = select_tag('placements_selection', options_for_select("Alla" => 'all', "Barn med överlappande boenden" => 'overlapping'),
         class: 'form-control chosen')
 
   .form-group
