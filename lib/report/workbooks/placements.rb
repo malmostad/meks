@@ -35,8 +35,11 @@ class Report::Workbooks
           query: @record.home.name
         },
         {
-          heading: 'Aktuellt lagrum',
-          query: @record.legal_code.try(:name)
+          heading: 'Lagrum',
+          query: @record.refugee.placements.map do |placement|
+            placement.legal_code.try(:name)
+          end.join(', '),
+          tooltip: 'Lagrum för alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },
         {
           heading: 'placement.specification',
@@ -45,8 +48,8 @@ class Report::Workbooks
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: @record.refugee.placements.map do |p|
-            "#{p.home.name} (#{Report.numshort_date(p.moved_in_at)}–#{Report.numshort_date(p.moved_out_at)})"
+          query: @record.refugee.placements.map do |placement|
+            "#{placement.home.name} (#{Report.numshort_date(placement.moved_in_at)}–#{Report.numshort_date(placement.moved_out_at)})"
           end.reject(&:blank?).join(', '),
           tooltip: 'Alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },
