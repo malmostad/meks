@@ -2,8 +2,9 @@ class Report::Workbooks
   class Placements
     attr_accessor :record
 
-    def initialize
+    def initialize(placements_within_range)
       @record = Placement.new(refugee: Refugee.new, home: Home.new)
+      @placements_within_range = placements_within_range
     end
 
     # The strucure is built to make it easy to re-arrange columns
@@ -35,10 +36,10 @@ class Report::Workbooks
           query: @record.home.name
         },
         {
-          heading: 'Lagrum',
-          query: @record.refugee.placements.map do |placement|
-            placement.legal_code.try(:name)
-          end.join(', '),
+          heading: 'Alla lagrum inom angivet datumintervall',
+          query: @placements_within_range.map do |placement|
+            placement.legal_code if placement.refugee_id == @record.refugee_id
+          end.reject(&:blank?).map(&:name).join(', '),
           tooltip: 'Lagrum för alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },
         {
@@ -48,8 +49,8 @@ class Report::Workbooks
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: @record.refugee.placements.map do |placement|
-            "#{placement.home.name} (#{Report.numshort_date(placement.moved_in_at)}–#{Report.numshort_date(placement.moved_out_at)})"
+          query: @placements_within_range.map do |placement|
+            "#{placement.home.name} (#{placement.moved_in_at}–#{placement.moved_out_at})" if placement.refugee_id == @record.refugee_id
           end.reject(&:blank?).join(', '),
           tooltip: 'Alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },

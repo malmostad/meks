@@ -11,14 +11,14 @@ class GenerateReportJob
     private
 
     def create_workbook(placements, params, filename)
-      workbook = Report::Workbooks::Placements.new
+      workbook = Report::Workbooks::Placements.new(placements)
       report = Report::Generator.new(workbook, placements, from: params[:placements_from], to: params[:placements_to])
       report.to_xlsx(filename)
     end
 
     def placements_query(params)
       placements = Placement.includes(
-        :refugee, :home, :moved_out_reason,
+        :home, :moved_out_reason, :legal_code,
         refugee: %i[countries languages ssns dossier_numbers
                     gender homes placements municipality
                     relateds inverse_relateds deregistered_reason],
