@@ -60,29 +60,14 @@ module Reports
       ]
     end
 
-    def sub_sheet_columns(refugee = Refugee.new, i = 0)
-      row = i + 2
+    def last_row(row_number)
       [
-        {
-          heading: 'Budgeterad kostnad',
-          query: self.class.costs_formula(refugee.placements_costs_and_days(from: @from, to: @to))
-        },
-        {
-          heading: 'Förväntad schablon',
-          query: refugee.expected_rate
-        },
-        {
-          heading: 'Avvikelse',
-          query: "=D#{row}-C#{row}"
-        },
-        {
-          heading: 'Utbetald schablon',
-          query: self.class.payments_formula(refugee.amount_and_days(from: @from, to: @to))
-        },
-        {
-          heading: 'Avvikelse',
-          query: "=D#{row}-C#{row}"
-        }
+        '',
+        "=SUM(B2:B#{row_number})",
+        "=SUM(C2:C#{row_number})",
+        "=SUM(D2:D#{row_number})",
+        "=SUM(E2:E#{row_number})",
+        "=SUM(F2:F#{row_number})"
       ]
     end
   end

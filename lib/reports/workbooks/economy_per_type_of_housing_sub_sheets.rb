@@ -36,7 +36,7 @@ module Reports
         },
         {
           heading: 'Avvikelse',
-          query: "=D#{row}-C#{row}"
+          query: "=C#{row}-B#{row}"
         },
         {
           heading: 'Utbetald schablon',
@@ -44,8 +44,19 @@ module Reports
         },
         {
           heading: 'Avvikelse',
-          query: "=D#{row}-C#{row}"
+          query: "=E#{row}-C#{row}"
         }
+      ]
+    end
+
+    def last_row(row_number)
+      [
+        '',
+        "=SUM(B2:B#{row_number})",
+        "=SUM(C2:C#{row_number})",
+        "=SUM(D2:D#{row_number})",
+        "=SUM(E2:E#{row_number})",
+        "=SUM(F2:F#{row_number})"
       ]
     end
   end
