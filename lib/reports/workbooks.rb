@@ -119,8 +119,10 @@ module Reports
     end
 
     def add_last_row
-      row = last_row(records.size + 1)
-      return unless row
+      data_rows = records.size
+      return if data_rows.zero?
+
+      row = last_row(data_rows + 1)
       @sheet.add_row(
         row.map { |cell| cell }
       )
