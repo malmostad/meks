@@ -1,4 +1,6 @@
 - title "#{t('actions.new')} boende"
 %section.box.form
   %h1.box-title= h1
+  - @method = :post
+  - @action = homes_path
   = render 'form'

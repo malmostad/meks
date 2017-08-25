@@ -11,6 +11,7 @@ $ ->
       $specification.show()
     else
       $specification.hide()
+      $('#placement_specification').val('')
 
   setCostField = ->
     if $homeSelect.find(':selected').attr('data-use-placement-cost') is 'true'
@@ -25,3 +26,4 @@ $ ->
 
   $(window).load ->
     setCostField()
+    setSpecificationField()

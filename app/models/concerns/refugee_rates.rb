@@ -1,8 +1,6 @@
 module RefugeeRates
   extend ActiveSupport::Concern
 
-  DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
-
   module ClassMethods
     def refugees_in_arrival_0_17
       in_arrival.age_0_17
@@ -22,8 +20,12 @@ module RefugeeRates
   end
 
   included do
-    def expected_rate(report_range = DEFAULT_RANGE)
-      0
+    def expected_rate(report_range = default_range)
+      'ej klart'
+    end
+
+    def default_range
+      { from: Date.new(0), to: Date.today }
     end
   end
 end

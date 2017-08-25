@@ -28,9 +28,6 @@ class Home < ApplicationRecord
 
   def number_of_current_placements
     current_placements.count
-
-    # Pure Ruby to prevent n+1 in certain cases
-    # placements.reject { |p| p.moved_out_at.present? }.size
   end
 
   def seats
@@ -58,5 +55,13 @@ class Home < ApplicationRecord
       return true if cost.end_date >= Date.today
     end
     false
+  end
+
+  private
+
+  def overlapping_cost(cost1, cost2)
+    return if cost1 == cost2
+
+    (cost1.start_date..cost1.end_date).overlaps?(cost2.start_date..cost2.end_date)
   end
 end

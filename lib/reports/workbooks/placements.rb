@@ -1,35 +1,13 @@
 module Reports
   class Placements < Workbooks
+    attr_accessor :record
+
     def initialize(options = {})
       super(options)
       @owner_type = options[:owner_type]
       @free_seats = options[:free_seats]
       @selection =  options[:selection]
       @home_id =    options[:home_id]
-    end
-
-    private
-
-    def records
-      placements = Placement.includes(
-        :refugee, :home, :moved_out_reason,
-        refugee: %i[countries languages ssns dossier_numbers
-                    gender homes placements municipality
-                    relateds inverse_relateds deregistered_reason],
-        home: %i[languages type_of_housings placements
-                 owner_type target_groups languages]
-      ).within_range(@from, @to)
-
-      # Selected one home or all
-      if @home_id.present? && @home_id.reject(&:empty?).present?
-        placements = placements.where(home_id: @home_id)
-      end
-
-      # Only overlapping placements in time per refugee
-      if @selection == 'overlapping'
-        placements = Placement.overlapping_by_refugee(@from, @to, @home_id)
-      end
-      placements
     end
 
     # The strucure is built to make it easy to re-arrange columns
@@ -61,14 +39,21 @@ module Reports
           query: record.home.name
         },
         {
+          heading: 'Alla lagrum inom angivet datumintervall',
+          query: @placements_within_range.map do |placement|
+            placement.legal_code if placement.refugee_id == @record.refugee_id
+          end.reject(&:blank?).map(&:name).join(', '),
+          tooltip: 'Lagrum för alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
+        },
+        {
           heading: 'placement.specification',
           query: record.specification,
           tooltip: 'Specificerar extern placering'
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: record.refugee.placements.map do |p|
-            "#{p.home.name} (#{Reports.numshort_date(p.moved_in_at)}–#{Reports.numshort_date(p.moved_out_at)})"
+          query: @placements_within_range.map do |placement|
+            "#{placement.home.name} (#{placement.moved_in_at}–#{placement.moved_out_at})" if placement.refugee_id == @record.refugee_id
           end.reject(&:blank?).join(', '),
           tooltip: 'Alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },

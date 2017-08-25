@@ -3,15 +3,14 @@ module Reports
 
     private
 
-    def records
-      Refugee.includes(
-        :dossier_numbers, :ssns,
-        :municipality,
-        :gender, :homes, :municipality,
-        :payments,
-        placements: { home: :costs },
-        current_placements: [:legal_code, home: :type_of_housings]
-      ).where(registered: @from..@to)
+    def initialize(range = {})
+      @from = range[:from]
+      @to = range[:to]
+      @record = Refugee.new # Used when getting the headings
+    end
+
+    def selected_placements
+      @record.placements_within(@from, @to)
     end
 
     # The strucure is built to make it easy to re-arrange columns
@@ -40,14 +39,13 @@ module Reports
         },
         {
           heading: 'Lagrum',
-          query: refugee.current_placements.map(&:legal_code).map { |lc| lc.try(:name) }.reject(&:nil?).join(', ')
+          query: selected_placements.map(&:legal_code).map { |lc| lc.try(:name) }.reject(&:nil?).join(', ')
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: refugee.placements.map do |p|
-            next unless p.refugee_id == refugee.id
-            "#{p.home.name} (#{Reports.numshort_date(p.moved_in_at)}–#{Reports.numshort_date(p.moved_out_at)})"
-          end.reject(&:blank?).join(', ')
+          query: selected_placements.map do |placement|
+            "#{placement.home.name} (#{placement.moved_in_at}–#{placement.moved_out_at})"
+          end.join(', ')
         },
         {
           heading: 'refugee.registered',
@@ -56,11 +54,11 @@ module Reports
         },
         {
           heading: 'Placeringsdatum',
-          query: refugee.current_placements.first.try(:moved_in_at)
+          query: selected_placements.map(&:moved_in_at).compact.join(', ')
         },
         {
           heading: 'Utskrivningsdatum',
-          query: refugee.current_placements.first.try(:moved_out_at)
+          query: selected_placements.map(&:moved_out_at).compact.join(', ')
         },
         {
           heading: 'refugee.deregistered',
@@ -70,7 +68,7 @@ module Reports
         },
         {
           heading: 'Boendeformer',
-          query: refugee.current_placements.map { |cp| cp.home.type_of_housings.map(&:name) }.join(', ')
+          query: selected_placements.map { |placement| placement.home.type_of_housings.map(&:name) }.join(', ')
         },
         {
           heading: 'refugee.municipality',
@@ -109,7 +107,7 @@ module Reports
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.costs_formula(refugee.placements_costs_and_days(from: @from, to: @to))
+          query: self.class.costs_formula(@record.placements_costs_and_days(from: @from, to: @to))
         },
         {
           heading: 'Förväntad schablon',
@@ -117,7 +115,7 @@ module Reports
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.payments_formula(refugee.amount_and_days(from: @from, to: @to))
+          query: self.class.payments_formula(@record.amount_and_days(from: @from, to: @to))
         },
         {
           heading: 'Ålder',
