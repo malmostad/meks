@@ -3,7 +3,7 @@
   .placement
     = show_attribute('Total boendetid', "#{number_with_delimiter(@refugee.total_placement_time, delimiter: ' ')} dagar")
 
-  - @refugee.placements.each do |placement|
+  - @refugee.placements.order(:moved_in_at).each do |placement|
     .placement
       = show_attribute('refugee.home', (link_to placement.home.name, home_path(placement.home)))
       = show_attribute("Aktuell dygnskostnad för #{placement.home.name}", "#{number_to_currency(placement.home.current_cost, delimiter: ' ')}")
