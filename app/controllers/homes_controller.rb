@@ -9,8 +9,7 @@ class HomesController < ApplicationController
 
   def show
     @home = Home.includes(:owner_type, :target_groups, :languages).find(params[:id])
-
-    @placements = Placement.includes(refugee: [:gender, :countries, :municipality]).where(home_id: params[:id], moved_out_at: nil)
+    @placements = Placement.includes(refugee: [:gender, :countries, :municipality]).where(home_id: params[:id], moved_out_at: nil).order(:moved_in_at)
   end
 
   def new
