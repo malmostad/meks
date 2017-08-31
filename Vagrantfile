@@ -1,15 +1,12 @@
-VAGRANTFILE_API_VERSION = '2'
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = 'ubuntu/trusty64'
+Vagrant.configure('2') do |config|
+  config.vm.box = 'bento/ubuntu-16.04'
   config.vm.hostname = 'www.local.malmo.se'
 
   config.vm.provider :virtualbox do |v|
-    v.memory = 1024 * 2
+    v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+    v.memory = 1024 * 4
     v.cpus = 2
   end
-  config.vm.provider :vmware_fusion
-  config.vm.provider :vmware_workstation
 
   config.vm.network 'forwarded_port', guest: 3000, host: 3036
 

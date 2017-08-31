@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Bootstraps Puppet on Ubuntu 14.04
+# Bootstraps Puppet on Ubuntu 16.04
 #
 set -e
 
@@ -8,7 +8,7 @@ set -e
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-locale-gen en_US.UTF-8 >/dev/null
+locale-gen en_US.UTF-8
 
 # Load up the release information
 . /etc/lsb-release
@@ -36,9 +36,9 @@ apt-get install -y puppet >/dev/null
 touch /etc/puppet/hiera.yaml >/dev/null
 
 echo "Installing malmo-mcommons Puppet module"
-wget https://github.com/malmostad/puppet-mcommons/archive/v1.0.0.tar.gz -O malmo-mcommons.tar.gz 2>/dev/null
+wget https://github.com/malmostad/puppet-mcommons/archive/v2.0.1.tar.gz -O malmo-mcommons.tar.gz 2>/dev/null
 puppet module install malmo-mcommons.tar.gz
-rm malmo-mcommons.tar.gz >/dev/null
+# rm malmo-mcommons.tar.gz >/dev/null
 
 # Vagrant uses vagrant.pp for Puppet provisioning
 # We use server.pp if we are not in a Vagrant box
