@@ -133,7 +133,8 @@ class Refugee < ApplicationRecord
             .where('municipality_placement_migrationsverket_at > ?', Date.today)
             .where(deregistered: nil)
 
-    (type1 + type2).uniq
+    # Return an AcitiveRecord relation
+    where(id: type1 + type2)
   end
 
   # Return refugees with placements within a give range
