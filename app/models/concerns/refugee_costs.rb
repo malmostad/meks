@@ -15,7 +15,7 @@ module RefugeeCosts
     #  * the placement range
     #  * each placement.home cost ranges
     # Returns an array of hashes
-    def placements_costs_and_days(report_range = default_range)
+    def placements_costs_and_days(report_range = default_date_range)
       costs = placements.includes(home: :costs).map do |placement|
         moved_out_at = placement.moved_out_at || Date.today
         moved_in_at  = placement.moved_in_at
@@ -32,7 +32,7 @@ module RefugeeCosts
     end
 
     # Used when placement.home.use_placement_cost
-    def placement_cost(placement, range = default_range)
+    def placement_cost(placement, range = default_date_range)
       # Count days from the latest start date and the earliest end date
       #   by comparing the count_* with the cost's dates
       starts_at = [range[:from], placement.moved_in_at].max_by(&:to_date)
@@ -47,7 +47,7 @@ module RefugeeCosts
 
     # Costs per home and placement
     # Used unless home.use_placement_cost
-    def placement_home_costs(placement, range = default_range)
+    def placement_home_costs(placement, range = default_date_range)
       placement.home.costs.map do |cost|
         moved_out_at = placement.moved_out_at || range[:to]
         # Count days from the latest start date and the earliest end date
@@ -59,12 +59,6 @@ module RefugeeCosts
 
         { cost: cost.amount || 0, days: days, home: placement.home.name }
       end
-    end
-
-    private
-
-    def default_range
-      { from: Date.new(0), to: Date.today }
     end
   end
 end

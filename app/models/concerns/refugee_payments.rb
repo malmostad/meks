@@ -1,3 +1,5 @@
+# Utbetalning från Migrationsverket
+# See also Payment and PaymentImport
 module RefugeePayments
   extend ActiveSupport::Concern
 
@@ -10,7 +12,7 @@ module RefugeePayments
     #  * the report range
     #  * each payment range and amount
     # Returns an array of hashes
-    def amount_and_days(report_range = default_range)
+    def amount_and_days(report_range = default_date_range)
       payments.map do |payment|
         daily_amount = payment.amount / (payment.period_end - payment.period_start).to_i
         days = days_for_payment(payment, report_range)
@@ -30,10 +32,6 @@ module RefugeePayments
       days = (count_to.to_date - count_from.to_date).to_i
       days = 0 if days.negative? || days.nil?
       days
-    end
-
-    def default_range
-      { from: Date.new(0), to: Date.today }
     end
   end
 end
