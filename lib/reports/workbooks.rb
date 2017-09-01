@@ -9,8 +9,6 @@ module Reports
     require 'reports/workbooks/economy_per_type_of_housing'
     require 'reports/workbooks/economy_per_type_of_housing_sub_sheets'
 
-    DEFAULT_RANGE = { from: Date.new(0), to: Date.today }.freeze
-
     class << self
       def costs_formula(costs_and_days)
         calculation = costs_and_days.map do |cad|
@@ -27,12 +25,16 @@ module Reports
         return unless calculation.present?
         "=#{calculation.join('+')}"
       end
+
+      def default_date_range
+        { from: Date.new(0), to: Date.today }
+      end
     end
 
     def initialize(options = {})
       @filename   = options[:filename] || 'Utan titel.xlsx'
-      @from       = options[:from]     || DEFAULT_RANGE[:from]
-      @to         = options[:to]       || DEFAULT_RANGE[:to]
+      @from       = options[:from]     || default_date_range[:from]
+      @to         = options[:to]       || default_date_range[:to]
       @sheet_name = format_sheet_name
     end
 
