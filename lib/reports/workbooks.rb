@@ -25,10 +25,6 @@ module Reports
         return unless calculation.present?
         "=#{calculation.join('+')}"
       end
-
-      def default_date_range
-        { from: Date.new(0), to: Date.today }
-      end
     end
 
     def initialize(options = {})
@@ -147,8 +143,12 @@ module Reports
       # Optional
     end
 
-    def columns
+    def columns(*args)
       raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"
+    end
+
+    def default_date_range
+      { from: Date.new(0), to: Date.today }
     end
   end
 end

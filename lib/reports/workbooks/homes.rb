@@ -26,7 +26,7 @@ module Reports
 
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
-    def columns(home = Home.new, i)
+    def columns(home = Home.new, i = 0)
       [
         {
           heading: 'home.name',
