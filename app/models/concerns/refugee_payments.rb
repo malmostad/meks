@@ -14,7 +14,8 @@ module RefugeePayments
     # Returns an array of hashes
     def amount_and_days(report_range = default_date_range)
       payments.map do |payment|
-        daily_amount = payment.amount / (payment.period_end - payment.period_start).to_i
+        period_length = (payment.period_end - payment.period_start).to_i
+        daily_amount = period_length.zero? ? 0 : payment.amount / period_length
         days = days_for_payment(payment, report_range)
 
         { daily_amount: daily_amount.round, days: days }
@@ -30,7 +31,7 @@ module RefugeePayments
       count_to   = [payment.period_end, range[:to]].min_by(&:to_date)
 
       days = (count_to.to_date - count_from.to_date).to_i
-      days = 0 if days.negative? || days.nil?
+      days = 0 if days.nil? || days.negative?
       days
     end
   end
