@@ -1,4 +1,4 @@
-require 'report'
+require 'reports'
 
 namespace :reports do
   desc 'Cleanup reports directory'
