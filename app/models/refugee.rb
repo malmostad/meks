@@ -2,7 +2,6 @@ class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch
   include RefugeeStatuses
-  include RefugeeSelections
   include RefugeeCosts
   include RefugeeRates
   include RefugeePayments
@@ -81,73 +80,6 @@ class Refugee < ApplicationRecord
     placements.map(&:placement_time).inject(&:+) || 0
   end
 
-  # Get the asylum event with latest date
-  def asylum_status
-    dates = [:registered,
-        :municipality_placement_migrationsverket_at,
-        :municipality_placement_per_agreement_at,
-        :residence_permit_at,
-        :checked_out_to_our_city,
-        :temporary_permit_starts_at,
-        :temporary_permit_ends_at,
-        :deregistered]
-
-    # Create a key/value hash from the array
-    Hash[dates.map! { |k| [k.to_s, send(k)] }]
-
-    # Delete blanks
-    dates = dates.delete_if { |_k, v| v.blank? }
-
-    # Get the event with the latest date
-    dates.sort_by { |_k, v| v }.last
-  end
-
-  # Comment in Swedish are from project specifications
-  # Ankomstbarn typ 1:
-  # - ska ha inskrivningsdatum
-  # - ska inte ha anvisningskommun
-  # - ska inte ha anvisningsdatum
-  # - ska inte ha status avslutat
-  # - ska inte datum för PUT
-  # - ska inte datum för TUT
-  # - ska inte datum för medborgarskap
-  # - ska inte ha SoF-placering
-  #
-  # Ankomstbarn typ 2:
-  # - ska ha inskrivningsdatum
-  # - ska ha anvisningskommun
-  # - ska ha anvisningsdatum där anvisningsdatumet ligger i framtiden
-  # - ska inte ha status avslutat
-  def self.in_arrival
-    type1 = Refugee
-            .where.not(registered: nil)
-            .where(deregistered: nil)
-            .where(municipality: nil)
-            .where(municipality_placement_migrationsverket_at: nil)
-            .where(residence_permit_at: nil)
-            .where(temporary_permit_starts_at: nil)
-            .where(citizenship_at: nil)
-            .where(sof_placement: false)
-
-    type2 = Refugee
-            .where.not(registered: nil)
-            .where.not(municipality: nil)
-            .where('municipality_placement_migrationsverket_at > ?', Date.today)
-            .where(deregistered: nil)
-
-    # Return an AcitiveRecord relation
-    where(id: type1 + type2)
-  end
-
-  # Return refugees with placements within a give range
-  # Example:
-  #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')
-  def self.with_placements_within(from, to)
-    joins(:placements)
-      .where('placements.moved_in_at <= ?', to.to_date)
-      .where('placements.moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
-  end
-
   # Return a refugees placements within a give range
   # Example:
   #   refugees.first.placements_within('2017-05-01', '2017-07-01').first.home.name
@@ -162,5 +94,20 @@ class Refugee < ApplicationRecord
 
       next placement if (moved_in_at..moved_out_at).overlaps?((from - 1)..to)
     end.compact
+  end
+
+  # Return refugees with placements within a give range
+  # Example:
+  #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')
+  def self.with_placements_within(from, to)
+    joins(:placements)
+      .where('placements.moved_in_at <= ?', to.to_date)
+      .where('placements.moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
+  end
+
+  def self.per_type_of_housing(type_of_housing, registered = default_date_range)
+    includes(:payments, placements: { home: [:type_of_housings, :costs] })
+      .where(placements: { home: { type_of_housings: { id: type_of_housing.id } } })
+      .where(registered: registered[:from]..registered[:to])
   end
 end

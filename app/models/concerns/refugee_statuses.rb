@@ -46,7 +46,8 @@ module RefugeeStatuses
               .where('municipality_placement_migrationsverket_at > ?', Date.today)
               .where(deregistered: nil)
 
-      type1.or(type2).distinct
+      # Return an AcitiveRecord relation
+      where(id: type1 + type2)
     end
 
     # TODO: Change to spec def
