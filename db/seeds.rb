@@ -23,7 +23,7 @@ end
 end
 
 ['Villa Vånga', 'Tempo', 'Villa poppel', 'Tempo', 'Jourhem', 'Maglarp 1', 'Maglarp 2', 'Maglarp 2', 'Humania', 'Duvan', 'Maglarp 1', 'Maglarp 2', 'Maglarp 2', 'Maglarp 1', 'Maglarp 1', 'Maglarp 2', 'Aleris T'].each do |h|
-  Home.create(
+  h = Home.create(
     name: h,
     postal_town: 'Malmö',
     type_of_housing_ids: [rand(TypeOfHousing.count) + 1],
@@ -32,6 +32,15 @@ end
     guaranteed_seats: rand(100) + 1,
     movable_seats: rand(100) + 1
   )
+  if rand(0...5).zero?
+    h.update_attribute(:use_placement_cost, true)
+  else
+    h.costs << Cost.create(
+      amount: rand(1000...2500),
+      start_date: Date.today - rand(60...180).days,
+      end_date: Date.today - rand(-180...59).days
+    )
+  end
 end
 
 ['Kvinna', 'Man', 'Annat'].each do |s|
