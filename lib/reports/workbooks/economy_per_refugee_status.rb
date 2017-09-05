@@ -32,7 +32,7 @@ module Reports
       row = i + 2
       [
         {
-          heading: 'Barnets status',
+          heading: 'Barnens status',
           query: i18n_name(status[:name]),
           style: :link
         },
