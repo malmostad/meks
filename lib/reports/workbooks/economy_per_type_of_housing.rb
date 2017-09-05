@@ -32,7 +32,7 @@ module Reports
       row = i + 2
       [
         {
-          heading: 'Barnets status',
+          heading: 'Boendeform',
           query: type[:name],
           style: :link
         },
