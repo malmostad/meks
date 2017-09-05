@@ -14,16 +14,16 @@ module Reports
         calculation = costs_and_days.map do |cad|
           "(#{cad[:days]}*#{cad[:cost]})"
         end
-        return unless calculation.present?
-        "=#{calculation.join('+')}"
+        calculation = ['0*0'] if calculation.empty?
+        "=(#{calculation.join('+')})"
       end
 
       def payments_formula(days_and_daily_amounts)
         calculation = days_and_daily_amounts.map do |dada|
           "(#{dada[:days]}*#{dada[:daily_amount]})"
         end
-        return unless calculation.present?
-        "=#{calculation.join('+')}"
+        calculation = ['0*0'] if calculation.empty?
+        "=(#{calculation.join('+')})"
       end
     end
 
