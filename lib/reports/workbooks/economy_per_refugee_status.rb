@@ -39,11 +39,11 @@ module Reports
         {
           heading: 'Budgeterad kostnad',
           # query: 'status[:refugees]'
-          query: 220_000
+          query: 0
         },
         {
           heading: 'Förväntad schablon',
-          query: 200_000
+          query: 0
         },
         {
           heading: 'Avvikelse',
@@ -51,7 +51,7 @@ module Reports
         },
         {
           heading: 'Utbetald schablon',
-          query: 190_000
+          query: 0
         },
         {
           heading: 'Avvikelse mellan förväntad och utbetald schablon',

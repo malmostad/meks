@@ -18,7 +18,7 @@ module RefugeeRates
 
   included do
     def expected_rate(report_range = default_date_range)
-      'ej klart'
+      0
     end
   end
 end
