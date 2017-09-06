@@ -16,23 +16,23 @@ module Reports
     end
 
     def records
-      Refugee.per_type_of_housing(@type_of_housing, from: @from, to: @to)
+      @type_of_housing.homes
     end
 
-    def columns(refugee = Refugee.new, i = 0)
+    def columns(home = Home.new, i = 0)
       row = i + 2
       [
         {
-          heading: 'Dossiernumber',
-          query: refugee.dossier_number
+          heading: 'Boende',
+          query: home.name
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.costs_formula(refugee.placements_costs_and_days(from: @from, to: @to))
+          query: self.class.rates_formula(home.placements_costs)
         },
         {
           heading: 'Förväntad schablon',
-          query: refugee.expected_rate
+          # query: refugee.expected_rate
         },
         {
           heading: 'Avvikelse',
@@ -40,7 +40,7 @@ module Reports
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.payments_formula(refugee.amount_and_days(from: @from, to: @to))
+          # query: self.class.payments_formula(refugee.amount_and_days(from: @from, to: @to))
         },
         {
           heading: 'Avvikelse',
