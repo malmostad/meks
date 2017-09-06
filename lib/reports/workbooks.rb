@@ -10,12 +10,19 @@ module Reports
     require 'reports/workbooks/economy_per_type_of_housing_sub_sheets'
 
     class << self
+      def rates_formula(rates)
+        rates.compact!
+        # =SUM() is not valid in Excel
+        rates = [0] if rates.empty?
+        "=SUM(#{rates.join('+')})"
+      end
+
       def costs_formula(costs_and_days)
         calculation = costs_and_days.map do |cad|
           "(#{cad[:days]}*#{cad[:cost]})"
         end
         calculation = ['0*0'] if calculation.empty?
-        "=(#{calculation.join('+')})"
+        "=SUM(#{calculation.join('+')})"
       end
 
       def payments_formula(days_and_daily_amounts)
@@ -23,7 +30,7 @@ module Reports
           "(#{dada[:days]}*#{dada[:daily_amount]})"
         end
         calculation = ['0*0'] if calculation.empty?
-        "=(#{calculation.join('+')})"
+        "=SUM(#{calculation.join('+')})"
       end
     end
 

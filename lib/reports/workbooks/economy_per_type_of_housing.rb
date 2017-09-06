@@ -25,21 +25,20 @@ module Reports
     end
 
     def records
-      TypeOfHousing.includes(homes: :costs).all
+      TypeOfHousing.includes(homes: [:costs, placements: :refugee]).all
     end
 
-    def columns(type = {}, i = 0)
+    def columns(type_of_housing = TypeOfHousing.new, i = 0)
       row = i + 2
       [
         {
           heading: 'Boendeform',
-          query: type[:name],
+          query: type_of_housing.name,
           style: :link
         },
         {
           heading: 'Budgeterad kostnad',
-          # query: 'status[:refugees]'
-          query: 0
+          query: self.class.rates_formula(type_of_housing.placements_cost_per_home)
         },
         {
           heading: 'Förväntad schablon',
