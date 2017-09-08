@@ -1,6 +1,3 @@
-require 'reports/style'
-require 'reports/workbooks'
-
 module Reports
   def self.format_asylum_status(h)
     return 'Ingen status' if h.blank?

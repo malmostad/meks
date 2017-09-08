@@ -1,14 +1,5 @@
 module Reports
   class Workbooks
-    require 'reports/workbooks/economy'
-    require 'reports/workbooks/homes'
-    require 'reports/workbooks/refugees'
-    require 'reports/workbooks/placements'
-    require 'reports/workbooks/economy_per_refugee_status'
-    require 'reports/workbooks/economy_per_refugee_status_sub_sheets'
-    require 'reports/workbooks/economy_per_type_of_housing'
-    require 'reports/workbooks/economy_per_type_of_housing_sub_sheets'
-
     class << self
       def rates_formula(rates)
         rates.compact!
