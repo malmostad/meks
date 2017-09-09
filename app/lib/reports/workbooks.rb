@@ -138,11 +138,11 @@ module Reports
       raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"
     end
 
-    def last_row(row_number)
-      # Optional
+    def last_row(_row_number)
+      []
     end
 
-    def columns(*args)
+    def columns(*_args)
       raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"
     end
 
