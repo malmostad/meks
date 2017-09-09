@@ -1,7 +1,5 @@
 class GenerateReportJob
   class EconomyPerRefugeeStatus < ApplicationJob
-    queue_as :default
-
     def perform(params, file_id)
       workbook = Reports::EconomyPerRefugeeStatus.new(
         filename: "#{file_id}.xlsx",

@@ -1,7 +1,5 @@
 class GenerateReportJob
   class Economy < ApplicationJob
-    queue_as :default
-
     def perform(params, file_id)
       @from = params[:placements_from]
       @to = params[:placements_to]

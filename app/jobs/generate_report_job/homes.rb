@@ -1,7 +1,5 @@
 class GenerateReportJob
   class Homes < ApplicationJob
-    queue_as :default
-
     def perform(params, file_id)
       workbook = Reports::Homes.new(
         filename: "#{file_id}.xlsx",
