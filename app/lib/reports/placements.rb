@@ -4,243 +4,269 @@ module Reports
 
     def initialize(options = {})
       super(options)
-      @owner_type = options[:owner_type]
-      @free_seats = options[:free_seats]
-      @selection =  options[:selection]
-      @home_id =    options[:home_id]
+      @selection = options[:selection]
+      @home_id = options[:home_id]
+    end
+
+    def records
+      @_records ||= begin
+        placements = Placement.includes(
+          :home, :moved_out_reason, :legal_code,
+          refugee: %i[countries languages ssns dossier_numbers
+                      gender homes placements municipality
+                      deregistered_reason],
+          home: %i[languages type_of_housings placements
+                   owner_type target_groups languages]
+        ).within_range(@from, @to)
+
+        # Selected one home or all
+        if @home_id.present? && @home_id.reject(&:empty?).present?
+          placements = placements.where(home_id: @home_id)
+        end
+
+        # Select overlapping placements per refugee
+        if @selection == 'overlapping'
+          placements = placements.overlapping_by_refugee(@from, @to, @home_id)
+        end
+        placements
+      end
+    end
+
+    def refugee_placements_within_range(refugee)
+      records.map do |record|
+        record if record.refugee.id == refugee.id
+      end.compact.flatten
     end
 
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
-    def columns(record = Placement.new(refugee: Refugee.new, home: Home.new), i = 0)
+    def columns(placement = Placement.new(refugee: Refugee.new, home: Home.new), i = 0)
       [
         {
           heading: 'Dossiernummer',
-          query: record.refugee.dossier_number
+          query: placement.refugee.dossier_number
         },
         {
           heading: 'Extra dossiernummer',
-          query: record.refugee.dossier_numbers.map(&:name).join(', ')
+          query: placement.refugee.dossier_numbers.map(&:name).join(', ')
         },
         {
           heading: 'Namn',
-          query: record.refugee.name
+          query: placement.refugee.name
         },
         {
           heading: 'Personnummer',
-          query: record.refugee.ssn
+          query: placement.refugee.ssn
         },
         {
           heading: 'Extra personnummer',
-          query: record.refugee.ssns.map(&:full_ssn).join(', ')
+          query: placement.refugee.ssns.map(&:full_ssn).join(', ')
         },
         {
           heading: 'Boende',
-          query: record.home.name
+          query: placement.home.name
         },
         {
           heading: 'Alla lagrum inom angivet datumintervall',
-          query: @placements_within_range.map do |placement|
-            placement.legal_code if placement.refugee_id == @record.refugee_id
-          end.reject(&:blank?).map(&:name).join(', '),
+          query: refugee_placements_within_range(placement.refugee).map(&:legal_code).map(&:name).join(', '),
           tooltip: 'Lagrum för alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },
         {
           heading: 'placement.specification',
-          query: record.specification,
+          query: placement.specification,
           tooltip: 'Specificerar extern placering'
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: @placements_within_range.map do |placement|
-            "#{placement.home.name} (#{placement.moved_in_at}–#{placement.moved_out_at})" if placement.refugee_id == @record.refugee_id
-          end.reject(&:blank?).join(', '),
+          query: refugee_placements_within_range(placement.refugee).map do |rp|
+            "#{rp.home.name} (#{rp.moved_in_at}–#{rp.moved_out_at})"
+          end.join(', '),
           tooltip: 'Alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },
         {
           heading: 'refugee.registered',
-          query: record.refugee.registered,
+          query: placement.refugee.registered,
           tooltip: 'Anger det datum då barnet registreras i MEKS för första gången',
           type: :date
         },
         {
           heading: 'placement.moved_in_at',
-          query: record.moved_in_at,
+          query: placement.moved_in_at,
           tooltip: 'Anger det datum då barnet placeras på ett specifikt boende',
           type: :date
         },
         {
           heading: 'placement.moved_out_at',
-          query: record.moved_out_at,
+          query: placement.moved_out_at,
           type: :date
         },
         {
           heading: 'placement.moved_out_reason',
-          query: record.moved_out_reason.try(:name)
+          query: placement.moved_out_reason.try(:name)
         },
         {
           heading: 'refugee.deregistered',
-          query: record.refugee.deregistered,
+          query: placement.refugee.deregistered,
           tooltip: 'Anger datum för när socialtjänstansvaret för barnet är avslutat',
           type: :date
         },
         {
           heading: 'home.type_of_housings',
-          query: record.home.type_of_housings.map(&:name).join(', ')
+          query: placement.home.type_of_housings.map(&:name).join(', ')
         },
         {
           heading: 'refugee.municipality',
-          query: record.refugee.municipality.try(:name)
+          query: placement.refugee.municipality.try(:name)
         },
         {
           heading: 'refugee.municipality_placement_migrationsverket_at',
-          query: record.refugee.municipality_placement_migrationsverket_at,
+          query: placement.refugee.municipality_placement_migrationsverket_at,
           type: :date
         },
         {
           heading: 'refugee.sof_placement',
-          query: record.refugee.sof_placement ? 'Ja' : 'Nej'
+          query: placement.refugee.sof_placement ? 'Ja' : 'Nej'
         },
         {
           heading: 'refugee.municipality_placement_comment',
-          query: record.refugee.municipality_placement_comment
+          query: placement.refugee.municipality_placement_comment
         },
         {
           heading: 'PUT',
-          query: record.refugee.residence_permit_at,
+          query: placement.refugee.residence_permit_at,
           type: :date
         },
         {
           heading: 'refugee.checked_out_to_our_city',
-          query: record.refugee.checked_out_to_our_city,
+          query: placement.refugee.checked_out_to_our_city,
           tooltip: 'Det datum då barnet skrivs ut från Migrationsverket',
           type: :date
         },
         {
           heading: 'TUT startar',
-          query: record.refugee.temporary_permit_starts_at,
+          query: placement.refugee.temporary_permit_starts_at,
           type: :date
         },
         {
           heading: 'TUT slutar',
-          query: record.refugee.temporary_permit_ends_at,
+          query: placement.refugee.temporary_permit_ends_at,
           type: :date
         },
         {
           heading: 'refugee.citizenship_at',
-          query: record.refugee.citizenship_at,
+          query: placement.refugee.citizenship_at,
           type: :date
         },
         {
           heading: 'Ålder',
-          query: record.refugee.age,
+          query: placement.refugee.age,
           type: :integer
         },
         {
           heading: 'refugee.gender',
-          query: record.refugee.gender.try(:name)
+          query: placement.refugee.gender.try(:name)
         },
         {
           heading: 'refugee.countries',
-          query: record.refugee.countries.map(&:name).join(', ')
+          query: placement.refugee.countries.map(&:name).join(', ')
         },
         {
           heading: 'Språk (barn)',
-          query: record.refugee.languages.map(&:name).join(', ')
+          query: placement.refugee.languages.map(&:name).join(', ')
         },
         {
           heading: 'refugee.social_worker',
-          query: record.refugee.social_worker
+          query: placement.refugee.social_worker
         },
         {
           heading: 'refugee.special_needs',
-          query: record.refugee.special_needs? ? 'Ja' : 'Nej'
+          query: placement.refugee.special_needs? ? 'Ja' : 'Nej'
         },
         {
           heading: 'Total placeringstid (dagar)',
-          query: record.placement_time,
+          query: placement.placement_time,
           type: :integer
         },
         {
           heading: 'refugee.deregistered_reason',
-          query: record.refugee.deregistered_reason.try(:name)
+          query: placement.refugee.deregistered_reason.try(:name)
         },
         {
           heading: 'refugee.deregistered_comment',
-          query: record.refugee.deregistered_comment
+          query: placement.refugee.deregistered_comment
         },
         {
           heading: 'home.owner_type',
-          query: record.home.owner_type.try(:name)
+          query: placement.home.owner_type.try(:name)
         },
         {
           heading: 'home.target_groups',
-          query: record.home.target_groups.map(&:name).join(', ')
+          query: placement.home.target_groups.map(&:name).join(', ')
         },
         {
           heading: 'Anledning till utskrivning',
-          query: record.moved_out_reason.try(:name)
+          query: placement.moved_out_reason.try(:name)
         },
         {
           heading: 'Asylstatus',
-          query: Reports.format_asylum_status(record.refugee.asylum_status)
+          query: Reports.format_asylum_status(placement.refugee.asylum_status)
         },
         {
           heading: 'refugee.municipality_placement_per_agreement_at',
-          query: record.refugee.municipality_placement_per_agreement_at,
+          query: placement.refugee.municipality_placement_per_agreement_at,
           type: :date
         },
         {
           heading: 'home.phone',
-          query: record.home.phone
+          query: placement.home.phone
         },
         {
           heading: 'home.fax',
-          query: record.home.fax
+          query: placement.home.fax
         },
         {
           heading: 'home.address',
-          query: record.home.address
+          query: placement.home.address
         },
         {
           heading: 'home.post_code',
-          query: record.home.post_code
+          query: placement.home.post_code
         },
         {
           heading: 'home.postal_town',
-          query: record.home.postal_town
+          query: placement.home.postal_town
         },
         {
           heading: 'Språk (boende)',
-          query: record.home.languages.map(&:name).join(', ')
+          query: placement.home.languages.map(&:name).join(', ')
         },
         {
           heading: 'home.comment',
-          query: record.home.comment
+          query: placement.home.comment
         },
         {
           heading: 'home.guaranteed_seats',
-          query: record.home.guaranteed_seats,
+          query: placement.home.guaranteed_seats,
           type: :integer
         },
         {
           heading: 'Lediga platser',
-          query: (record.home.guaranteed_seats.to_i + record.home.movable_seats.to_i) - record.home.placements.select { |p| p.moved_out_at.nil?  }.size,
+          query: (placement.home.guaranteed_seats.to_i + placement.home.movable_seats.to_i) - placement.home.placements.select { |p| p.moved_out_at.nil?  }.size,
           type: :integer
         },
         {
           heading: 'home.movable_seats',
-          query: record.home.movable_seats,
+          query: placement.home.movable_seats,
           type: :integer
         },
         {
           heading: 'Summa platser (garanti + rörliga)',
-          query: record.home.seats,
+          query: placement.home.seats,
           type: :integer
         },
         {
           heading: 'home.active',
-          query: record.home.active? ? 'Ja' : 'Nej'
+          query: placement.home.active? ? 'Ja' : 'Nej'
         }
       ]
     end
