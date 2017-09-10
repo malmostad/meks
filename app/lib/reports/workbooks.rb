@@ -114,7 +114,6 @@ module Reports
       add_last_row
     end
 
-    # TODO: add "last_row:" property to columns
     def add_last_row
       data_rows = records.size
       return if data_rows.zero?
