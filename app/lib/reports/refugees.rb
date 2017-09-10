@@ -10,8 +10,6 @@ module Reports
       @asylum = options[:asylum]
     end
 
-    private
-
     def records
       refugees = Refugee.includes(
         :countries, :languages, :ssns, :dossier_numbers,
@@ -47,7 +45,6 @@ module Reports
       end
       refugees
     end
-
 
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other

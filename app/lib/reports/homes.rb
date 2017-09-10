@@ -6,8 +6,6 @@ module Reports
       @free_seats = options[:free_seats]
     end
 
-    private
-
     def records
       homes = Home.includes(
         :placements, :type_of_housings,

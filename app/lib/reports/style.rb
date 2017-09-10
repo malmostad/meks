@@ -60,8 +60,6 @@ module Reports
       )
     end
 
-    private
-
     def heading_base_style
       {
         font_name: @font,

@@ -1,8 +1,6 @@
 module Reports
   class Economy < Workbooks
 
-    private
-
     def initialize(range = {})
       @from = range[:from]
       @to = range[:to]
