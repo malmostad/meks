@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
     else
       finished = false
       created_at = job.created_at.to_i
-      queue_size = Delayed::Job.where(last_error: nil).count - 1
+      queue_size = Delayed::Job.where(last_error: nil).count
       queue_size = 'du är först i kön' if queue_size.nil? || queue_size <= 1
     end
 
