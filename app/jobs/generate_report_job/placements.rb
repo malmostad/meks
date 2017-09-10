@@ -3,10 +3,10 @@ class GenerateReportJob
     def perform(params, file_id)
       Reports::Placements.new(
         filename: "#{file_id}.xlsx",
-        placements_selection: params[:selection],
-        placements_home_id: params[:home_id],
-        placements_from: params[:from],
-        placements_to: params[:to]
+        selection: params[:placements_selection],
+        home_id: params[:placements_home_id],
+        from: params[:placements_from],
+        to: params[:placements_to]
       ).create
     end
   end
