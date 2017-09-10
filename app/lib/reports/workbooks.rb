@@ -107,8 +107,9 @@ module Reports
       data_rows.each do |row|
         @sheet.add_row(
           row.map { |cell| cell[:query] },
-          style: row.map { |cell| cell_style(cell[:style]) },
-          types: row.map { |cell| cell_type(cell[:type]) }
+          # :style and :type creates invalid xlsx file if the record set is large
+          # style: row.map { |cell| cell_style(cell[:style]) },
+          # types: row.map { |cell| cell_type(cell[:type]) }
         )
       end
       add_last_row
