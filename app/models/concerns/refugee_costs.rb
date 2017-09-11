@@ -16,6 +16,51 @@ module RefugeeCosts
         { name: status[:name], cost: status_cost }
       end
     end
+
+    def placements_costs_and_days(pms, report_range = default_date_range)
+      pms.map do |pm|
+        pm.moved_out_at ||= Date.today
+
+        # Count days from the latest start date and the earliest end date
+        #   by comparing the placements range and the range for the report
+        count_from = [pm.moved_in_at, report_range[:from]].max_by(&:to_date)
+        count_to   = [pm.moved_out_at, report_range[:to]].min_by(&:to_date)
+
+        args = [pm, from: count_from, to: count_to]
+        pm.home.use_placement_cost ? placement_cost(*args) : placement_home_costs(*args)
+      end.flatten
+    end
+
+    # Used when placement.home.use_placement_cost
+    def placement_cost(placement, range = default_date_range)
+      # Count days from the latest start date and the earliest end date
+      #   by comparing the count_* with the cost's dates
+      starts_at = [range[:from], placement.moved_in_at].max_by(&:to_date)
+      ends_at   = placement.moved_out_at ? [range[:to], placement.moved_out_at].min_by(&:to_date) : range[:to]
+
+      days = (ends_at.to_date - starts_at.to_date).to_i + 1
+      days = 0 if days.negative? || days.nil?
+      cost = placement.cost.to_i
+
+      { cost: cost, days: days, home: placement.home.name }
+    end
+
+    # Costs per home and placement
+    # Used unless home.use_placement_cost
+    def placement_home_costs(placement, range = default_date_range)
+      placement.home.costs.map do |cost|
+        moved_out_at = placement.moved_out_at || range[:to]
+
+        # Count days from the latest start date and the earliest end date
+        #   by comparing the count_* with the cost's dates
+        starts_at = [range[:from], placement.moved_in_at, cost.start_date].max_by(&:to_date)
+        ends_at = [range[:to], moved_out_at, cost.end_date].min_by(&:to_date)
+        days = (ends_at.to_date - starts_at.to_date).to_i + 1
+        days = 0 if days.negative? || days.nil?
+
+        { cost: cost.amount || 0, days: days, home: placement.home.name }
+      end
+    end
   end
 
   included do
@@ -30,6 +75,7 @@ module RefugeeCosts
     #  * the placement range
     #  * each placement.home cost ranges
     # Returns an array of hashes
+    # TODO: Also implemented as class method
     def placements_costs_and_days(report_range = default_date_range)
       costs = placements.includes(home: :costs).map do |placement|
         moved_out_at = placement.moved_out_at || Date.today
