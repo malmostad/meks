@@ -10,7 +10,7 @@ module Reports
 
       def costs_formula(costs_and_days)
         calculation = costs_and_days.map do |cad|
-          "(#{cad[:days]}*#{cad[:cost]})"
+          "#{cad[:days]}*#{cad[:cost]}"
         end
         calculation = ['0*0'] if calculation.empty?
         "=SUM(#{calculation.join('+')})"
