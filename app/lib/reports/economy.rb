@@ -1,20 +1,37 @@
 module Reports
   class Economy < Workbooks
-    def records
-      @_records ||= begin
-        Refugee.includes(
-          :dossier_numbers, :ssns,
-          :municipality, :payments, :gender,
-          placements: [:legal_code, { home: %i[type_of_housings costs] }]
-        ).with_placements_within(@from, @to)
-      end
+    def initialize(options = {})
+      super(options)
+      @placements_within_range = placements_within_range
     end
 
-    def selected_placements(refugee)
-      refugee.placements_within(@from, @to)
+    def records
+      @placements_within_range.map(&:refugee)
+    end
+
+    def refugees_placements_within_range
+      records.try(:map, &:placements)
+    end
+
+    def refugee_placements_within_range(refugee)
+      @placements_within_range.map do |pl|
+        pl if pl.refugee.id == refugee.id
+      end.compact
+    end
+
+    def placements_within_range
+      Placement.includes(
+        :moved_out_reason, :legal_code,
+        refugee: %i[countries languages ssns dossier_numbers
+                    gender homes placements municipality
+                    deregistered_reason payments],
+        home: %i[languages type_of_housings
+                 owner_type target_groups languages costs]
+      ).within_range(@from, @to)
     end
 
     def columns(refugee = Refugee.new, i = 0)
+      @refugee_placements = refugee_placements_within_range(refugee)
       [
         {
           heading: 'Dossiernummer',
@@ -38,12 +55,12 @@ module Reports
         },
         {
           heading: 'Lagrum',
-          query: selected_placements(refugee).map(&:legal_code).map { |lc| lc.try(:name) }.reject(&:nil?).join(', ')
+          query: @refugee_placements.map(&:legal_code).try(:map, &:name).join(', ')
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: selected_placements(refugee).map do |placement|
-            "#{placement.home.name} (#{placement.moved_in_at}–#{placement.moved_out_at})"
+          query: @refugee_placements.map do |pl|
+            "#{pl.home.name} (#{pl.moved_in_at}–#{pl.moved_out_at})"
           end.join(', ')
         },
         {
@@ -53,11 +70,11 @@ module Reports
         },
         {
           heading: 'Placeringsdatum',
-          query: selected_placements(refugee).map(&:moved_in_at).compact.join(', ')
+          query: @refugee_placements.map(&:moved_in_at).join(', ')
         },
         {
           heading: 'Utskrivningsdatum',
-          query: selected_placements(refugee).map(&:moved_out_at).compact.join(', ')
+          query: @refugee_placements.map(&:moved_out_at).join(', ')
         },
         {
           heading: 'refugee.deregistered',
@@ -67,7 +84,11 @@ module Reports
         },
         {
           heading: 'Boendeformer',
-          query: selected_placements(refugee).map { |placement| placement.home.type_of_housings.map(&:name) }.join(', ')
+          query: @refugee_placements
+            .map(&:home)
+            .try(:map, &:type_of_housings)
+            .try(:map, &:name)
+            .compact.join(', ')
         },
         {
           heading: 'refugee.municipality',
@@ -106,7 +127,7 @@ module Reports
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.costs_formula(refugee.placements_costs_and_days(from: @from, to: @to))
+          query: self.class.costs_formula(Refugee.placements_costs_and_days(@refugee_placements, from: @from, to: @to))
         },
         {
           heading: 'Förväntad schablon',
