@@ -86,9 +86,11 @@ module Reports
           heading: 'Boendeformer',
           query: @refugee_placements
             .map(&:home)
-            .try(:map, &:type_of_housings)
+            .map(&:type_of_housings)
+            .first
             .try(:map, &:name)
-            .compact.join(', ')
+            .try(:compact)
+            .try(:join, ', ')
         },
         {
           heading: 'refugee.municipality',
@@ -127,7 +129,9 @@ module Reports
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.costs_formula(Refugee.placements_costs_and_days(@refugee_placements, from: @from, to: @to))
+          query: self.class.days_amount_formula(
+            Statistics::Costs.placements_costs_and_days(@refugee_placements, from: @from, to: @to)
+          )
         },
         {
           heading: 'Förväntad schablon',
@@ -135,7 +139,9 @@ module Reports
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.payments_formula(refugee.amount_and_days(from: @from, to: @to))
+          query: self.class.days_amount_formula(
+            Statistics::Payments.amount_and_days(refugee.payments, from: @from, to: @to)
+          )
         },
         {
           heading: 'Ålder',
