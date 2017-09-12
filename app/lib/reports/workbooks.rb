@@ -8,20 +8,13 @@ module Reports
         "=SUM(#{rates.join('+')})"
       end
 
-      def costs_formula(costs_and_days)
-        calculation = costs_and_days.map do |cad|
-          "#{cad[:days]}*#{cad[:cost]}"
+      def days_amount_formula(days_and_amount)
+        calculation = days_and_amount.map do |da|
+          days = da[:days] || 0
+          amount = da[:amount] || 0
+          "#{days}*#{amount}"
         end
-        calculation = ['0*0'] if calculation.empty?
-        "=SUM(#{calculation.join('+')})"
-      end
-
-      def payments_formula(days_and_daily_amounts)
-        calculation = days_and_daily_amounts.map do |dada|
-          "(#{dada[:days]}*#{dada[:daily_amount]})"
-        end
-        calculation = ['0*0'] if calculation.empty?
-        "=SUM(#{calculation.join('+')})"
+        "=(#{calculation.join('+')})"
       end
     end
 
