@@ -21,6 +21,7 @@ module Reports
 
     def columns(home = Home.new, i = 0)
       row = i + 2
+      rates = Statistics::Rates.new(refugee)
       [
         {
           heading: 'Boende',
@@ -32,7 +33,7 @@ module Reports
         },
         {
           heading: 'Förväntad schablon',
-          query: refugee.expected_rate
+          query: rates.expected
         },
         {
           heading: 'Avvikelse',
