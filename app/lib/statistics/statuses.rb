@@ -1,9 +1,5 @@
 module Statistics
   class Statuses < Base
-    def initialize(refugee)
-      @refugee = refugee
-    end
-
     def self.statuses
       [
         { name: 'refugee.in_arrival', refugees: :in_arrival },
@@ -68,6 +64,10 @@ module Statistics
       # Om datum för "Utskriven till Malmö" är inte ifylld, då
       # är det datum i raden "Avslutad" som avgör när schablonen upphör.
       Refugee.find(1, 2)
+    end
+
+    def initialize(refugee)
+      @refugee = refugee
     end
 
     # Returns the asylum event for the refugee with latest date

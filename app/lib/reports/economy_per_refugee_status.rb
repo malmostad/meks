@@ -1,6 +1,6 @@
 module Reports
   class EconomyPerRefugeeStatus < Workbooks
-    def create
+    def create!
       @axlsx    = Axlsx::Package.new
       @workbook = @axlsx.workbook
       @style    = Style.new(@axlsx)
