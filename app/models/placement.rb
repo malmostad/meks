@@ -65,4 +65,8 @@ class Placement < ApplicationRecord
     return 0 unless placement_time.positive?
     cost_sum / placement_time
   end
+
+  def cost_sum
+    Statistics::Costs.for_placements_and_home([self])
+  end
 end
