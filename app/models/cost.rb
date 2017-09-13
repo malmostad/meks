@@ -1,7 +1,5 @@
 # Cost for homes
 class Cost < ApplicationRecord
-  attr_accessor :total_cost
-
   belongs_to :home
 
   default_scope { order(:start_date) }

@@ -2,9 +2,7 @@ class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch
   include RefugeeStatuses
-  include RefugeeCosts
   include RefugeeRates
-  include RefugeePayments
 
   belongs_to :gender
   belongs_to :municipality

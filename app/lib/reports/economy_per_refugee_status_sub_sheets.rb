@@ -28,7 +28,9 @@ module Reports
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.costs_formula(refugee.placements_costs_and_days(from: @from, to: @to))
+          query: self.class.days_amount_formula(
+            Statistics::Costs.placements_costs_and_days(refugee_placements, from: @from, to: @to)
+          )
         },
         {
           heading: 'Förväntad schablon',
@@ -40,7 +42,9 @@ module Reports
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.payments_formula(refugee.amount_and_days(from: @from, to: @to))
+          query: self.class.days_amount_formula(
+            Statistics::Payments.amount_and_days(refugee.payments, from: @from, to: @to)
+          )
         },
         {
           heading: 'Avvikelse',

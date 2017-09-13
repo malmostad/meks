@@ -32,7 +32,7 @@ module Reports
         },
         {
           heading: 'Förväntad schablon',
-          # query: refugee.expected_rate
+          query: refugee.expected_rate
         },
         {
           heading: 'Avvikelse',
@@ -40,7 +40,9 @@ module Reports
         },
         {
           heading: 'Utbetald schablon',
-          # query: self.class.payments_formula(refugee.amount_and_days(from: @from, to: @to))
+          query: self.class.days_amount_formula(
+            Statistics::Payments.amount_and_days(refugee.payments, from: @from, to: @to)
+          )
         },
         {
           heading: 'Avvikelse',
