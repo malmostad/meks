@@ -49,6 +49,7 @@ module Reports
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
     def columns(refugee = Refugee.new, i = 0)
+      status = Statistics::Statuses.new(refugee)
       [
         {
           heading: 'refugee.name',
@@ -183,10 +184,10 @@ module Reports
           query: refugee.municipality_placement_per_agreement_at,
           type: :date
         },
-        # {
-        #   heading: 'Asylstatus',
-        #   query: Reports.format_asylum_status(refugee.asylum_status)
-        # },
+        {
+          heading: 'Asylstatus',
+          query: status.format_asylum
+        },
         {
           heading: 'Extra personnummer',
           query: refugee.ssns.map(&:full_ssn).join(', ')

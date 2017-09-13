@@ -15,6 +15,7 @@ module Statistics
     def age_18_20
       @refugee.born.where('date_of_birth <= ? and date_of_birth > ?', 18.years.ago, 21.years.ago)
     end
+
     def expected(report_range = DEFAULT_DATE_RANGE)
       0
     end

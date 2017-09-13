@@ -25,7 +25,7 @@ module Reports
     end
 
     def records
-      Refugee.statuses
+      Statistics::Statuses.statuses
     end
 
     def columns(status = {}, i = 0)

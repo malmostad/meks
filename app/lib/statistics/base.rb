@@ -15,5 +15,9 @@ module Statistics
     def self.latest_date(dates)
       dates.compact.max_by(&:to_date)
     end
+
+    def self.numshort_date(date)
+      I18n.l(date, format: :numshort) unless date.nil?
+    end
   end
 end
