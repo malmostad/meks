@@ -57,10 +57,6 @@ class Home < ApplicationRecord
     false
   end
 
-  def placements_costs(range = default_date_range)
-    placements.map(&:cost_sum)
-  end
-
   private
 
   def overlapping_cost(cost1, cost2)

@@ -29,7 +29,7 @@ module Reports
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.rates_formula(home.placements_costs)
+          query: self.class.sum_formula(placements_costs_and_days(home.placements, from: @from, to: @to))
         },
         {
           heading: 'Förväntad schablon',

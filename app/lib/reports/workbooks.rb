@@ -1,23 +1,19 @@
 module Reports
   class Workbooks
-    class << self
-      def rates_formula(rates = [])
-        rates.compact!
-        # =SUM() is not valid in Excel
-        return 0 if rates.blank?
-        "=SUM(#{rates.join('+')})"
-      end
+    def class.sum_formula(a = [])
+      a.compact!
+      return 0 if a.blank?
+      "=(#{a.join('+')})"
+    end
 
-      def days_amount_formula(days_and_amount = [])
-        return 0 if days_and_amount.blank?
-        calculation = days_and_amount.map do |da|
-          days   = da[:days]   || 0
-          amount = da[:amount] || 0
-          "#{days}*#{amount}"
-        end
-        return 0 if calculation.empty?
-        "=(#{calculation.join('+')})"
+    def class.days_amount_formula(days_and_amount = [])
+      return 0 if days_and_amount.blank?
+      calculation = days_and_amount.map do |da|
+        days   = da[:days]   || 0
+        amount = da[:amount] || 0
+        "#{days}*#{amount}"
       end
+      sum_formula(calculation)
     end
 
     def initialize(options = {})
