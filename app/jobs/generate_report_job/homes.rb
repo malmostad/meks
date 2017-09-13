@@ -8,7 +8,7 @@ class GenerateReportJob
         owner_type: params[:home_owner_type],
         free_seats: params[:homes_free_seats]
       )
-      workbook.create
+      workbook.create!
     end
   end
 end

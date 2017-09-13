@@ -7,7 +7,7 @@ module Reports
       @sheet_name      = @type_of_housing.name
     end
 
-    def create
+    def create!
       @workbook = @axlsx.workbook
       @sheet    = @workbook.add_worksheet(name: @sheet_name)
       @style    = Style.new(@axlsx)

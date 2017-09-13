@@ -27,7 +27,7 @@ module Reports
       @sheet_name = format_sheet_name
     end
 
-    def create
+    def create!
       axlsx     = Axlsx::Package.new
       @workbook = axlsx.workbook
       @sheet    = @workbook.add_worksheet(name: @sheet_name)

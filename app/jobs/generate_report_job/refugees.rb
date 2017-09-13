@@ -10,7 +10,7 @@ class GenerateReportJob
         include_without_date_of_birth: params[:refugees_include_without_date_of_birth],
         asylum: params[:refugees_asylum]
       )
-      workbook.create
+      workbook.create!
     end
   end
 end

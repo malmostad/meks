@@ -6,7 +6,7 @@ class GenerateReportJob
         from: params[:placements_from],
         to: params[:placements_to]
       )
-      workbook.create
+      workbook.create!
     end
   end
 end

@@ -19,7 +19,7 @@ module Reports
     def add_sub_sheets
       records.each_with_index do |status, i|
         sheet = Reports::EconomyPerRefugeeStatusSubSheets.new(status: status, axlsx: @axlsx)
-        sheet.create
+        sheet.create!
         @sheet.add_hyperlink(location: "'#{i18n_name(status[:name])}'!A1", ref: "A#{i + 2}", target: :sheet)
       end
     end
