@@ -1,19 +1,21 @@
 module Reports
   class Workbooks
     class << self
-      def rates_formula(rates)
+      def rates_formula(rates = [])
         rates.compact!
         # =SUM() is not valid in Excel
-        rates = [0] if rates.empty?
+        return 0 if rates.blank?
         "=SUM(#{rates.join('+')})"
       end
 
-      def days_amount_formula(days_and_amount)
+      def days_amount_formula(days_and_amount = [])
+        return 0 if days_and_amount.blank?
         calculation = days_and_amount.map do |da|
-          days = da[:days] || 0
+          days   = da[:days]   || 0
           amount = da[:amount] || 0
           "#{days}*#{amount}"
         end
+        return 0 if calculation.empty?
         "=(#{calculation.join('+')})"
       end
     end
@@ -51,7 +53,7 @@ module Reports
     end
 
     def format_sheet_name
-      @from && @to ? "#{@from}–#{@to}" : 'Inget intervall'
+      @from && @to ? "#{@from.to_date}–#{@to.to_date}" : 'Inget intervall'
     end
 
     def i18n_name(name)

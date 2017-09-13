@@ -1,37 +1,45 @@
 module Reports
+  # The rows in this spreadsheet are refugee centered.
+  # Refugees that have one or more placements within the
+  #   range are collected.
+  # Each selected refugee's row is populated with data
+  #   containing all the refugee's placements within the range
+  #   and data related to those placements.
+  # Formulas in the spreadsheet contains rates, costs, and payments
+  #   associated with the refugee and it's placements within the range.
   class Economy < Workbooks
     def initialize(options = {})
       super(options)
-      @placements_within_range = placements_within_range
     end
 
+    # Returns all refugees with placements within the range
     def records
-      @placements_within_range.map(&:refugee)
+      placements_within_range.map(&:refugee)
     end
 
-    def refugees_placements_within_range
-      records.try(:map, &:placements)
+    # Returns all placements within the range
+    def placements_within_range
+      @_placements_within_range ||= begin
+        Placement.includes(
+          :moved_out_reason, :legal_code,
+          refugee: %i[countries languages ssns dossier_numbers
+                      gender homes placements municipality
+                      deregistered_reason payments],
+          home: %i[languages type_of_housings
+                   owner_type target_groups languages costs]
+        ).within_range(@from, @to)
+      end
     end
 
+    # Returns a single refugee's all placements within the range
     def refugee_placements_within_range(refugee)
-      @placements_within_range.map do |pl|
+      placements_within_range.map do |pl|
         pl if pl.refugee.id == refugee.id
       end.compact
     end
 
-    def placements_within_range
-      Placement.includes(
-        :moved_out_reason, :legal_code,
-        refugee: %i[countries languages ssns dossier_numbers
-                    gender homes placements municipality
-                    deregistered_reason payments],
-        home: %i[languages type_of_housings
-                 owner_type target_groups languages costs]
-      ).within_range(@from, @to)
-    end
-
     def columns(refugee = Refugee.new, i = 0)
-      @refugee_placements = refugee_placements_within_range(refugee)
+      refugee_placements = refugee_placements_within_range(refugee)
       [
         {
           heading: 'Dossiernummer',
@@ -55,11 +63,11 @@ module Reports
         },
         {
           heading: 'Lagrum',
-          query: @refugee_placements.map(&:legal_code).try(:map, &:name).join(', ')
+          query: refugee_placements.map(&:legal_code).try(:map, &:name).join(', ')
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: @refugee_placements.map do |pl|
+          query: refugee_placements.map do |pl|
             "#{pl.home.name} (#{pl.moved_in_at}–#{pl.moved_out_at})"
           end.join(', ')
         },
@@ -70,11 +78,11 @@ module Reports
         },
         {
           heading: 'Placeringsdatum',
-          query: @refugee_placements.map(&:moved_in_at).join(', ')
+          query: refugee_placements.map(&:moved_in_at).join(', ')
         },
         {
           heading: 'Utskrivningsdatum',
-          query: @refugee_placements.map(&:moved_out_at).join(', ')
+          query: refugee_placements.map(&:moved_out_at).join(', ')
         },
         {
           heading: 'refugee.deregistered',
@@ -84,7 +92,7 @@ module Reports
         },
         {
           heading: 'Boendeformer',
-          query: @refugee_placements
+          query: refugee_placements
             .map(&:home)
             .map(&:type_of_housings)
             .first
@@ -130,7 +138,7 @@ module Reports
         {
           heading: 'Budgeterad kostnad',
           query: self.class.days_amount_formula(
-            Statistics::Costs.placements_costs_and_days(@refugee_placements, from: @from, to: @to)
+            Statistics::Costs.placements_costs_and_days(refugee_placements, from: @from, to: @to)
           )
         },
         {

@@ -1,28 +1,25 @@
 module Statistics
-  class Payments
-    # Calculate the refugees payments based on
+  class Payments < Base
+    # Calculate a refugee's payments based on
     #  * the report range
-    #  * each payment range and amount
+    #  * each payment's range and amount
     # Returns an array of hashes
-    def self.amount_and_days(payments, range = Statistics::DEFAULT_DATE_RANGE)
+    def self.amount_and_days(payments, range = DEFAULT_DATE_RANGE)
+      return [] if payments.empty?
+
       payments.map do |payment|
-        period_length = (payment.period_end - payment.period_start).to_i
-        daily_amount = period_length.zero? ? 0 : payment.amount / period_length
         days = days(payment, range)
+        daily_amount = days.zero? ? 0 : payment.amount / days
 
         { amount: daily_amount.round, days: days }
-      end.flatten
+      end
     end
 
-    # Count days from the latest start date and the earliest end date
-    #   by comparing the payments range and the range for the report
+    # Returns the number of days the payment spans over within the range
     def self.days(payment, range)
-      count_from = [payment.period_start, range[:from]].max_by(&:to_date)
-      count_to   = [payment.period_end, range[:to]].min_by(&:to_date)
-
-      days = (count_to.to_date - count_from.to_date).to_i
-      days = 0 if days.nil? || days.negative?
-      days
+      from = latest_date [payment.period_start, range[:from]]
+      to   = earliest_date [payment.period_end, range[:to]]
+      number_of_days(from, to)
     end
   end
 end
