@@ -1,12 +1,12 @@
 module Reports
   class Workbooks
-    def class.sum_formula(a = [])
+    def self.sum_formula(a = [])
       a.compact!
       return 0 if a.blank?
       "=(#{a.join('+')})"
     end
 
-    def class.days_amount_formula(days_and_amount = [])
+    def self.days_amount_formula(days_and_amount = [])
       return 0 if days_and_amount.blank?
       calculation = days_and_amount.map do |da|
         days   = da[:days]   || 0
