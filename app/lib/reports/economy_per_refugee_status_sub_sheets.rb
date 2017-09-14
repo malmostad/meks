@@ -30,7 +30,7 @@ module Reports
         {
           heading: 'Budgeterad kostnad',
           query: self.class.days_amount_formula(
-            Statistics::Costs.placements_costs_and_days(refugee_placements, from: @from, to: @to)
+            Statistics::Costs.placements_costs_and_days(refugee.placements, from: @from, to: @to)
           )
         },
         {
