@@ -25,7 +25,7 @@ module Reports
     end
 
     def records
-      TypeOfHousing.includes(homes: [:costs, placements: :refugee]).all
+      TypeOfHousing.includes(homes: [:costs, placements: { refugee: :payments }]).all
     end
 
     def columns(type_of_housing = TypeOfHousing.new, i = 0)

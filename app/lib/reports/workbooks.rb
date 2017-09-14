@@ -1,5 +1,7 @@
 module Reports
   class Workbooks
+    DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
+
     def self.sum_formula(a = [])
       a.compact!
       return 0 if a.blank?
@@ -18,8 +20,8 @@ module Reports
 
     def initialize(options = {})
       @filename   = options[:filename] || 'Utan titel.xlsx'
-      @from       = options[:from]     || default_date_range[:from]
-      @to         = options[:to]       || default_date_range[:to]
+      @from       = options[:from]     || DEFAULT_DATE_RANGE[:from]
+      @to         = options[:to]       || DEFAULT_DATE_RANGE[:to]
       @sheet_name = format_sheet_name
     end
 
@@ -135,10 +137,6 @@ module Reports
 
     def columns(*_args)
       raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"
-    end
-
-    def default_date_range
-      { from: Date.new(0), to: Date.today }
     end
   end
 end

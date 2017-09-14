@@ -5,9 +5,9 @@ class TypeOfHousing < ApplicationRecord
   validates_presence_of :name
   validates_length_of :name, maximum: 191
 
-  def placements_cost_per_home(range = default_date_range)
+  def placements_cost_per_home(range = DEFAULT_DATE_RANGE)
     homes.map do |home|
-      home.placements.map(&:cost_sum).sum
+      Statistics::Costs.for_placements_and_home(home.placements, range)
     end
   end
 end

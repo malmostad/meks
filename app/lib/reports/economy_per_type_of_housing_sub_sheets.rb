@@ -21,7 +21,6 @@ module Reports
 
     def columns(home = Home.new, i = 0)
       row = i + 2
-      rates = Statistics::Rates.new(refugee)
       [
         {
           heading: 'Boende',
@@ -29,11 +28,14 @@ module Reports
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.sum_formula(placements_costs_and_days(home.placements, from: @from, to: @to))
+          query: self.class.sum_formula(
+            Statistics::Costs.placements_costs_and_days(home.placements, from: @from, to: @to)
+          )
         },
         {
           heading: 'Förväntad schablon',
-          query: rates.expected
+          # TODO: implement
+          query: 0
         },
         {
           heading: 'Avvikelse',
@@ -42,7 +44,7 @@ module Reports
         {
           heading: 'Utbetald schablon',
           query: self.class.days_amount_formula(
-            Statistics::Payments.amount_and_days(refugee.payments, from: @from, to: @to)
+            home.payments(from: @from, to: @to)
           )
         },
         {
