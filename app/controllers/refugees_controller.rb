@@ -6,7 +6,7 @@ class RefugeesController < ApplicationController
       placements: [:home, :moved_out_reason, :legal_code],
       payments: :payment_import
     ).find(params[:id])
-    @status = Statistics::Statuses.new(@refugee)
+    @status = Statistics::Statuse.new(@refugee)
   end
 
   def new

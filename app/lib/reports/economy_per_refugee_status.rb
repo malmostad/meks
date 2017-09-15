@@ -25,7 +25,7 @@ module Report
     end
 
     def records
-      Statistics::Statuses.statuses
+      Statistics::Statuse.statuses
     end
 
     def columns(status = {}, i = 0)
