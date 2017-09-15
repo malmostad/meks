@@ -4,8 +4,7 @@ module Statistics
       [
         { name: 'refugee.in_arrival', refugees: :in_arrival },
         { name: 'refugee.temporary_permit', refugees: :temporary_permit },
-        { name: 'refugee.residence_permit', refugees: :residence_permit },
-        { name: 'refugee.designated', refugees: :designated }
+        { name: 'refugee.residence_permit', refugees: :residence_permit }
       ]
     end
 
@@ -54,16 +53,6 @@ module Statistics
 
     def self.residence_permit
       Refugee.where.not(residence_permit_at: nil)
-    end
-
-    def self.designated
-      # TODO: implement
-      # Lagrum SoL. Schablonen ska beräknas för barn som ej har fyllt 18 år
-      # samt från och med anvisningsdatum till Malmö och
-      # avslutas samma dag som står i kolumnen "Utskriven till Malmö".
-      # Om datum för "Utskriven till Malmö" är inte ifylld, då
-      # är det datum i raden "Avslutad" som avgör när schablonen upphör.
-      Refugee.find(1, 2)
     end
 
     def initialize(refugee)
