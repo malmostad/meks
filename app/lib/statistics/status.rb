@@ -1,5 +1,5 @@
 module Statistics
-  class Statuse < Base
+  class Status < Base
     def self.statuses
       [
         { name: 'refugee.in_arrival', refugees: :in_arrival },
