@@ -1,4 +1,4 @@
-module Reports
+module Report
   class EconomyPerTypeOfHousing < Workbooks
     def create!
       @axlsx    = Axlsx::Package.new
@@ -18,7 +18,7 @@ module Reports
 
     def add_sub_sheets
       records.each_with_index do |type_of_housing, i|
-        sheet = Reports::EconomyPerTypeOfHousingSubSheets.new(type_of_housing: type_of_housing, axlsx: @axlsx)
+        sheet = Report::EconomyPerTypeOfHousingSubSheets.new(type_of_housing: type_of_housing, axlsx: @axlsx)
         sheet.create!
         @sheet.add_hyperlink(location: "'#{type_of_housing.name}'!A1", ref: "A#{i + 2}", target: :sheet)
       end

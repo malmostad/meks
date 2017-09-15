@@ -1,4 +1,4 @@
-module Reports
+module Report
   class Placements < Workbooks
     attr_accessor :record
 

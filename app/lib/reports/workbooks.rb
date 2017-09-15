@@ -1,4 +1,4 @@
-module Reports
+module Report
   class Workbooks
     DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
 

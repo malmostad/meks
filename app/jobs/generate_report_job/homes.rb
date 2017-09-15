@@ -1,7 +1,7 @@
 class GenerateReportJob
   class Homes < ApplicationJob
     def perform(params, file_id)
-      workbook = Reports::Homes.new(
+      workbook = Report::Homes.new(
         filename: "#{file_id}.xlsx",
         from: params[:placements_from],
         to: params[:placements_to],

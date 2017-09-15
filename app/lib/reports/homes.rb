@@ -1,4 +1,4 @@
-module Reports
+module Report
   class Homes < Workbooks
     def initialize(options = {})
       super(options)

@@ -1,4 +1,4 @@
-module Reports
+module Report
   class EconomyPerTypeOfHousingSubSheets < Workbooks
     def initialize(options = {})
       super(options)

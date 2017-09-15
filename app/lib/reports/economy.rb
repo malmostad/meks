@@ -1,4 +1,4 @@
-module Reports
+module Report
   # The rows in this spreadsheet are refugee centered.
   # Refugees that have one or more placements within the
   #   range are collected.

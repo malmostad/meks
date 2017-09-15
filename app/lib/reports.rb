@@ -1,2 +1,2 @@
-module Reports
+module Report
 end
