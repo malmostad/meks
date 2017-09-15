@@ -7,11 +7,13 @@
     .placement
       = show_attribute('refugee.home', (link_to placement.home.name, home_path(placement.home)))
       = show_attribute("Aktuell dygnskostnad för #{placement.home.name}", "#{number_to_currency(placement.home.current_cost, delimiter: ' ')}")
+
       - if placement.home.use_placement_specification?
         = show_attribute('placement.specification', placement.specification)
       = show_attribute('placement.legal_code', placement.legal_code.present? ? placement.legal_code.name : '')
       = show_attribute('Boendetid', "#{placement.placement_time} dagar")
       = show_attribute('placement.moved_in_at', placement.moved_in_at)
+
       - if placement.moved_out_at.present?
         = show_attribute('placement.moved_out_at', placement.moved_out_at)
         - if placement.moved_out_reason.present?
