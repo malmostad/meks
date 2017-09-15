@@ -67,6 +67,6 @@ class Placement < ApplicationRecord
   end
 
   def cost_sum
-    Statistics::Costs.for_placements_and_home([self])
+    Statistics::Cost.for_placements_and_home([self])
   end
 end

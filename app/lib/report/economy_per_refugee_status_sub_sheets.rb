@@ -21,7 +21,7 @@ module Report
 
     def columns(refugee = Refugee.new, i = 0)
       row = i + 2
-      rates = Statistics::Rates.new(refugee)
+      rates = Statistics::Rate.new(refugee)
       [
         {
           heading: 'Dossiernumber',
@@ -30,7 +30,7 @@ module Report
         {
           heading: 'Budgeterad kostnad',
           query: self.class.days_amount_formula(
-            Statistics::Costs.placements_costs_and_days(refugee.placements, from: @from, to: @to)
+            Statistics::Cost.placements_costs_and_days(refugee.placements, from: @from, to: @to)
           )
         },
         {
@@ -44,7 +44,7 @@ module Report
         {
           heading: 'Utbetald schablon',
           query: self.class.days_amount_formula(
-            Statistics::Payments.amount_and_days(refugee.payments, from: @from, to: @to)
+            Statistics::Payment.amount_and_days(refugee.payments, from: @from, to: @to)
           )
         },
         {

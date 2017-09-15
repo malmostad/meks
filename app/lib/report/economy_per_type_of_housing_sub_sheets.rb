@@ -29,7 +29,7 @@ module Report
         {
           heading: 'Budgeterad kostnad',
           query: self.class.sum_formula(
-            Statistics::Costs.placements_costs_and_days(home.placements, from: @from, to: @to)
+            Statistics::Cost.placements_costs_and_days(home.placements, from: @from, to: @to)
           )
         },
         {

@@ -1,5 +1,5 @@
 module Statistics
-  class Costs < Base
+  class Cost < Base
     def self.for_placements_and_home(placements, range = DEFAULT_DATE_RANGE)
       costs = placements_costs_and_days(placements, range)
       costs.map do |c|

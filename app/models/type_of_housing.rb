@@ -7,7 +7,7 @@ class TypeOfHousing < ApplicationRecord
 
   def placements_cost_per_home(range = DEFAULT_DATE_RANGE)
     homes.map do |home|
-      Statistics::Costs.for_placements_and_home(home.placements, range)
+      Statistics::Cost.for_placements_and_home(home.placements, range)
     end
   end
 end

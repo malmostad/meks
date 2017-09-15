@@ -1,5 +1,5 @@
 module Statistics
-  class Rates < Base
+  class Rate < Base
     def initialize(refugee)
       @refugee = refugee
     end
