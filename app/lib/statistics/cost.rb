@@ -1,5 +1,12 @@
 module Statistics
   class Cost < Base
+    def self.total_for_placements_and_home(placements)
+      costs = placements_costs_and_days(placements)
+      costs.map do |c|
+        c[:amount] * c[:days]
+      end.sum
+    end
+
     def self.for_placements_and_home(placements, range = DEFAULT_DATE_RANGE)
       costs = placements_costs_and_days(placements, range)
       costs.map do |c|
