@@ -1,5 +1,5 @@
 module Statistics
-  class Payments < Base
+  class Payment < Base
     # Calculate daily amount and number of days for payments based on
     #  * the report range
     #  * each payment's range and amount
