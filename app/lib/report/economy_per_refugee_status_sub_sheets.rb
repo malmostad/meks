@@ -21,7 +21,7 @@ module Report
 
     def columns(refugee = Refugee.new, i = 0)
       row = i + 2
-      rate = Statistics::Rate
+      rate = Statistics::RateCategories
       [
         {
           heading: 'Dossiernumber',

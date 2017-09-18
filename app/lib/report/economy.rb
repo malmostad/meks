@@ -40,7 +40,7 @@ module Report
 
     def columns(refugee = Refugee.new, i = 0)
       refugee_placements = refugee_placements_within_range(refugee)
-      rate = Statistics::Rate
+      rate = Statistics::RateCategories
       [
         {
           heading: 'Dossiernummer',
