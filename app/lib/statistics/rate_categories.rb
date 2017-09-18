@@ -22,6 +22,14 @@ module Statistics
         age_18_20.tut
       end
 
+      def put_0_17
+        age_0_17.put
+      end
+
+      def put_18_20
+        age_18_20.put
+      end
+
       # * SKA vara född
       # * SKA INTE ha datum för ”Avslutad” som har inträffat
       def default
@@ -78,19 +86,30 @@ module Statistics
 
       # * SKA ha datum för ”TUT startar” och SKA ligga idag eller tidigare
       # * SKA ha datum för ”TUT slutar” och SKA INTE ha inträffat
-      # XXX: correct? * SKA ha datum för ”Utskriven till Malmö” i går eller tidigare
+      # * SKA ha datum för ”Utskriven till Malmö” i går eller tidigare
       # * TUT SKA vara längre än 12 månader
       # * SKA INTE ha datum för PUT som har inträffat
       def tut
         refugees = default.where('temporary_permit_starts_at <= ?', Date.today)
           .where('temporary_permit_ends_at > ?', Date.today)
           .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
-          .where('municipality_placement_migrationsverket_at <= ?', Date.today)
+          .where('municipality_placement_migrationsverket_at <= ?', Date.today) # XXX: correct? *
           .where('residence_permit_at > ? OR residence_permit_at IS ?', Date.today, nil)
 
         refugees = refugees.map do |refugee|
           refugee if 12.months.ago(refugee.temporary_permit_ends_at) > refugee.temporary_permit_starts_at
         end.compact
+      end
+
+      # * SKA ha startdatum för PUT som har inträffat
+      # * SKA vara ”Utskriven till Malmö” i går eller tidigare
+      # * SKA INTE ha datum för medborgarskap
+      def put
+        default
+          .where('residence_permit_at <= ?', Date.today)
+          .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
+          .where('municipality_placement_migrationsverket_at <= ?', Date.today) # XXX: correct? *
+          .where(citizenship_at: nil)
       end
     end
   end
