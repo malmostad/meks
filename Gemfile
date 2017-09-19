@@ -1,25 +1,24 @@
 source 'https://rubygems.org'
 
 gem 'rails', '5.0.2'
-gem 'haml-rails', '0.9.0'
+gem 'haml-rails', '1.0.0'
 gem 'sass-rails', '5.0.6'
-gem 'uglifier', '3.1.12'
-gem 'coffee-rails', '4.2.1'
-gem 'jquery-rails', '4.3.1'
+gem 'uglifier', '3.2.0'
+gem 'coffee-rails', '4.2.2'
 
-gem 'simple_form', '3.4.0'
-gem 'mysql2', '0.4.5'
+gem 'simple_form', '3.5.0'
+gem 'mysql2', '0.4.9'
 gem 'dalli', '2.7.6'
-gem 'elasticsearch-model', '0.1.9'
-gem 'elasticsearch-rails', '0.1.9'
+gem 'elasticsearch-model', '5.0.1'
+gem 'elasticsearch-rails', '5.0.1'
 gem 'daemons', '1.2.4'
 
 gem 'net-ldap', '0.16.0'
-gem 'cancancan', '1.16.0'
-gem 'ruby-saml', '1.4.2'
+gem 'cancancan', '2.0.0'
+gem 'ruby-saml', '1.5.0'
 
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '05f3412'
-gem 'delayed_job_active_record', '4.1.1'
+gem 'delayed_job_active_record', '4.1.2'
 
 gem 'whenever', '0.9.7', require: false
 gem 'highline', '1.7.8'
@@ -31,9 +30,9 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'pry-rails'
 
 group :development do
-  gem 'capistrano', '3.8.0', require: false
-  gem 'capistrano-rails', '1.2.3', require: false
-  gem 'capistrano-rbenv', '2.1.0', require: false
+  gem 'capistrano', '3.9.1', require: false
+  gem 'capistrano-rails', '1.3.0', require: false
+  gem 'capistrano-rbenv', '2.1.1', require: false
   gem 'bullet'
 end
 
@@ -46,7 +45,7 @@ group :local_test do
 end
 
 group :development, :test, :local_test do
-  gem 'rspec-rails', '~> 3.5.2'
+  gem 'rspec-rails', '~> 3.6.1'
 end
 
 group :development, :test do
