@@ -1,5 +1,6 @@
 module Statistics
   # TODO: limit queries by report range
+  # Qualifiers for refugee rate categories (schabloner)
   class RateCategories < Refugee
     class << self
       def expected
@@ -30,6 +31,7 @@ module Statistics
         age_18_20.put
       end
 
+      # Conditions for all categories
       # * SKA vara född
       # * SKA INTE ha datum för ”Avslutad” som har inträffat
       def default
@@ -96,7 +98,7 @@ module Statistics
           .where('municipality_placement_migrationsverket_at <= ?', Date.today) # XXX: correct? *
           .where('residence_permit_at > ? OR residence_permit_at IS ?', Date.today, nil)
 
-        refugees = refugees.map do |refugee|
+        refugees.map do |refugee|
           refugee if 12.months.ago(refugee.temporary_permit_ends_at) > refugee.temporary_permit_starts_at
         end.compact
       end
