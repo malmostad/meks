@@ -14,7 +14,7 @@
       - @languages.each do |language|
         %tr
           %td= link_to language.name, edit_language_path(language)
-          %td.delete= link_to t('actions.delete'), language, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), language, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }

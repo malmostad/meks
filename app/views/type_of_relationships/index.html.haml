@@ -11,7 +11,7 @@
       - @type_of_relationships.each do |type_of_relationship|
         %tr
           %td= link_to type_of_relationship.name, edit_type_of_relationship_path(type_of_relationship)
-          %td.delete= link_to t('actions.delete'), type_of_relationship, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), type_of_relationship, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }

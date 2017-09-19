@@ -11,7 +11,7 @@
       - @target_groups.each do |target_group|
         %tr
           %td= link_to target_group.name, edit_target_group_path(target_group)
-          %td.delete= link_to t('actions.delete'), target_group, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), target_group, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }

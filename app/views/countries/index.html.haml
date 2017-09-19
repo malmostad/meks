@@ -15,7 +15,7 @@
       - @countries.each do |country|
         %tr
           %td= link_to country.name, edit_country_path(country)
-          %td.delete= link_to t('actions.delete'), country, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), country, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
       %tr
         %td{ colspan: 2 }
           .actions= link_to t('actions.new'), new_country_path, class: "btn btn-primary"

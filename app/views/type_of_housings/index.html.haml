@@ -11,7 +11,7 @@
       - @type_of_housings.each do |type_of_housing|
         %tr
           %td= link_to type_of_housing.name, edit_type_of_housing_path(type_of_housing)
-          %td.delete= link_to t('actions.delete'), type_of_housing, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), type_of_housing, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }
