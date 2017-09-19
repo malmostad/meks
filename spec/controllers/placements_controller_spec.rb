@@ -49,7 +49,7 @@ RSpec.describe PlacementsController, type: :controller do
     describe "GET #move_out" do
       it "assigns the requested placement as @placement" do
         placement = Placement.create! valid_attributes
-        get :move_out #, refugee_id: valid_refugee.id, placement_id: placement.to_param
+        get :move_out, params: { refugee_id: valid_refugee.id, :placement_id => placement.to_param }, session: valid_session
         expect(assigns(:placement)).to eq(placement)
       end
     end

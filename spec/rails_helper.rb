@@ -8,8 +8,7 @@ require 'rspec/rails'
 require 'haml'
 require 'factory_girl_rails'
 require 'cancan/matchers'
-# require 'capybara/rspec'
-# require 'capybara/poltergeist'
+require 'capybara/poltergeist'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
