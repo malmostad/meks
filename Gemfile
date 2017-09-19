@@ -37,15 +37,12 @@ group :development do
 end
 
 group :local_test do
-  # gem 'rails-controller-testing'
+  gem 'rspec-rails', '3.6.0'
+  gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'poltergeist'
-end
-
-group :development, :test, :local_test do
-  gem 'rspec-rails', '3.5.2'
 end
 
 group :development, :test do
