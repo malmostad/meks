@@ -30,7 +30,7 @@ RSpec.describe "Deregistered reasons", type: :feature do
     scenario "deletes a deregistered_reason", js: true do
       deregistered_reason = create(:deregistered_reason, name: "Fox")
       visit "/deregistered_reasons"
-      first("a.btn-danger").click
+      first(".btn-danger").click
 
       sleep 2
       page.evaluate_script("window.confirm()")

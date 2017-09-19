@@ -4,7 +4,7 @@ RSpec.describe UsersController, type: :controller do
   describe "GET #index" do
     it "assigns all users as @users" do
       user = User.create!(username: "username", name: "First Last", role: "writer")
-      get :index, {}, valid_session
+      get :index, params: {}, session: valid_session
       expect(assigns(:users)).to eq([user])
     end
 

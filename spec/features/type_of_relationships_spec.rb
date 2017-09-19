@@ -30,7 +30,7 @@ RSpec.describe "Type of relationships", type: :feature do
     scenario "deletes a type_of_relationship", js: true do
       type_of_relationship = create(:type_of_relationship, name: "Fox")
       visit "/type_of_relationships"
-      first("a.btn-danger").click
+      first(".btn-danger").click
 
       page.evaluate_script("window.confirm()")
       expect(page).to have_selector(".notice", text: "raderades")
