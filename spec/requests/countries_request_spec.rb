@@ -12,8 +12,7 @@ RSpec.describe CountriesController, type: :request do
   describe "GET #index" do
     it "assigns all countries as @countries" do
       country = Country.create! valid_attributes
-      get '/countries', {}, valid_session
-      expect(response).to redirect_to(assigns(:country))
+      get '/countries', session: { user_id: current_user.id }
       expect(assigns(:countries)).to eq([country])
     end
   end

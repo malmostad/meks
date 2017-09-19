@@ -1,4 +1,4 @@
-class CreateDeregisteredReasons < ActiveRecord::Migration
+class CreateDeregisteredReasons < ActiveRecord::Migration[4.2]
   def change
     create_table :deregistered_reasons do |t|
       t.string :name

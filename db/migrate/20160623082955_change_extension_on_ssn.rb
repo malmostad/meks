@@ -1,4 +1,4 @@
-class ChangeExtensionOnSsn < ActiveRecord::Migration
+class ChangeExtensionOnSsn < ActiveRecord::Migration[4.2]
   def up
     change_column :ssns, :extension, :string
   end

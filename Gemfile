@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.2'
+gem 'rails', '5.1.4'
 gem 'haml-rails', '1.0.0'
 gem 'sass-rails', '5.0.6'
 gem 'uglifier', '3.2.0'
@@ -30,22 +30,22 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'pry-rails'
 
 group :development do
-  gem 'capistrano', '3.9.1', require: false
-  gem 'capistrano-rails', '1.3.0', require: false
+  # gem 'capistrano', '3.9.1', require: false
+  # gem 'capistrano-rails', '1.3.0', require: false
   gem 'capistrano-rbenv', '2.1.1', require: false
   gem 'bullet'
 end
 
 group :local_test do
-  gem 'rails-controller-testing'
+  # gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'capybara'
-  gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :development, :test, :local_test do
-  gem 'rspec-rails', '~> 3.6.1'
+  gem 'rspec-rails', '3.5.2'
 end
 
 group :development, :test do
