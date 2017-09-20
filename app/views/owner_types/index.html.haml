@@ -11,7 +11,7 @@
       - @owner_types.each do |owner_type|
         %tr
           %td= link_to owner_type.name, edit_owner_type_path(owner_type)
-          %td.delete= link_to t('actions.delete'), owner_type, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), owner_type, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }

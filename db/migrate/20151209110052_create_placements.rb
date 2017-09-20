@@ -1,4 +1,4 @@
-class CreatePlacements < ActiveRecord::Migration
+class CreatePlacements < ActiveRecord::Migration[4.2]
   def change
     create_table :placements do |t|
       t.belongs_to :home, index: true

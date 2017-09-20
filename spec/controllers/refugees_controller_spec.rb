@@ -21,7 +21,7 @@ RSpec.describe RefugeesController, type: :controller do
   describe "GET #drafts" do
     it "assigns all refugees as @refugees" do
       refugee = Refugee.create! valid_attributes.merge(draft: true)
-      get :drafts, {}, valid_session
+      get :drafts, params: {}, session: valid_session
       expect(assigns(:refugees)).to eq([refugee])
     end
   end
@@ -29,14 +29,14 @@ RSpec.describe RefugeesController, type: :controller do
   describe "GET #show" do
     it "assigns the requested refugee as @refugee" do
       refugee = Refugee.create! valid_attributes
-      get :show, {:id => refugee.to_param}, valid_session
+      get :show, params: { :id => refugee.to_param }, session: valid_session
       expect(assigns(:refugee)).to eq(refugee)
     end
   end
 
   describe "GET #new" do
     it "assigns a new refugee as @refugee" do
-      get :new, {}, valid_session
+      get :new, params: {}, session: valid_session
       expect(assigns(:refugee)).to be_a_new(Refugee)
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe RefugeesController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested refugee as @refugee" do
       refugee = Refugee.create! valid_attributes
-      get :edit, {:id => refugee.to_param}, valid_session
+      get :edit, params: { :id => refugee.to_param }, session: valid_session
       expect(assigns(:refugee)).to eq(refugee)
     end
   end
@@ -53,40 +53,40 @@ RSpec.describe RefugeesController, type: :controller do
     context "with valid params" do
       it "creates a new Refugee" do
         expect {
-          post :create, {:refugee => valid_attributes}, valid_session
+          post :create, params: {:refugee => valid_attributes}, session: valid_session
         }.to change(Refugee, :count).by(1)
       end
 
       it "assigns a newly created refugee as @refugee" do
-        post :create, {:refugee => valid_attributes}, valid_session
+        post :create, params: {:refugee => valid_attributes}, session: valid_session
         expect(assigns(:refugee)).to be_a(Refugee)
         expect(assigns(:refugee)).to be_persisted
       end
 
       it "redirects to the created refugee" do
-        post :create, {:refugee => valid_attributes}, valid_session
+        post :create, params: {:refugee => valid_attributes}, session: valid_session
         expect(response).to redirect_to(Refugee.last)
       end
 
       it "make @refugee a draft if reader role" do
-        post :create, {:refugee => valid_attributes}, valid_session(role: :reader)
+        post :create, params: {:refugee => valid_attributes}, session: valid_session(role: :reader)
         expect(Refugee.last.draft).to eq(true)
       end
 
       it "don't make @refugee a draft if writer role" do
-        post :create, {:refugee => valid_attributes}, valid_session(role: :writer)
+        post :create, params: {:refugee => valid_attributes}, session: valid_session(role: :writer)
         expect(Refugee.last.draft).to eq(false)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved refugee as @refugee" do
-        post :create, {:refugee => invalid_attributes}, valid_session
+        post :create, params: {:refugee => invalid_attributes}, session: valid_session
         expect(assigns(:refugee)).to be_a_new(Refugee)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:refugee => invalid_attributes}, valid_session
+        post :create, params: {:refugee => invalid_attributes}, session: valid_session
         expect(response).to render_template("new")
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe RefugeesController, type: :controller do
 
       it "updates the requested refugee" do
         refugee = Refugee.create! valid_attributes
-        put :update, {:id => refugee.to_param, :refugee => new_attributes}, valid_session
+        put :update, params: { :id => refugee.to_param, :refugee => new_attributes}, session: valid_session
         refugee.reload
         expect(refugee.name).to eq(new_attributes[:name])
         expect(refugee.date_of_birth.to_date.to_s).to eq(new_attributes[:date_of_birth])
@@ -115,13 +115,13 @@ RSpec.describe RefugeesController, type: :controller do
 
       it "assigns the requested refugee as @refugee" do
         refugee = Refugee.create! valid_attributes
-        put :update, {:id => refugee.to_param, :refugee => valid_attributes}, valid_session
+        put :update, params: { :id => refugee.to_param, :refugee => valid_attributes}, session: valid_session
         expect(assigns(:refugee)).to eq(refugee)
       end
 
       it "redirects to the refugee" do
         refugee = Refugee.create! valid_attributes
-        put :update, {:id => refugee.to_param, :refugee => valid_attributes}, valid_session
+        put :update, params: { :id => refugee.to_param, :refugee => valid_attributes}, session: valid_session
         expect(response).to redirect_to(refugee)
       end
     end
@@ -129,25 +129,25 @@ RSpec.describe RefugeesController, type: :controller do
     context "with invalid params" do
       it "assigns the refugee as @refugee" do
         refugee = Refugee.create! valid_attributes
-        put :update, {:id => refugee.to_param, :refugee => invalid_attributes}, valid_session
+        put :update, params: { :id => refugee.to_param, :refugee => invalid_attributes}, session: valid_session
         expect(assigns(:refugee)).to eq(refugee)
       end
 
       it "re-renders the 'edit' template" do
         refugee = Refugee.create! valid_attributes
-        put :update, {:id => refugee.to_param, :refugee => invalid_attributes}, valid_session
+        put :update, params: { :id => refugee.to_param, :refugee => invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
 
       it "re-renders the 'edit' template if ssn_extension is invalid" do
         refugee = Refugee.create! valid_attributes
-        put :update, {:id => refugee.to_param, :refugee => { ssn_extension: "12345" } }, valid_session
+        put :update, params: { :id => refugee.to_param, :refugee => { ssn_extension: "12345" } }, session: valid_session
         expect(response).to render_template("edit")
       end
 
       it "re-renders the 'edit' template if date_of_birth is invalid" do
         refugee = Refugee.create! valid_attributes
-        put :update, {:id => refugee.to_param, :refugee => { date_of_birth: "2016-01-xx" } }, valid_session
+        put :update, params: { :id => refugee.to_param, :refugee => { date_of_birth: "2016-01-xx" } }, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -182,7 +182,7 @@ RSpec.describe RefugeesController, type: :controller do
           moved_in_at: '2016-01-02'
         }]
       }
-      post :create, { :refugee => attributes }, valid_session
+      post :create, params: { :refugee => attributes }, session: valid_session
       expect(assigns(:refugee)).to be_persisted
       expect(Refugee.last.placements.size).to eq(1)
     end
@@ -192,7 +192,7 @@ RSpec.describe RefugeesController, type: :controller do
         name: "Firstname Lastname",
         placements_attributes: []
       }
-      post :create, { :refugee => attributes }, valid_session
+      post :create, params: { :refugee => attributes }, session: valid_session
       expect(assigns(:refugee)).to be_persisted
       expect(Refugee.last.placements.size).to eq(0)
     end
@@ -205,7 +205,7 @@ RSpec.describe RefugeesController, type: :controller do
           home_id: home.id
         }]
       }
-      post :create, { refugee: attributes }, valid_session
+      post :create, params: { refugee: attributes }, session: valid_session
       expect(response).to render_template("new")
     end
 
@@ -217,7 +217,7 @@ RSpec.describe RefugeesController, type: :controller do
           home_id: home.id
         }]
       }
-      post :create, { refugee: attributes }, valid_session
+      post :create, params: { refugee: attributes }, session: valid_session
       expect(response).to render_template("new")
     end
   end

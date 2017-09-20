@@ -30,7 +30,7 @@ RSpec.describe "Legal codes", type: :feature do
     scenario "deletes a legal_code", js: true do
       create(:legal_code, name: "Fox")
       visit "/legal_codes"
-      first("a.btn-danger").click
+      first(".btn-danger").click
 
       page.evaluate_script("window.confirm()")
       expect(page).to have_selector(".notice", text: "raderades")

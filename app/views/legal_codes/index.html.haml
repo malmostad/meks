@@ -11,7 +11,7 @@
       - @legal_codes.each do |legal_code|
         %tr
           %td= link_to legal_code.name, edit_legal_code_path(legal_code)
-          %td.delete= link_to t('actions.delete'), legal_code, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), legal_code, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }

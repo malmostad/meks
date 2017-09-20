@@ -8,7 +8,6 @@ require 'rspec/rails'
 require 'haml'
 require 'factory_girl_rails'
 require 'cancan/matchers'
-require 'capybara/rspec'
 require 'capybara/poltergeist'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -29,6 +28,12 @@ RSpec.configure do |config|
   config.include IntegrationMacros, type: :view
   config.include ApplicationHelper, type: :view
 
+  # [:controller, :view, :request].each do |type|
+  #   config.include ::Rails::Controller::Testing::TestProcess, type: type
+  #   config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
+  #   config.include ::Rails::Controller::Testing::Integration, type: type
+  # end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -44,7 +49,7 @@ RSpec.configure do |config|
   # You can disable this behaviour by removing the line below, and instead
   # explicitly tag your specs with their type, e.g.:
   #
-  #     RSpec.describe UsersController, :type => :controller do
+  #     RSpec.describe UsersController, type: :controller do
   #       # ...
   #     end
   #

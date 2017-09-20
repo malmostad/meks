@@ -1,4 +1,4 @@
-class ChangeColumnDeregisteredReasonOnRefugees < ActiveRecord::Migration
+class ChangeColumnDeregisteredReasonOnRefugees < ActiveRecord::Migration[4.2]
   def change
     change_table :refugees do |t|
       t.remove :deregistered_reason

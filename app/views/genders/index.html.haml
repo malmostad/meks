@@ -14,7 +14,7 @@
       - @genders.each do |gender|
         %tr
           %td= link_to gender.name, edit_gender_path(gender)
-          %td.delete= link_to t('actions.delete'), gender, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), gender, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }

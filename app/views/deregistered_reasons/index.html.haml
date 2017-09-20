@@ -11,7 +11,7 @@
       - @deregistered_reasons.each do |deregistered_reason|
         %tr
           %td= link_to deregistered_reason.name, edit_deregistered_reason_path(deregistered_reason)
-          %td.delete= link_to t('actions.delete'), deregistered_reason, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), deregistered_reason, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }

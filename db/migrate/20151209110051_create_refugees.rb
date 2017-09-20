@@ -1,4 +1,4 @@
-class CreateRefugees < ActiveRecord::Migration
+class CreateRefugees < ActiveRecord::Migration[4.2]
   def change
     create_table :refugees do |t|
       t.boolean :draft, default: false

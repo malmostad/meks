@@ -30,7 +30,7 @@ RSpec.describe "Type of housings", type: :feature do
     scenario "deletes a type_of_housing", js: true do
       type_of_housing = create(:type_of_housing, name: "Fox")
       visit "/type_of_housings"
-      first("a.btn-danger").click
+      first(".btn-danger").click
 
       page.evaluate_script("window.confirm()")
       expect(page).to have_selector(".notice", text: "raderades")

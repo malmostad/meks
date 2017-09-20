@@ -32,7 +32,7 @@ class MovedOutReasonsController < ApplicationController
 
   def destroy
     @moved_out_reason.destroy
-    redirect_to moved_out_reasons_url, notice: 'Målgruppen raderades'
+    redirect_to moved_out_reasons_path, notice: 'Målgruppen raderades'
   end
 
   private

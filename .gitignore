@@ -15,3 +15,7 @@
 !/tmp/.keep
 /reports/*.*
 !/reports/.keep
+
+# Ignore encrypted secrets key file.
+config/secrets.yml.key
+config/secrets.yml.enc
