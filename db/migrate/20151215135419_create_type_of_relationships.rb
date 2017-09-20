@@ -1,4 +1,4 @@
-class CreateTypeOfRelationships < ActiveRecord::Migration
+class CreateTypeOfRelationships < ActiveRecord::Migration[4.2]
   def change
     create_table :type_of_relationships do |t|
       t.string :name

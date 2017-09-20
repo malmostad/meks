@@ -24,5 +24,4 @@
               = link_to refugee.current_placements.last.home.name, home_path(refugee.current_placements.last.home)
 
   - if @has_more
-    .load-more
-      %input.btn.btn-default{ type: "button", value: "Visa fler", "data-path" => @more_request }
+    .load-more= link_to 'Visa fler', @more_request, class: 'btn btn-default'

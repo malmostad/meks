@@ -14,7 +14,7 @@
       - @municipalities.each do |municipality|
         %tr
           %td= link_to municipality.name, edit_municipality_path(municipality)
-          %td.delete= link_to t('actions.delete'), municipality, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td.delete= button_to t('actions.delete'), municipality, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
       %tr
         %td{ colspan: 2 }
           .actions= link_to t('actions.new'), new_municipality_path, class: "btn btn-primary"

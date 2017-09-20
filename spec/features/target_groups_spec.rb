@@ -30,7 +30,7 @@ RSpec.describe "Target groups", type: :feature do
     scenario "deletes a target_group", js: true do
       target_group = create(:target_group, name: "Fox")
       visit "/target_groups"
-      first("a.btn-danger").click
+      first(".btn-danger").click
 
       page.evaluate_script("window.confirm()")
       expect(page).to have_selector(".notice", text: "raderades")

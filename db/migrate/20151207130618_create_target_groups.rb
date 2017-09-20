@@ -1,4 +1,4 @@
-class CreateTargetGroups < ActiveRecord::Migration
+class CreateTargetGroups < ActiveRecord::Migration[4.2]
   def change
     create_table :target_groups do |t|
       t.string :name

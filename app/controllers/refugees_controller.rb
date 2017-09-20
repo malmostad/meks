@@ -106,39 +106,41 @@ class RefugeesController < ApplicationController
 
   private
 
-    def load_more_query
-      { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page).to_h)
-    end
+  def load_more_query
+    {
+      page: params[:page].to_i + 1, q: params[:q], utf8: '✓'
+    }
+  end
 
-    def refugee_params
-      permitted_params = [
-        :name, :registered, :deregistered, :deregistered_reason_id, :deregistered_comment,
-        :date_of_birth,
-        :ssn_extension,
-        :dossier_number,
-        :residence_permit_at,
-        :checked_out_to_our_city,
-        :temporary_permit_starts_at,
-        :temporary_permit_ends_at,
-        :secrecy,
-        :sof_placement,
-        :municipality_id,
-        :municipality_placement_migrationsverket_at,
-        :municipality_placement_per_agreement_at,
-        :municipality_placement_comment,
-        :social_worker,
-        :special_needs, :other_relateds, :comment_id,
-        :gender_id,
-        :citizenship_at,
-        home_ids: [],
-        country_ids: [],
-        language_ids: [],
-        ssns_attributes: [:id, :_destroy, :date_of_birth, :extension],
-        dossier_numbers_attributes: [:id, :_destroy, :name],
-        placements_attributes: [:home_id, :refugee_id, :moved_in_at,
-        :legal_code_id, :specification, :cost]
-      ]
-      permitted_params.unshift(:draft) if can? :manage, Refugee
-      params.require(:refugee).permit(*permitted_params)
-    end
+  def refugee_params
+    permitted_params = [
+      :name, :registered, :deregistered, :deregistered_reason_id, :deregistered_comment,
+      :date_of_birth,
+      :ssn_extension,
+      :dossier_number,
+      :residence_permit_at,
+      :checked_out_to_our_city,
+      :temporary_permit_starts_at,
+      :temporary_permit_ends_at,
+      :secrecy,
+      :sof_placement,
+      :municipality_id,
+      :municipality_placement_migrationsverket_at,
+      :municipality_placement_per_agreement_at,
+      :municipality_placement_comment,
+      :social_worker,
+      :special_needs, :other_relateds, :comment_id,
+      :gender_id,
+      :citizenship_at,
+      home_ids: [],
+      country_ids: [],
+      language_ids: [],
+      ssns_attributes: [:id, :_destroy, :date_of_birth, :extension],
+      dossier_numbers_attributes: [:id, :_destroy, :name],
+      placements_attributes: [:home_id, :refugee_id, :moved_in_at,
+      :legal_code_id, :specification, :cost]
+    ]
+    permitted_params.unshift(:draft) if can? :manage, Refugee
+    params.require(:refugee).permit(*permitted_params)
+  end
 end

@@ -11,7 +11,8 @@
       - @moved_out_reasons.each do |moved_out_reason|
         %tr
           %td= link_to moved_out_reason.name, edit_moved_out_reason_path(moved_out_reason)
-          %td.delete= link_to t('actions.delete'), moved_out_reason, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td
+            .delete= button_to t('actions.delete'), moved_out_reason, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 2 }

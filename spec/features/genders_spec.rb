@@ -30,7 +30,7 @@ RSpec.describe "Genders", type: :feature do
     scenario "deletes a gender", js: true do
       gender = create(:gender, name: "Fox")
       visit "/genders"
-      first("a.btn-danger").click
+      first(".btn-danger").click
 
       page.evaluate_script("window.confirm()")
       expect(page).to have_selector(".notice", text: "raderades")
