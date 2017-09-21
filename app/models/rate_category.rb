@@ -1,19 +1,12 @@
 # a.k.a. 'Schablon'
 class RateCategory < ApplicationRecord
   has_many :rates, dependent: :destroy
-  accepts_nested_attributes_for :rates,
-    allow_destroy: true
+  accepts_nested_attributes_for :rates, allow_destroy: true
   validates_associated :rates
 
-  belongs_to :legal_code
+  default_scope { order(:human_name) }
 
-  default_scope { order(:name, :from_age) }
-
-  validates :name, :legal_code, presence: true
-  validates :from_age, :to_age, presence: true, numericality: true
-  validate do
-    date_range(:from_age, from_age, to_age)
-  end
+  validates :name, :human_name, :description, presence: true
 
   after_save do
     # Rollback transaction if cost date ranges overlaps
