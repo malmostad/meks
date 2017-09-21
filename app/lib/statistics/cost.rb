@@ -26,13 +26,13 @@ module Statistics
       end.flatten
     end
 
-    # Cost per home
+    # Costs per placement
     def self.placement_cost(placement, range)
       days = number_of_days(range[:from], range[:to])
       { amount: placement.cost.to_i, days: days }
     end
 
-    # Costs per placement
+    # Cost per home
     def self.placement_home_costs(placement, range)
       placement.home.costs.map do |cost|
         from = latest_date([range[:from], cost.start_date])
