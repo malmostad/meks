@@ -17,26 +17,6 @@ RSpec.describe RateCategory, type: :model do
     it "should require a name" do
       expect(build(:rate_category, name: nil)).not_to be_valid
     end
-
-    it "should require a from age" do
-      expect(build(:rate_category, from_age: nil)).not_to be_valid
-    end
-
-    it "should require a to age" do
-      expect(build(:rate_category, to_age: nil)).not_to be_valid
-    end
-
-    it "should require a legal code" do
-      expect(build(:rate_category, legal_code: nil)).not_to be_valid
-    end
-
-    it "from age should be an integer" do
-      expect(rate_category.from_age).to be_a Integer
-    end
-
-    it "to age should be an integer" do
-      expect(rate_category.to_age).to be_a Integer
-    end
   end
 
   describe 'destroy' do

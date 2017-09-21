@@ -35,8 +35,6 @@ RSpec.describe RateCategoriesController, type: :controller do
         put :update, params: { :id => rate_category.to_param, :rate_category => new_attributes}, session: valid_session
         rate_category.reload
         expect(rate_category.name).to eq(new_attributes[:name])
-        expect(rate_category.from_age).to eq(new_attributes[:from_age])
-        expect(rate_category.to_age).to eq(new_attributes[:to_age])
       end
 
       it "redirects to the rate_category" do
