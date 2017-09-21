@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170704094251) do
+ActiveRecord::Schema.define(version: 20170921131220) do
 
   create_table "costs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
     t.integer "amount"
@@ -212,13 +212,10 @@ ActiveRecord::Schema.define(version: 20170704094251) do
 
   create_table "rate_categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
     t.string "name"
-    t.integer "from_age"
-    t.integer "to_age"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "legal_code_id"
-    t.index ["legal_code_id"], name: "index_rate_categories_on_legal_code_id"
+    t.string "human_name"
   end
 
   create_table "rates", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
@@ -333,7 +330,6 @@ ActiveRecord::Schema.define(version: 20170704094251) do
   add_foreign_key "payments", "refugees"
   add_foreign_key "placements", "legal_codes"
   add_foreign_key "placements", "moved_out_reasons"
-  add_foreign_key "rate_categories", "legal_codes"
   add_foreign_key "rates", "rate_categories"
   add_foreign_key "refugees", "deregistered_reasons"
   add_foreign_key "refugees", "genders"
