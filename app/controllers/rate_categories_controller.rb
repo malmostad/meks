@@ -2,7 +2,7 @@ class RateCategoriesController < ApplicationController
   before_action :set_rate_category, only: [:edit, :update]
 
   def index
-    @rate_categories = RateCategory.includes(:rates, :legal_code).order(:name)
+    @rate_categories = RateCategory.includes(:rates).order(:human_name)
   end
 
   def edit
@@ -25,7 +25,7 @@ class RateCategoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def rate_category_params
       params.require(:rate_category).permit(
-        :name, :from_age, :to_age, :legal_code_id,
+        :name, :human_name,
         rates_attributes: [:id, :_destroy, :amount, :start_date, :end_date]
       )
     end

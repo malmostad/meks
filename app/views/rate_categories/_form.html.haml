@@ -3,11 +3,8 @@
     = f.error_notification class: "warning"
 
     %h2.group-title Schablon
-    = show_attribute('rate_category.name', @rate_category.name)
-    = show_attribute('rate_category.description', @rate_category.description)
-    = show_attribute('rate_category.from_age', @rate_category.from_age)
-    = show_attribute('rate_category.to_age', @rate_category.to_age)
-    = show_attribute('rate_category.legal_code', @rate_category.legal_code.name)
+    = show_attribute('rate_category.human_name', @rate_category.human_name)
+    = show_attribute('rate_category.description', @rate_category.description.gsub(/\n/, '<br>'))
 
     %h2.group-title Ekonomi
     .terms

@@ -4,8 +4,6 @@ class RateCategory < ApplicationRecord
   accepts_nested_attributes_for :rates, allow_destroy: true
   validates_associated :rates
 
-  default_scope { order(:human_name) }
-
   validates :name, :human_name, :description, presence: true
 
   after_save do

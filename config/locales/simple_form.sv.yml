@@ -101,9 +101,7 @@ sv:
 
       rate_category:
         <<: *defaults
-        legal_code: Lagrum
-        from_age: Från ålder
-        to_age: Till och med ålder
+        human_name: Namn
 
       legal_code:
         <<: *defaults
