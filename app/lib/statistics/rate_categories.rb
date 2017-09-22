@@ -3,6 +3,35 @@ module Statistics
   # Qualifiers for refugee rate categories (schabloner)
   class RateCategories < Refugee
     class << self
+      CATEGORIES = %i[
+        arrival_0_17
+        assigned_0_17
+        tut_0_17
+        tut_18_20
+        put_0_17
+        put_18_20
+      ].freeze
+
+      # Returns an array of hashes with categories and their rates
+      def amount_and_range
+        RateCategory.all.map do |category|
+          {
+            id: category.id,
+            name: category.name,
+            human_name: category.human_name,
+            rates: category.rates.map do |rate|
+              { rate: rate.amount, from: rate.start_date, to: rate.end_date }
+            end
+          }
+        end
+      end
+
+      def cats
+        CATEGORIES.map do |category|
+          send(category)
+        end
+      end
+
       def expected
         0
       end
@@ -32,11 +61,9 @@ module Statistics
       end
 
       # Conditions for all categories
-      # * SKA vara född
       # * SKA INTE ha datum för ”Avslutad” som har inträffat
       def default
-        where('date_of_birth <= ?', Date.today)
-          .where('deregistered > ?  OR deregistered IS ?', Date.today, nil)
+        where('deregistered > ?  OR deregistered IS ?', Date.today, nil)
       end
 
       def age_0_17
@@ -95,7 +122,7 @@ module Statistics
         refugees = default.where('temporary_permit_starts_at <= ?', Date.today)
           .where('temporary_permit_ends_at > ?', Date.today)
           .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
-          .where('municipality_placement_migrationsverket_at <= ?', Date.today) # XXX: correct? *
+          .where('municipality_placement_migrationsverket_at <= ?', Date.today)
           .where('residence_permit_at > ? OR residence_permit_at IS ?', Date.today, nil)
 
         refugees.map do |refugee|
@@ -110,7 +137,7 @@ module Statistics
         default
           .where('residence_permit_at <= ?', Date.today)
           .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
-          .where('municipality_placement_migrationsverket_at <= ?', Date.today) # XXX: correct? *
+          .where('municipality_placement_migrationsverket_at <= ?', Date.today)
           .where(citizenship_at: nil)
       end
     end
