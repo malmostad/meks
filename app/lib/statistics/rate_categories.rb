@@ -1,20 +1,16 @@
 module Statistics
-  # TODO: limit queries by report range
-  # Qualifiers for refugee rate categories (schabloner)
+  # Refugee rate categories (schabloner)
   class RateCategories < Refugee
     class << self
-      CATEGORIES = %i[
-        arrival_0_17
-        assigned_0_17
-        tut_0_17
-        tut_18_20
-        put_0_17
-        put_18_20
-      ].freeze
+      def refugees_per_category
+        amount_and_range.map do |category|
+          Statistics::RateCategories.send category[:name].to_sym
+        end
+      end
 
       # Returns an array of hashes with categories and their rates
       def amount_and_range
-        RateCategory.all.map do |category|
+        RateCategory.includes(:rates).all.map do |category|
           {
             id: category.id,
             name: category.name,
@@ -23,12 +19,6 @@ module Statistics
               { rate: rate.amount, from: rate.start_date, to: rate.end_date }
             end
           }
-        end
-      end
-
-      def cats
-        CATEGORIES.map do |category|
-          send(category)
         end
       end
 
@@ -60,12 +50,6 @@ module Statistics
         age_18_20.put
       end
 
-      # Conditions for all categories
-      # * SKA INTE ha datum för ”Avslutad” som har inträffat
-      def default
-        where('deregistered > ?  OR deregistered IS ?', Date.today, nil)
-      end
-
       def age_0_17
         default.where('date_of_birth > ?', 18.years.ago)
       end
@@ -74,13 +58,17 @@ module Statistics
         default.where('date_of_birth <= ? and date_of_birth > ?', 18.years.ago, 21.years.ago)
       end
 
+      # * SKA INTE ha datum för ”Avslutad” som har inträffat
+      def default
+        where('deregistered > ?  OR deregistered IS ?', Date.today, nil)
+      end
+
       # Ankomstbarn
       # * SKA ha inskrivningsdatum idag eller tidigare
       # * SKA INTE ha ”Anvisningsdatum” som har inträffat
       # * SKA INTE ha TUT som inträffat
       # * SKA INTE ha PUT som inträffat
       # * SKA INTE ha medborgarskap
-      # FIXME: allow nils for dates?
       def arrival
         default
           .where('registered <= ?', Date.today)
@@ -105,10 +93,9 @@ module Statistics
       # Anvisade barn 0–17 år:
       # * SKA ha ”Anvisningsdatum till Malmö” idag eller tidigare
       # * ”Utskriven till Malmö” SKA INTE ha inträffat senare än igår
-      # FIXME: allow nils for dates?
       def assigned
         default
-          .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
+          .where(municipality_id: 135)
           .where('municipality_placement_migrationsverket_at <= ?', Date.today)
           .where('checked_out_to_our_city < ?', Date.today)
       end
@@ -121,7 +108,7 @@ module Statistics
       def tut
         refugees = default.where('temporary_permit_starts_at <= ?', Date.today)
           .where('temporary_permit_ends_at > ?', Date.today)
-          .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
+          .where(municipality_id: 135)
           .where('municipality_placement_migrationsverket_at <= ?', Date.today)
           .where('residence_permit_at > ? OR residence_permit_at IS ?', Date.today, nil)
 
@@ -136,7 +123,7 @@ module Statistics
       def put
         default
           .where('residence_permit_at <= ?', Date.today)
-          .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
+          .where(municipality_id: 135)
           .where('municipality_placement_migrationsverket_at <= ?', Date.today)
           .where(citizenship_at: nil)
       end
