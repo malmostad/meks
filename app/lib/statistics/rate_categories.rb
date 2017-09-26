@@ -119,6 +119,7 @@ module Statistics
     # * SKA ha startdatum för PUT som har inträffat
     # * SKA vara ”Utskriven till Malmö” i går eller tidigare
     # * SKA INTE ha datum för medborgarskap
+    # TODO: Utskriven till Malmö is date for checked_out_to_our_city and not municipality_id
     def self.put
       default
         .where('residence_permit_at <= ?', Date.today)
