@@ -8,12 +8,12 @@ module Statistics
       days
     end
 
-    def self.earliest_date(dates)
-      dates.compact.min_by(&:to_date)
+    def self.earliest_date(*dates)
+      dates.compact.compact.map(&:to_date).min
     end
 
-    def self.latest_date(dates)
-      dates.compact.max_by(&:to_date)
+    def self.latest_date(*dates)
+      dates.compact.compact.map(&:to_date).max
     end
 
     def self.numshort_date(date)

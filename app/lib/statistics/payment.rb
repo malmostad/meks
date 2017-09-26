@@ -14,8 +14,8 @@ module Statistics
 
     # Returns the number of days the payment spans over within the range
     def self.days(payment, range)
-      from = latest_date   [payment.period_start, range[:from]]
-      to   = earliest_date [payment.period_end, range[:to]]
+      from = latest_date(payment.period_start, range[:from])
+      to   = earliest_date(payment.period_end, range[:to])
       number_of_days(from, to)
     end
   end
