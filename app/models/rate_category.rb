@@ -1,5 +1,7 @@
 # a.k.a. 'Schablon'
 class RateCategory < ApplicationRecord
+  # TODO: Categories and enum?
+  #   https://robots.thoughtbot.com/whats-new-in-edge-rails-active-record-enum
   has_many :rates, dependent: :destroy
   accepts_nested_attributes_for :rates, allow_destroy: true
   validates_associated :rates
