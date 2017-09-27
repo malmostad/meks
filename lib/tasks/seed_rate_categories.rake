@@ -30,7 +30,7 @@ namespace :db do
         rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
       },
       {
-        name: 'tut_0_17',
+        name: 'temporary_permit_0_17',
         human_name: 'TUT-barn 0–17 år',
         description: "– SKA INTE ha datum avslutad som har inträffat\n" \
         "– SKA vara under 18 år\n" \
@@ -42,7 +42,7 @@ namespace :db do
         rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
       },
       {
-        name: 'tut_18_20',
+        name: 'temporary_permit_18_20',
         human_name: 'TUT-barn 18–20 år',
         description: "– SKA INTE ha datum Avslutad som har inträffat\n" \
         "– SKA vara mellan 18–20 år\n" \
@@ -54,7 +54,7 @@ namespace :db do
         rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
       },
       {
-        name: 'put_0_17',
+        name: 'residence_permit_0_17',
         human_name: 'PUT-barn 0–17 år',
         description: "– SKA INTE ha datum avslutad som har inträffat\n" \
         "– SKA vara under 18 år\n" \
@@ -65,7 +65,7 @@ namespace :db do
         rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
       },
       {
-        name: 'put_18_20',
+        name: 'residence_permit_18_20',
         human_name: 'PUT-barn 18–20 år',
         description: "– SKA INTE ha datum avslutad som har inträffat\n" \
         "– SKA vara mellan 18–20 år\n" \
