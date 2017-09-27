@@ -16,7 +16,7 @@ module Statistics
 
     def self.placements_costs_and_days(placements, range = DEFAULT_DATE_RANGE)
       placements.map do |placement|
-        from = latest_day(placement.moved_in_at, range[:from])
+        from = latest_date(placement.moved_in_at, range[:from])
         to   = earliest_date(placement.moved_out_at, range[:to])
         args = [placement, from: from, to: to]
 
