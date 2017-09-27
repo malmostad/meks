@@ -89,7 +89,6 @@ module Statistics
         .where(citizenship_at: nil)
     end
 
-    # Anvisade barn 0–17 år:
     # * SKA ha ”Anvisningsdatum till Malmö” idag eller tidigare
     # * ”Utskriven till Malmö” SKA INTE ha inträffat senare än igår
     def self.assigned
