@@ -1,3 +1,5 @@
+# TODO: refactor common props
+# TODO: n+1 for cats and rates
 # Queries:
 # Statistics::Rates.temporary_permit_0_17(refugee)
 # Statistics::Rates.temporary_permit_18_20(refugee)
@@ -7,35 +9,36 @@
 # Statistics::Rates.arrival_0_17(refugee)
 module Statistics
   # Refugee rates (schabloner)
+  # Comments in Swedish from project specs
   class Rates < Base
-    # Return the amount and days for all rates in all rate categories
+    # Return number of days for each rate and rate amount
     def self.for_all_categories(refugee, range = DEFAULT_DATE_RANGE)
       RateCategory.includes(:rates).find_each do |category|
         send(category.name.to_sym, refugee, range, category)
       end
     end
 
-    def self.temporary_permit_0_17(refugee, range = DEFAULT_DATE_RANGE, category)
-      age = { from: 0, to: 17 }
-      temporary_permit(refugee, age, range, category)
+    # Return number of days for each rate and rate amount
+    def self.temporary_permit_0_17(refugee, category, range = DEFAULT_DATE_RANGE)
+      temporary_permit(refugee, age(0, 17), category, range)
     end
 
-    def self.temporary_permit_18_20(refugee, range = DEFAULT_DATE_RANGE, category)
-      age = { from: 18, to: 20 }
-      temporary_permit(refugee, age, range, category)
+
+    # Return number of days for each rate and rate amount
+    def self.temporary_permit_18_20(refugee, category, range = DEFAULT_DATE_RANGE)
+      temporary_permit(refugee, age(18, 20), category, range)
     end
 
-    def self.residence_permit_0_17(refugee, range = DEFAULT_DATE_RANGE, category)
-      age = { from: 0, to: 17 }
-      residence_permit(refugee, age, range, category)
+    # Return number of days for each rate and rate amount
+    def self.residence_permit_0_17(refugee, category, range = DEFAULT_DATE_RANGE)
+      residence_permit(refugee, age(0, 17), category, range)
     end
 
-    def self.residence_permit_18_20(refugee, range = DEFAULT_DATE_RANGE, category)
-      age = { from: 18, to: 20 }
-      residence_permit(refugee, age, range, category)
+    # Return number of days for each rate and rate amount
+    def self.residence_permit_18_20(refugee, category, range = DEFAULT_DATE_RANGE)
+      residence_permit(refugee, age(18, 20), category, range)
     end
 
-    # TODO: implement
     ## Overall:
     # SKA vara född
     #   :date_of_birth
@@ -43,7 +46,9 @@ module Statistics
     ## Time based (calculate number of days):
     # SKA:
     #   vara mellan 0 och 17 år
-    #   vara inskrivningen
+    #     :date_of_birth
+    #   vara inskriven
+    #     :registered
     #
     # SKA INTE:
     #   vara anvisad
@@ -51,12 +56,41 @@ module Statistics
     #   ha startdatum för TUT
     #   ha startdatum för PUT
     #   ha medborgarskap
-    def self.arrival_0_17(refugee, range = DEFAULT_DATE_RANGE, category)
+    # Return number of days for each rate and rate amount
+    def self.arrival_0_17(refugee, category, range = DEFAULT_DATE_RANGE)
       return [] if
           refugee.date_of_birth.nil?
 
-      age = { from: 0, to: 17 }
-      []
+      category.rates.map do |rate|
+        from = latest_date(
+          # Ranges
+          range[:from],
+          rate[:start_date],
+          # Date properties
+          refugee.registered,
+          refugee.municipality_placement_migrationsverket_at,
+          refugee.temporary_permit_starts_at,
+          refugee.residence_permit_at,
+          refugee.citizenship_at,
+          # Age
+          refugee.date_of_birth,
+          date_at_min_age(refugee.date_of_birth, 0)
+        )
+
+        to = earliest_date(
+          Date.today,
+          range[:to],
+          rate[:end_date],
+          refugee.deregistered,
+          refugee.checked_out_to_our_city,
+          date_at_max_age(refugee.date_of_birth, 17)
+        )
+
+        days = number_of_days(from, to)
+        next if days.zero?
+
+        { amount: rate.amount, days: days }
+      end.flatten.compact
     end
 
     ## Overall:
@@ -79,12 +113,10 @@ module Statistics
     #   vara avslutad
     #     :deregistered
     # Returns the number of days and rate amouts in the PUT category's rates
-    def self.assigned_0_17(refugee, range = DEFAULT_DATE_RANGE, category)
+    def self.assigned_0_17(refugee, category, range = DEFAULT_DATE_RANGE)
       return [] if
           refugee.date_of_birth.nil? ||
           refugee.municipality_id != 135
-
-      age = { from: 0, to: 17 }
 
       category.rates.map do |rate|
         from = latest_date(
@@ -92,7 +124,7 @@ module Statistics
           rate[:start_date],
           refugee.municipality_placement_migrationsverket_at,
           refugee.date_of_birth,
-          refugee.date_of_birth + (age[:from] + 1).years - 1.day
+          date_at_min_age(refugee.date_of_birth, 0)
         )
 
         to = earliest_date(
@@ -101,7 +133,7 @@ module Statistics
           rate[:end_date],
           refugee.deregistered,
           refugee.checked_out_to_our_city,
-          refugee.date_of_birth + (age[:to] + 1).years - 1.day
+          date_at_max_age(refugee.date_of_birth, 17)
         )
 
         days = number_of_days(from, to)
@@ -111,36 +143,37 @@ module Statistics
       end.flatten.compact
     end
 
-    ## Overall:
-    # SKA:
+    ## Måste:
     #   vara född
     #     :date_of_birth
     #   ha datum för TUT startar
+    #     :temporary_permit_starts_at
+    #   ha datum för TUT starar
     #     :temporary_permit_starts_at
     #   ha datum för TUT slutar
     #     :temporary_permit_ends_at
     #   ha TUT som är längre än 12 månader
     #     :temporary_permit_starts_at, :temporary_permit_ends_at
     #
-    ## Time based (calculate number of days):
-    # SKA:
-    #   vara 0–17 år
+    ## Från-datum, beräknas på senaste datum av följande:
+    #   Minimiålder + 1 år - 1 dag
     #     :date_of_birth
     #   ha startdatum för TUT
     #     :temporary_permit_starts_at
     #   var Utskriven till Malmö
     #     :checked_out_to_our_city
     #
-    # SKA INTE:
-    #   ha avslutsdatum för TUT
+    ## Till-datum, beräknas på tidigaste datum av följande:
+    #   Maxålder + 1 år - 1 dag
+    #     :date_of_birth
+    #   avslutsdatum för TUT
     #     :temporary_permit_ends_at
-    #   vara avslutad
+    #   avslutsdatum
     #     :deregistered
-    #  ha datum för PUT
-    #   :residence_permit_at
-    #
-    # Number of days and rate amouts in the temporary_permit (TUT) category's rates
-    def self.temporary_permit(refugee, age, range, category)
+    #   datum för PUT
+    #     :residence_permit_at
+    # Return number of days for each rate and rate amount
+    def self.temporary_permit(refugee, age, category, range)
       return [] if
           refugee.date_of_birth.nil? ||
           refugee.temporary_permit_starts_at.nil? ||
@@ -150,21 +183,20 @@ module Statistics
       category.rates.map do |rate|
         from = latest_date(
           range[:from],
+          rate[:start_date],
           refugee.checked_out_to_our_city,
           refugee.temporary_permit_starts_at,
-          refugee.date_of_birth,
-          refugee.date_of_birth + (age[:from] + 1).years - 1.day,
-          rate[:start_date]
+          date_at_min_age(refugee.date_of_birth, age[:min])
         )
 
         to = earliest_date(
           Date.today,
           range[:to],
+          rate[:end_date],
           refugee.deregistered,
           refugee.temporary_permit_ends_at,
           refugee.residence_permit_at,
-          refugee.date_of_birth + (age[:to] + 1).years - 1.day,
-          rate[:end_date]
+          date_at_max_age(refugee.date_of_birth, age[:max])
         )
 
         days = number_of_days(from, to)
@@ -174,42 +206,44 @@ module Statistics
       end.flatten.compact
     end
 
-    ## Time based (calculate number of days):
-    # SKA:
+    ## Måste:
     #   vara född
     #     :date_of_birth
-    #   vara utskriven till Malmö
-    #     :checked_out_to_our_city
-    #   ha startdatum för PUT
+    #
+    ## Från-datum, beräknas på senaste datum av följande:
+    #   minimiålder + 1 år - 1 dag
+    #     :date_of_birth
+    #   Startdatum för PUT
     #     :residence_permit_at
+    #   Utskriven till Malmö
+    #     :checked_out_to_our_city
     #
-    # SKA INTE:
-    #   vara avslutad
+    ## Till-datum, beräknas på tidigaste datum av följande:
+    #   maxålder + 1 år - 1 dag
+    #   avslutsdatum
     #     :deregistered
-    #   ha medborgarskap
+    #   medborgarskap
     #     :citizenship_at
-    #
-    # Returns an array of hashes with amount and days for each rate range
-    def self.residence_permit(refugee, age, range, category)
+    # Return number of days for each rate and rate amount
+    def self.residence_permit(refugee, age, category, range)
       return [] if refugee.date_of_birth.nil?
 
       category.rates.map do |rate|
         from = latest_date(
           range[:from],
-          refugee.checked_out_to_our_city,
-          refugee.citizenship_at,
-          refugee.date_of_birth,
-          refugee.date_of_birth + (age[:from] + 1).years - 1.day,
-          rate[:start_date]
+          rate[:start_date],
+          date_at_min_age(refugee.date_of_birth, age[:min]),
+          refugee.residence_permit_at,
+          refugee.checked_out_to_our_city
         )
 
         to = earliest_date(
           Date.today,
           range[:to],
+          rate[:end_date],
+          date_at_max_age(refugee.date_of_birth, age[:max]),
           refugee.deregistered,
-          refugee.residence_permit_at,
-          refugee.date_of_birth + (age[:to] + 1).years - 1.day,
-          rate[:end_date]
+          refugee.citizenship_at
         )
 
         days = number_of_days(from, to)
@@ -217,6 +251,18 @@ module Statistics
 
         { amount: rate.amount, days: days }
       end.flatten.compact
+    end
+
+    def self.age(from, to)
+      { from: from, to: to }
+    end
+
+    def self.date_at_min_age(date_of_birth, age)
+      date_of_birth.to_date + age.years
+    end
+
+    def self.date_at_max_age(date_of_birth, age)
+      date_of_birth.to_date + age.years + 1.years - 1.day
     end
   end
 end
