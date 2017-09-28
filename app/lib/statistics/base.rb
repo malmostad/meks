@@ -9,11 +9,11 @@ module Statistics
     end
 
     def self.earliest_date(*dates)
-      dates.compact.compact.map(&:to_date).min
+      dates.compact.map(&:to_date).min
     end
 
     def self.latest_date(*dates)
-      dates.compact.compact.map(&:to_date).max
+      dates.compact.map(&:to_date).max
     end
 
     def self.numshort_date(date)
