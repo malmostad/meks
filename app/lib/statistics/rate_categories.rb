@@ -9,7 +9,7 @@ module Statistics
 
     # Returns an array of hashes with categories and their rates
     def self.amount_and_range
-      RateCategory.includes(:rates).all.map do |category|
+      RateCategory.includes(:rates).map do |category|
         {
           id: category.id,
           name: category.name,
