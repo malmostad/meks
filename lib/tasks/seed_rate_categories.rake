@@ -8,6 +8,9 @@ namespace :db do
     [
       {
         name: 'arrival_0_17',
+        min_age: 0,
+        max_age: 17,
+        base_qualifier: 'arrival_0_17',
         human_name: 'Ankomstbarn 0–17 år',
         description: "– SKA INTE ha datum avslutad som har inträffat\n" \
         "– SKA INTE ha datum för Avslutad som har inträffat\n" \
@@ -21,6 +24,9 @@ namespace :db do
       },
       {
         name: 'assigned_0_17',
+        min_age: 0,
+        max_age: 17,
+        base_qualifier: 'assigned_0_17',
         human_name: 'Anvisade barn 0–17 år',
         description: "– SKA INTE ha datum avslutad som har inträffat\n" \
         "– SKA INTE ha datum för Avslutad som har inträffat\n" \
@@ -31,6 +37,9 @@ namespace :db do
       },
       {
         name: 'temporary_permit_0_17',
+        min_age: 0,
+        max_age: 17,
+        base_qualifier: 'temporary_permit',
         human_name: 'TUT-barn 0–17 år',
         description: "– SKA INTE ha datum avslutad som har inträffat\n" \
         "– SKA vara under 18 år\n" \
@@ -43,6 +52,9 @@ namespace :db do
       },
       {
         name: 'temporary_permit_18_20',
+        min_age: 18,
+        max_age: 20,
+        base_qualifier: 'temporary_permit',
         human_name: 'TUT-barn 18–20 år',
         description: "– SKA INTE ha datum Avslutad som har inträffat\n" \
         "– SKA vara mellan 18–20 år\n" \
@@ -55,6 +67,9 @@ namespace :db do
       },
       {
         name: 'residence_permit_0_17',
+        min_age: 0,
+        max_age: 17,
+        base_qualifier: 'residence_permit',
         human_name: 'PUT-barn 0–17 år',
         description: "– SKA INTE ha datum avslutad som har inträffat\n" \
         "– SKA vara under 18 år\n" \
@@ -66,6 +81,9 @@ namespace :db do
       },
       {
         name: 'residence_permit_18_20',
+        min_age: 18,
+        max_age: 20,
+        base_qualifier: 'residence_permit',
         human_name: 'PUT-barn 18–20 år',
         description: "– SKA INTE ha datum avslutad som har inträffat\n" \
         "– SKA vara mellan 18–20 år\n" \
