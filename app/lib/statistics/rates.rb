@@ -1,11 +1,4 @@
-# TODO: DB => enum const?
-# Queries:
-# Statistics::Rates.temporary_permit_0_17(refugee)
-# Statistics::Rates.temporary_permit_18_20(refugee)
-# Statistics::Rates.residence_permit_0_17(refugee)
-# Statistics::Rates.residence_permit_18_20(refugee)
-# Statistics::Rates.assigned_0_17(refugee)
-# Statistics::Rates.arrival_0_17(refugee)
+# TODO: DB => enum constant?
 module Statistics
   # Refugee rates (schabloner)
   # Comments in Swedish from project specs
