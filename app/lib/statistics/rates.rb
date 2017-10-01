@@ -11,7 +11,7 @@ module Statistics
   # Comments in Swedish from project specs
   class Rates < Base
     # Return the number of days for each rate and the rate amount
-    def self.for_all_categories(refugee, range = DEFAULT_DATE_RANGE)
+    def self.for_all_rate_categories(refugee, range = DEFAULT_DATE_RANGE)
       @rate_categories ||= RateCategory.includes(:rates).all
       @rate_categories.map do |category|
         send(
