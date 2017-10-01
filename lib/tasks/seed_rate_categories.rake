@@ -8,9 +8,7 @@ namespace :db do
     [
       {
         name: 'arrival_0_17',
-        min_age: 0,
-        max_age: 17,
-        base_qualifier: 'arrival_0_17',
+        qualifier: 0,
         human_name: 'Ankomstbarn 0–17 år',
         description: 'Måste:
 – Ha födelsdatum
@@ -26,13 +24,11 @@ Till-datum beräknas på tidigaste datum av följande:
 – TUT startar
 – PUT startar
 – medborgarskap',
-        rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
       },
+
       {
         name: 'assigned_0_17',
-        min_age: 0,
-        max_age: 17,
-        base_qualifier: 'assigned_0_17',
+        qualifier: 1,
         human_name: 'Anvisade barn 0–17 år',
         description: 'Måste:
 – ha födelsdatum
@@ -44,13 +40,11 @@ Från-datum beräknas på senaste datum av följande:
 
 Till-datum beräknas på tidigaste datum av följande:
 – vara avslutad',
-        rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
       },
+
       {
         name: 'temporary_permit_0_17',
-        min_age: 0,
-        max_age: 17,
-        base_qualifier: 'temporary_permit',
+        qualifier: 2,
         human_name: 'TUT-barn 0–17 år',
         description: 'Måste:
 – ha födelsdatum
@@ -67,14 +61,11 @@ Till-datum beräknas på tidigaste datum av följande:
 – maxålder + 1 år - 1 dag
 – avslutsdatum för TUT
 – datum för PUT
-– avslutsdatum',
-        rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+– avslutsdatum'
       },
       {
         name: 'temporary_permit_18_20',
-        min_age: 18,
-        max_age: 20,
-        base_qualifier: 'temporary_permit',
+        qualifier: 3,
         human_name: 'TUT-barn 18–20 år',
         description: 'Måste:
 – ha födelsdatum
@@ -91,14 +82,11 @@ Till-datum beräknas på tidigaste datum av följande:
 – maxålder + 1 år - 1 dag
 – avslutsdatum för TUT
 – datum för PUT
-– avslutsdatum',
-        rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+– avslutsdatum'
       },
       {
         name: 'residence_permit_0_17',
-        min_age: 0,
-        max_age: 17,
-        base_qualifier: 'residence_permit',
+        qualifier: 4,
         human_name: 'PUT-barn 0–17 år',
         description: 'Måste:
 – ha födelsdatum
@@ -111,14 +99,11 @@ Från-datum beräknas på senaste datum av följande:
 Till-datum beräknas på tidigaste datum av följande:
 – maxålder + 1 år - 1 dag
 – medborgarskap
-– avslutsdatum',
-        rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+– avslutsdatum'
       },
       {
         name: 'residence_permit_18_20',
-        min_age: 18,
-        max_age: 20,
-        base_qualifier: 'residence_permit',
+        qualifier: 5,
         human_name: 'PUT-barn 18–20 år',
         description: 'Måste:
 – ha födelsdatum
@@ -131,14 +116,17 @@ Från-datum beräknas på senaste datum av följande:
 Till-datum beräknas på tidigaste datum av följande:
 – maxålder + 1 år - 1 dag
 – medborgarskap
-– avslutsdatum',
-        rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+– avslutsdatum'
       }
     ].each do |rc|
-      rate = rc[:rate]
       rc.except! :rate
       r = RateCategory.create!(rc)
-      r.rates << Rate.new(rate) if rate.present?
+      # rate1 = { amount: rand(1000..2000), start_date: '2017-01-01', end_date: '2017-06-30' }
+      # rate2 = { amount: rand(1000..2000), start_date: '2017-07-01', end_date: '2017-12-31' }
+      # r.rates << Rate.new(rate1)
+      # r.rates << Rate.new(rate2)
+      rate = { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+      r.rates << Rate.new(rate)
       r.save!
     end
   end

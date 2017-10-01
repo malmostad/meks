@@ -22,7 +22,7 @@ end
   TargetGroup.create(name: htg)
 end
 
-['Villa Vånga', 'Tempo', 'Villa poppel', 'Tempo', 'Jourhem', 'Maglarp 1', 'Maglarp 2', 'Maglarp 2', 'Humania', 'Duvan', 'Maglarp 1', 'Maglarp 2', 'Maglarp 2', 'Maglarp 1', 'Maglarp 1', 'Maglarp 2', 'Aleris T'].each do |h|
+['Villa Vånga', 'Tempo', 'Villa poppel', 'Tempo 2', 'Jourhem', 'Humania', 'Duvan', 'Maglarp 1', 'Maglarp 2', 'Maglarp 3', 'Maglarp 4', 'Maglarp 5', 'Maglarp 6', 'Maglarp 7', 'Maglarp 8', 'Maglarp 9', 'Aleris T'].each do |h|
   h = Home.create(
     name: h,
     postal_town: 'Malmö',

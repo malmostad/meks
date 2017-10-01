@@ -1,5 +1,4 @@
 # TODO: Specs
-# TODO: DB => enum constant?
 module Statistics
   # Refugee rates (schabloner)
   # Comments in Swedish from project specs
@@ -9,7 +8,7 @@ module Statistics
       @rate_categories ||= RateCategory.includes(:rates).all
       @rate_categories.map do |category|
         send(
-          category.base_qualifier.to_sym,
+          category.qualifier[:meth],
           refugee,
           category,
           range
@@ -194,7 +193,7 @@ module Statistics
 
     def self.shared_from_attr(refugee, category, range, rate)
       [
-        date_at_min_age(refugee.date_of_birth, category.min_age),
+        date_at_min_age(refugee.date_of_birth, category.qualifier[:min_age]),
         range[:from],
         rate[:start_date]
       ]
@@ -202,7 +201,7 @@ module Statistics
 
     def self.shared_to_attr(refugee, category, range, rate)
       [
-        date_at_max_age(refugee.date_of_birth, category.max_age),
+        date_at_max_age(refugee.date_of_birth, category.qualifier[:max_age]),
         range[:to],
         rate[:end_date]
       ]

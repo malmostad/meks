@@ -1,7 +1,15 @@
-# a.k.a. 'Schablon'
+# A.k.a. 'Schablon'
 class RateCategory < ApplicationRecord
-  # TODO: Categories and enum?
-  #   https://robots.thoughtbot.com/whats-new-in-edge-rails-active-record-enum
+  # meth is used for sending a method , *_age are used as arguments
+  enum qualifier: [
+    { meth: :arrival_0_17,     min_age: 0,  max_age: 17 },
+    { meth: :assigned_0_17,    min_age: 0,  max_age: 17 },
+    { meth: :temporary_permit, min_age: 0,  max_age: 17 },
+    { meth: :temporary_permit, min_age: 18, max_age: 20 },
+    { meth: :residence_permit, min_age: 0,  max_age: 17 },
+    { meth: :residence_permit, min_age: 18, max_age: 20 }
+  ]
+
   has_many :rates, dependent: :destroy
   accepts_nested_attributes_for :rates, allow_destroy: true
   validates_associated :rates
