@@ -23,21 +23,23 @@ module Statistics
       end.flatten.compact
     end
 
-    ## Måste:
-    #    vara född
+    # Måste:
+    #    Ha födelsdatum
     #      :date_of_birth
     #
-    ## Från-datum beräknas på senaste datum av följande:
-    #    minimiålder + 1 år - 1 dag
+    # Från-datum beräknas på senaste datum av följande:
+    #    minimiålder
     #      :date_of_birth
-    #    Inskrivningsdatum
+    #    inskrivningsdatum
     #      :registered
     #
-    ## Till-datum beräknas på tidigaste datum av följande:
+    # Till-datum beräknas på tidigaste datum av följande:
     #    maxålder + 1 år - 1 dag
     #      :date_of_birth
-    #  Avslutsdatum
+    #  avslutsdatum
     #      :deregistered
+    #  anvisningsdatum
+    #      :municipality_placement_migrationsverket_at
     #  TUT startar
     #      :temporary_permit_starts_at
     #  PUT startar
@@ -58,6 +60,7 @@ module Statistics
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
           refugee.deregistered,
+          refugee.municipality_placement_migrationsverket_at,
           refugee.temporary_permit_starts_at,
           refugee.residence_permit_at,
           refugee.citizenship_at
@@ -68,11 +71,10 @@ module Statistics
     end
 
     # Måste:
-    #   vara född
+    #   ha födelsdatum
     #     :date_of_birth
     #
-    ## Från-datum beräknas på senaste datum av följande:
-    # SKA:
+    # Från-datum beräknas på senaste datum av följande:
     #   vara 0–17 år
     #     :date_of_birth
     #   vara utskriven till Malmö
@@ -91,8 +93,8 @@ module Statistics
       category.rates.map do |rate|
         from = latest_date(
           *shared_from_attr(refugee, category, range, rate),
-          refugee.municipality_placement_migrationsverket_at,
-          refugee.checked_out_to_our_city
+          refugee.checked_out_to_our_city,
+          refugee.municipality_placement_migrationsverket_at
         )
 
         to = earliest_date(
@@ -104,35 +106,33 @@ module Statistics
       end
     end
 
-    ## Måste:
-    #   vara född
+    # Måste:
+    #   ha födelsdatum
     #     :date_of_birth
     #   ha datum för TUT startar
-    #     :temporary_permit_starts_at
-    #   ha datum för TUT starar
     #     :temporary_permit_starts_at
     #   ha datum för TUT slutar
     #     :temporary_permit_ends_at
     #   ha TUT som är längre än 12 månader
     #     :temporary_permit_starts_at, :temporary_permit_ends_at
     #
-    ## Från-datum beräknas på senaste datum av följande:
-    #   Minimiålder + 1 år - 1 dag
+    # Från-datum beräknas på senaste datum av följande:
+    #   minimiålder
     #     :date_of_birth
+    #   var utskriven till Malmö
+    #     :checked_out_to_our_city
     #   ha startdatum för TUT
     #     :temporary_permit_starts_at
-    #   var Utskriven till Malmö
-    #     :checked_out_to_our_city
     #
-    ## Till-datum beräknas på tidigaste datum av följande:
-    #   Maxålder + 1 år - 1 dag
+    # Till-datum beräknas på tidigaste datum av följande:
+    #   maxålder + 1 år - 1 dag
     #     :date_of_birth
     #   avslutsdatum för TUT
     #     :temporary_permit_ends_at
-    #   avslutsdatum
-    #     :deregistered
     #   datum för PUT
     #     :residence_permit_at
+    #   avslutsdatum
+    #     :deregistered
     # Return the number of days for each rate and the rate amount
     def self.temporary_permit(refugee, category, range)
       return [] if
@@ -150,33 +150,33 @@ module Statistics
 
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
-          refugee.deregistered,
           refugee.temporary_permit_ends_at,
-          refugee.residence_permit_at
+          refugee.residence_permit_at,
+          refugee.deregistered
         )
 
         amount_and_days(from, to, rate)
       end
     end
 
-    ## Måste:
-    #   vara född
+    # Måste:
+    #   ha födelsdatum
     #     :date_of_birth
     #
-    ## Från-datum beräknas på senaste datum av följande:
-    #   minimiålder + 1 år - 1 dag
+    # Från-datum beräknas på senaste datum av följande:
+    #   minimiålder
     #     :date_of_birth
-    #   Startdatum för PUT
+    #   startdatum för PUT
     #     :residence_permit_at
-    #   Utskriven till Malmö
+    #   utskriven till Malmö
     #     :checked_out_to_our_city
     #
-    ## Till-datum beräknas på tidigaste datum av följande:
+    # Till-datum beräknas på tidigaste datum av följande:
     #   maxålder + 1 år - 1 dag
-    #   avslutsdatum
-    #     :deregistered
     #   medborgarskap
     #     :citizenship_at
+    #   avslutsdatum
+    #     :deregistered
     # Return the number of days for each rate and the rate amount
     def self.residence_permit(refugee, category, range)
       return [] if refugee.date_of_birth.nil?
@@ -190,8 +190,8 @@ module Statistics
 
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
-          refugee.deregistered,
-          refugee.citizenship_at
+          refugee.citizenship_at,
+          refugee.deregistered
         )
 
         amount_and_days(from, to, rate)
