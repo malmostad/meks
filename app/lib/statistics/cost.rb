@@ -1,3 +1,4 @@
+# TODO: Specs
 module Statistics
   class Cost < Base
     def self.total_for_placements_and_home(placements)

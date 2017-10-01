@@ -1,3 +1,4 @@
+# TODO: Specs
 # TODO: DB => enum constant?
 module Statistics
   # Refugee rates (schabloner)

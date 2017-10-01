@@ -1,3 +1,4 @@
+# TODO: Specs
 module Statistics
   class Payment < Base
     # Calculate daily amount and number of days for payments based on

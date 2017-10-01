@@ -4,6 +4,8 @@
 
     %h2.group-title Schablon
     = show_attribute('rate_category.human_name', @rate_category.human_name)
+    = show_attribute('rate_category.min_age', @rate_category.min_age)
+    = show_attribute('rate_category.max_age', @rate_category.max_age)
     = show_attribute('rate_category.description', @rate_category.description.gsub(/\n/, '<br>'))
 
     %h2.group-title Ekonomi
