@@ -102,6 +102,7 @@ sv:
       rate_category:
         <<: *defaults
         human_name: Namn
+        description: Villkor
 
       legal_code:
         <<: *defaults
