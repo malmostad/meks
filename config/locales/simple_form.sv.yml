@@ -103,8 +103,7 @@ sv:
         <<: *defaults
         human_name: Namn
         description: Villkor
-        min_age: Ålder från och med
-        max_age: Ålder till och med
+        age: Ålder
 
       legal_code:
         <<: *defaults
