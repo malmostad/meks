@@ -32,12 +32,12 @@ gem 'pry-rails'
 group :development do
   # gem 'capistrano', '3.9.1', require: false
   # gem 'capistrano-rails', '1.3.0', require: false
-  gem 'capistrano-rbenv', '2.1.1', require: false
+  gem 'capistrano-rbenv', '2.1.2', require: false
   gem 'bullet'
 end
 
 group :local_test do
-  gem 'rspec-rails', '3.6.0'
+  gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'capybara'
