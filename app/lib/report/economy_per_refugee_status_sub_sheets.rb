@@ -21,7 +21,6 @@ module Report
 
     def columns(refugee = Refugee.new, i = 0)
       row = i + 2
-      rate = Statistics::RateCategories
       [
         {
           heading: 'Dossiernumber',
@@ -35,7 +34,7 @@ module Report
         },
         {
           heading: 'Förväntad schablon',
-          query: rate.expected
+          query: 'TODO'
         },
         {
           heading: 'Avvikelse',
