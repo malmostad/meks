@@ -16,10 +16,6 @@ module Statistics
       end.flatten.compact
     end
 
-    # Måste:
-    #    Ha födelsdatum
-    #      :date_of_birth
-    #
     # Från-datum beräknas på senaste datum av följande:
     #    minimiålder
     #      :date_of_birth
@@ -63,10 +59,6 @@ module Statistics
       end
     end
 
-    # Måste:
-    #   ha födelsdatum
-    #     :date_of_birth
-    #
     # Från-datum beräknas på senaste datum av följande:
     #   vara 0–17 år
     #     :date_of_birth
@@ -100,8 +92,6 @@ module Statistics
     end
 
     # Måste:
-    #   ha födelsdatum
-    #     :date_of_birth
     #   ha datum för TUT startar
     #     :temporary_permit_starts_at
     #   ha datum för TUT slutar
@@ -152,10 +142,6 @@ module Statistics
       end
     end
 
-    # Måste:
-    #   ha födelsdatum
-    #     :date_of_birth
-    #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
