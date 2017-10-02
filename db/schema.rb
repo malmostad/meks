@@ -22,21 +22,21 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["home_id"], name: "index_costs_on_home_id"
   end
 
-  create_table "countries", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "countries", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
-  create_table "countries_homes", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "countries_homes", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "country_id"
     t.integer "home_id"
     t.index ["country_id"], name: "index_countries_homes_on_country_id"
     t.index ["home_id"], name: "index_countries_homes_on_home_id"
   end
 
-  create_table "countries_refugees", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "countries_refugees", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "country_id"
     t.integer "refugee_id"
     t.datetime "created_at", null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["refugee_id"], name: "index_countries_refugees_on_refugee_id"
   end
 
-  create_table "delayed_jobs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "delayed_jobs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -60,12 +60,12 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "deregistered_reasons", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "deregistered_reasons", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.index ["name"], name: "index_deregistered_reasons_on_name", unique: true
   end
 
-  create_table "dossier_numbers", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "dossier_numbers", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.integer "refugee_id"
     t.datetime "created_at", null: false
@@ -74,14 +74,14 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["refugee_id"], name: "index_dossier_numbers_on_refugee_id"
   end
 
-  create_table "genders", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "genders", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_genders_on_name", unique: true
   end
 
-  create_table "homes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "homes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.string "phone"
     t.string "fax"
@@ -102,35 +102,35 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["owner_type_id"], name: "index_homes_on_owner_type_id"
   end
 
-  create_table "homes_languages", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "homes_languages", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "home_id"
     t.integer "language_id"
     t.index ["home_id"], name: "index_homes_languages_on_home_id"
     t.index ["language_id"], name: "index_homes_languages_on_language_id"
   end
 
-  create_table "homes_target_groups", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "homes_target_groups", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "home_id"
     t.integer "target_group_id"
     t.index ["home_id"], name: "index_homes_target_groups_on_home_id"
     t.index ["target_group_id"], name: "index_homes_target_groups_on_target_group_id"
   end
 
-  create_table "homes_type_of_housings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "homes_type_of_housings", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "home_id"
     t.integer "type_of_housing_id"
     t.index ["home_id"], name: "index_homes_type_of_housings_on_home_id"
     t.index ["type_of_housing_id"], name: "index_homes_type_of_housings_on_type_of_housing_id"
   end
 
-  create_table "languages", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "languages", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_languages_on_name", unique: true
   end
 
-  create_table "languages_refugees", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "languages_refugees", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "language_id"
     t.integer "refugee_id"
     t.datetime "created_at", null: false
@@ -147,21 +147,21 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["name"], name: "index_legal_codes_on_name", unique: true
   end
 
-  create_table "moved_out_reasons", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "moved_out_reasons", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_moved_out_reasons_on_name", unique: true
   end
 
-  create_table "municipalities", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "municipalities", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_municipalities_on_name", unique: true
   end
 
-  create_table "owner_types", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "owner_types", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -193,7 +193,7 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["refugee_id"], name: "index_payments_on_refugee_id"
   end
 
-  create_table "placements", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "placements", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "home_id"
     t.integer "refugee_id"
     t.date "moved_in_at"
@@ -229,7 +229,7 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["rate_category_id"], name: "index_rates_on_rate_category_id"
   end
 
-  create_table "refugees", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "refugees", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.boolean "draft", default: false
     t.string "name"
     t.date "date_of_birth"
@@ -261,7 +261,7 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["municipality_id"], name: "index_refugees_on_municipality_id"
   end
 
-  create_table "relationships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "relationships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.integer "refugee_id"
     t.integer "related_id"
     t.integer "type_of_relationship_id"
@@ -282,7 +282,7 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["key"], name: "index_settings_on_key", unique: true
   end
 
-  create_table "ssns", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "ssns", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.date "date_of_birth"
     t.string "extension"
     t.integer "refugee_id"
@@ -291,28 +291,28 @@ ActiveRecord::Schema.define(version: 20171001142446) do
     t.index ["refugee_id"], name: "index_ssns_on_refugee_id"
   end
 
-  create_table "target_groups", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "target_groups", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_target_groups_on_name", unique: true
   end
 
-  create_table "type_of_housings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "type_of_housings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_type_of_housings_on_name", unique: true
   end
 
-  create_table "type_of_relationships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "type_of_relationships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_type_of_relationships_on_name", unique: true
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci" do |t|
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci" do |t|
     t.string "username"
     t.string "name"
     t.string "email"
