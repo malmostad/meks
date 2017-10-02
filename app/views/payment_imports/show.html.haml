@@ -21,4 +21,4 @@
       %section.misc
         %p= "Om du raderar importen kommer alla fält för utbetalda schabloner som skapats av importen att raderas permanent."
         %p= "Detta går inte att ångra. Du kan efter detta ladda upp filen på nytt."
-        .delete= button_to "Radera permanent", @payment_import, data: { confirm: 'Är du säker på att du vill radera importen och dess utbetalda schabloner permanent?', method: :delete }, class: "btn btn-danger btn-default"
+        .delete= button_to "Radera permanent", @payment_import, method: :delete, data: { confirm: 'Är du säker på att du vill radera importen och dess utbetalda schabloner permanent?' }, class: "btn btn-danger btn-default"
