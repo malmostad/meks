@@ -1,4 +1,5 @@
 module Statistics
+  # TODO: Remove class and use Rates for 'ögonblicksbilder' instead?
   # Refugee rate categories (schabloner)
   class RateCategories < Refugee
     def self.refugees_per_category
@@ -19,10 +20,6 @@ module Statistics
           end
         }
       end
-    end
-
-    def self.expected
-      0
     end
 
     def self.arrival_0_17
