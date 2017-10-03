@@ -16,14 +16,14 @@ module Report
     end
 
     def records
-      Refugee.includes(:payments, placements: { home: :costs }).send(@status[:refugees])
+      Statistics::Rates.send(@status)
     end
 
     def columns(refugee = Refugee.new, i = 0)
       row = i + 2
       [
         {
-          heading: 'Dossiernumber',
+          heading: 'Dossiernummer',
           query: refugee.dossier_number
         },
         {
@@ -34,7 +34,9 @@ module Report
         },
         {
           heading: 'Förväntad schablon',
-          query: 'TODO'
+          query: self.class.days_amount_formula(
+            Statistics::Rates.for_all_rate_categories(refugee, from: @from, to: @to)
+          )
         },
         {
           heading: 'Avvikelse',
@@ -55,7 +57,7 @@ module Report
 
     def last_row(row_number)
       [
-        '',
+        'SUMMA:',
         "=SUM(B2:B#{row_number})",
         "=SUM(C2:C#{row_number})",
         "=SUM(D2:D#{row_number})",

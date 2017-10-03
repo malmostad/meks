@@ -22,6 +22,7 @@ module Report
       @filename   = options[:filename] || 'Utan titel.xlsx'
       @from       = options[:from]     || DEFAULT_DATE_RANGE[:from]
       @to         = options[:to]       || DEFAULT_DATE_RANGE[:to]
+      @range      = { from: @from, to: @to }
       @sheet_name = format_sheet_name
     end
 
@@ -43,8 +44,8 @@ module Report
     end
 
     def data_rows
-      records.each_with_index.map do |refugee, i|
-        columns(refugee, i).map do |cell|
+      records.each_with_index.map do |inst, i|
+        columns(inst, i).map do |cell|
           cell
         end
       end

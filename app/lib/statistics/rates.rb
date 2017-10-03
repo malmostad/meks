@@ -16,6 +16,17 @@ module Statistics
       end.flatten.compact
     end
 
+    def self.refugees_rates_for_category(category, range = DEFAULT_DATE_RANGE)
+      Refugee.includes(:payments).map do |refugee|
+        send(
+          category.qualifier[:meth],
+          refugee,
+          category,
+          range
+        )
+      end.flatten.compact
+    end
+
     # Från-datum beräknas på senaste datum av följande:
     #    minimiålder
     #      :date_of_birth
@@ -55,20 +66,22 @@ module Statistics
           refugee.citizenship_at
         )
 
-        amount_and_days(from, to, rate)
+        amount_and_days(from, to, rate, refugee)
       end
     end
 
     # Från-datum beräknas på senaste datum av följande:
-    #   vara 0–17 år
+    #   minimiålder
     #     :date_of_birth
-    #   vara utskriven till Malmö
+    #   utskriven till Malmö
     #     :checked_out_to_our_city
-    #   vara anvisad
+    #   anvisad
     #     :municipality_placement_migrationsverket_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #   vara avslutad
+    #   maxålder + 1 år - 1 dag
+    #     :date_of_birth
+    #   avslutad
     #     :deregistered
     # Returns the number of days and rate amouts in the PUT category's rates
     def self.assigned_0_17(refugee, category, range)
@@ -87,7 +100,7 @@ module Statistics
           refugee.deregistered
         )
 
-        amount_and_days(from, to, rate)
+        amount_and_days(from, to, rate, refugee)
       end
     end
 
@@ -102,9 +115,9 @@ module Statistics
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
-    #   var utskriven till Malmö
+    #   utskriven till Malmö
     #     :checked_out_to_our_city
-    #   ha startdatum för TUT
+    #   startdatum för TUT
     #     :temporary_permit_starts_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
@@ -122,7 +135,7 @@ module Statistics
           refugee.date_of_birth.nil? ||
           refugee.temporary_permit_starts_at.nil? ||
           refugee.temporary_permit_ends_at.nil? ||
-          refugee.temporary_permit_ends_at - refugee.temporary_permit_starts_at < 1.year
+          refugee.temporary_permit_ends_at - refugee.temporary_permit_starts_at < 365
 
       category.rates.map do |rate|
         from = latest_date(
@@ -138,7 +151,7 @@ module Statistics
           refugee.deregistered
         )
 
-        amount_and_days(from, to, rate)
+        amount_and_days(from, to, rate, refugee)
       end
     end
 
@@ -173,7 +186,7 @@ module Statistics
           refugee.deregistered
         )
 
-        amount_and_days(from, to, rate)
+        amount_and_days(from, to, rate, refugee)
       end
     end
 
@@ -193,11 +206,11 @@ module Statistics
       ]
     end
 
-    def self.amount_and_days(from, to, rate)
+    def self.amount_and_days(from, to, rate, refugee)
       days = number_of_days(from, to)
       return nil if days.zero?
 
-      { amount: rate.amount, days: days }
+      { amount: rate.amount, days: days, refugee: refugee }
     end
 
     def self.age(from, to)

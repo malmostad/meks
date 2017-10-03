@@ -61,7 +61,7 @@ module Report
 
     def last_row(row_number)
       [
-        '',
+        'SUMMA:',
         "=SUM(B2:B#{row_number})",
         "=SUM(C2:C#{row_number})",
         "=SUM(D2:D#{row_number})",
