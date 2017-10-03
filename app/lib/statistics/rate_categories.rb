@@ -1,6 +1,9 @@
 module Statistics
-  # TODO: Remove class and use Rates for 'ögonblicksbilder' instead?
   # Refugee rate categories (schabloner)
+  # Note that those category definitions intentionally
+  #   doesn’t match with categories with the same name
+  #   for economy reports and Statistics overview.
+  # Qualifiers here selects the current state of refugees.
   class RateCategories < Refugee
     def self.refugees_per_category
       amount_and_range.map do |category|
