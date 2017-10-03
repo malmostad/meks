@@ -28,12 +28,13 @@ Till-datum beräknas på tidigaste datum av följande:
         qualifier: 1,
         human_name: 'Anvisade barn 0–17 år',
         description: 'Från-datum beräknas på senaste datum av följande:
-– vara 0–17 år
-– vara utskriven till Malmö
-– vara anvisad
+– minimiålder
+– utskriven till Malmö
+– anvisad
 
 Till-datum beräknas på tidigaste datum av följande:
-– vara avslutad'
+– maxålder + 1 år - 1 dag
+– avslutad'
       },
 
       {
@@ -47,8 +48,8 @@ Till-datum beräknas på tidigaste datum av följande:
 
 Från-datum beräknas på senaste datum av följande:
 – minimiålder
-– var utskriven till Malmö
-– ha startdatum för TUT
+– utskriven till Malmö
+– startdatum för TUT
 
 Till-datum beräknas på tidigaste datum av följande:
 – maxålder + 1 år - 1 dag
@@ -67,8 +68,8 @@ Till-datum beräknas på tidigaste datum av följande:
 
 Från-datum beräknas på senaste datum av följande:
 – minimiålder
-– var utskriven till Malmö
-– ha startdatum för TUT
+– utskriven till Malmö
+– startdatum för TUT
 
 Till-datum beräknas på tidigaste datum av följande:
 – maxålder + 1 år - 1 dag
