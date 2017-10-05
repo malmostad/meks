@@ -21,8 +21,8 @@ module Report
     # Add a sub sheet and a data row for each rate category
     def data_rows
       records.each_with_index.map do |category, i|
-        # add_sub_sheet(category)
-        # @sheet.add_hyperlink(location: "'#{i18n_name(category[:human_name])}'!A1", ref: "A#{i + 2}", target: :sheet)
+        add_sub_sheet(category)
+        @sheet.add_hyperlink(location: "'#{i18n_name(category[:human_name])}'!A1", ref: "A#{i + 2}", target: :sheet)
 
         columns(category, i).map do |cell|
           cell

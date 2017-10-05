@@ -1,10 +1,11 @@
 module Report
-  class EconomyPerRefugeeStatusSubSheets < Workbooks
+  class EconomyPerRefugeeStatusSubSheets < EconomyPerRefugeeStatus
     def initialize(options = {})
       super(options)
       @axlsx      = options[:axlsx]
-      @status     = options[:status]
-      @sheet_name = i18n_name(@status[:name])
+      @category   = options[:category]
+      @refugees   = options[:refugees]
+      @sheet_name = i18n_name(@category[:human_name])
     end
 
     def create!
@@ -16,7 +17,33 @@ module Report
     end
 
     def records
-      Statistics::Rates.send(@status)
+      @refugees
+    end
+
+    def costs(refugee)
+      placements = refugee_placements_within_range(refugee)
+      Statistics::Cost.placements_costs_and_days(placements, @range)
+    end
+
+    def refugee_rates_for_category(refugee)
+      Statistics::Rates.send(
+        @category.qualifier[:meth],
+        refugee,
+        @category,
+        @range
+      )
+    end
+
+    def data_rows
+      records.each_with_index.map do |inst, i|
+        columns(inst, i).map do |cell|
+          cell
+        end
+      end
+    end
+
+    def payments(refugee)
+      Statistics::Payment.amount_and_days(refugee.payments, @range)
     end
 
     def columns(refugee = Refugee.new, i = 0)
@@ -28,15 +55,11 @@ module Report
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.days_amount_formula(
-            Statistics::Cost.placements_costs_and_days(refugee.placements, from: @from, to: @to)
-          )
+          query: costs(refugee).map { |rate| rate[:amount] * rate[:days] }.sum
         },
         {
           heading: 'Förväntad schablon',
-          query: self.class.days_amount_formula(
-            Statistics::Rates.for_all_rate_categories(refugee, from: @from, to: @to)
-          )
+          query: refugee_rates_for_category(refugee).map { |rate| rate[:amount] * rate[:days] }.sum
         },
         {
           heading: 'Avvikelse',
@@ -44,9 +67,7 @@ module Report
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.days_amount_formula(
-            Statistics::Payment.amount_and_days(refugee.payments, from: @from, to: @to)
-          )
+          query: payments(refugee).map { |payment| payment[:amount] * payment[:days] }.sum
         },
         {
           heading: 'Avvikelse',
