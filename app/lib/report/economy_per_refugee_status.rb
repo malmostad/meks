@@ -1,13 +1,11 @@
 module Report
-  class EconomyPerRefugeeStatus < Workbooks
+  class EconomyPerRefugeeStatus < Economy
     def create!
       @axlsx    = Axlsx::Package.new
       @workbook = @axlsx.workbook
       @style    = Style.new(@axlsx)
 
       add_sheet
-      # add_sub_sheets
-
       @axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
 
@@ -16,37 +14,36 @@ module Report
       fill_sheet
     end
 
-    def add_sub_sheets
-      records.each_with_index do |status, i|
-        sheet = Report::EconomyPerRefugeeStatusSubSheets.new(status: status, axlsx: @axlsx)
-        sheet.create!
-        @sheet.add_hyperlink(location: "'#{i18n_name(status[:name])}'!A1", ref: "A#{i + 2}", target: :sheet)
+    def records
+      RateCategory.includes(:rates).all
+    end
+
+    # Add a sub sheet and a data row for each rate category
+    def data_rows
+      records.each_with_index.map do |category, i|
+        # add_sub_sheet(category)
+        # @sheet.add_hyperlink(location: "'#{i18n_name(category[:human_name])}'!A1", ref: "A#{i + 2}", target: :sheet)
+
+        columns(category, i).map do |cell|
+          cell
+        end
       end
     end
 
-    def records
-      RateCategory.includes(:rates).all
+    def add_sub_sheet(category)
+      sub_sheet = Report::EconomyPerRefugeeStatusSubSheets.new(refugees: refugees(category), category: category, axlsx: @axlsx)
+      sub_sheet.create!
     end
 
     # Returns all placements within the range
     def placements_within_range
       @_placements_within_range ||= begin
         Placement.includes(
-          :moved_out_reason, :legal_code,
-          refugee: %i[countries languages ssns dossier_numbers
-                      gender homes placements municipality
-                      deregistered_reason payments],
-          home: %i[languages type_of_housings
-                   owner_type target_groups languages costs]
+          :moved_out_reason,
+          refugee: %i[homes placements payments],
+          home: :costs
         ).within_range(@from, @to)
       end
-    end
-
-    # Returns a single refugee's all placements within the range
-    def refugee_placements_within_range(refugee)
-      placements_within_range.map do |pl|
-        pl if pl.refugee.id == refugee.id
-      end.compact
     end
 
     def refugees(category)
@@ -70,7 +67,7 @@ module Report
       end.flatten
     end
 
-    def columns(category = RateCategory.first, i = 0)
+    def columns(category = RateCategory.new, i = 0)
       row = i + 2
       [
         {
