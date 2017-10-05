@@ -5,8 +5,8 @@ module Statistics
   class Rates < Base
     # Return the number of days for each rate and the rate amount
     def self.for_all_rate_categories(refugee, range = DEFAULT_DATE_RANGE)
-      @rate_categories ||= RateCategory.includes(:rates).all
-      @rate_categories.map do |category|
+      @_rate_categories_and_rates ||= RateCategory.includes(:rates).all
+      @_rate_categories_and_rates.map do |category|
         send(
           category.qualifier[:meth],
           refugee,
@@ -17,7 +17,10 @@ module Statistics
     end
 
     def self.refugees_rates_for_category(category, range = DEFAULT_DATE_RANGE)
-      Refugee.includes(:payments).map do |refugee|
+      return [] if category.qualifier.nil?
+
+      @_refugees_and_payments ||= Refugee.includes(:payments).all
+      @_refugees_and_payments.map do |refugee|
         send(
           category.qualifier[:meth],
           refugee,
