@@ -29,7 +29,7 @@ module Statistics
     # Costs per placement
     def self.placement_cost(placement, range)
       days = number_of_days(range[:from], range[:to])
-      { amount: placement.cost.to_i, days: days }
+      { amount: placement.cost.to_i, days: days, refugee: placement.refugee }
     end
 
     # Cost per home
@@ -38,7 +38,7 @@ module Statistics
         from = latest_date(range[:from], cost.start_date)
         to   = earliest_date(range[:to], cost.end_date)
         days = number_of_days(from, to)
-        { amount: cost.amount.to_i, days: days }
+        { amount: cost.amount.to_i, days: days, refugee: placement.refugee }
       end
     end
   end
