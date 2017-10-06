@@ -3,9 +3,10 @@ module Report
     def initialize(options = {})
       super(options)
       @axlsx      = options[:axlsx]
-      @category   = options[:category]
-      @refugees   = options[:refugees]
-      @sheet_name = i18n_name(@category[:human_name])
+      @rates      = options[:rates]
+      @costs      = options[:costs]
+      @payments   = options[:payments]
+      @sheet_name = options[:sheet_name]
     end
 
     def create!
@@ -17,49 +18,50 @@ module Report
     end
 
     def records
-      @refugees
+      merge_records
     end
 
-    def costs(refugee)
-      placements = refugee_placements_within_range(refugee)
-      Statistics::Cost.placements_costs_and_days(placements, @range)
-    end
+    # Merge arrays of @rates, @costs and @payments to one hash per refugee
+    def merge_records
+      @rates.map do |rate|
+        refugee_id = rate[:refugee].id
+        record = {}
+        record[:refugee] = rate[:refugee]
+        record[:rate] = rate.except(:refugee)
 
-    def refugee_rates_for_category(refugee)
-      Statistics::Rates.send(
-        @category.qualifier[:meth],
-        refugee,
-        @category,
-        @range
-      )
+        record[:costs] = @costs.map do |cost|
+          cost.except(:refugee) if cost[:refugee].id == refugee_id
+        end.flatten.compact
+
+        record[:payments] = @payments.map do |payments|
+          payments.except(:refugee) if payments[:refugee].id == refugee_id
+        end.flatten.compact
+        record
+      end
     end
 
     def data_rows
-      records.each_with_index.map do |inst, i|
-        columns(inst, i).map do |cell|
+      records.each_with_index.map do |refugee, i|
+        columns(refugee, i).map do |cell|
           cell
         end
       end
     end
 
-    def payments(refugee)
-      Statistics::Payment.amount_and_days(refugee.payments, @range)
-    end
-
-    def columns(refugee = Refugee.new, i = 0)
+    def columns(record = {}, i = 0)
       row = i + 2
       [
         {
           heading: 'Dossiernummer',
-          query: refugee.dossier_number
+          query: record[:refugee]&.dossier_number
         },
         {
           heading: 'Budgeterad kostnad',
-          query: costs(refugee).map { |rate| rate[:amount] * rate[:days] }.sum
+          query: record[:costs]&.map { |cost| cost[:amount] * cost[:days] }&.sum
         },
         {
           heading: 'Förväntad schablon',
-          query: refugee_rates_for_category(refugee).map { |rate| rate[:amount] * rate[:days] }.sum
+          query: record[:rate].present? ? record[:rate][:amount] * record[:rate][:days] : ''
         },
         {
           heading: 'Avvikelse',
@@ -67,7 +69,7 @@ module Report
         },
         {
           heading: 'Utbetald schablon',
-          query: payments(refugee).map { |payment| payment[:amount] * payment[:days] }.sum
+          query: record[:payments]&.map { |payment| payment[:amount] * payment[:days] }&.sum
         },
         {
           heading: 'Avvikelse',
