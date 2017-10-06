@@ -18,13 +18,18 @@ module Report
       RateCategory.includes(:rates).all
     end
 
-    # Add a sub sheet and a data row for each rate category
+    # Add a data row and a sub sheet for each rate category
     def data_rows
       records.each_with_index.map do |category, i|
-        @sheet.add_hyperlink(location: "'#{i18n_name(category[:human_name])}'!A1", ref: "A#{i + 2}", target: :sheet)
+        @sheet.add_hyperlink(
+          location: "'#{i18n_name(category[:human_name])}'!A1", ref: "A#{i + 2}",
+          target: :sheet
+        )
+
         cols = columns(category, i).map do |cell|
           cell
         end
+
         add_sub_sheet(category)
         cols
       end
@@ -46,6 +51,15 @@ module Report
 
     def rates(category)
       @rates = Statistics::Rates.refugees_rates_for_category(category, @range)
+    end
+
+    def placements_within_range
+      @_placements_within_range ||= begin
+        Placement.includes(
+          :refugee,
+          home: :costs
+        ).within_range(@from, @to)
+      end
     end
 
     def costs(category)
