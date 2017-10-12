@@ -63,10 +63,12 @@ module Report
     end
 
     def costs(category)
-      @costs = refugees(category).map do |refugee|
+      costs = refugees(category).map do |refugee|
         placements = refugee_placements_within_range(refugee)
         Statistics::Cost.placements_costs_and_days(placements, @range)
-      end.flatten
+      end
+
+      @costs = costs.flatten.map { |rate| rate[:amount] * rate[:days] }.sum
     end
 
     def payments(category)
@@ -84,7 +86,7 @@ module Report
         },
         {
           heading: 'Budgeterad kostnad',
-          query: costs(category).map { |rate| rate[:amount] * rate[:days] }.sum
+          query: costs(category)
         },
         {
           heading: 'Förväntad schablon',
