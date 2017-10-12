@@ -45,7 +45,7 @@ module Report
         },
         {
           heading: 'Förväntad schablon',
-          query: rates(type_of_housing).map { |rate| rate[:amount] * rate[:days] }.sum
+          query: 0 # rates(type_of_housing).map { |rate| rate[:amount] * rate[:days] }.sum
         },
         {
           heading: 'Avvikelse',
@@ -53,7 +53,7 @@ module Report
         },
         {
           heading: 'Utbetald schablon',
-          query: 0
+          query: '?'
         },
         {
           heading: 'Avvikelse mellan förväntad och utbetald schablon',
