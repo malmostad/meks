@@ -6,7 +6,7 @@ module Report
       @style    = Style.new(@axlsx)
 
       add_sheet
-      add_sub_sheets
+      # add_sub_sheets
 
       @axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
@@ -25,7 +25,10 @@ module Report
     end
 
     def records
-      TypeOfHousing.includes(homes: [:costs, placements: { refugee: :payments }]).all
+      type_of_housings = TypeOfHousing.includes(homes: [:costs, placements: { refugee: :payments }])
+      type_of_housings.map do |type_of_housing|
+        Statistics::Cost.for_type_of_housing(type_of_housing)
+      end
     end
 
     def columns(type_of_housing = TypeOfHousing.new, i = 0)
@@ -42,7 +45,7 @@ module Report
         },
         {
           heading: 'Förväntad schablon',
-          query: 0
+          query: rates(type_of_housing).map { |rate| rate[:amount] * rate[:days] }.sum
         },
         {
           heading: 'Avvikelse',

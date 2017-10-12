@@ -1,11 +1,12 @@
 # TODO: Specs
 module Statistics
   class Cost < Base
-    def self.total_for_placements_and_home(placements)
-      costs = placements_costs_and_days(placements)
-      costs.map do |c|
-        c[:amount] * c[:days]
-      end.sum
+    def self.for_type_of_housing(type_of_housing, range = DEFAULT_DATE_RANGE)
+      type_of_housing.homes.map do |home|
+        home.placements.map do |placement|
+          placement_home_costs(placement, range)
+        end
+      end
     end
 
     def self.for_placements_and_home(placements, range = DEFAULT_DATE_RANGE)
