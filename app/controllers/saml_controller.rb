@@ -1,4 +1,5 @@
 class SamlController < ApplicationController
+  before_action :reset_session_keys, only: [:consume, :sso, :logout]
   skip_authorize_resource
   skip_authorization_check
   skip_before_action :authenticate
@@ -56,7 +57,6 @@ class SamlController < ApplicationController
 
   def logout
     # Placeholder for SAML SLO implementation
-    reset_session
     redirect_to root_path, notice: 'Du är utloggad från MEKS'
   end
 

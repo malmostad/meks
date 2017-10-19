@@ -1,5 +1,6 @@
 class LoginController < ApplicationController
   before_action :redirect_if_saml, except: :destroy
+  before_action :reset_session_keys
   skip_authorize_resource
   skip_authorization_check
   skip_before_action :authenticate
@@ -55,8 +56,6 @@ class LoginController < ApplicationController
   end
 
   def destroy
-    reset_session
-
     if APP_CONFIG['auth_method'] == 'saml'
       redirect_to Rails.application.secrets.saml['idp_slo_target_url']
     else

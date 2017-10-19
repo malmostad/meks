@@ -41,12 +41,25 @@ class ApplicationController < ActionController::Base
     update_session
   end
 
+  def reset_session_keys
+    reset_session
+    session[:renewed_at] = nil
+    session[:user_id]    = nil
+  end
+
   def session_expired?
-    return true if session[:expires_at].nil? || session[:expires_at] < Time.now
+    if session[:renewed_at].nil? ||
+       session[:renewed_at].to_time + SESSION_TIME.minutes < Time.now
+
+      reset_session_keys
+      true
+    else
+      false
+    end
   end
 
   def update_session
-    session[:expires_at] = Time.now + SESSION_TIME.minutes
+    session[:renewed_at] = Time.now
   end
 
   def redirect_after_login
