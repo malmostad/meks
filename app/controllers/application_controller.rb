@@ -12,6 +12,9 @@ class ApplicationController < ActionController::Base
   SESSION_TIME = APP_CONFIG['session_time']
 
   def log_user_on_request
+    logger.info "[REFERRER]       #{request.referrer}"
+    logger.info "[USER_ID]        #{session[:user_id]}"
+    logger.info "[EXPIRES_AT]     #{session[:expires_at]}"
     logger.info "[REQUESTED_BY]   #{current_user.present? ? current_user.username : 'Not authenticated'}"
     logger.info "[REQUESTED_FROM] #{client_ip}"
   end
@@ -30,15 +33,29 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
+    logger.info "[AUTHENTICATE]"
     if !current_user || session_expired?
+      logger.info "[USER_ID]        #{session[:user_id]}"
+      logger.info "[EXPIRES_AT]     #{session[:expires_at]}"
+      logger.info "[NOT CURRENT_USER]  #{!current_user.class}"
+      logger.info "[SESSION_EXPIRED]  #{session_expired?.class}"
+
+      reset_session_keys
       unless request.xhr?
         # Remember where the user was about to go
         session[:requested_url] = request.fullpath
       end
       flash.now[:warning] = "Du har varit inaktiv i #{SESSION_TIME} minuter och har loggats ut från MEKS" if session_expired?
       redirect_to login_path
+    else
+      update_session
     end
-    update_session
+  end
+
+  def reset_session_keys
+    reset_session
+    session[:user_id] = nil
+    session[:expires_at] = nil
   end
 
   def session_expired?
@@ -46,11 +63,11 @@ class ApplicationController < ActionController::Base
   end
 
   def update_session
+    logger.info "[UPDATE_SESSION]"
     session[:expires_at] = Time.now + SESSION_TIME.minutes
   end
 
   def redirect_after_login
-    update_session
     if session[:requested_url]
       requested_url = session[:requested_url]
       session[:requested_url] = nil
