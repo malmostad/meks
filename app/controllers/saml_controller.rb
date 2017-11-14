@@ -57,6 +57,7 @@ class SamlController < ApplicationController
 
   def logout
     # Placeholder for SAML SLO implementation
+    reset_session_keys
     redirect_to root_path, notice: 'Du är utloggad från MEKS'
   end
 
