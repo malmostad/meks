@@ -12,6 +12,9 @@ class ApplicationController < ActionController::Base
   SESSION_TIME = APP_CONFIG['session_time']
 
   def log_user_on_request
+    logger.info "[REFERRER]       #{request.referrer}"
+    logger.info "[USER_ID]        #{session[:user_id]}"
+    logger.info "[RENEWED_AT]     #{session[:renewed_at]}"
     logger.info "[REQUESTED_BY]   #{current_user.present? ? current_user.username : 'Not authenticated'}"
     logger.info "[REQUESTED_FROM] #{client_ip}"
   end
@@ -30,40 +33,41 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    if !current_user || session_expired?
+    logger.info "[AUTHENTICATE]"
+    if current_user && session_fresh?
+      update_session
+    else
+      logger.info "[USER_ID]        #{session[:user_id]}"
+      logger.info "[RENEWED_AT]     #{session[:renewed_at]}"
+      logger.info "[CURRENT_USER]  #{current_user}"
+      logger.info "[SESSION_FRESH]  #{session_fresh?}"
+
+      reset_session_keys
       unless request.xhr?
         # Remember where the user was about to go
         session[:requested_url] = request.fullpath
       end
-      flash.now[:warning] = "Du har varit inaktiv i #{SESSION_TIME} minuter och har loggats ut från MEKS" if session_expired?
+      flash.now[:warning] = "Du har varit inaktiv i #{SESSION_TIME} minuter och har loggats ut från MEKS" unless session_fresh?
       redirect_to login_path
     end
-    update_session
   end
 
   def reset_session_keys
     reset_session
+    session[:user_id] = nil
     session[:renewed_at] = nil
-    session[:user_id]    = nil
   end
 
-  def session_expired?
-    if session[:renewed_at].nil? ||
-       session[:renewed_at].to_time + SESSION_TIME.minutes < Time.now
-
-      reset_session_keys
-      true
-    else
-      false
-    end
+  def session_fresh?
+    session[:renewed_at] && session[:renewed_at].to_time > Time.now - SESSION_TIME.minutes
   end
 
   def update_session
+    logger.info '[UPDATE_SESSION]'
     session[:renewed_at] = Time.now
   end
 
   def redirect_after_login
-    update_session
     if session[:requested_url]
       requested_url = session[:requested_url]
       session[:requested_url] = nil

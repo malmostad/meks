@@ -56,6 +56,8 @@ class LoginController < ApplicationController
   end
 
   def destroy
+    reset_session_keys
+
     if APP_CONFIG['auth_method'] == 'saml'
       redirect_to Rails.application.secrets.saml['idp_slo_target_url']
     else
@@ -79,6 +81,7 @@ class LoginController < ApplicationController
       user = User.where(username: params[:username].strip.downcase).first
       if user
         session[:user_id] = user.id
+        update_session
         logger.debug { "Stubbed authenticated user #{current_user.id}" }
         redirect_after_login
       else
