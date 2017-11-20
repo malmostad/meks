@@ -50,9 +50,12 @@ sv:
         deregistered_reason: Avslutsorsak
         deregistered_comment: Avslutsorsak, kommentar
         residence_permit_at: PUT
+        residence_permit: PUT
         checked_out_to_our_city: Utskriven till Malmö
         temporary_permit_starts_at: TUT startar
         temporary_permit_ends_at: TUT slutar
+        temporary_permit: TUT
+        designated: Anvisad
         citizenship_at: Medborgarskap erhölls
         municipality: Anvisningskommun
         municipality_placement_migrationsverket_at: Anvisningsdatum
@@ -63,6 +66,7 @@ sv:
         type_of_relationships: Anhörigform
         other_relateds: Anhöriga utanför systemet
         social_worker: Socialsekreterare
+        in_arrival: I ankomst
         placements:
           <<: *placement
 
@@ -97,9 +101,9 @@ sv:
 
       rate_category:
         <<: *defaults
-        legal_code: Lagrum
-        from_age: Från ålder
-        to_age: Till och med ålder
+        human_name: Namn
+        description: Villkor
+        age: Ålder
 
       legal_code:
         <<: *defaults

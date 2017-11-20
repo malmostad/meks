@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
     else
       finished = false
       created_at = job.created_at.to_i
-      queue_size = Delayed::Job.where(last_error: nil).count - 1
+      queue_size = Delayed::Job.where(last_error: nil).count
       queue_size = 'du är först i kön' if queue_size.nil? || queue_size <= 1
     end
 
@@ -87,15 +87,21 @@ class ReportsController < ApplicationController
   end
 
   def generate_report_job(file_id)
-    case params['report_type']
+    case params[:report_type]
     when 'economy'
       GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
+    when 'economy_per_refugee_status'
+      GenerateReportJob::EconomyPerRefugeeStatus.perform_later(report_params.to_h, file_id)
+    when 'economy_per_type_of_housing'
+      GenerateReportJob::EconomyPerTypeOfHousing.perform_later(report_params.to_h, file_id)
     when 'homes'
       GenerateReportJob::Homes.perform_later(report_params.to_h, file_id)
     when 'placements'
       GenerateReportJob::Placements.perform_later(report_params.to_h, file_id)
     when 'refugees'
       GenerateReportJob::Refugees.perform_later(report_params.to_h, file_id)
+    when 'economy_per_refugee_status'
+      GenerateReportJob::EconomyPerRefugeeStatus.perform_later(report_params.to_h, file_id)
     end
   end
 
@@ -103,6 +109,10 @@ class ReportsController < ApplicationController
     case params[:report_type]
     when 'economy'
       'Ekonomi'
+    when 'economy_per_refugee_status'
+      'Per barns asylsstatus'
+    when 'economy_per_type_of_housing'
+      'Per boendeform'
     when 'homes'
       'Boenden'
     when 'placements'

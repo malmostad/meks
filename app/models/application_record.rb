@@ -1,4 +1,5 @@
 class ApplicationRecord < ActiveRecord::Base
+  DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
   self.abstract_class = true
 
   def date_format(field_name)
@@ -11,10 +12,6 @@ class ApplicationRecord < ActiveRecord::Base
   def date_range(field_name, from, to)
     return unless errors.blank?
     errors.add(field_name, 'Startdatum måste infalla innan slutdatum') if from >= to
-  end
-
-  def default_date_range
-    { from: Date.new(0), to: Date.today }
   end
 
   # Rollback transaction if any record date ranges overlaps

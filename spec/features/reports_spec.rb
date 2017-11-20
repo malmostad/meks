@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Reports", type: :feature do
+RSpec.describe "Report", type: :feature do
   describe "admin role" do
     before(:each) do
       login_user(:admin)

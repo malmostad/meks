@@ -5,14 +5,10 @@
     %thead
       %tr
         %th Namn
-        %th Ålder
-        %th Lagrum
         %th Har belopp
 
     %tbody
       - @rate_categories.each do |rate_category|
         %tr
-          %td= link_to rate_category.name, edit_rate_category_path(rate_category)
-          %td= "#{rate_category.from_age}–#{rate_category.to_age}"
-          %td= rate_category.legal_code.name
+          %td= link_to rate_category.human_name, edit_rate_category_path(rate_category)
           %td= rate_category.current_rate? ? 'Ja' : 'Nej'

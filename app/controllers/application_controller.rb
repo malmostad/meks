@@ -37,10 +37,10 @@ class ApplicationController < ActionController::Base
     if current_user && session_fresh?
       update_session
     else
-      logger.info "[USER_ID]        #{session[:user_id]}"
-      logger.info "[RENEWED_AT]     #{session[:renewed_at]}"
+      logger.info "[USER_ID]       #{session[:user_id]}"
+      logger.info "[RENEWED_AT]    #{session[:renewed_at]}"
       logger.info "[CURRENT_USER]  #{current_user}"
-      logger.info "[SESSION_FRESH]  #{session_fresh?}"
+      logger.info "[SESSION_FRESH] #{session_fresh?}"
 
       reset_session_keys
       unless request.xhr?

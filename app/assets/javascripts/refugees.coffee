@@ -12,12 +12,13 @@ $ ->
   $("#query-refugee").focus()
 
   # Load more search results
-  $("section.search.refugees").on "click", ".load-more input", (event) ->
+  $("section.search.refugees").on "click", ".load-more a", (event) ->
     event.preventDefault()
     $trigger = $(@)
-    $trigger.val("Hämtar fler...").addClass('disabled')
+    $trigger.text("Hämtar fler...").addClass('disabled')
+    console.log $trigger.attr('href')
 
-    $.get $trigger.attr('data-path'), (data) ->
+    $.get $trigger.attr('href'), (data) ->
       $('.load-more').replaceWith($(data).find('.load-more'))
       $(data).find('tbody tr').appendTo('table.results tbody')
 

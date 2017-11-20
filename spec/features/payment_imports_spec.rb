@@ -32,7 +32,7 @@ RSpec.describe PaymentImport, type: :feature do
   #   scenario "deletes a language", js: true do
   #     language = create(:language, name: "Fox")
   #     visit "/languages"
-  #     first("a.btn-danger").click
+  #     first(".btn-danger").click
   #
   #     page.evaluate_script("window.confirm()")
   #     expect(page).to have_selector(".notice", text: "raderades")

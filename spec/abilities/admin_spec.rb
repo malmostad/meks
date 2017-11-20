@@ -19,7 +19,6 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:manage, DeregisteredReason.new) }
     it { should be_able_to(:manage, Municipality.new) }
     it { should be_able_to(:manage, OwnerType.new) }
-    it { should be_able_to(:manage, LegalCode.new) }
     it { should be_able_to(:manage, Ssn.new) }
     it { should be_able_to(:manage, TargetGroup.new) }
     it { should be_able_to(:manage, TypeOfHousing.new) }
@@ -33,7 +32,6 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:read, Gender.new) }
     it { should be_able_to(:read, Language.new) }
     it { should be_able_to(:read, MovedOutReason.new) }
-    it { should be_able_to(:read, LegalCode.new) }
     it { should be_able_to(:read, DeregisteredReason.new) }
     it { should be_able_to(:read, Municipality.new) }
     it { should be_able_to(:read, OwnerType.new) }

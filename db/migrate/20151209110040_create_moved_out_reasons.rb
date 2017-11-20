@@ -1,4 +1,4 @@
-class CreateMovedOutReasons < ActiveRecord::Migration
+class CreateMovedOutReasons < ActiveRecord::Migration[4.2]
   def change
     create_table :moved_out_reasons do |t|
       t.string :name

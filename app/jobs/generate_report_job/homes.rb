@@ -1,35 +1,14 @@
 class GenerateReportJob
-  class Homes  < ApplicationJob
-    queue_as :default
-
+  class Homes < ApplicationJob
     def perform(params, file_id)
-      filename = "#{file_id}.xlsx"
-      homes = homes_query(params)
-      create_workbook(homes, filename)
-    end
-
-    private
-
-    def create_workbook(homes, filename)
-      workbook = Report::Workbooks::Homes.new
-      report = Report::Generator.new(workbook, homes)
-      report.to_xlsx(filename)
-    end
-
-    def homes_query(params)
-      homes = Home.includes(
-        :placements, :type_of_housings,
-        :owner_type, :target_groups, :languages
+      workbook = Report::Homes.new(
+        filename: "#{file_id}.xlsx",
+        from: params[:placements_from],
+        to: params[:placements_to],
+        owner_type: params[:home_owner_type],
+        free_seats: params[:homes_free_seats]
       )
-
-      if params[:homes_owner_type].present?
-        homes = homes.where(owner_type: params[:homes_owner_type])
-      end
-
-      if params[:homes_free_seats] == 'with'
-        homes = homes.each.reject { |r| r.free_seats <= 0 }
-      end
-      homes
+      workbook.create!
     end
   end
 end

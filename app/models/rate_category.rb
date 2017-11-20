@@ -1,19 +1,20 @@
-# a.k.a. 'Schablon'
+# A.k.a. 'Schablon'
 class RateCategory < ApplicationRecord
+  # meth is used for sending a method , *_age are used as arguments
+  enum qualifier: [
+    { meth: :arrival_0_17,     min_age: 0,  max_age: 17 },
+    { meth: :assigned_0_17,    min_age: 0,  max_age: 17 },
+    { meth: :temporary_permit, min_age: 0,  max_age: 17 },
+    { meth: :temporary_permit, min_age: 18, max_age: 20 },
+    { meth: :residence_permit, min_age: 0,  max_age: 17 },
+    { meth: :residence_permit, min_age: 18, max_age: 20 }
+  ]
+
   has_many :rates, dependent: :destroy
-  accepts_nested_attributes_for :rates,
-    allow_destroy: true
+  accepts_nested_attributes_for :rates, allow_destroy: true
   validates_associated :rates
 
-  belongs_to :legal_code
-
-  default_scope { order(:name, :from_age) }
-
-  validates :name, :legal_code, presence: true
-  validates :from_age, :to_age, presence: true, numericality: true
-  validate do
-    date_range(:from_age, from_age, to_age)
-  end
+  validates :name, :human_name, :description, presence: true
 
   after_save do
     # Rollback transaction if cost date ranges overlaps

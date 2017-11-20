@@ -28,7 +28,6 @@ Rails.application.routes.draw do
 
   resources :homes
   resources :moved_out_reasons, except: :show
-  resources :legal_codes, except: :show
   resources :deregistered_reasons, except: :show
   resources :target_groups, except: :show
   resources :type_of_housings, except: :show

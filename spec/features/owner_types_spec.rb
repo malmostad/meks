@@ -30,7 +30,7 @@ RSpec.describe "Owner types", type: :feature do
     scenario "deletes a owner_type", js: true do
       create(:owner_type, name: "Fox")
       visit "/owner_types"
-      first("a.btn-danger").click
+      first(".btn-danger").click
 
       page.evaluate_script("window.confirm()")
       expect(page).to have_selector(".notice", text: "raderades")

@@ -1,48 +1,119 @@
 namespace :db do
-  desc "Seed data for rate categories and legal codes"
+  desc 'Seed data for rate categories'
   task seed_rate_categories: :environment do
-    %w(SoL BoL LoL).each do |legal_code|
-      LegalCode.create name: legal_code
+    if Rate.count.positive? || RateCategory.count.positive?
+      puts 'Run RateCategory.destroy_all first'
+      exit
     end
+    [
+      {
+        name: 'arrival_0_17',
+        qualifier: 0,
+        human_name: 'Ankomstbarn 0–17 år',
+        description: 'Från-datum beräknas på senaste datum av följande:
+– minimiålder
+– inskrivningsdatum
 
-    lc_id = LegalCode.where(name: 'SoL').first.id
+Till-datum beräknas på tidigaste datum av följande:
+– maxålder + 1 år - 1 dag
+– avslutsdatum
+– anvisningsdatum
+– TUT startar
+– PUT startar
+– medborgarskap'
+      },
 
-    [{ name: 'Ankomstbarn', from_age: 0, to_age: 17,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen ska beräknas från och med inskrivningsdatum och avslutas samma dag som anvisningsdatum till en annan kommun eller genom att datum i raden för avslut är ifyllt.',
-        rate: { amount: 3_000, start_date: '2017-01-01', end_date: '2017-12-31' }
+      {
+        name: 'assigned_0_17',
+        qualifier: 1,
+        human_name: 'Anvisade barn 0–17 år',
+        description: 'Från-datum beräknas på senaste datum av följande:
+– minimiålder
+– utskriven till Malmö
+– anvisad
+
+Till-datum beräknas på tidigaste datum av följande:
+– maxålder + 1 år - 1 dag
+– avslutad'
       },
-      { name: 'Ankomstbarn', from_age: 18, to_age: 20,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen uteblir från och med 18-års dagen.',
-        rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+
+      {
+        name: 'temporary_permit_0_17',
+        qualifier: 2,
+        human_name: 'TUT-barn 0–17 år',
+        description: 'Måste ha:
+– datum för TUT startar
+– datum för TUT slutar
+– TUT som är längre än 12 månader
+
+Från-datum beräknas på senaste datum av följande:
+– minimiålder
+– utskriven till Malmö
+– startdatum för TUT
+
+Till-datum beräknas på tidigaste datum av följande:
+– maxålder + 1 år - 1 dag
+– avslutsdatum för TUT
+– datum för PUT
+– avslutsdatum'
       },
-      { name: 'Anvisade barn', from_age: 0, to_age: 17,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen ska beräknas för barn som ej har fyllt 18 år samt från och med anvisningsdatum till Malmö och avslutas samma dag som  står i kolumnen "Utskriven till Malmö". Om datum för "Utskriven till Malmö" är inte ifylld, då är det datum i raden "Avslutad" som avgör när schablonen upphör.',
-        rate: { amount: 1_350, start_date: '2017-01-01', end_date: '2017-12-31' }
+      {
+        name: 'temporary_permit_18_20',
+        qualifier: 3,
+        human_name: 'TUT-barn 18–20 år',
+        description: 'Måste ha:
+– datum för TUT startar
+– datum för TUT slutar
+– TUT som är längre än 12 månader
+
+Från-datum beräknas på senaste datum av följande:
+– minimiålder
+– utskriven till Malmö
+– startdatum för TUT
+
+Till-datum beräknas på tidigaste datum av följande:
+– maxålder + 1 år - 1 dag
+– avslutsdatum för TUT
+– datum för PUT
+– avslutsdatum'
       },
-      { name: 'Anvisade barn', from_age: 18, to_age: 20,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen uterblir från och med 18-års dagen.',
-        rate: { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+      {
+        name: 'residence_permit_0_17',
+        qualifier: 4,
+        human_name: 'PUT-barn 0–17 år',
+        description: 'Från-datum beräknas på senaste datum av följande:
+– minimiålder
+– startdatum för PUT
+– utskriven till Malmö
+
+Till-datum beräknas på tidigaste datum av följande:
+– maxålder + 1 år - 1 dag
+– medborgarskap
+– avslutsdatum'
       },
-      { name: 'Barn med TUT', from_age: 0, to_age: 17,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen avser barn som ej har fyllt 18 år och har datum för "TUT startar" och "TUT slutar" ifyllda. Schablonen ska beräknas från och med dagen efter det datumet som står i raden "Utskriven till Malmö" och avslutas samma dag som barnet fyller 18 år eller det datum som står i raden "TUT slutar".',
-        rate: { amount: 1_350, start_date: '2017-01-01', end_date: '2017-12-31' }
-      },
-      { name: 'Barn med TUT', from_age: 18, to_age: 20,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen avser barn som har fyllt 18 år, men inte 21 år och har datum för "TUT startar" och "TUT slutar" ifyllda.  Schablonen ska beräknas från och med dagen då barnet fyller 18 år och avslutas dagen innan barnet fyller 21 år eller det datumet som står i raden "TUT slutar".',
-      },
-      { name: 'Barn med PUT', from_age: 0, to_age: 17,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen avser barn som ej har fyllt 18 år. Schablonen ska beräknas från och med dagen efter det datumet som står i raden "Utskriven till Malmö". Schablonen avslutas samma dag som barnet fyller 18 år, dagen innan det datum som står i raden "Medborgarskap erhölls" eller om datum i raden "Avslutad" är ifylld.',
-        rate: { amount: 1_350, start_date: '2017-01-01', end_date: '2017-12-31' }
-      },
-      { name: 'Barn med PUT', from_age: 18, to_age: 20,
-        legal_code_id: lc_id, description: 'Lagrum SoL. Schablonen avser barn som har fyllt 18 år, men inte 21 år. Schablonen ska beräknas från och med dagen då barnet fyller 18 år och avslutas dagen innan barnet fyller 21 år, det datumet som står i raden "Avslutad" eller "Medborgarskap erhölls".',
-        rate: { amount: 750, start_date: '2017-01-01', end_date: '2017-12-31' }
-       }
+      {
+        name: 'residence_permit_18_20',
+        qualifier: 5,
+        human_name: 'PUT-barn 18–20 år',
+        description: 'Från-datum beräknas på senaste datum av följande:
+– minimiålder
+– startdatum för PUT
+– utskriven till Malmö
+
+Till-datum beräknas på tidigaste datum av följande:
+– maxålder + 1 år - 1 dag
+– medborgarskap
+– avslutsdatum'
+      }
     ].each do |rc|
-      rate = rc[:rate]
       rc.except! :rate
       r = RateCategory.create!(rc)
-      r.rates << Rate.new(rate) if rate.present?
+      # rate1 = { amount: rand(1000..2000), start_date: '2017-01-01', end_date: '2017-06-30' }
+      # rate2 = { amount: rand(1000..2000), start_date: '2017-07-01', end_date: '2017-12-31' }
+      # r.rates << Rate.new(rate1)
+      # r.rates << Rate.new(rate2)
+      rate = { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+      r.rates << Rate.new(rate)
       r.save!
     end
   end

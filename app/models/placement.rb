@@ -21,10 +21,10 @@ class Placement < ApplicationRecord
       .where('moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
   end
 
-  def self.overlapping_by_refugee(options = {})
+  def self.overlapping_by_refugee(from, to, home_id)
     # Within range
-    range_from = begin; Date.parse(options[:placements_from]).to_s; rescue; (Date.today - 10.years).to_s; end
-    range_to   = begin; Date.parse(options[:placements_to]).to_s; rescue; Date.today.to_s; end
+    range_from = begin; Date.parse(from).to_s; rescue; (Date.today - 10.years).to_s; end
+    range_to   = begin; Date.parse(to).to_s; rescue; Date.today.to_s; end
 
     # Get and array of overlapping placements per refugee, within range, for home
     records = find_by_sql(["
@@ -55,21 +55,6 @@ class Placement < ApplicationRecord
     where('moved_out_at = ? or moved_in_at >= ?', nil, Date.today.beginning_of_quarter)
   end
 
-  def cost_sum
-    costs = []
-    if home.use_placement_cost
-      costs << refugee.placement_cost(self)
-    else
-      costs << refugee.placement_home_costs(self)
-    end
-
-    cost = 0
-    costs.flatten.each do |c|
-      cost += c[:cost] * c[:days]
-    end
-    cost
-  end
-
   def placement_time
     return 0 if moved_in_at.blank?
     days = moved_out_at.present? ? (moved_out_at - moved_in_at).to_i : (Date.today - moved_in_at).to_i
@@ -79,5 +64,9 @@ class Placement < ApplicationRecord
   def cost_per_day
     return 0 unless placement_time.positive?
     cost_sum / placement_time
+  end
+
+  def cost_sum
+    Statistics::Cost.for_placements_and_home([dup])
   end
 end

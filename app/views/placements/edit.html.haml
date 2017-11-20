@@ -12,4 +12,4 @@
     .box-content.basic.form-data
       %section.misc
         %p= "Placeringen kommer att raderas permanent. Detta går inte att ångra."
-        .delete= link_to 'Radera placeringen permanent', refugee_placement_path(@refugee, @placement), data: { confirm: 'Är du säker på att du vill radera placeringen permanent?', method: :delete }, class: "btn btn-danger btn-default"
+        .delete= button_to 'Radera placeringen permanent', refugee_placement_path(@refugee, @placement), method: :delete, data: { confirm: 'Är du säker på att du vill radera placeringen permanent?' }, class: "btn btn-danger btn-default"
