@@ -41,7 +41,7 @@ module Report
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.sum_formula(type_of_housing.placements_cost_per_home)
+          query: 0 # self.class.sum_formula(type_of_housing.placements_cost_per_home)
         },
         {
           heading: 'Förväntad schablon',
