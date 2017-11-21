@@ -68,7 +68,7 @@ module Report
         Statistics::Cost.placements_costs_and_days(placements, @range)
       end
 
-      @costs = costs.flatten.map { |rate| rate[:amount] * rate[:days] }.sum
+      @costs = costs.flatten
     end
 
     def payments(category)
@@ -86,7 +86,7 @@ module Report
         },
         {
           heading: 'Budgeterad kostnad',
-          query: costs(category)
+          query: costs(category).map { |cost| cost[:amount] * cost[:days] }.sum
         },
         {
           heading: 'Förväntad schablon',
