@@ -35,7 +35,7 @@ class RateCategory < ApplicationRecord
 
   def current_rate?
     rates.each do |rate|
-      return true if rate.end_date >= Date.today
+      return true if rate.end_date >= Date.today && rate.amount&.positive?
     end
     false
   end
