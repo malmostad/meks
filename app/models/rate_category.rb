@@ -1,6 +1,12 @@
 # A.k.a. 'Schablon'
 class RateCategory < ApplicationRecord
-  # meth is used for sending a method , *_age are used as arguments
+  # `enum` maps qualifier number in DB to the qualifiers below
+  # `meth` is used for sending qualifiers to a method to select refugees
+  # `min_age` and `max_age` are used as arguments
+  #
+  # Run:
+  # rake db:seed_rate_categories
+  # to create the rate categories
   enum qualifier: [
     { meth: :arrival_0_17,     min_age: 0,  max_age: 17 },
     { meth: :assigned_0_17,    min_age: 0,  max_age: 17 },
