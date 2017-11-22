@@ -30,6 +30,8 @@ module Statistics
       end.flatten.compact
     end
 
+    # Schablonkategori Ankomstbarn
+    #
     # Från-datum beräknas på senaste datum av följande:
     #    minimiålder
     #      :date_of_birth
@@ -73,6 +75,8 @@ module Statistics
       end
     end
 
+    # Schablonkategori Anvisad
+    #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
@@ -107,6 +111,8 @@ module Statistics
       end
     end
 
+    # Schablonkategori TUT
+    #
     # Måste:
     #   ha datum för TUT startar
     #     :temporary_permit_starts_at
@@ -158,6 +164,8 @@ module Statistics
       end
     end
 
+    # Schablonkategori PUT
+    #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
