@@ -59,7 +59,7 @@ class LoginController < ApplicationController
     reset_session_keys
 
     if APP_CONFIG['auth_method'] == 'saml'
-      redirect_to Rails.application.secrets.saml['idp_slo_target_url']
+      redirect_to Rails.application.secrets.saml[:idp_slo_target_url]
     else
       redirect_to root_path, notice: 'Du är utloggad från MEKS'
     end
