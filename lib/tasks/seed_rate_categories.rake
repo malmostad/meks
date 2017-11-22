@@ -10,100 +10,39 @@ namespace :db do
         name: 'arrival_0_17',
         qualifier: 0,
         human_name: 'Ankomstbarn 0–17 år',
-        description: 'Från-datum beräknas på senaste datum av följande:
-– minimiålder
-– inskrivningsdatum
-
-Till-datum beräknas på tidigaste datum av följande:
-– maxålder + 1 år - 1 dag
-– avslutsdatum
-– anvisningsdatum
-– TUT startar
-– PUT startar
-– medborgarskap'
+        description: ''
       },
 
       {
         name: 'assigned_0_17',
         qualifier: 1,
         human_name: 'Anvisade barn 0–17 år',
-        description: 'Från-datum beräknas på senaste datum av följande:
-– minimiålder
-– utskriven till Malmö
-– anvisad
-
-Till-datum beräknas på tidigaste datum av följande:
-– maxålder + 1 år - 1 dag
-– avslutad'
+        description: ''
       },
 
       {
         name: 'temporary_permit_0_17',
         qualifier: 2,
         human_name: 'TUT-barn 0–17 år',
-        description: 'Måste ha:
-– datum för TUT startar
-– datum för TUT slutar
-– TUT som är längre än 12 månader
-
-Från-datum beräknas på senaste datum av följande:
-– minimiålder
-– utskriven till Malmö
-– startdatum för TUT
-
-Till-datum beräknas på tidigaste datum av följande:
-– maxålder + 1 år - 1 dag
-– avslutsdatum för TUT
-– datum för PUT
-– avslutsdatum'
+        description: ''
       },
       {
         name: 'temporary_permit_18_20',
         qualifier: 3,
         human_name: 'TUT-barn 18–20 år',
-        description: 'Måste ha:
-– datum för TUT startar
-– datum för TUT slutar
-– TUT som är längre än 12 månader
-
-Från-datum beräknas på senaste datum av följande:
-– minimiålder
-– utskriven till Malmö
-– startdatum för TUT
-
-Till-datum beräknas på tidigaste datum av följande:
-– maxålder + 1 år - 1 dag
-– avslutsdatum för TUT
-– datum för PUT
-– avslutsdatum'
+        description: ''
       },
       {
         name: 'residence_permit_0_17',
         qualifier: 4,
         human_name: 'PUT-barn 0–17 år',
-        description: 'Från-datum beräknas på senaste datum av följande:
-– minimiålder
-– startdatum för PUT
-– utskriven till Malmö
-
-Till-datum beräknas på tidigaste datum av följande:
-– maxålder + 1 år - 1 dag
-– medborgarskap
-– avslutsdatum'
+        description: ''
       },
       {
         name: 'residence_permit_18_20',
         qualifier: 5,
         human_name: 'PUT-barn 18–20 år',
-        description: 'Från-datum beräknas på senaste datum av följande:
-– minimiålder
-– startdatum för PUT
-– utskriven till Malmö
-
-Till-datum beräknas på tidigaste datum av följande:
-– maxålder + 1 år - 1 dag
-– medborgarskap
-– avslutsdatum'
+        description: ''
       }
     ].each do |rc|
       rc.except! :rate
