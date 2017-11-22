@@ -20,7 +20,7 @@ class RateCategory < ApplicationRecord
   accepts_nested_attributes_for :rates, allow_destroy: true
   validates_associated :rates
 
-  validates :name, :human_name, :description, presence: true
+  validates :name, :human_name, presence: true
 
   after_save do
     # Rollback transaction if cost date ranges overlaps
