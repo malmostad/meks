@@ -44,7 +44,7 @@ class SamlController < ApplicationController
       end
     rescue => e
       logger.fatal "[SAML_AUTH] SAML response for #{client_ip} failed. #{e.message}"
-      logger.fatal e
+      logger.fatal e.backtrace.inspect
       @error_message = 'Inloggning med SAML misslyckades.'
       render :fail
     end
