@@ -48,7 +48,7 @@ class Ldap
           "CN=#{group[:ldap_name]},#{@config[:base_group]}"))
 
       entry = @client.search(base: @config[:basedn], filter: filter).first
-      return group['name'] if entry.present?
+      return group[:name] if entry.present?
     end
     false
   end
