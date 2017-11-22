@@ -21,7 +21,7 @@ Detta är en rad i Excelarket. Samma beräkningsmodell görs för varje barn, dv
 
 ## Beräkning av antal dagar i respektive schablonkategori
 
-För att beräkna hur många dagar inom valt rapportintervall som ett barn uppfyller villkoren för varje schablonkategori används datumet då barnet nått minimiåldern (0 år eller 18 år) samt inte är äldre än maxåldern (17 år + 1 år - 1 dag eller 20 år + 1 år - 1 dag). Utöver det används ett antal datum som är specifika för varje schablonkategori och anges nedan. När man fått fram ett från-datum och ett till-datum för respektive schablonkategori har man tidsintervallet som barnet uppfyller villkoren för schablonkategorin. Datum som inte är angivna i en akt ignoreras. Tidsintevall där erhållet från-datum inträffar efter till-datumet ignoreras.
+För att beräkna hur många dagar inom valt rapportintervall som ett barn uppfyller villkoren för varje schablonkategori används datumet då barnet nått minimiåldern (0 år eller 18 år) samt inte är äldre än maxåldern (17 år + 1 år - 1 dag eller 20 år + 1 år - 1 dag). Utöver det används ett antal datum som är specifika för varje schablonkategori och anges nedan. När man fått fram ett från-datum och ett till-datum för respektive schablonkategori har man tidsintervallet som barnet uppfyller villkoren för schablonkategorin. Datum som inte är angivna i en akt ignoreras. Tidsintervall där erhållet från-datum inträffar efter till-datumet ignoreras.
 
 ## Ankomstbarn 0–17 år
 
