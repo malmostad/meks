@@ -9,40 +9,34 @@ namespace :db do
       {
         name: 'arrival_0_17',
         qualifier: 0,
-        human_name: 'Ankomstbarn 0–17 år',
-        description: ''
+        human_name: 'Ankomstbarn 0–17 år'
       },
 
       {
         name: 'assigned_0_17',
         qualifier: 1,
-        human_name: 'Anvisade barn 0–17 år',
-        description: ''
+        human_name: 'Anvisade barn 0–17 år'
       },
 
       {
         name: 'temporary_permit_0_17',
         qualifier: 2,
-        human_name: 'TUT-barn 0–17 år',
-        description: ''
+        human_name: 'TUT-barn 0–17 år'
       },
       {
         name: 'temporary_permit_18_20',
         qualifier: 3,
-        human_name: 'TUT-barn 18–20 år',
-        description: ''
+        human_name: 'TUT-barn 18–20 år'
       },
       {
         name: 'residence_permit_0_17',
         qualifier: 4,
-        human_name: 'PUT-barn 0–17 år',
-        description: ''
+        human_name: 'PUT-barn 0–17 år'
       },
       {
         name: 'residence_permit_18_20',
         qualifier: 5,
-        human_name: 'PUT-barn 18–20 år',
-        description: ''
+        human_name: 'PUT-barn 18–20 år'
       }
     ].each do |rc|
       rc.except! :rate
@@ -51,7 +45,7 @@ namespace :db do
       # rate2 = { amount: rand(1000..2000), start_date: '2017-07-01', end_date: '2017-12-31' }
       # r.rates << Rate.new(rate1)
       # r.rates << Rate.new(rate2)
-      rate = { amount: 0, start_date: '2017-01-01', end_date: '2017-12-31' }
+      rate = { amount: rand(0..2000), start_date: '2017-01-01', end_date: '2017-12-31' }
       r.rates << Rate.new(rate)
       r.save!
     end
