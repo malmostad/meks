@@ -9,7 +9,7 @@ module Statistics
       payments.map do |payment|
         days = days(payment, range)
         daily_amount = days.zero? ? 0 : payment.amount / days
-        { amount: daily_amount.round, days: days, refugee: payment.refugee }
+        { amount: daily_amount, days: days, refugee: payment.refugee }
       end
     end
 
