@@ -7,6 +7,7 @@ module Statistics
     def self.for_all_rate_categories(refugee, range = DEFAULT_DATE_RANGE)
       @_rate_categories_and_rates ||= RateCategory.includes(:rates).all
       @_rate_categories_and_rates.map do |category|
+        Rails.logger.debug "category.id: #{category.id}"
         send(
           category.qualifier[:meth],
           refugee,
@@ -218,6 +219,12 @@ module Statistics
     end
 
     def self.amount_and_days(from, to, rate, refugee)
+      Rails.logger.debug refugee.id
+      Rails.logger.debug rate.id
+      Rails.logger.debug "from: #{from}"
+      Rails.logger.debug "to: #{to}"
+      Rails.logger.debug ""
+
       days = number_of_days(from, to)
       return nil if days.zero?
 

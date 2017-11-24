@@ -76,6 +76,12 @@ class Refugee < ApplicationRecord
     placements.map(&:placement_time).inject(&:+) || 0
   end
 
+  def total_rate
+    Statistics::Rates.for_all_rate_categories(self).map do |cat|
+      cat[:amount] * cat[:days]
+    end.sum
+  end
+
   # Return a refugees placements within a give range
   # Example:
   #   refugees.first.placements_within('2017-05-01', '2017-07-01').first.home.name
