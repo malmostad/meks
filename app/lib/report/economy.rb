@@ -14,7 +14,9 @@ module Report
 
     # Returns all refugees with placements within the range
     def records
-      placements_within_range.map(&:refugee)
+      # Since each record is placement centered we get dublicates for each refugee.
+      # Select uniq refugees
+      placements_within_range.map(&:refugee).uniq
     end
 
     # Returns all placements within the range
