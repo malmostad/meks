@@ -25,6 +25,10 @@ För att beräkna hur många dagar inom valt rapportintervall som ett barn uppfy
 
 ## Ankomstbarn 0–17 år
 
+Måste:
+* inte ha datum medborgarskap
+* ha inskrivningsdatum idag eller tidigare
+
 Från-datum, det senaste av:
 * rapportintervallets från-datum
 * datumet när barnet uppnått minimiålder
@@ -41,6 +45,9 @@ Till-datum, det tidigaste av:
 
 
 ## Anvisad
+
+Måste:
+* ?? ha ”Anvisningsdatum till Malmö” idag eller tidigare
 
 Från-datum, det senaste av:
 * rapportintervallets från-datum
@@ -60,6 +67,7 @@ Måste:
 * ha datum för TUT startar
 * ha datum för TUT slutar
 * ha TUT som är längre än 12 månader
+* ha Utskriven till Malmö
 
 Från-datum, det senaste av:
 * rapportintervallets från-datum
@@ -76,6 +84,11 @@ Till-datum, det tidigaste av:
 
 
 ## PUT
+
+Måste:
+* Ha PUT
+* Ha Utskriven till Malmö
+* inte ha medborgarskap
 
 Från-datum, det senaste av:
 * rapportintervallets från-datum

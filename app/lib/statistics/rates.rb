@@ -88,6 +88,12 @@ module Statistics
 
     # Schablonkategori Anvisad
     #
+    # Måste:
+    #   anvisningsdatum till Malmö
+    #     :municipality_placement_migrationsverket_at
+    #   ?
+    #     :?
+    #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
@@ -185,7 +191,7 @@ module Statistics
     #   :residence_permit_at
     # Ha Utskriven till Malmö
     #   :checked_out_to_our_city
-    # inte ha
+    # inte ha medborgarskap
     #   :citizenship_at
     #
     # Från-datum beräknas på senaste datum av följande:
