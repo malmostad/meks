@@ -6,7 +6,7 @@ module Statistics
     # Return the number of days for each rate and the rate amount
     def self.for_all_rate_categories(refugee, range = DEFAULT_DATE_RANGE)
       @_rate_categories_and_rates ||= RateCategory.includes(:rates).all
-      x = @_rate_categories_and_rates.map do |category|
+      @_rate_categories_and_rates.map do |category|
         send(
           category.qualifier[:meth],
           refugee,
@@ -14,10 +14,6 @@ module Statistics
           range
         )
       end.flatten.compact
-      x.each do |y|
-        puts "#{y[:amount]} kr #{y[:days]} dagar"
-      end
-      x
     end
 
     def self.refugees_rates_for_category(category, range = DEFAULT_DATE_RANGE)
