@@ -85,10 +85,9 @@ module Statistics
     # Schablonkategori Anvisad
     #
     # Måste:
-    #   anvisningsdatum till Malmö
+    #   ha anvisningsdatum till Malmö, dvs. ha:
     #     :municipality_placement_migrationsverket_at
-    #   ?
-    #     :?
+    #     :in_our_municipality
     #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
@@ -106,7 +105,8 @@ module Statistics
     # Returns the number of days and rate amouts in the PUT category's rates
     def self.assigned_0_17(refugee, category, range)
       return [] if
-          refugee.date_of_birth.nil?
+          refugee.date_of_birth.nil? ||
+          refugee.municipality_placement_migrationsverket_at.nil?
 
       category.rates.map do |rate|
         from = latest_date(
