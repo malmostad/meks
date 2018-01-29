@@ -4,7 +4,7 @@ module StatisticsHelper
   # men som saknar datum för avslut
   def srf_refugees
     Refugee
-      .where(municipality_id: 135) # 135 is hard wired to "Malmö kommun, Srf"
+      .where(municipality_id: 135) # FIXME: hard coded
       .where(deregistered: nil)
   end
 
@@ -75,42 +75,40 @@ module StatisticsHelper
     Placement
       .current_placements
       .includes(:refugee, home: :type_of_housings)
-      .where(refugees: { municipality_id: 135 })
-      .where(home: { type_of_housings: { name: 'Institution' } })
+      .where(refugees: { municipality_id: 135 }) # FIXME: hard coded
+      .where(home: { type_of_housings: { id: 2 } }) # FIXME: hard coded
       .select(:refugee_id).distinct.count
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # och som har aktuell placering på boende med boendeform "Extern placering".
   def externaly_placed_refugees
-    refugees_on_type_of_housing(6)
+    refugees_on_type_of_housing(6) # FIXME: hard coded
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # och som har aktuell placering på boendeform "jourhem".
   def refugees_on_emergency_home
-    refugees_on_type_of_housing(3)
+    refugees_on_type_of_housing(3) # FIXME: hard coded
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # och som har aktuell placering på boendeform "Familjehem".
   def refugees_on_family_home
-    refugees_on_type_of_housing(1)
+    refugees_on_type_of_housing(1) # FIXME: hard coded
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
   # och som har aktuell placering på boendeform "Utsluss".
   def refugees_on_outward_home
-    refugees_on_type_of_housing(4)
+    refugees_on_type_of_housing(4) # FIXME: hard coded
   end
 
   # Samtliga barn som har Malmö Innerstaden, Malmö Väster, Malmö Norr, Malmö Öster eller Malmö Söder
   # angivet som anvisningskommun och som har aktuell placering.
   def refugees_in_malmo_sof_with_placement
     Refugee.with_current_placement
-      .includes(:municipality)
-      .where("municipalities.name like ?", "malmö%")
-      .where.not(municipalities: { name: 'Malmö kommun, Srf' })
+      .where(municipality_id: [136, 137, 138, 139, 140]) # FIXME: hard coded
       .count
   end
 
@@ -131,8 +129,8 @@ module StatisticsHelper
     Placement
       .current_placements
       .includes(:refugee, home: :type_of_housings)
-      .where(home: { type_of_housings: { id: id } }) # 4 is hard wired to type_of_housing with "boendeform Utsluss".
-      .where(refugees: { municipality_id: 135, deregistered: nil }) # 135 is hard wired to "Malmö kommun, Srf"
+      .where(home: { type_of_housings: { id: id } })
+      .where(refugees: { municipality_id: 135, deregistered: nil })  # FIXME: hard coded
       .select(:refugee_id).distinct.count
   end
 end
