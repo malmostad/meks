@@ -19,6 +19,16 @@ class Refugee < ApplicationRecord
     .order('placements.moved_in_at desc')
   }
 
+  # FIXME: hard coded
+  scope :in_our_municipality, -> {
+    where(municipality_id: [135, 136, 137, 138, 139, 140])
+  }
+
+  # FIXME: hard coded
+  scope :in_our_municipality_department, -> {
+    where(municipality_id: 135)
+  }
+
   has_many :homes, through: :placements
   accepts_nested_attributes_for :placements,
     reject_if: proc { |attr| attr[:home_id].blank? }

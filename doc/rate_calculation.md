@@ -43,17 +43,18 @@ Till-datum, det tidigaste av:
 * PUT startar
 * medborgarskap
 
-
 ## Anvisad
 
 Måste:
-* ?? ha ”Anvisningsdatum till Malmö” idag eller tidigare
+* ha ”Anvisningsdatum till Malmö” idag eller tidigare, dvs. ha:
+  - municipality_placement_migrationsverket_at
+  - in_our_municipality
 
 Från-datum, det senaste av:
 * rapportintervallets från-datum
 * datumet när barnet uppnått minimiålder
 * utskriven till Malmö
-* anvisad
+* anvisningsdatum
 
 Till-datum, det tidigaste av:
 * rapportintervallets till-datum
