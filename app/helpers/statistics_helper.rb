@@ -99,9 +99,9 @@ module StatisticsHelper
   end
 
   # Samtliga barn som har Malmö SRF angivet som anvisningskommun
-  # och som har aktuell placering på boendeform "Utsluss".
+  # och som har aktuell placering på boendeform "Utsluss". Ändrat till Stödboende.
   def refugees_on_outward_home
-    refugees_on_type_of_housing(4) # FIXME: hard coded
+    refugees_on_type_of_housing(5) # FIXME: hard coded
   end
 
   # Samtliga barn som har Malmö Innerstaden, Malmö Väster, Malmö Norr, Malmö Öster eller Malmö Söder
