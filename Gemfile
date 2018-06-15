@@ -36,6 +36,7 @@ group :development do
   # gem 'capistrano-rails', '1.3.0', require: false
   gem 'capistrano-rbenv', '2.1.3', require: false
   gem 'bullet'
+  gem 'listen'
 end
 
 group :local_test do

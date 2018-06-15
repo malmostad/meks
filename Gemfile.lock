@@ -148,6 +148,10 @@ GEM
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     kgio (2.11.2)
+    listen (3.1.5)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
+      ruby_dep (~> 1.2)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -238,6 +242,7 @@ GEM
     rspec-support (3.7.1)
     ruby-saml (1.8.0)
       nokogiri (>= 1.5.10)
+    ruby_dep (1.5.0)
     ruby_parser (3.11.0)
       sexp_processor (~> 4.9)
     rubyzip (1.2.1)
@@ -308,6 +313,7 @@ DEPENDENCIES
   faker
   haml-rails (= 1.0.0)
   highline (= 2.0.0)
+  listen
   mysql2 (= 0.5.1)
   net-ldap (= 0.16.1)
   poltergeist
