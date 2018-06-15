@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :cost do
     home { create(:home) }
     start_date { Date.today - rand(7..12).months }

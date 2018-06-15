@@ -6,7 +6,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 
 require 'rspec/rails'
 require 'haml'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'cancan/matchers'
 require 'capybara/poltergeist'
 
@@ -17,12 +17,13 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.javascript_driver = :poltergeist
+Capybara.server = :webrick
 
 # config.include for :view dosn't work in the config block
 include IntegrationMacros
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.include IntegrationMacros, type: :controller
   config.include IntegrationMacros, type: :view

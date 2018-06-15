@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :rate do
     rate_category { create(:rate_category) }
     amount { rand(500..5000) }

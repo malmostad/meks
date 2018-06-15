@@ -1,11 +1,14 @@
 sv:
 # Project specifics, See also simple_form.sv-SE.yml
-  messages:
-    post_created: "Posten skapades"
-    post_updated: "Posten uppdaterades"
-    correct_form: "Vänligen korrigera följande:"
-    new_post: "Lägg till"
-    validation_errors: "Vänligen korrigera nedanstående markerade uppgifter."
+  activerecord:
+    errors:
+      messages:
+        post_created: "Posten skapades"
+        post_updated: "Posten uppdaterades"
+        correct_form: "Vänligen korrigera följande:"
+        new_post: "Lägg till"
+        validation_errors: "Vänligen korrigera nedanstående markerade uppgifter."
+
   actions:
     new: "Lägg till"
     register: "Registrera ny"

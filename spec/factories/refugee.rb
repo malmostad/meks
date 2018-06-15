@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :refugee do
     sequence(:name) { |n| "name-#{n}" }
     draft false

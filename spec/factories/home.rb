@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :home do
     sequence(:name) { |n| "home-#{n}" }
     sequence(:phone) { |n| "040-34 10 #{n}" }

@@ -90,7 +90,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound,
               ActionController::RoutingError,
-              ActionController::UnknownController,
               ActionController::MethodNotAllowed do |exception|
 
     logger.warn "#{exception.message}"

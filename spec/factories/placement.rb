@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :placement do
     refugee { create(:refugee) }
     home { create(:home) }
