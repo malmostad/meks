@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2017_10_01_142446) do
+ActiveRecord::Schema.define(version: 2018_06_15_103802) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -182,13 +182,13 @@ ActiveRecord::Schema.define(version: 2017_10_01_142446) do
 
   create_table "payments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "refugee_id"
-    t.string "diarie"
     t.date "period_start"
     t.date "period_end"
     t.decimal "amount", precision: 8, scale: 2
     t.integer "payment_import_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "comment"
     t.index ["payment_import_id"], name: "index_payments_on_payment_import_id"
     t.index ["refugee_id"], name: "index_payments_on_refugee_id"
   end
