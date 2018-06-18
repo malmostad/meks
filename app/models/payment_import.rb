@@ -1,4 +1,12 @@
-# All pre-saving parsing errors are added to errors[:parse]
+# Parsing a tab or semicolon separated csv file with on payment on each row.
+# 4 mandatory and 1 optional field per row:
+#   dossier_number, e.g. 123456
+#   period_start, e.g. 20180618 or 2018-06-18
+#   period_end, as period_start
+#   amount, positive or negative float or integer as text, Swedish format -123,12, 321,54 or 789
+#   comment, optional text
+#
+# All pre-saving parsing errors are added to errors[:parsing]
 # In the save phase, standard validations are logged
 class PaymentImport < ApplicationRecord
   MINIMUM_FIELDS = 4
@@ -13,11 +21,11 @@ class PaymentImport < ApplicationRecord
   validate :pre_validation_errors
 
   after_rollback do
-    # Log standard validation messages when pre-validation errors[:parse] is empty
-    if errors[:parse].empty?
+    # Log standard validation messages when pre-validation errors[:parsing] is empty
+    if errors[:parsing].empty?
       error_id = Time.now.to_i
       logger.error "[ERROR_ID #{error_id}] An error occured when #{user.try(:username)} imported a payment file. #{errors.messages}"
-      errors[:parse] << "Ett oväntat fel inträffade och har loggats. [Id: #{error_id}]"
+      errors[:parsing] << "Ett oväntat fel inträffade och har loggats. [Id: #{error_id}]"
     end
   end
 
@@ -29,7 +37,7 @@ class PaymentImport < ApplicationRecord
       self.raw = File.open(file.path, 'r:bom|utf-8') { |f| f.read.gsub(/\r\n*/, "\n") }
     rescue => e
       logger.error "File upload error: #{e} #{file.content_type} #{file.original_filename}"
-      parse_error 'Filformatet gick inte att läsa'
+      parsing_error 'Filformatet gick inte att läsa'
     else
       self.content_type = file.content_type
       self.original_filename = file.original_filename
@@ -45,11 +53,11 @@ class PaymentImport < ApplicationRecord
   def create_payments
     valid_payments = parse_file
 
+    logger.debug valid_payments
+
     valid_payments.each do |fields|
-      payments << Payment.new(
-        { refugee_id: refugee_id_by_dossier_number(fields) }
-        .merge(fields.except(:dossier_number, :row_number))
-      )
+      logger.debug fields.except(:dossier_number, :row_number)
+      payments << Payment.new(fields.except(:dossier_number, :row_number))
     end
   end
 
@@ -65,13 +73,19 @@ class PaymentImport < ApplicationRecord
 
   def parse_row(row, row_number)
     fields = extract_fields(row, row_number) || return
-    dates = extract_dates(fields[1], row_number) || return
 
-    { dossier_number: fields[0],
-      period_start: dates[:start],
-      period_end: dates[:end],
-      amount_as_string: fields[2],
-      diarie: fields[3],
+    refugee        = refugee_by_dossier_number(fields[0], row_number) || return
+    period_start   = parse_date(fields[1], row_number)                || return
+    period_end     = parse_date(fields[2], row_number)                || return
+    amount         = parse_amount(fields[3], row_number)              || return
+    comment        = fields[4]
+
+    { refugee_id: refugee.id,
+      dossier_number: refugee.dossier_number,
+      period_start: period_start,
+      period_end: period_end,
+      amount: amount,
+      comment: comment,
       row_number: row_number }
   end
 
@@ -87,47 +101,63 @@ class PaymentImport < ApplicationRecord
 
     # Too few fields
     if fields.size < MINIMUM_FIELDS
-      parse_error "Raden innehåller för få fält. [rad #{row_number}]"
+      parsing_error "Raden innehåller för få fält. [rad #{row_number}]"
       return
     end
     fields
   end
 
-  # Split the date range field
-  def extract_dates(str, row_number)
-    if str.match?(/^\d{4}-\d{2}-\d{2}--\d{4}-\d{2}-\d{2}$/)
-      d1, d2 = str.split(/\s*--\s*/)
-    else
-      parse_error "Perioden #{str} har inte korrekt format [rad #{row_number}]"
+  def refugee_by_dossier_number(str, row_number)
+    dossier_number = str.gsub(/\D/, '')
+    refugee = Refugee.where(dossier_number: dossier_number).first
+    if refugee.blank?
+      parsing_error "Inget barn hittades med dossiernumret #{dossier_number} [rad #{fields[:row_number]}]"
+      return
+    # Skip refugees not belonging to this municipality
+    elsif refugee.municipality_id != 135 # FIXME: hard coded
       return
     end
-    { start: d1, end: d2 }
+    refugee
   end
 
-  def refugee_id_by_dossier_number(fields)
-    r = Refugee.where(dossier_number: fields[:dossier_number].strip).first
-    if r.blank?
-      parse_error "Inget barn hittades med dossiernumret #{fields[:dossier_number][0...25]} [rad #{fields[:row_number]}]"
-    else
-      r.id
+  # Assumes the format YYYYMMDD and other characters like spaces and hyphens that will be removed
+  def parse_date(str, row_number)
+    str.gsub!(/\D/, '')
+    begin
+      str.to_date
+    rescue
+      parsing_error "Datumet #{str} har inte korrekt format (ÅÅÅÅMMDD) [rad #{row_number}]"
+      return
     end
+  end
+
+  def parse_amount(str, row_number)
+    # Cleanup
+    amount = str.gsub(/[^\d\-+,\.]/, '')
+    # Change from Swedish to US float
+    amount.gsub!(/,/, '.')
+    unless amount.match(/\A[+-]?[\d\.]+\z/)
+      parsing_error "Beloppet #{str} kunde inte tolkas [rad #{row_number}]"
+      return
+    end
+    amount.to_f
   end
 
   def pre_validation_errors
-    number_of_errors = @parse_errors.try(:size) || 0
+    number_of_errors = @parsing_errors.try(:size) || 0
 
     if number_of_errors > 15
-      @parse_errors = @parse_errors[0...15]
-      @parse_errors << "... ytterligare #{number_of_errors - 15} fel hittades."
+      @parsing_errors = @parsing_errors[0...15]
+      @parsing_errors << "... ytterligare #{number_of_errors - 15} fel hittades."
     end
 
-    errors[:parse] << @parse_errors
-    errors[:parse].flatten!
-    errors[:parse].reject!(&:nil?)
+    errors[:parsing] << @parsing_errors
+    errors[:parsing].flatten!
+    errors[:parsing].reject!(&:nil?)
   end
 
-  def parse_error(msg)
-    @parse_errors ||= []
-    @parse_errors << msg
+  def parsing_error(msg)
+    @parsing_errors ||= []
+    @parsing_errors << msg
   end
 end

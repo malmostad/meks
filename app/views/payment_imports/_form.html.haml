@@ -4,17 +4,20 @@
       .warning
         %p= 'Utbetalningarna kunde inte sparas. Följande fel upptäcktes:'
         %ul
-          - @payment_import.errors.messages[:parse].each do |msg|
+          - @payment_import.errors.messages[:parsing].each do |msg|
             %li= msg
 
     .help-block.file_instructions
       %p= 'Välj ”Spara som...” i Excel och välj filformatet CSV med semikolon- eller tab-separerade fält.'
+      %p= 'MEKS tar bort allt utom siffror för fälten dossiernummer och datum.'
+      %p= 'Barn som inte tillhör "Malmö kommun, Srf" (id 135) ignoreras.'
       %p= 'Använd inga kolumnrubriker och använd följande kolumnordning:'
       %ol
-        %li Dossiernummer – måste matcha ett befintligt dossiernummer exakt
-        %li Period – exakt formaterat som 2018-10-01--2018-12-31, dvs. med två bindestreck som avskiljare
-        %li Utbetalt belopp
-        %li Diarienummer
+        %li Dossiernummer: måste matcha ett befintligt dossiernummer exakt
+        %li Från-datum: format ÅÅÅÅMMDD (eller ÅÅÅÅ-MM-DD, ÅÅÅÅ MM DD)
+        %li Till-datum: format som från-datum
+        %li Utbetalt belopp: svenskt hel- eller decimal-tal
+        %li Kommentar (frivilligt)
       %p= 'Övriga kolumner ignoreras.'
 
     = f.input :file, as: :file
