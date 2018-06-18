@@ -111,7 +111,7 @@ class PaymentImport < ApplicationRecord
     dossier_number = str.gsub(/\D/, '')
     refugee = Refugee.where(dossier_number: dossier_number).first
     if refugee.blank?
-      parsing_error "Inget barn hittades med dossiernumret #{dossier_number} [rad #{fields[:row_number]}]"
+      parsing_error "Inget barn hittades med dossiernumret #{dossier_number} [rad #{row_number}]"
       return
     # Skip refugees not belonging to this municipality
     elsif refugee.municipality_id != 135 # FIXME: hard coded
@@ -122,9 +122,9 @@ class PaymentImport < ApplicationRecord
 
   # Assumes the format YYYYMMDD and other characters like spaces and hyphens that will be removed
   def parse_date(str, row_number)
-    str.gsub!(/\D/, '')
+    date = str.gsub(/\D/, '')
     begin
-      str.to_date
+      date.to_date
     rescue
       parsing_error "Datumet #{str} har inte korrekt format (ÅÅÅÅMMDD) [rad #{row_number}]"
       return
