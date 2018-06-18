@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 2018_06_15_103802) do
     t.integer "payment_import_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "comment"
+    t.text "comment"
     t.index ["payment_import_id"], name: "index_payments_on_payment_import_id"
     t.index ["refugee_id"], name: "index_payments_on_refugee_id"
   end
