@@ -55,8 +55,7 @@ class Refugee < ApplicationRecord
   has_many :inverse_relationships, class_name: 'Relationship', foreign_key: 'related_id', dependent: :destroy
   has_many :inverse_relateds, through: :inverse_relationships, source: :refugee
 
-  validates_uniqueness_of :dossier_number, case_sensitive: false, allow_blank: true
-  validates :dossier_number, format: { with: /\A\d+\z/, message: "endast siffror" }
+  validates :dossier_number, uniqueness: true, allow_blank: true, format: { with: /\A\d+\z/, message: "endast siffror" }
 
   validates_presence_of :name
   validates_length_of :name, maximum: 191
