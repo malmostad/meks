@@ -28,6 +28,7 @@ module Report
 
     def create!
       axlsx     = Axlsx::Package.new
+      axlsx.use_shared_strings = true
       @workbook = axlsx.workbook
       @sheet    = @workbook.add_worksheet(name: @sheet_name)
       @style    = Style.new(axlsx)

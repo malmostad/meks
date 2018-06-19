@@ -13,6 +13,15 @@ module Statistics
       end
     end
 
+    # Returns comments for payments within range
+    def self.comments(payments, range = DEFAULT_DATE_RANGE)
+      payments.map do |payment|
+        if days(payment, range).positive?
+          payment.comment
+        end
+      end
+    end
+
     # Returns the number of days the payment spans over within the range
     def self.days(payment, range)
       from = latest_date(payment.period_start, range[:from])

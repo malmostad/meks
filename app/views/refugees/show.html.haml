@@ -71,7 +71,7 @@
               %th Dagar
               %th Belopp
               %th Belopp per dag
-              %th Diarienummer
+              %th Kommentar
 
           %tbody
             - @refugee.payments.each do |payment|
@@ -82,4 +82,4 @@
                 %td= payment.days
                 %td= "#{number_to_currency(payment.amount, delimiter: ' ')}"
                 %td= "#{number_to_currency(payment.per_day, delimiter: ' ')}"
-                %td= payment.diarie
+                %td= payment.comment

@@ -156,6 +156,10 @@ module Report
           )
         },
         {
+          heading: 'Kommentarer till utbetalda schabloner',
+          query: Statistics::Payment.comments(refugee.payments, from: @from, to: @to).compact.join("\r\x0D\x0A")
+        },
+        {
           heading: 'Ålder',
           query: refugee.age,
           type: :integer
