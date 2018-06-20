@@ -41,11 +41,7 @@ namespace :db do
     ].each do |rc|
       rc.except! :rate
       r = RateCategory.create!(rc)
-      # rate1 = { amount: rand(1000..2000), start_date: '2017-01-01', end_date: '2017-06-30' }
-      # rate2 = { amount: rand(1000..2000), start_date: '2017-07-01', end_date: '2017-12-31' }
-      # r.rates << Rate.new(rate1)
-      # r.rates << Rate.new(rate2)
-      rate = { amount: rand(0..2000), start_date: '2017-01-01', end_date: '2017-12-31' }
+      rate = { amount: rand(1000..2000), start_date: Date.today.beginning_of_year, end_date: Date.today.end_of_year }
       r.rates << Rate.new(rate)
       r.save!
     end
