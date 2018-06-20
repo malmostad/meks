@@ -13,7 +13,7 @@ class Payment < ApplicationRecord
   end
 
   def days
-    (period_end - period_start).to_i
+    (period_end - period_start).to_i + 1
   end
 
   def per_day

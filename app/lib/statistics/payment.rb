@@ -8,8 +8,7 @@ module Statistics
     def self.amount_and_days(payments, range = DEFAULT_DATE_RANGE)
       payments.map do |payment|
         days = days(payment, range)
-        daily_amount = days.zero? ? 0 : payment.amount / days
-        { amount: daily_amount, days: days, refugee: payment.refugee }
+        { amount: payment.per_day, days: days, refugee: payment.refugee }
       end
     end
 
