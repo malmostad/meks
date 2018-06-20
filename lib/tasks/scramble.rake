@@ -37,7 +37,7 @@ namespace :scramble do
     home_names.flatten!.uniq!
 
     Home.find_each.with_index do |home, index|
-      home.name = home_names[index]
+      home.name = "#{home_names[index]}-#{index}"
       home.phone = ''
       home.fax = ''
       home.address = ''
