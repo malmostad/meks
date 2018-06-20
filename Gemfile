@@ -32,9 +32,10 @@ gem 'bcrypt', '~> 3.1.12'
 gem 'pry-rails'
 
 group :development do
-  # gem 'capistrano', '3.9.1', require: false
-  # gem 'capistrano-rails', '1.3.0', require: false
+  gem 'capistrano', '3.11.0', require: false
+  gem 'capistrano-rails', '1.4.0', require: false
   gem 'capistrano-rbenv', '2.1.3', require: false
+  gem 'capistrano-bundler', '1.3.0', require: false
   gem 'bullet'
   gem 'listen'
 end
