@@ -6,7 +6,7 @@ class RateCategory < ApplicationRecord
   #
   # Run:
   # rake db:seed_rate_categories
-  # to create the rate categories
+  # to create the rate categories with dummy rates
   enum qualifier: [
     { meth: :arrival_0_17,     min_age: 0,  max_age: 17 },
     { meth: :assigned_0_17,    min_age: 0,  max_age: 17 },
