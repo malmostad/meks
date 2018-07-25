@@ -108,6 +108,16 @@ class Refugee < ApplicationRecord
     end.compact
   end
 
+  # municipality_placement_migrationsverket_at - day or nil
+  def before_municipality_placement_migrationsverket_at
+    municipality_placement_migrationsverket_at - 1.day if municipality_placement_migrationsverket_at
+  end
+
+  # deregistered - day or nil
+  def before_deregistered
+    deregistered - 1.day if deregistered
+  end
+
   # Return refugees with placements within a give range
   # Example:
   #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')

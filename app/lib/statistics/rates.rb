@@ -47,9 +47,9 @@ module Statistics
     # Till-datum beräknas på tidigaste datum av följande:
     #    maxålder + 1 år - 1 dag
     #      :date_of_birth
-    #  avslutsdatum
+    #  avslutsdatum - 1
     #      :deregistered
-    #  anvisningsdatum
+    #  anvisningsdatum - 1
     #      :municipality_placement_migrationsverket_at
     #  TUT startar
     #      :temporary_permit_starts_at
@@ -71,8 +71,8 @@ module Statistics
 
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
-          refugee.deregistered,
-          refugee.municipality_placement_migrationsverket_at,
+          refugee.before_deregistered,
+          refugee.before_municipality_placement_migrationsverket_at,
           refugee.temporary_permit_starts_at,
           refugee.residence_permit_at,
           refugee.citizenship_at
@@ -100,7 +100,7 @@ module Statistics
     # Till-datum beräknas på tidigaste datum av följande:
     #   maxålder + 1 år - 1 dag
     #     :date_of_birth
-    #   avslutad
+    #   avslutad - 1
     #     :deregistered
     # Returns the number of days and rate amouts in the PUT category's rates
     def self.assigned_0_17(refugee, category, range)
@@ -117,7 +117,7 @@ module Statistics
 
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
-          refugee.deregistered
+          refugee.before_deregistered
         )
 
         amount_and_days(from, to, rate, refugee)
@@ -151,7 +151,7 @@ module Statistics
     #     :temporary_permit_ends_at
     #   datum för PUT
     #     :residence_permit_at
-    #   avslutsdatum
+    #   avslutsdatum - 1
     #     :deregistered
     # Return the number of days for each rate and the rate amount
     def self.temporary_permit(refugee, category, range)
@@ -173,7 +173,7 @@ module Statistics
           *shared_to_attr(refugee, category, range, rate),
           refugee.temporary_permit_ends_at,
           refugee.residence_permit_at,
-          refugee.deregistered
+          refugee.before_deregistered
         )
 
         amount_and_days(from, to, rate, refugee)
@@ -202,7 +202,7 @@ module Statistics
     #   maxålder + 1 år - 1 dag
     #   medborgarskap
     #     :citizenship_at
-    #   avslutsdatum
+    #   avslutsdatum - 1
     #     :deregistered
     # Return the number of days for each rate and the rate amount
     def self.residence_permit(refugee, category, range)
@@ -222,7 +222,7 @@ module Statistics
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
           refugee.citizenship_at,
-          refugee.deregistered
+          refugee.before_deregistered
         )
 
         amount_and_days(from, to, rate, refugee)
