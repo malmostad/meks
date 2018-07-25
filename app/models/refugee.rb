@@ -1,4 +1,9 @@
 class Refugee < ApplicationRecord
+  # FIXME: hard coded
+  OUR_MUNICIPALITY_DEPARTMENT_ID = 135.freeze
+  # FIXME: hard coded
+  OUR_MUNICIPALITY_IDS = [OUR_MUNICIPALITY_DEPARTMENT_ID, 136, 137, 138, 139, 140].freeze
+
   include RefugeeIndex
   include RefugeeSearch
 
@@ -19,14 +24,12 @@ class Refugee < ApplicationRecord
     .order('placements.moved_in_at desc')
   }
 
-  # FIXME: hard coded
   scope :in_our_municipality, -> {
-    where(municipality_id: [135, 136, 137, 138, 139, 140])
+    where(municipality_id: OUR_MUNICIPALITY_IDS)
   }
 
-  # FIXME: hard coded
   scope :in_our_municipality_department, -> {
-    where(municipality_id: 135)
+    where(municipality_id: OUR_MUNICIPALITY_DEPARTMENT_ID)
   }
 
   has_many :homes, through: :placements
@@ -116,6 +119,10 @@ class Refugee < ApplicationRecord
   # deregistered - day or nil
   def before_deregistered
     deregistered - 1.day if deregistered
+  end
+
+  def in_our_municipality?
+    OUR_MUNICIPALITY_IDS.include? municipality_id
   end
 
   # Return refugees with placements within a give range
