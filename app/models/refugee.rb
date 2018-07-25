@@ -125,6 +125,10 @@ class Refugee < ApplicationRecord
     OUR_MUNICIPALITY_IDS.include? municipality_id
   end
 
+  def in_our_municipality_department?
+    OUR_MUNICIPALITY_DEPARTMENT_ID == municipality_id
+  end
+
   # Return refugees with placements within a give range
   # Example:
   #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')
