@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '5.2.0'
 gem 'haml-rails', '1.0.0'
 gem 'sass-rails', '5.0.7'
-gem 'uglifier', '4.1.14'
+gem 'uglifier', '4.1.16'
 gem 'coffee-rails', '4.2.2'
 
 gem 'simple_form', '4.0.1'
@@ -55,5 +55,5 @@ group :development, :test do
 end
 
 group :test, :production do
-  gem 'unicorn', '5.4.0'
+  gem 'unicorn', '5.4.1'
 end
