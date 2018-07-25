@@ -87,36 +87,37 @@ module Statistics
     # Måste:
     #   ha anvisningsdatum till Malmö, dvs. ha:
     #     :municipality_placement_migrationsverket_at
-    #     :in_our_municipality
+    #     :in_our_municipality?
     #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
-    #   utskriven till Malmö
-    #     :checked_out_to_our_city
     #   anvisad
     #     :municipality_placement_migrationsverket_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
     #   maxålder + 1 år - 1 dag
     #     :date_of_birth
+    #   utskriven till Malmö
+    #     :checked_out_to_our_city
     #   avslutad - 1
     #     :deregistered
     # Returns the number of days and rate amouts in the PUT category's rates
     def self.assigned_0_17(refugee, category, range)
       return [] if
           refugee.date_of_birth.nil? ||
-          refugee.municipality_placement_migrationsverket_at.nil?
+          refugee.municipality_placement_migrationsverket_at.nil? ||
+          !refugee.in_our_municipality?
 
       category.rates.map do |rate|
         from = latest_date(
           *shared_from_attr(refugee, category, range, rate),
-          refugee.checked_out_to_our_city,
           refugee.municipality_placement_migrationsverket_at
         )
 
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
+          refugee.checked_out_to_our_city,
           refugee.before_deregistered
         )
 
@@ -159,7 +160,7 @@ module Statistics
           refugee.date_of_birth.nil? ||
           refugee.temporary_permit_starts_at.nil? ||
           refugee.temporary_permit_ends_at.nil? ||
-          refugee.checked_out_to_our_city ||
+          refugee.checked_out_to_our_city.nil? ||
           refugee.temporary_permit_ends_at - refugee.temporary_permit_starts_at < 365
 
       category.rates.map do |rate|
