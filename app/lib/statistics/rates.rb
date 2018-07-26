@@ -47,9 +47,9 @@ module Statistics
     # Till-datum beräknas på tidigaste datum av följande:
     #    maxålder + 1 år - 1 dag
     #      :date_of_birth
-    #  avslutsdatum - 1
+    #  avslutsdatum - 1 dag
     #      :deregistered
-    #  anvisningsdatum - 1
+    #  anvisningsdatum - 1 dag
     #      :municipality_placement_migrationsverket_at
     #  TUT startar
     #      :temporary_permit_starts_at
@@ -86,38 +86,40 @@ module Statistics
     #
     # Måste:
     #   ha anvisningsdatum till Malmö, dvs. ha:
-    #     :municipality_placement_migrationsverket_at
-    #     :in_our_municipality?
+    #     Utskriven till Malmö
+    #       :municipality_placement_migrationsverket_at
+    #     Malmö kommun, SRF
+    #       :in_our_municipality_department?
     #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
+    #   utskriven till Malmö
+    #     :checked_out_to_our_city
     #   anvisad
     #     :municipality_placement_migrationsverket_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
     #   maxålder + 1 år - 1 dag
     #     :date_of_birth
-    #   utskriven till Malmö
-    #     :checked_out_to_our_city
-    #   avslutad - 1
+    #   avslutad - 1 dag
     #     :deregistered
     # Returns the number of days and rate amouts in the PUT category's rates
     def self.assigned_0_17(refugee, category, range)
       return [] if
           refugee.date_of_birth.nil? ||
           refugee.municipality_placement_migrationsverket_at.nil? ||
-          !refugee.in_our_municipality?
+          !refugee.in_our_municipality_department?
 
       category.rates.map do |rate|
         from = latest_date(
           *shared_from_attr(refugee, category, range, rate),
+          refugee.checked_out_to_our_city,
           refugee.municipality_placement_migrationsverket_at
         )
 
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
-          refugee.checked_out_to_our_city,
           refugee.before_deregistered
         )
 
