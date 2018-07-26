@@ -142,8 +142,8 @@ module Statistics
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
-    #   utskriven till Malmö
-    #     :checked_out_to_our_city
+    #   utskriven till Malmö - 1 dag
+    #     :before_checked_out_to_our_city
     #   startdatum för TUT
     #     :temporary_permit_starts_at
     #
@@ -168,7 +168,7 @@ module Statistics
       category.rates.map do |rate|
         from = latest_date(
           *shared_from_attr(refugee, category, range, rate),
-          refugee.checked_out_to_our_city,
+          refugee.before_checked_out_to_our_city,
           refugee.temporary_permit_starts_at
         )
 
@@ -188,8 +188,8 @@ module Statistics
     # Måste:
     # Ha PUT
     #   :residence_permit_at
-    # Ha Utskriven till Malmö
-    #   :checked_out_to_our_city
+    # Ha Utskriven till Malmö - 1 dag
+    #   :before_checked_out_to_our_city
     # inte ha medborgarskap
     #   :citizenship_at
     #
@@ -219,7 +219,7 @@ module Statistics
         from = latest_date(
           *shared_from_attr(refugee, category, range, rate),
           refugee.residence_permit_at,
-          refugee.checked_out_to_our_city
+          refugee.before_checked_out_to_our_city
         )
 
         to = earliest_date(
