@@ -94,14 +94,14 @@ module Statistics
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
-    #   utskriven till Malmö
-    #     :checked_out_to_our_city
     #   anvisad
     #     :municipality_placement_migrationsverket_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
     #   maxålder + 1 år - 1 dag
     #     :date_of_birth
+    #   utskriven till Malmö
+    #     :checked_out_to_our_city
     #   avslutad - 1 dag
     #     :deregistered
     # Returns the number of days and rate amouts in the PUT category's rates
@@ -114,12 +114,12 @@ module Statistics
       category.rates.map do |rate|
         from = latest_date(
           *shared_from_attr(refugee, category, range, rate),
-          refugee.checked_out_to_our_city,
           refugee.municipality_placement_migrationsverket_at
         )
 
         to = earliest_date(
           *shared_to_attr(refugee, category, range, rate),
+          refugee.checked_out_to_our_city,
           refugee.before_deregistered
         )
 
