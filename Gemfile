@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.0'
+gem 'rails', '5.2.1'
 gem 'haml-rails', '1.0.0'
 gem 'sass-rails', '5.0.7'
-gem 'uglifier', '4.1.16'
+gem 'uglifier', '4.1.19'
 gem 'coffee-rails', '4.2.2'
 
 gem 'simple_form', '4.0.1'
@@ -14,9 +14,10 @@ gem 'elasticsearch-rails', '5.1.0'
 gem 'daemons', '1.2.6'
 
 gem 'net-ldap', '0.16.1'
-gem 'cancancan', '2.2.0'
-gem 'ruby-saml', '1.8.0'
+gem 'cancancan', '2.3.0'
+gem 'ruby-saml', '1.9.0'
 
+gem 'rubyzip', '~> 1.2.2'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '05f3412'
 gem 'delayed_job_active_record', '4.1.3'
 
@@ -34,7 +35,7 @@ gem 'pry-rails'
 group :development do
   gem 'capistrano', '3.11.0', require: false
   gem 'capistrano-rails', '1.4.0', require: false
-  gem 'capistrano-rbenv', '2.1.3', require: false
+  gem 'capistrano-rbenv', '2.1.4', require: false
   gem 'capistrano-bundler', '1.3.0', require: false
   gem 'bullet'
   gem 'listen'
