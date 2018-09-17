@@ -26,7 +26,6 @@ module Statistics
     # - ska inte ha status avslutat
     def self.in_arrival
       type1 = Refugee
-              .includes(placements: { home: :costs })
               .where.not(registered: nil)
               .where(deregistered: nil)
               .where(municipality: nil)
@@ -37,7 +36,6 @@ module Statistics
               .where(sof_placement: false)
 
       type2 = Refugee
-              .includes(placements: { home: :costs })
               .where.not(registered: nil)
               .where.not(municipality: nil)
               .where('municipality_placement_migrationsverket_at > ?', Date.today)
