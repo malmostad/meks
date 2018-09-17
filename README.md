@@ -84,10 +84,10 @@ $ bundle exec cap staging deploy
 $ bundle exec cap production deploy
 ```
 
-The worker for delayed jobs is watched by Monit. I must be restarted using sudo after deployment:
+The worker for delayed job that is used for gererating reports is watched by Monit. It must be restarted using sudo after deployment:
 
 ```shell
-$ sudo monit restart delayed_jo
+$ sudo monit restart delayed_job
 ```
 
 ## Testing
