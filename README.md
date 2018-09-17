@@ -6,7 +6,7 @@ MEKS is a management system for unaccompanied children, their asylum status, log
 * nginx (for production)
 * Ruby 2.x
 * MySQL >= 5.5
-* ElasticSearch 2.x
+* ElasticSearch 5.x
 * Memcached
 * [Global Assets](https://github.com/malmostad/global-assets).
 
