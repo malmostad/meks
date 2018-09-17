@@ -4,7 +4,7 @@ MEKS is a management system for unaccompanied children, their asylum status, log
 ## Dependencies
 
 * nginx (for production)
-* Ruby 2.x
+* Ruby 2.5
 * MySQL >= 5.5
 * ElasticSearch 5.x
 * Memcached
@@ -82,6 +82,12 @@ In the project root, run one of the following commands including the appropriate
 ```shell
 $ bundle exec cap staging deploy
 $ bundle exec cap production deploy
+```
+
+The worker for delayed jobs is watched by Monit. I must be restarted using sudo after deployment:
+
+```shell
+$ sudo monit restart delayed_jo
 ```
 
 ## Testing
