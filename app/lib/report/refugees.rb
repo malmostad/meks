@@ -1,6 +1,10 @@
 module Report
   class Refugees < Workbooks
     def initialize(options = {})
+      # Used for sheet name
+      options[:from] = options[:registered_from]
+      options[:to] = options[:registered_to]
+
       super(options)
       @registered_from = options[:registered_from]
       @registered_to = options[:registered_to]
@@ -19,26 +23,26 @@ module Report
         current_placements: [home: :type_of_housings]
       )
 
-      if @refugees_registered_from.present? && @refugees_registered_to.present?
-        refugees = refugees.where(registered: @refugees_registered_from..@refugees_registered_to)
+      if @registered_from.present? && @registered_to.present?
+        refugees = refugees.where(registered: @registered_from..@registered_to)
       end
 
-      query = [(@refugees_born_after..@refugees_born_before)]
-      query << nil if @refugees_include_without_date_of_birth
+      query = [(@born_after..@born_before)]
+      query << nil if @include_without_date_of_birth
 
-      if @refugees_born_after.present? && @refugees_born_before.present?
+      if @born_after.present? && @born_before.present?
         refugees = refugees.where(date_of_birth: query)
       end
 
-      if @refugees_asylum.present?
+      if @asylum.present?
         query = []
-        if @refugees_asylum.include? 'put'
+        if @asylum.include? 'put'
           query << 'refugees.residence_permit_at is not null'
         end
-        if @refugees_asylum.include? 'tut'
+        if @asylum.include? 'tut'
           query << 'refugees.temporary_permit_starts_at is not null'
         end
-        if @refugees_asylum.include? 'municipality'
+        if @asylum.include? 'municipality'
           query << 'refugees.municipality_id is not null'
         end
         refugees = refugees.where(query.join(' or '))
