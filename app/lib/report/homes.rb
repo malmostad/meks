@@ -4,6 +4,7 @@ module Report
       super(options)
       @owner_type = options[:owner_type]
       @free_seats = options[:free_seats]
+      @sheet_name = 'Boenden'
     end
 
     def records
