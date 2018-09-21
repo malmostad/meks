@@ -100,8 +100,6 @@ class ReportsController < ApplicationController
       GenerateReportJob::Placements.perform_later(report_params.to_h, file_id)
     when 'refugees'
       GenerateReportJob::Refugees.perform_later(report_params.to_h, file_id)
-    when 'economy_per_refugee_status'
-      GenerateReportJob::EconomyPerRefugeeStatus.perform_later(report_params.to_h, file_id)
     end
   end
 
