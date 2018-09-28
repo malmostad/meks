@@ -52,14 +52,13 @@
       = render 'placements'
       = render 'relateds'
 
-
       %h2.group-title Ekonomi
-      = show_attribute('Budgeterad dygnskostnad', number_to_currency(Statistics::Cost.for_placements_and_home(@refugee.placements), delimiter: ' '))
+      = show_attribute('Total placeringskostnad', number_to_currency(Statistics::Cost.for_placements_and_home(@refugee.placements), delimiter: ' '))
       = show_attribute('Förväntad schablonkonstnad', number_to_currency(@refugee.total_rate.to_s, delimiter: ' '))
       = show_attribute('Total utbetald schablon',    number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' '))
 
-      = show_attribute('Utbetalda schabloner', '')
-      - if @refugee.blank?
+      %h2.group-title Utbetalda schabloner
+      - if @refugee.payments.blank?
         %p Inga schabloner har betalts ut
       - else
         %table.full.wrap
