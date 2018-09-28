@@ -213,7 +213,7 @@ module Statistics
         refugee.date_of_birth.nil? ||
         refugee.residence_permit_at.nil? ||
         refugee.checked_out_to_our_city.nil? ||
-        refugee.citizenship_at.nil?
+        refugee.citizenship_at.present?
 
       category.rates.map do |rate|
         from = latest_date(
