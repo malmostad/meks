@@ -15,8 +15,7 @@ class Ability
     elsif user.has_role? :writer
       can :manage, Refugee
       cannot :destroy, Refugee
-      can :manage, Home
-      cannot :destroy, Home
+      can :read, Home
       can :manage, User
       can :manage, Relationship
       can :manage, Placement
