@@ -3,7 +3,7 @@
   %h1.box-title= h1
   %table.full.wrap
     %thead
-      - if can? :manage, Refugee
+      - if can? :manage, Home
         %tr
           %td{ colspan: 10 }
             .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"
