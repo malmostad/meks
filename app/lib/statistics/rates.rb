@@ -88,8 +88,8 @@ module Statistics
     #   ha anvisningsdatum till Malmö, dvs. ha:
     #     Utskriven till Malmö
     #       :municipality_placement_migrationsverket_at
-    #     Malmö kommun, SRF
-    #       :in_our_municipality_department?
+    #     Malmö kommun (alla delar)
+    #       :in_our_municipality?
     #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
@@ -109,7 +109,7 @@ module Statistics
       return [] if
           refugee.date_of_birth.nil? ||
           refugee.municipality_placement_migrationsverket_at.nil? ||
-          !refugee.in_our_municipality_department?
+          !refugee.in_our_municipality?
 
       category.rates.map do |rate|
         from = latest_date(
