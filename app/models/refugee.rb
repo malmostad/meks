@@ -1,6 +1,6 @@
 class Refugee < ApplicationRecord
   # FIXME: hard coded
-  OUR_MUNICIPALITY_DEPARTMENT_ID = 135.freeze
+  OUR_MUNICIPALITY_DEPARTMENT_ID = 135
   # FIXME: hard coded
   OUR_MUNICIPALITY_IDS = [OUR_MUNICIPALITY_DEPARTMENT_ID, 136, 137, 138, 139, 140].freeze
 

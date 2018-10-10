@@ -7,12 +7,12 @@ RSpec.describe User, type: :ability do
     let(:user) { build(:user, role: 'writer') }
 
     it { should be_able_to(:manage, Refugee.new) }
-    it { should be_able_to(:manage, Home.new) }
     it { should be_able_to(:manage, Placement.new) }
     it { should be_able_to(:manage, Relationship.new) }
     it { should be_able_to(:generate, :reports) }
     it { should be_able_to(:view, :statistics) }
 
+    it { should_not be_able_to(:manage, Home.new) }
     it { should_not be_able_to(:manage, Country.new) }
     it { should_not be_able_to(:manage, Gender.new) }
     it { should_not be_able_to(:manage, Language.new) }

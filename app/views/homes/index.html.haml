@@ -37,7 +37,7 @@
           %td= home.current_cost? ? 'Ja' : 'Nej'
           %td= home.active? ? 'Ja' : 'Nej'
 
-      - if can? :manage, Refugee
+      - if can? :manage, Home
         %tr
           %td{ colspan: 10 }
             .actions= link_to t('actions.new'), new_home_path, class: "btn btn-primary"

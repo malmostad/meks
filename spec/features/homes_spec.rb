@@ -47,15 +47,5 @@ RSpec.describe "Homes", type: :feature do
     before(:each) do
       login_user(:writer)
     end
-
-    scenario "adds a home" do
-      visit "/homes"
-      first(".btn-primary", text: "Lägg till").click
-      fill_in "home_name", with: "Foo"
-      click_button "Spara"
-
-      expect(current_path).to eq home_path(Home.last)
-      expect(page).to have_selector(".notice", text: "skapades")
-    end
   end
 end
