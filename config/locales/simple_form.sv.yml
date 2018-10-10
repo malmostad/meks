@@ -129,7 +129,7 @@ sv:
         period_end: Slutdatum
 
       extra_contribution:
-        extra_contribution_type: Insatstyp
+        extra_contribution_type: Insatsform
         period_start: Startdatum
         period_end: Slutdatum
         fee: Arvode

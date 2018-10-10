@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :target_groups, except: :show
   resources :type_of_housings, except: :show
   resources :owner_types, except: :show
+  resources :extra_contribution_types, except: :show
   resources :type_of_relationships, except: :show
   resources :municipalities, except: :show
   resources :countries, except: :show
