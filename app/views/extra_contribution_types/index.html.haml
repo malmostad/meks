@@ -1,0 +1,18 @@
+- title "Extra insatsformer"
+%section.box.index
+  %h1.box-title= h1
+  %table.full.wrap
+    %thead
+      %tr
+        %th Namn
+        %th
+
+    %tbody
+      - @extra_contribution_types.each do |extra_contribution_type|
+        %tr
+          %td= link_to extra_contribution_type.name, edit_extra_contribution_type_path(extra_contribution_type)
+          %td.delete= button_to t('actions.delete'), extra_contribution_type, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_extra_contribution_type_path, class: "btn btn-primary"
