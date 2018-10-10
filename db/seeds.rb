@@ -59,7 +59,7 @@ end
   TypeOfRelationship.create(name: name)
 end
 
-['Kontakperson', 'Kontaktfamilj', 'Särskilt kvalificerad kontaktperson'].each do |name|
+['Kontaktperson', 'Kontaktfamilj', 'Särskilt kvalificerad kontaktperson'].each do |name|
   ExtraContributionType.create(name: name)
 end
 
