@@ -57,6 +57,8 @@
       = show_attribute('Förväntad schablonkonstnad', number_to_currency(@refugee.total_rate.to_s, delimiter: ' '))
       = show_attribute('Total utbetald schablon',    number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' '))
 
+      = render 'extra_contributions'
+
       %h2.group-title Utbetalda schabloner
       - if @refugee.payments.blank?
         %p Inga schabloner har betalts ut

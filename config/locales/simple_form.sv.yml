@@ -128,6 +128,13 @@ sv:
         period_start: Startdatum
         period_end: Slutdatum
 
+      extra_contribution:
+        extra_contribution_type: Insatstyp
+        period_start: Startdatum
+        period_end: Slutdatum
+        fee: Arvode
+        expense: Omkostnad
+
       payments:
         <<: *payment
         refugee_id: Barn

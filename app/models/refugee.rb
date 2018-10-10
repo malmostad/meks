@@ -13,15 +13,16 @@ class Refugee < ApplicationRecord
 
   has_many :placements, dependent: :destroy
   has_many :payments
+  has_many :extra_contributions
 
   has_many :current_placements, -> { where(moved_out_at: nil).where.not(moved_in_at: nil) },
     class_name: 'Placement'
 
   scope :with_current_placement, -> {
     includes(:placements)
-    .where(placements: { moved_out_at: nil })
-    .where.not(placements: { moved_in_at: nil })
-    .order('placements.moved_in_at desc')
+      .where(placements: { moved_out_at: nil })
+      .where.not(placements: { moved_in_at: nil })
+      .order('placements.moved_in_at desc')
   }
 
   scope :in_our_municipality, -> {

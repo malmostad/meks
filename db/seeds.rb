@@ -59,6 +59,10 @@ end
   TypeOfRelationship.create(name: name)
 end
 
+['Kontakperson', 'Kontaktfamilj', 'Särskilt kvalificerad kontaktperson'].each do |name|
+  ExtraContributionType.create(name: name)
+end
+
 locales = Rails.configuration.i18n.available_locales
 (0...1000).each do
   I18n.locale = locales[rand(locales.size)]
