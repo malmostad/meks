@@ -13,7 +13,7 @@ class Refugee < ApplicationRecord
 
   has_many :placements, dependent: :destroy
   has_many :payments
-  has_many :extra_contributions
+  has_many :extra_contributions, dependent: :destroy
 
   has_many :current_placements, -> { where(moved_out_at: nil).where.not(moved_in_at: nil) },
     class_name: 'Placement'
