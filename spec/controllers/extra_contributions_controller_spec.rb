@@ -130,7 +130,7 @@ RSpec.describe ExtraContributionsController, type: :controller do
     it 'redirects to the show refugee' do
       extra_contribution = ExtraContribution.create! valid_attributes
       delete :destroy, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param }, session: valid_session
-      expect(response).to redirect_to(refugee_url)
+      expect(response).to redirect_to(refugee_url(valid_refugee))
     end
   end
 end
