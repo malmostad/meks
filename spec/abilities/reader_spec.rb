@@ -34,12 +34,18 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:read, TypeOfHousing.new) }
     it { should_not be_able_to(:read, TypeOfRelationship.new) }
     it { should_not be_able_to(:manage, Refugee.new) }
+    it { should_not be_able_to(:manage, ExtraContribution.new) }
+    it { should_not be_able_to(:manage, ExtraContributionType.new) }
+    it { should_not be_able_to(:read, ExtraContributionType.new) }
+
     it { should_not be_able_to(:manage, Home.new) }
     it { should_not be_able_to(:manage, Placement.new) }
     it { should_not be_able_to(:manage, Relationship.new) }
     it { should_not be_able_to(:generate, :reports) }
 
     it { should be_able_to(:read, build(:refugee)) }
+    it { should be_able_to(:read, build(:extra_contribution)) }
+
     it { should be_able_to(:read, build(:home)) }
     it { should be_able_to(:read, build(:placement)) }
     it { should be_able_to(:read, build(:relationship)) }
@@ -47,7 +53,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:edit, drafted_refugee) }
     it { should be_able_to(:update, drafted_refugee) }
     it { should be_able_to(:drafts, drafted_refugee) }
-    it { should be_able_to(:manage, build(:placement, refugee: drafted_refugee))}
+    it { should be_able_to(:manage, build(:placement, refugee: drafted_refugee)) }
     it { should be_able_to(:manage, build(:relationship, refugee_id: drafted_refugee.id)) }
   end
 end

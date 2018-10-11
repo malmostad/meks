@@ -7,6 +7,7 @@ RSpec.describe User, type: :ability do
     let(:user) { build(:user, role: 'writer') }
 
     it { should be_able_to(:manage, Refugee.new) }
+    it { should be_able_to(:manage, ExtraContribution.new) }
     it { should be_able_to(:manage, Placement.new) }
     it { should be_able_to(:manage, Relationship.new) }
     it { should be_able_to(:generate, :reports) }
@@ -27,6 +28,8 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:manage, RateCategory.new) }
     it { should_not be_able_to(:manage, PaymentImport.new) }
     it { should_not be_able_to(:manage, Payment.new) }
+    it { should_not be_able_to(:manage, ExtraContributionType.new) }
+    it { should_not be_able_to(:read, ExtraContributionType.new) }
     it { should_not be_able_to(:read, Country.new) }
     it { should_not be_able_to(:read, Gender.new) }
     it { should_not be_able_to(:read, Language.new) }
@@ -38,6 +41,8 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:read, TargetGroup.new) }
     it { should_not be_able_to(:read, TypeOfHousing.new) }
     it { should_not be_able_to(:read, TypeOfRelationship.new) }
+    it { should_not be_able_to(:read, ExtraContributionType.new) }
+
 
     it { should_not be_able_to(:destroy, Refugee.new) }
     it { should_not be_able_to(:destroy, Home.new) }
