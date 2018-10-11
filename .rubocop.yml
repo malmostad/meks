@@ -1,2 +1,9 @@
 Style/AsciiComments:
   Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+  # The IgnoredPatterns option is a list of !ruby/regexp and/or string
+  # elements. Strings will be converted to Regexp objects. A line that matches
+  # any regular expression listed in this option will be ignored by LineLength.
+  IgnoredPatterns: []
