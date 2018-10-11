@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 2018_10_09_122954) do
     t.bigint "extra_contribution_type_id"
     t.date "period_start"
     t.date "period_end"
-    t.decimal "fee", precision: 8, scale: 2
-    t.decimal "expense", precision: 8, scale: 2
+    t.decimal "fee", precision: 10, scale: 2, default: "0.0"
+    t.decimal "expense", precision: 10, scale: 2, default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["extra_contribution_type_id"], name: "index_extra_contributions_on_extra_contribution_type_id"

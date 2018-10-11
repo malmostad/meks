@@ -13,7 +13,11 @@ class Refugee < ApplicationRecord
 
   has_many :placements, dependent: :destroy
   has_many :payments
+
   has_many :extra_contributions, dependent: :destroy
+  accepts_nested_attributes_for :extra_contributions, reject_if: proc { |attr|
+    attr[:extra_contribution_type].blank?
+  }
 
   has_many :current_placements, -> { where(moved_out_at: nil).where.not(moved_in_at: nil) },
     class_name: 'Placement'

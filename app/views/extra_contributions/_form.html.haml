@@ -1,0 +1,7 @@
+= show_attribute('Namn', @refugee.name)
+= f.association :extra_contribution_type, include_blank: false
+= f.input :period_start, as: :string, wrapper: :datepicker
+= f.input :period_end, as: :string, wrapper: :datepicker
+= f.input :fee, input_html: { value: number_with_precision(f.object.fee, precision: 2, separator: '.') }
+= f.input :expense, input_html: { value: number_with_precision(f.object.expense, precision: 2, separator: '.') }
+= render 'application/submit', form: f, cancel_path: refugee_path(@refugee)

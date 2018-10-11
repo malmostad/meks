@@ -132,8 +132,8 @@ sv:
         extra_contribution_type: Insatsform
         period_start: Startdatum
         period_end: Slutdatum
-        fee: Arvode
-        expense: Omkostnad
+        fee: Arvode per månad
+        expense: Omkostnad per månad
 
       payments:
         <<: *payment

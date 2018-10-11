@@ -38,7 +38,7 @@ SimpleForm.setup do |config|
       label.use :label
     end
     b.wrapper tag: 'div', class: 'input-group date' do |ba|
-      ba.use :input, class: 'form-control date'
+      ba.use :input, class: 'form-control date', autocomplete: 'off'
     end
     b.wrapper tag: 'span', class: 'no-control-label' do |label|
     end

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       patch :move_out_update
     end
     resources :relationships
+    resources :extra_contributions, except: :index
   end
 
   resources :homes

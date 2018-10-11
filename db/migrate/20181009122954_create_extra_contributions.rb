@@ -5,8 +5,8 @@ class CreateExtraContributions < ActiveRecord::Migration[5.2]
       t.references :extra_contribution_type, index: true, foreign_key: true
       t.date :period_start
       t.date :period_end
-      t.decimal :fee, precision: 8, scale: 2
-      t.decimal :expense, precision: 8, scale: 2
+      t.decimal :fee, precision: 10, scale: 2, default: 0
+      t.decimal :expense, precision: 10, scale: 2, default: 0
 
       t.timestamps
     end

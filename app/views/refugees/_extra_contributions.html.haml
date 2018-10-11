@@ -1,5 +1,5 @@
 .extra_contributions
-  %h2.group-title Extra insatser
+  %h2.group-title Extra insatser per månad
   - if @refugee.extra_contributions.blank?
     %p Inga extra insatser är registrerade
   - else
@@ -10,3 +10,12 @@
         = show_attribute('extra_contribution.period_end', extra_contribution.period_end)
         = show_attribute('extra_contribution.fee', number_to_currency(extra_contribution.fee.to_s, delimiter: ' '))
         = show_attribute('extra_contribution.expense', number_to_currency(extra_contribution.expense.to_s, delimiter: ' '))
+
+        - if can? :edit, @refugee
+          .form-group.action
+            %span.no-control-label
+            .controls
+              = link_to "Redigera extra insatsen", edit_refugee_extra_contribution_path(@refugee, extra_contribution), class: "btn btn-default btn-sm"
+
+  - if can? :edit, @refugee
+    = link_to "Ny extra insats", new_refugee_extra_contribution_path(@refugee), class: "btn btn-default btn-sm"
