@@ -59,7 +59,7 @@ class Home < ApplicationRecord
 
   def payments(range = DEFAULT_DATE_RANGE)
     refugees_payments = refugees.map(&:payments).flatten.compact
-    Statistics::Payment.amount_and_days(refugees_payments, range)
+    Economy::Payment.amount_and_days(refugees_payments, range)
   end
 
   private

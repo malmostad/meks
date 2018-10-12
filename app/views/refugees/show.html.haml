@@ -17,7 +17,7 @@
       = show_attribute('Personnummer', @refugee.ssn)
       = show_attribute('Dossiernummer', @refugee.dossier_number)
       = show_attribute('Aktuellt boende', @refugee.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(', '))
-      = show_attribute('Asylstatus', Statistics::Status.new(@refugee).format_asylum)
+      = show_attribute('Asylstatus', Economy::Status.new(@refugee).format_asylum)
 
       %h2.group-title Personuppgifter
       = show_attribute('Personnummer', @refugee.ssn)
@@ -53,7 +53,7 @@
       = render 'relateds'
 
       %h2.group-title Ekonomi
-      = show_attribute('Total placeringskostnad', number_to_currency(Statistics::Cost.for_placements_and_home(@refugee.placements), delimiter: ' '))
+      = show_attribute('Total placeringskostnad', number_to_currency(Economy::Cost.for_placements_and_home(@refugee.placements), delimiter: ' '))
       = show_attribute('Förväntad schablonkonstnad', number_to_currency(@refugee.total_rate.to_s, delimiter: ' '))
       = show_attribute('Total utbetald schablon',    number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' '))
 

@@ -1,5 +1,5 @@
 # TODO: Specs
-module Statistics
+module Economy
   class Cost < Base
     def self.for_type_of_housing(type_of_housing, range = DEFAULT_DATE_RANGE)
       type_of_housing.homes.map do |home|

@@ -1,5 +1,5 @@
 # TODO: Specs
-module Statistics
+module Economy
   # Refugee rates (schabloner)
   # Comments in Swedish from project specs
   class Rates < Base

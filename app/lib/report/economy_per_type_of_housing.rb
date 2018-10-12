@@ -27,7 +27,7 @@ module Report
     def records
       type_of_housings = TypeOfHousing.includes(homes: [:costs, placements: { refugee: :payments }])
       type_of_housings.map do |type_of_housing|
-        Statistics::Cost.for_type_of_housing(type_of_housing)
+        ::Economy::Cost.for_type_of_housing(type_of_housing)
       end
     end
 

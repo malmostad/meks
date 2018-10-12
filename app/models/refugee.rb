@@ -95,7 +95,7 @@ class Refugee < ApplicationRecord
   end
 
   def total_rate
-    Statistics::Rates.for_all_rate_categories(self).map do |cat|
+    Economy::Rates.for_all_rate_categories(self).map do |cat|
       cat[:amount] * cat[:days]
     end.sum
   end

@@ -1,4 +1,4 @@
-module Statistics
+module Economy
   class Base
     DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
 

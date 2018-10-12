@@ -1,4 +1,4 @@
-module Statistics
+module Economy
   class Status < Base
     def self.statuses
       [

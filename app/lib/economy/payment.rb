@@ -1,5 +1,5 @@
 # TODO: Specs
-module Statistics
+module Economy
   class Payment < Base
     # Calculate daily amount and number of days for payments based on
     #  * the report range

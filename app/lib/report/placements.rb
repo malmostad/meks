@@ -41,7 +41,7 @@ module Report
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
     def columns(placement = Placement.new(refugee: Refugee.new, home: Home.new), i = 0)
-      status = Statistics::Status.new(placement.refugee)
+      status = ::Economy::Status.new(placement.refugee)
       [
         {
           heading: 'Dossiernummer',
