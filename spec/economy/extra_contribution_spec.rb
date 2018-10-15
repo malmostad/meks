@@ -56,7 +56,7 @@ RSpec.describe 'ExtraContribution' do
       from: '2018-01-01',
       to: '2018-01-10'
     )
-    expect(ec.as_formula).to eq '(0.3225806451612903*35801.0)'
+    expect(ec.as_formula_array).to eq ['0.3225806451612903*35801.0']
   end
 
   describe 'multiple extra contributions' do
@@ -86,7 +86,7 @@ RSpec.describe 'ExtraContribution' do
         from: '2017-06-11',
         to: '2018-04-15'
       )
-      expect(ec.as_formula).to eq '(10.166666666666666*119752.0)'
+      expect(ec.as_formula_array).to eq ['10.166666666666666*119752.0']
     end
   end
 end

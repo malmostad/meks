@@ -6,16 +6,16 @@ module Economy
       @report_range = report_range
     end
 
-    def as_formula
-      as_hash.map do |months_and_cost|
-        "(#{months_and_cost[:months]}*#{months_and_cost[:costs]})"
-      end.join('+')
-    end
-
     def sum
       as_hash.sum do |mac|
         mac[:months] * mac[:costs]
       end.round(2)
+    end
+
+    def as_formula_array
+      as_hash.map do |mac|
+        "#{mac[:months]}*#{mac[:costs]}"
+      end
     end
 
     def as_hash
@@ -32,7 +32,7 @@ module Economy
 
     def months(range)
       (range[:from]..range[:to]).sum do |date|
-        1.to_f / (date.end_of_month - date.beginning_of_month + 1).to_f
+        1.to_f / (date.end_of_month - date.beginning_of_month + 1)
       end
     end
 
