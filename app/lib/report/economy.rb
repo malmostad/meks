@@ -140,25 +140,25 @@ module Report
         {
           heading: 'Budgeterad kostnad',
           query: self.class.sum_formula(
-            self.class.days_amount_formula(::Economy::Cost.placements_costs_and_days(refugee_placements, from: @from, to: @to)) +
-            ::Economy::ExtraContribution.new(refugee, from: @from, to: @to).as_formula_array
+            self.class.days_amount_formula(::Economy::Cost.placements_costs_and_days(refugee_placements, @range)) +
+            ::Economy::ExtraContribution.new(refugee, @range).as_formula_array
           )
         },
         {
           heading: 'Förväntad schablon',
           query: self.class.sum_formula(self.class.days_amount_formula(
-            ::Economy::Rates.for_all_rate_categories(refugee, from: @from, to: @to)
+            ::Economy::Rates.for_all_rate_categories(refugee, @range)
           ))
         },
         {
           heading: 'Utbetald schablon',
           query: self.class.sum_formula(self.class.days_amount_formula(
-            ::Economy::Payment.amount_and_days(refugee.payments, from: @from, to: @to)
+            ::Economy::Payment.amount_and_days(refugee.payments, @range)
           ))
         },
         {
           heading: 'Kommentarer till utbetalda schabloner',
-          query: ::Economy::Payment.comments(refugee.payments, from: @from, to: @to).compact.join("\r\x0D\x0A")
+          query: ::Economy::Payment.comments(refugee.payments, @range).compact.join("\r\x0D\x0A")
         },
         {
           heading: 'Ålder',
