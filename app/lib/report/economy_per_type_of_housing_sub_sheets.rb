@@ -43,9 +43,9 @@ module Report
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.days_amount_formula(
+          query: self.class.sum_formula(self.class.days_amount_formula(
             home.payments(from: @from, to: @to)
-          )
+          ))
         },
         {
           heading: 'Avvikelse',

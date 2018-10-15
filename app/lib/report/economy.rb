@@ -139,21 +139,21 @@ module Report
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.days_amount_formula(
+          query: self.class.sum_formula(self.class.days_amount_formula(
             ::Economy::Cost.placements_costs_and_days(refugee_placements, from: @from, to: @to)
-          )
+          ))
         },
         {
           heading: 'Förväntad schablon',
-          query: self.class.days_amount_formula(
+          query: self.class.sum_formula(self.class.days_amount_formula(
             ::Economy::Rates.for_all_rate_categories(refugee, from: @from, to: @to)
-          )
+          ))
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.days_amount_formula(
+          query: self.class.sum_formula(self.class.days_amount_formula(
             ::Economy::Payment.amount_and_days(refugee.payments, from: @from, to: @to)
-          )
+          ))
         },
         {
           heading: 'Kommentarer till utbetalda schabloner',

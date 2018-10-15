@@ -2,20 +2,21 @@ module Report
   class Workbooks
     DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
-    def self.sum_formula(a = [])
-      a.compact!
-      return 0 if a.blank?
-      "=(#{a.join('+')})"
+    def self.sum_formula(arr = [])
+      arr.compact!
+      return 0 if arr.blank?
+
+      "=(#{arr.join('+')})"
     end
 
     def self.days_amount_formula(days_and_amount = [])
-      return 0 if days_and_amount.blank?
-      calculation = days_and_amount.map do |da|
+      return [] if days_and_amount.blank?
+
+      days_and_amount.map do |da|
         days   = da[:days]   || 0
         amount = da[:amount] || 0
         "#{days}*#{amount}"
       end
-      sum_formula(calculation)
     end
 
     def initialize(options = {})
@@ -27,11 +28,11 @@ module Report
     end
 
     def create!
-      axlsx     = Axlsx::Package.new
+      axlsx = Axlsx::Package.new
       axlsx.use_shared_strings = true
       @workbook = axlsx.workbook
-      @sheet    = @workbook.add_worksheet(name: @sheet_name)
-      @style    = Style.new(axlsx)
+      @sheet = @workbook.add_worksheet(name: @sheet_name)
+      @style = Style.new(axlsx)
 
       fill_sheet
 
