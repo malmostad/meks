@@ -139,9 +139,10 @@ module Report
         },
         {
           heading: 'Budgeterad kostnad',
-          query: self.class.sum_formula(self.class.days_amount_formula(
-            ::Economy::Cost.placements_costs_and_days(refugee_placements, from: @from, to: @to)
-          ))
+          query: self.class.sum_formula(
+            self.class.days_amount_formula(::Economy::Cost.placements_costs_and_days(refugee_placements, from: @from, to: @to)) +
+            ::Economy::ExtraContribution.new(refugee, from: @from, to: @to).as_formula_array
+          )
         },
         {
           heading: 'Förväntad schablon',

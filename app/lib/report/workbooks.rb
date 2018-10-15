@@ -4,7 +4,7 @@ module Report
 
     def self.sum_formula(arr = [])
       arr.compact!
-      return 0 if arr.blank?
+      return '=(0)' if arr.blank?
 
       "=(#{arr.join('+')})"
     end
