@@ -108,7 +108,7 @@ class ReportsController < ApplicationController
     when 'economy'
       'Ekonomi'
     when 'economy_per_refugee_status'
-      'Per barns asylsstatus'
+      'Per barns asylstatus'
     when 'economy_per_type_of_housing'
       'Per boendeform'
     when 'homes'
