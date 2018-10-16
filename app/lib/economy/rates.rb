@@ -1,4 +1,3 @@
-# TODO: Specs
 module Economy
   # Refugee rates (schabloner)
   # Comments in Swedish from project specs
@@ -143,7 +142,7 @@ module Economy
     #   minimiålder
     #     :date_of_birth
     #   utskriven till Malmö - 1 dag
-    #     :before_checked_out_to_our_city
+    #     :checked_out_to_our_city
     #   startdatum för TUT
     #     :temporary_permit_starts_at
     #

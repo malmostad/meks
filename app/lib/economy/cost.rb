@@ -1,4 +1,3 @@
-# TODO: Specs
 module Economy
   class Cost < Base
     def self.for_type_of_housing(type_of_housing, range = DEFAULT_DATE_RANGE)
