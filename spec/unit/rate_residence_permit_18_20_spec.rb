@@ -30,7 +30,7 @@ RSpec.describe 'Rates for residence_permit_18_20' do
 
     # Count days to the first of the following
     # refugee.date_of_birth + 1 year - 1 day (defined above)
-    refugee.citizenship_at          = '2020-01-01'
+    refugee.citizenship_at          = nil
     refugee.deregistered            = nil # - 1 day
   end
 

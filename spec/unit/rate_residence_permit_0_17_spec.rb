@@ -27,7 +27,7 @@ RSpec.describe 'Rates for residence_permit_0_17' do
 
     # Count days to the first of the following
     # refugee.date_of_birth + 1 year - 1 day (defined above)
-    refugee.citizenship_at          = '2020-01-01'
+    refugee.citizenship_at          = nil
     refugee.deregistered            = nil # - 1 day
   end
 
@@ -65,15 +65,6 @@ RSpec.describe 'Rates for residence_permit_0_17' do
     expect(rate[:days]).to eq 87
   end
 
-  it 'should respond to changed citizenship_at' do
-    refugee.citizenship_at = '2018-06-01'
-
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
-    rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_0_17])
-
-    expect(rate[:days]).to eq 62
-  end
-
   it 'should respond to changed deregistered' do
     refugee.deregistered = '2018-05-01'
 
@@ -101,8 +92,8 @@ RSpec.describe 'Rates for residence_permit_0_17' do
     expect(rate).to be_nil
   end
 
-  it 'should require citizenship_at' do
-    refugee.citizenship_at = nil
+  it 'should no allow citizenship_at' do
+    refugee.citizenship_at = '2018-05-01'
     rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_0_17])
 
