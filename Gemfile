@@ -48,7 +48,6 @@ group :local_test do
   gem 'factory_bot_rails'
   gem 'capybara'
   gem 'database_cleaner'
-  # gem 'poltergeist'
   gem 'selenium-webdriver'
 end
 
