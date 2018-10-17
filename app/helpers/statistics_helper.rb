@@ -4,7 +4,7 @@ module StatisticsHelper
   # men som saknar datum för avslut
   def srf_refugees
     Refugee
-      .where(municipality_id: 135) # FIXME: hard coded
+      .in_our_municipality_department
       .where(deregistered: nil)
   end
 
@@ -75,7 +75,7 @@ module StatisticsHelper
     Placement
       .current_placements
       .includes(:refugee, home: :type_of_housings)
-      .where(refugees: { municipality_id: 135 }) # FIXME: hard coded
+      .where(refugees: { municipality_id: Refugee::OUR_MUNICIPALITY_DEPARTMENT_ID })
       .where(home: { type_of_housings: { id: 2 } }) # FIXME: hard coded
       .select(:refugee_id).distinct.count
   end
@@ -107,9 +107,7 @@ module StatisticsHelper
   # Samtliga barn som har Malmö Innerstaden, Malmö Väster, Malmö Norr, Malmö Öster eller Malmö Söder
   # angivet som anvisningskommun och som har aktuell placering.
   def refugees_in_malmo_sof_with_placement
-    Refugee.with_current_placement
-      .where(municipality_id: [136, 137, 138, 139, 140]) # FIXME: hard coded
-      .count
+    Refugee.with_current_placement.where(municipality_id: Refugee::OUR_MUNICIPALITY_IDS - [Refugee::OUR_MUNICIPALITY_DEPARTMENT_ID]).count
   end
 
   # Samtliga aktiva boenden med boendeform "Institution" samt "Utsluss".
@@ -130,7 +128,7 @@ module StatisticsHelper
       .current_placements
       .includes(:refugee, home: :type_of_housings)
       .where(home: { type_of_housings: { id: id } })
-      .where(refugees: { municipality_id: 135, deregistered: nil })  # FIXME: hard coded
+      .where(refugees: { municipality_id: Refugee::OUR_MUNICIPALITY_DEPARTMENT_ID, deregistered: nil })
       .select(:refugee_id).distinct.count
   end
 end
