@@ -113,8 +113,8 @@ class PaymentImport < ApplicationRecord
     if refugee.blank?
       parsing_error "Inget barn hittades med dossiernumret #{dossier_number} [rad #{row_number}]"
       return
-    # Skip refugees not belonging to this municipality
-    elsif refugee.municipality_id != 135 # FIXME: hard coded
+    # Skip refugees not belonging to our own municipality
+    elsif refugee.in_our_municipality?
       return
     end
     refugee
