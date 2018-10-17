@@ -28,9 +28,9 @@ RSpec.describe "Extra contribution types", type: :feature do
     scenario "deletes a extra_contribution_type", js: true do
       create(:extra_contribution_type, name: "Fox")
       visit "/extra_contribution_types"
-      first(".btn-danger").click
-
-      page.evaluate_script("window.confirm()")
+      page.accept_alert 'Är du säker?' do
+        first(".btn-danger").click
+      end
       expect(page).to have_selector(".notice", text: "raderades")
     end
   end

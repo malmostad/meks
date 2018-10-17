@@ -25,7 +25,8 @@ Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 Capybara.javascript_driver = :chrome
-Capybara.server = :webrick
+Capybara.server = :puma, { Silent: true }
+Capybara.default_max_wait_time = 20
 
 # config.include for :view dosn't work in the config block
 include IntegrationMacros

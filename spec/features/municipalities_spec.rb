@@ -28,9 +28,9 @@ RSpec.describe "Municipalities", type: :feature do
     scenario "deletes a municipality", js: true do
       municipality = create(:municipality, name: "Fox")
       visit "/municipalities"
-      first(".btn-danger").click
-
-      page.evaluate_script("window.confirm()")
+      page.accept_alert 'Är du säker?' do
+        first(".btn-danger").click
+      end
       expect(page).to have_selector(".notice", text: "raderades")
     end
   end

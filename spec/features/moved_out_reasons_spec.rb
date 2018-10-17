@@ -28,9 +28,9 @@ RSpec.describe "Moved out reasons", type: :feature do
     scenario "deletes a moved_out_reason", js: true do
       moved_out_reason = create(:moved_out_reason, name: "Fox")
       visit "/moved_out_reasons"
-      first(".btn-danger").click
-
-      page.evaluate_script("window.confirm()")
+      page.accept_alert 'Är du säker?' do
+        first(".btn-danger").click
+      end
       expect(page).to have_selector(".notice", text: "raderades")
     end
   end
