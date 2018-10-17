@@ -8,7 +8,8 @@ require 'rspec/rails'
 require 'haml'
 require 'factory_bot_rails'
 require 'cancan/matchers'
-require 'capybara/poltergeist'
+# require 'capybara/poltergeist'
+require 'selenium-webdriver'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -16,7 +17,14 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-Capybara.javascript_driver = :poltergeist
+# Capybara.javascript_driver = :poltergeist
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[headless disable-gpu no-sandbox]
+  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+Capybara.javascript_driver = :chrome
 Capybara.server = :webrick
 
 # config.include for :view dosn't work in the config block
