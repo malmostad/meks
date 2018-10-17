@@ -4,6 +4,7 @@ class RefugeesController < ApplicationController
       :placements,
       relationships: [:type_of_relationship, :related],
       placements: [:home, :moved_out_reason, :legal_code],
+      extra_contributions: :extra_contribution_type,
       payments: :payment_import
     ).find(params[:id])
     @status = Economy::Status.new(@refugee)
