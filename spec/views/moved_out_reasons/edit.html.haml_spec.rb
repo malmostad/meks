@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "moved_out_reasons/edit", type: :view do
   before(:each) do
     @moved_out_reason = assign(:moved_out_reason, create(:moved_out_reason))

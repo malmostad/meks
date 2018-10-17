@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "Homes", type: :feature do
   describe "admin role" do
     before(:each) do

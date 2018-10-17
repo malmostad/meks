@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "Genders", type: :feature do
   describe "admin role" do
     before(:each) do

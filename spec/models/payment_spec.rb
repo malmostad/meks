@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Payment, type: :model do
   let(:payment) { create(:payment) }
 

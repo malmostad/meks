@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "languages/index", type: :view do
   before(:each) do
     @languages = assign(:languages, create_list(:language, 2))

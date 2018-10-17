@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "owner_types/new", type: :view do
   before(:each) do
     assign(:owner_type, build(:owner_type))

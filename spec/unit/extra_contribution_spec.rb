@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'ExtraContribution' do
   let(:refugee) { create(:refugee) }
   let(:extra_contribution) do

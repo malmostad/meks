@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe RateCategoriesController, type: :controller do
   let(:valid_attributes) {
     { name: 'Foo 0-17', from_age: 0, to_age: 17 }

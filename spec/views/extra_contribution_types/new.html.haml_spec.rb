@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'extra_contribution_types/new', type: :view do
   before(:each) do
     assign(:extra_contribution_type, build(:extra_contribution_type))

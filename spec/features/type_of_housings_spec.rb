@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "Type of housings", type: :feature do
   describe "admin role" do
     before(:each) do

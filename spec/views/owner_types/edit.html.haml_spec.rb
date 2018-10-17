@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "owner_types/edit", type: :view do
   before(:each) do
     @owner_type = assign(:owner_type, create(:owner_type))

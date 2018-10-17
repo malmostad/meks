@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "refugees/new", type: :view do
   before(:each) do
     assign(:refugee, build(:refugee))

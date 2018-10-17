@@ -1,7 +1,4 @@
-require 'rails_helper'
-
 RSpec.describe "Refugees", type: :request do
-
   describe "GET /refugees" do
     it "should redirect to login page" do
       get refugees_path

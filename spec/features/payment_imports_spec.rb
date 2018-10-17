@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe PaymentImport, type: :feature do
   # TODO: below is pasted code from Language feat spec
 

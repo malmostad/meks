@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "refugees/search", type: :view do
   before(:each) do
     @refugees = assign(:refugees, create_list(:refugee, 2))

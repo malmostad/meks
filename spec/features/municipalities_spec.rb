@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "Municipalities", type: :feature do
   describe "admin role" do
     before(:each) do

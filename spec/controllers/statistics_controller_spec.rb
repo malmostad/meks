@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe StatisticsController, type: :controller do
   describe "GET #index" do
     it "should render the index view" do

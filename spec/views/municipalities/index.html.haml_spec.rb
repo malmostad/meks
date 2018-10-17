@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "municipalities/index", type: :view do
   before(:each) do
     @municipalities = assign(:municipalities, create_list(:municipality, 2))

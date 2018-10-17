@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Language, type: :model do
   it "should be adding one" do
     expect { create(:language) }.to change(Language, :count).by(+1)

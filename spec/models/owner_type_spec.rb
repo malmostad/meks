@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe OwnerType, type: :model do
   it "should be adding one" do
     expect { create(:owner_type) }.to change(OwnerType, :count).by(+1)

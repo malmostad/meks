@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe PlacementsController, type: :controller do
     let(:valid_refugee) {
       Refugee.create!(name: "Valid refugee")

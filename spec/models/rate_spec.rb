@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Rate, type: :model do
   let(:rate) { create(:rate) }
 

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe User, type: :ability do
   describe "with writer role" do
     subject(:ability) { Ability.new(user) }

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Gender, type: :model do
   it "should be adding one" do
     expect { create(:gender) }.to change(Gender, :count).by(+1)

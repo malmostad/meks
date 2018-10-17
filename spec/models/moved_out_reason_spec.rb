@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe MovedOutReason, type: :model do
   it "should be adding one" do
     expect { create(:moved_out_reason) }.to change(MovedOutReason, :count).by(+1)

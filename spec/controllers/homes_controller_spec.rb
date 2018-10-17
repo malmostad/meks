@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe HomesController, type: :controller do
   let(:valid_attributes) {
     { name: 'Home'}

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "target_groups/edit", type: :view do
   before(:each) do
     @target_group = assign(:target_group, create(:target_group))

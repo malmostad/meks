@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Country, type: :model do
   it "should be adding one" do
     expect { create(:country) }.to change(Country, :count).by(+1)

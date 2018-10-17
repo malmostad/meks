@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe ExtraContributionsController, type: :routing do
   describe 'routing' do
     it 'routes to #new' do

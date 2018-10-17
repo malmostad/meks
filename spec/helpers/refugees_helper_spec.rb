@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe RefugeesHelper, type: :helper do
   before(:each) do
     helper.title('foo')

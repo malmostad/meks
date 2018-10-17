@@ -1,7 +1,4 @@
-require 'rails_helper'
-
 RSpec.describe TypeOfHousingsController, type: :controller do
-
   let(:valid_attributes) {
     { name: "Type of housing" }
   }

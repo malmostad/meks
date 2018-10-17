@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 # Förväntad schablon för TUT 0-17
 RSpec.describe 'Rates' do
   before(:all) do

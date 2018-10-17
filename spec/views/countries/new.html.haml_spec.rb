@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "countries/new", type: :view do
   before(:each) do
     assign(:country, build(:country))

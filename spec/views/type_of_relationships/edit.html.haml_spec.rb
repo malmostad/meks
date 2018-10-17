@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "type_of_relationships/edit", type: :view do
   before(:each) do
     @type_of_relationship = assign(:type_of_relationship, create(:type_of_relationship))

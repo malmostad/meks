@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "owner_types/index", type: :view do
   before(:each) do
     @owner_types = assign(:owner_types, create_list(:owner_type, 2))

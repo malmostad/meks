@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe TypeOfHousing, type: :model do
   it "should be adding one" do
     expect { create(:type_of_housing) }.to change(TypeOfHousing, :count).by(+1)

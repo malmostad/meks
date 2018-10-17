@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "Languages", type: :feature do
   describe "admin role" do
     before(:each) do

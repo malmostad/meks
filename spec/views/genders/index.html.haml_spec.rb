@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "genders/index", type: :view do
   before(:each) do
     @genders = assign(:genders, create_list(:gender, 2))

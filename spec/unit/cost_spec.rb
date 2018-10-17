@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'Cost calculation' do
   let(:amount) { 1234 }
   let(:home) { create(:home) }

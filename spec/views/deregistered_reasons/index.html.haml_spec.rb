@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "moved_out_reasons/index", type: :view do
   before(:each) do
     @moved_out_reasons = assign(:moved_out_reasons, create_list(:moved_out_reason, 2))

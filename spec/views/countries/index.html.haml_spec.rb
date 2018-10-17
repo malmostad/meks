@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "countries/index", type: :view do
   before(:each) do
     @countries = assign(:countries, create_list(:country, 2))

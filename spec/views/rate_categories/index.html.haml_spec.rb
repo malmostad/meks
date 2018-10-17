@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "rate_categories/index", type: :view do
   before(:each) do
     @rate_categories = assign(:rate_categories, create_list(:rate_category, 2))

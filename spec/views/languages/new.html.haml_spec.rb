@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "languages/new", type: :view do
   before(:each) do
     assign(:language, build(:language))

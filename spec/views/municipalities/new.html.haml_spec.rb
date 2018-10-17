@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "municipalities/new", type: :view do
   before(:each) do
     assign(:municipality, build(:municipality))

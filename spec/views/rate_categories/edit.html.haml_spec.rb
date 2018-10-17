@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "rate_categories/edit", type: :view do
   before(:each) do
     @rate_category = assign(:rate_category, create(:rate_category))

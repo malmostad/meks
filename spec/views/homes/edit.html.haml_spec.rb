@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "homes/edit", type: :view do
   before(:each) do
     @home = assign(:home, create(:home))

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "type_of_housings/index", type: :view do
   before(:each) do
     @type_of_housings = assign(:type_of_housings, create_list(:type_of_housing, 2))

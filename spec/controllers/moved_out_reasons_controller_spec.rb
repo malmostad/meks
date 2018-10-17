@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe MovedOutReasonsController, type: :controller do
   let(:valid_attributes) {
     { name: 'Flyttat' }

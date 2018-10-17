@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "target_groups/index", type: :view do
   before(:each) do
     @target_groups = assign(:target_groups, create_list(:target_group, 2))

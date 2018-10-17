@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "countries/edit", type: :view do
   before(:each) do
     @country = assign(:country, create(:country))

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "type_of_relationships/index", type: :view do
   before(:each) do
     @type_of_relationships = assign(:type_of_relationships, create_list(:type_of_relationship, 2))

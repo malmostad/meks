@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "homes/new", type: :view do
   before(:each) do
     assign(:home, build(:home))

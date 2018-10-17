@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe ExtraContribution, type: :model do
   it 'should be adding one' do
     expect { create(:extra_contribution) }.to change(ExtraContribution, :count).by(+1)

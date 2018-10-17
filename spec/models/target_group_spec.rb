@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe TargetGroup, type: :model do
   it "should be adding one" do
     expect { create(:target_group) }.to change(TargetGroup, :count).by(+1)

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe LegalCode, type: :model do
   it "should be adding one" do
     expect { create(:legal_code) }.to change(LegalCode, :count).by(+1)

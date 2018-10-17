@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "Placements", type: :feature do
   # testing with out js to get rid of the testing problems with the chosen widget
 

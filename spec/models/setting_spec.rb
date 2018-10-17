@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Setting, type: :model do
   it "should be adding one" do
     expect { create(:setting) }.to change(Setting, :count).by(+1)

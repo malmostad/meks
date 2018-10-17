@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe DeregisteredReason, type: :model do
   it "should be adding one" do
     expect { create(:deregistered_reason) }.to change(DeregisteredReason, :count).by(+1)

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe RateCategory, type: :model do
   let(:rate_category) { create(:rate_category) }
 

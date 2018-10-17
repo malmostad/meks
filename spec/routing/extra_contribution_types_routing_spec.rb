@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe ExtraContributionTypesController, type: :routing do
   describe 'routing' do
     it 'routes to #index' do

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe TypeOfRelationship, type: :model do
   it "should be adding one" do
     expect { create(:type_of_relationship) }.to change(TypeOfRelationship, :count).by(+1)

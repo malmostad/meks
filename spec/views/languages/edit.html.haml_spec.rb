@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "languages/edit", type: :view do
   before(:each) do
     @language = assign(:language, create(:language))

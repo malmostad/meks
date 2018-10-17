@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "target_groups/new", type: :view do
   before(:each) do
     assign(:target_group, build(:target_group))

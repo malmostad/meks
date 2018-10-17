@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "genders/new", type: :view do
   before(:each) do
     assign(:gender, build(:gender))

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "municipalities/edit", type: :view do
   before(:each) do
     @municipality = assign(:municipality, create(:municipality))

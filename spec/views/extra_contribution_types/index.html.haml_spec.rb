@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'extra_contribution_types/index', type: :view do
   before(:each) do
     @extra_contribution_types = assign(:extra_contribution_types, create_list(:extra_contribution_type, 2))

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe PaymentImport, type: :model do
   let(:payment_import) { create(:payment_import) }
 

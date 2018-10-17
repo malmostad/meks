@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Municipality, type: :model do
   it "should be adding one" do
     expect { create(:municipality) }.to change(Municipality, :count).by(+1)

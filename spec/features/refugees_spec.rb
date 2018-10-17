@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "Refugees", type: :feature do
   describe "writer role" do
     before(:each) do

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "reports/index", type: :view do
   before(:each) do
     assign(:homes, create_list(:home, 2))

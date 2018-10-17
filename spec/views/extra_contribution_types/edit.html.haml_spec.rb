@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'extra_contribution_types/edit', type: :view do
   before(:each) do
     @extra_contribution_type = assign(:extra_contribution_type, create(:extra_contribution_type))

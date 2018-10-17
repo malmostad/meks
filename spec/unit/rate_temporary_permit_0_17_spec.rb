@@ -1,6 +1,5 @@
-require 'rails_helper'
-
 # Förväntad schablon för TUT 0-17
+# See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates' do
   before(:all) do
     create_rate_categories_with_rates
@@ -15,9 +14,6 @@ RSpec.describe 'Rates' do
   describe 'temporary_permit_0_17' do
     before(:each) do
       refugee.reload
-
-      # See specifications of conditions in app/lib/economy/rates.rb
-
       # Mandatories
       # refugee.temporary_permit_starts_at (defined below)
       # refugee.temporary_permit_ends_at (defined below)
