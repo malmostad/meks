@@ -142,7 +142,7 @@ module Economy
     #   minimiålder
     #     :date_of_birth
     #   utskriven till Malmö - 1 dag
-    #     :checked_out_to_our_city
+    #     :before_checked_out_to_our_city
     #   startdatum för TUT
     #     :temporary_permit_starts_at
     #
