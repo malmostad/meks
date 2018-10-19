@@ -1,4 +1,10 @@
 class Home < ApplicationRecord
+  enum type_of_cost: %i[
+    per_day
+    per_placement
+    for_family_and_emergency_home
+  ]
+
   has_many :placements, dependent: :destroy
   has_many :refugees, through: :placements
 
