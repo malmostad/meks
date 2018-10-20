@@ -1,6 +1,6 @@
 class AddCostModelToHomes < ActiveRecord::Migration[5.2]
   def up
-    # enums in model: :per_day :per_placement :for_family_and_emergency_home
+    # type_of_cost enums in Home model: :per_day :per_placement :for_family_and_emergency_home
     add_column :homes, :type_of_cost, :integer
 
     # Migrates from old boolean setting use_placement_cost to new model enum setting

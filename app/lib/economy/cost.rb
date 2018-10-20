@@ -21,8 +21,14 @@ module Economy
         to   = earliest_date(placement.moved_out_at, range[:to])
         args = [placement, from: from, to: to]
 
-        # Home cost or placement costs
-        placement.home.use_placement_cost ? placement_cost(*args) : placement_home_costs(*args)
+        # Which type_of_cost?
+        if placement.home.per_day?
+          placement_home_costs(*args)
+        elsif placement.home.per_placement?
+          placement_cost(*args)
+        elsif placement.home.for_family_and_emergency_home?
+          family_and_emergency_costs(*args)
+        end
       end.flatten
     end
 
@@ -40,6 +46,11 @@ module Economy
         days = number_of_days(from, to)
         { amount: cost.amount.to_i, days: days, refugee: placement.refugee }
       end
+    end
+
+    # Costs for family and emergency
+    def self.family_and_emergency_costs(placement, range)
+      # TODO: implement
     end
   end
 end

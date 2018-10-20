@@ -56,7 +56,8 @@ class Home < ApplicationRecord
   end
 
   def current_cost?
-    return true if use_placement_cost?
+    return true if per_placement?
+
     costs.each do |cost|
       return true if cost.end_date >= Date.today
     end
