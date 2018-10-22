@@ -93,6 +93,14 @@ module Report
           type: :date
         },
         {
+          heading: 'refugee.deregistered_reason',
+          query: refugee.deregistered_reason&.name
+        },
+        {
+          heading: 'refugee.deregistered_comment',
+          query: refugee.deregistered_comment
+        },
+        {
           heading: 'Boendeformer',
           query: refugee_placements
             .map(&:home)
