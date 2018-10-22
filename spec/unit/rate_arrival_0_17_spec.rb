@@ -1,14 +1,11 @@
 # Schablonkategori Ankomstbarn 0-17
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for arrival_0_17' do
-  before(:all) do
-    create_rate_categories_with_rates
-  end
-
   let(:refugee) { create(:refugee) }
 
   before(:each) do
     refugee.reload
+    create_rate_categories_with_rates
 
     # Mandatories
     # refugee.registered (defined below)

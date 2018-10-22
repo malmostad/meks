@@ -5,14 +5,11 @@
 # The majority of test for this rate category is performed
 # in rate_temporary_permit_0_17_spec.rb. Only conditionals for date of birth differs
 RSpec.describe 'Rates for temporary_permit_18_20' do
-  before(:all) do
-    create_rate_categories_with_rates
-  end
-
   let(:refugee) { create(:refugee) }
 
   before(:each) do
     refugee.reload
+    create_rate_categories_with_rates
     # Mandatories
     # refugee.temporary_permit_starts_at (defined below)
     # refugee.temporary_permit_ends_at (defined below)

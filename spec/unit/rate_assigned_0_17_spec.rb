@@ -1,10 +1,6 @@
 # Schablonkategori Anvisad
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for assigned_0_17' do
-  before(:all) do
-    create_rate_categories_with_rates
-  end
-
   let(:refugee) { create(:refugee) }
 
   let(:municipality) do
@@ -14,6 +10,7 @@ RSpec.describe 'Rates for assigned_0_17' do
 
   before(:each) do
     refugee.reload
+    create_rate_categories_with_rates
 
     # Mandatories
     # refugee.municipality_placement_migrationsverket_at (defined below)

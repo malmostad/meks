@@ -1,10 +1,11 @@
 # Förväntad schablon för TUT 0-17
 RSpec.describe 'Rates' do
-  before(:all) do
+  let(:refugee) { create(:refugee) }
+
+  before(:each) do
+    refugee.reload
     create_rate_categories_with_rates
   end
-
-  let(:refugee) { create(:refugee) }
 
   describe 'refugee without properties' do
     it 'should not belong to any rate category' do

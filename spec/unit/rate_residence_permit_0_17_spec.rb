@@ -1,10 +1,6 @@
 # Förväntad schablon för PUT 0-17
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for residence_permit_0_17' do
-  before(:all) do
-    create_rate_categories_with_rates
-  end
-
   let(:municipality) do
     Municipality.where(id: Refugee::OUR_MUNICIPALITY_DEPARTMENT_ID).first_or_create { |m| m.name = 'Foo City' }
   end
@@ -13,6 +9,7 @@ RSpec.describe 'Rates for residence_permit_0_17' do
 
   before(:each) do
     refugee.reload
+    create_rate_categories_with_rates
     # Mandatories
     # refugee.residence_permit_at (defined below)
     # refugee.before_checked_out_to_our_city (checked_out_to_our_city defined below)
