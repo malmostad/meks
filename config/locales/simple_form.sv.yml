@@ -9,6 +9,13 @@ sv:
     error_notification:
       default_message: "Vänligen korrigera nedanstående markerade uppgifter."
 
+    options:
+      home:
+        type_of_cost:
+          per_day: Dygnskostnad
+          per_placement: Placeringskostnad
+          for_family_and_emergency_home: Familje-/jourhemskostnad
+
     labels:
       defaults: &defaults
         name: Namn
@@ -97,7 +104,7 @@ sv:
         languages: Språk
         active: Aktivt
         use_placement_specification: Använd placeringsspecifikation
-        use_placement_cost: Använd placeringskostnad
+        type_of_cost: Form av kostnad
 
       rate_category:
         <<: *defaults

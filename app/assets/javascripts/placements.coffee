@@ -14,7 +14,7 @@ $ ->
       $('#placement_specification').val('')
 
   setCostField = ->
-    if $homeSelect.find(':selected').attr('data-use-placement-cost') is 'true'
+    if $homeSelect.find(':selected').attr('data-type-of-cost') is 'per_placement'
       $placementCost.show()
     else
       $placementCost.hide()

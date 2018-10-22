@@ -1,10 +1,6 @@
 # Förväntad schablon för TUT 0-17
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for temporary_permit_0_17' do
-  before(:all) do
-    create_rate_categories_with_rates
-  end
-
   let(:municipality) do
     Municipality.where(id: Refugee::OUR_MUNICIPALITY_DEPARTMENT_ID).first_or_create { |m| m.name = 'Foo City' }
   end
@@ -13,6 +9,7 @@ RSpec.describe 'Rates for temporary_permit_0_17' do
 
   before(:each) do
     refugee.reload
+    create_rate_categories_with_rates
     # Mandatories
     # refugee.temporary_permit_starts_at (defined below)
     # refugee.temporary_permit_ends_at (defined below)

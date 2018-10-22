@@ -24,7 +24,7 @@
       = show_attribute('home.comment', @home.comment)
 
       %h2.group-title Ekonomi
-      = show_attribute('Använd placeringskostnad', @home.use_placement_cost? ? 'Ja' : 'Nej')
+      = show_attribute('Form av kostnad', I18n.t("simple_form.options.home.type_of_cost.#{@home.type_of_cost}"))
       = show_attribute('Dygnskostnader (kr)', @home.costs.map { |cost| "#{cost.amount} kr (#{cost.start_date} till #{cost.end_date})" }.join('<br>'))
 
       %h2.group-title Tillgänglighet

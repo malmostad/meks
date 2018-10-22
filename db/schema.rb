@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_09_122954) do
+ActiveRecord::Schema.define(version: 2018_10_19_112427) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 2018_10_09_122954) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "use_placement_specification", default: false
-    t.boolean "use_placement_cost", default: false
+    t.integer "type_of_cost"
     t.index ["name"], name: "index_homes_on_name", unique: true
     t.index ["owner_type_id"], name: "index_homes_on_owner_type_id"
   end

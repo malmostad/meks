@@ -49,7 +49,7 @@ class HomesController < ApplicationController
         :name, :phone, :fax, :address, :post_code,
         :postal_town, :guaranteed_seats, :movable_seats, :active, :comment,
         :use_placement_specification,
-        :use_placement_cost,
+        :type_of_cost,
         :owner_type_id,
         language_ids: [],
         target_group_ids: [],

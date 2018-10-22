@@ -2,15 +2,15 @@ $ ->
   $addPlacementCost = $('.form-group.add-cost')
 
   # Remove home costs if use_placement_cost
-  $("form").on "click", "#home_use_placement_cost", (event) ->
-    if $(@).is(':checked')
+  $("form").on "change", "#home_type_of_cost", (event) ->
+    if $(@).val() != 'per_day'
       $('.terms.cost').find('.fields_for_group').hide().find("input[type=hidden]").val(true)
       $addPlacementCost.hide()
     else
       $addPlacementCost.show()
 
   $(window).load ->
-    if $('#home_use_placement_cost').is(':checked')
+    if $('#home_type_of_cost').val() != 'per_day'
       $addPlacementCost.hide()
 
   daysInRange = (startDate, endData)  ->

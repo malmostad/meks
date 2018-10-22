@@ -46,7 +46,7 @@
       = f.simple_fields_for :placements do |placement|
         = placement.association :home,
             collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification,
-            'data-use-placement-cost' => h.use_placement_cost }] },
+            'data-type-of-cost' => h.type_of_cost }] },
             input_html: { class: 'chosen' }
         - if @pre_selected.present?
           = placement.association :legal_code, include_blank: false, selected: @pre_selected
