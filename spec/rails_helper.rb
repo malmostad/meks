@@ -44,6 +44,10 @@ RSpec.configure do |config|
   #   config.include ::Rails::Controller::Testing::Integration, type: type
   # end
 
+  config.before(:each) do
+    Capybara.reset_sessions!
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
