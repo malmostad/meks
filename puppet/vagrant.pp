@@ -19,8 +19,8 @@ class { '::mcommons::mysql':
 }
 
 class { '::mcommons::elasticsearch':
-  version => '5.x',
-  memory  => '48m',
+  version => '6.x',
+  memory  => '200m',
 }
 
 # -> exec {'Create ElasticSearch index':
@@ -42,7 +42,7 @@ class { '::mcommons::memcached':
 }
 
 class { '::mcommons::ruby':
-  version => '2.5.1',
+  version => '2.5.3',
 }
 
 class { 'mcommons::ruby::bundle_install': }
