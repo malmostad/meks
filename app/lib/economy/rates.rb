@@ -1,5 +1,5 @@
 module Economy
-  # Refugee rates (schabloner)
+  # Refugee rates (förväntade intäkter)
   # Comments in Swedish from project specs
   class Rates < Base
     # Return the number of days for each rate and the rate amount

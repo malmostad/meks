@@ -101,7 +101,7 @@ module Report
           query: payments(category).map { |payment| payment[:amount] * payment[:days] }.sum
         },
         {
-          heading: 'Avvikelse mellan förväntad och utbetald schablon',
+          heading: 'Avvikelse mellan förväntad intäkt och utbetald schablon',
           query: "=E#{row}-C#{row}"
         }
       ]

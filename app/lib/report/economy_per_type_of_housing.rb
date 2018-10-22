@@ -56,7 +56,7 @@ module Report
           query: '?'
         },
         {
-          heading: 'Avvikelse mellan förväntad och utbetald schablon',
+          heading: 'Avvikelse mellan förväntad intäkt och utbetald schablon',
           query: "=E#{row}-C#{row}"
         }
       ]
