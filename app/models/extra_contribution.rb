@@ -1,4 +1,4 @@
-# "Extra insatser"
+# "Extra insatser/extra kostnader"
 class ExtraContribution < ApplicationRecord
   belongs_to :refugee
   belongs_to :extra_contribution_type

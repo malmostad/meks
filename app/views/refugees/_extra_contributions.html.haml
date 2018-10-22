@@ -1,7 +1,7 @@
 .extra_contributions
-  %h2.group-title Extra insatser
+  %h2.group-title Extra insatser/extra kostnader
   - if @refugee.extra_contributions.blank?
-    %p Inga extra insatser är registrerade
+    %p Inga extra insatser/extra kostnader är registrerade
   - else
     - @refugee.extra_contributions.each do |extra_contribution|
       .extra_contribution
