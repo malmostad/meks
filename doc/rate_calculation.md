@@ -1,8 +1,8 @@
-# Beräkning av belopp för förväntad schablon
+# Beräkning av belopp för förväntad intäkt
 
-Beräkningen av belopp för förväntad schablon görs genom att ta reda på i vilket tidsintervall varje barn uppfyller villkoren för respektive schablonkategori inom det valda rapportintervall. Därefter beräknas antalet dagar som varje schablonbelopp inom de erhållna schablonkategori-intervallen för barnet gäller. Schablonbeloppen multipliceras med antal dagar de gäller inom respektive schablonkategori-intervall.
+Beräkningen av belopp för förväntad intäkt görs genom att ta reda på i vilket tidsintervall varje barn uppfyller villkoren för respektive schablonkategori inom det valda rapportintervall. Därefter beräknas antalet dagar som varje schablonbelopp inom de erhållna schablonkategori-intervallen för barnet gäller. Schablonbeloppen multipliceras med antal dagar de gäller inom respektive schablonkategori-intervall.
 
-De barn som får en förväntad schablon på 0 kronor har alltså inte uppfyllt något av schablonvillkoren under någon av de dagar som ingår i rapportintervallet.
+De barn som får en förväntad intäkt på 0 kronor har alltså inte uppfyllt något av schablonvillkoren under någon av de dagar som ingår i rapportintervallet.
 
 Exempel:
 
@@ -14,7 +14,7 @@ Exempel:
 * Samma barn har i rapportintervallet uppfyllt villkoren för "PUT-barn 0–17 år" under 2018-01-13––2018-02-28 vilket är 47 dagar. Schablonkategorin "PUT-barn 0–17 år" har under det intervallet haft en schablonkostnad:
   * 1285 kr.  1285 * 47 = 60395 kr.
 
-Schablonkostnaden för barnet under rapportintervallet är 24939 + 15864 + 60395 = 101198. I fältet förväntad schablon i Excelarket finns nu formeln =(1467*17 + 1322*12 + 1285*47) och beloppet 101198 visas.
+Schablonkostnaden för barnet under rapportintervallet är 24939 + 15864 + 60395 = 101198. I fältet förväntad intäkt i Excelarket finns nu formeln =(1467*17 + 1322*12 + 1285*47) och beloppet 101198 visas.
 
 Detta är en rad i Excelarket. Samma beräkningsmodell görs för varje barn, dvs. på varje rad i arket.
 

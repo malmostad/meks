@@ -89,7 +89,7 @@ module Report
           query: costs(category).map { |cost| cost[:amount] * cost[:days] }.sum
         },
         {
-          heading: 'Förväntad schablon',
+          heading: 'Förväntad intäkt',
           query: rates(category).map { |rate| rate[:amount] * rate[:days] }.sum
         },
         {

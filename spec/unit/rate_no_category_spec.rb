@@ -1,4 +1,4 @@
-# Förväntad schablon för TUT 0-17
+# Förväntad intäkt för TUT 0-17
 RSpec.describe 'Rates' do
   let(:refugee) { create(:refugee) }
 

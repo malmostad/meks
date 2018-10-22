@@ -1,4 +1,4 @@
-# Förväntad schablon för PUT 0-17
+# Förväntad intäkt för PUT 0-17
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for residence_permit_0_17' do
   let(:municipality) do

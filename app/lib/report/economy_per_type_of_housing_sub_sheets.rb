@@ -33,7 +33,7 @@ module Report
           )
         },
         {
-          heading: 'Förväntad schablon',
+          heading: 'Förväntad intäkt',
           # TODO: implement
           query: 0
         },

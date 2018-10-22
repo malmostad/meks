@@ -44,7 +44,7 @@ module Report
           query: 0 # self.class.sum_formula(type_of_housing.placements_cost_per_home)
         },
         {
-          heading: 'Förväntad schablon',
+          heading: 'Förväntad intäkt',
           query: 0 # rates(type_of_housing).map { |rate| rate[:amount] * rate[:days] }.sum
         },
         {

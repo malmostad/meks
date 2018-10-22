@@ -1,4 +1,4 @@
-# Förväntad schablon för PUT 18-20
+# Förväntad intäkt för PUT 18-20
 # See specifications of conditions in app/lib/economy/rates.rb
 #
 # The majority of test for this rate category is performed

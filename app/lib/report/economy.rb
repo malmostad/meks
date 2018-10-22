@@ -153,7 +153,7 @@ module Report
           )
         },
         {
-          heading: 'Förväntad schablon',
+          heading: 'Förväntad intäkt',
           query: self.class.sum_formula(self.class.days_amount_formula(
             ::Economy::Rates.for_all_rate_categories(refugee, @range)
           ))

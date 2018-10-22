@@ -60,7 +60,7 @@ module Report
           query: record[:costs]&.map { |cost| cost[:amount] * cost[:days] }&.sum
         },
         {
-          heading: 'Förväntad schablon',
+          heading: 'Förväntad intäkt',
           query: record[:rate].present? ? record[:rate][:amount] * record[:rate][:days] : ''
         },
         {
