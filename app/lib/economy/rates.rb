@@ -47,7 +47,7 @@ module Economy
     #    maxålder + 1 år - 1 dag
     #      :date_of_birth
     #  avslutsdatum - 1 dag
-    #      :deregistered
+    #      :before_deregistered
     #  anvisningsdatum - 1 dag
     #      :municipality_placement_migrationsverket_at
     #  TUT startar
