@@ -8,7 +8,7 @@ gem 'coffee-rails', '4.2.2'
 
 gem 'simple_form', '4.0.1'
 gem 'mysql2', '0.5.2'
-gem 'dalli', '2.7.8'
+gem 'dalli', '2.7.9'
 gem 'elasticsearch-model', '6.0.0'
 gem 'elasticsearch-rails', '6.0.0'
 gem 'daemons', '1.2.6'
@@ -36,7 +36,7 @@ group :development do
   gem 'capistrano', '3.11.0', require: false
   gem 'capistrano-rails', '1.4.0', require: false
   gem 'capistrano-rbenv', '2.1.4', require: false
-  gem 'capistrano-bundler', '1.3.0', require: false
+  gem 'capistrano-bundler', '1.4.0', require: false
   gem 'bullet'
   gem 'listen'
 end
