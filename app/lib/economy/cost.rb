@@ -10,9 +10,7 @@ module Economy
 
     def self.for_placements_and_home(placements, range = DEFAULT_DATE_RANGE)
       costs = placements_costs_and_days(placements, range)
-      costs.map do |c|
-        c[:amount] * c[:days]
-      end.sum
+      costs.sum { |c| c[:amount] * c[:days] }
     end
 
     def self.placements_costs_and_days(placements, range = DEFAULT_DATE_RANGE)
@@ -50,6 +48,7 @@ module Economy
 
     # Costs for family and emergency
     def self.family_and_emergency_costs(placement, range)
+      { amount: 0, days: 0, refugee: placement.refugee }
       # TODO: implement
     end
   end

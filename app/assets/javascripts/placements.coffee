@@ -13,17 +13,19 @@ $ ->
       $specification.hide()
       $('#placement_specification').val('')
 
-  setCostField = ->
-    if $homeSelect.find(':selected').attr('data-type-of-cost') is 'per_placement'
-      $placementCost.show()
-    else
+  setFieldsForTypeOfCost = ->
+    if $homeSelect.find(':selected').attr('data-type-of-cost') is 'per_day'
       $placementCost.hide()
       $placementCostField.val('')
+    else if $homeSelect.find(':selected').attr('data-type-of-cost') is 'per_placement'
+      $placementCost.show()
+    else if $homeSelect.find(':selected').attr('data-type-of-cost') is 'for_family_and_emergency_home'
+      console.log 'for_family_and_emergency_home'
 
   $homeSelect.change ->
     setSpecificationField()
-    setCostField()
+    setFieldsForTypeOfCost()
 
   $(window).load ->
-    setCostField()
     setSpecificationField()
+    setFieldsForTypeOfCost()
