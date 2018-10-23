@@ -2,6 +2,7 @@
 /config/database.yml
 /config/deploy/staging.rb
 /config/deploy/production.rb
+.byebug_history
 
 .DS_Store
 /.bundle
