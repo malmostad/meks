@@ -28,4 +28,12 @@ module ApplicationHelper
       content_tag(:div, raw(value), class: 'controls'),
       class: 'form-group')
   end
+
+  # show_attribute by chaining attributes to obj, e.g.
+  # simple_attribute placement, :refugee, :name
+  def simple_attribute(obj, *attr_chain)
+    name = "#{obj.class.name.underscore}.#{attr_chain.map(&:to_s).join('.')}".gsub(/\.$/, '')
+    value = attr_chain.inject(obj) { |o, a| o.send(a) }
+    show_attribute(name, value)
+  end
 end
