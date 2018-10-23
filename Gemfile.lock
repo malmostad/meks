@@ -65,6 +65,7 @@ GEM
     bullet (5.7.6)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11.0)
+    byebug (10.0.2)
     cancancan (2.3.0)
     capistrano (3.11.0)
       airbrussh (>= 1.0.0)
@@ -308,6 +309,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.12)
   bootstrap-datepicker-rails (= 1.8.0.1)
   bullet
+  byebug
   cancancan (= 2.3.0)
   capistrano (= 3.11.0)
   capistrano-bundler (= 1.4.0)

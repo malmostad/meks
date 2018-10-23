@@ -54,9 +54,9 @@ group :local_test do
   gem 'selenium-webdriver'
 end
 
-group :development, :test do
+group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  # gem 'byebug'
+  gem 'byebug'
 end
 
 group :test, :production do
