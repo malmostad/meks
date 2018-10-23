@@ -59,6 +59,8 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     arel (9.0.0)
     bcrypt (3.1.12)
+    bootstrap-datepicker-rails (1.8.0.1)
+      railties (>= 3.0)
     builder (3.2.3)
     bullet (5.7.6)
       activesupport (>= 3.0.0)
@@ -304,6 +306,7 @@ PLATFORMS
 DEPENDENCIES
   axlsx!
   bcrypt (~> 3.1.12)
+  bootstrap-datepicker-rails (= 1.8.0.1)
   bullet
   cancancan (= 2.3.0)
   capistrano (= 3.11.0)

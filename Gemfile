@@ -6,6 +6,9 @@ gem 'sass-rails', '5.0.7'
 gem 'uglifier', '4.1.19'
 gem 'coffee-rails', '4.2.2'
 
+# Version 1.5 that is included in Malmo Global Assets have bugs in the date range selector
+gem 'bootstrap-datepicker-rails', '1.8.0.1'
+
 gem 'simple_form', '4.0.1'
 gem 'mysql2', '0.5.2'
 gem 'dalli', '2.7.9'
