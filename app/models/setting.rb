@@ -1,3 +1,4 @@
+# 'Inställningar'
 # Simle key value settings
 class Setting < ApplicationRecord
   validates :key, presence: true, uniqueness: true, length: { maximum: 191 }

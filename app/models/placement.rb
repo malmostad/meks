@@ -1,3 +1,4 @@
+# 'Boendeplacering'
 class Placement < ApplicationRecord
   attr_reader :placement_time
 

@@ -1,3 +1,4 @@
+# 'Ensambkommande barn'
 class Refugee < ApplicationRecord
   # FIXME: hard coded
   OUR_MUNICIPALITY_DEPARTMENT_ID = 135

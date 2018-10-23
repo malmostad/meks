@@ -1,3 +1,4 @@
+# 'Anhörigform'
 class TypeOfRelationship < ApplicationRecord
   has_many :relationships, dependent: :nullify
 

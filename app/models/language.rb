@@ -1,3 +1,4 @@
+# 'Språk'
 class Language < ApplicationRecord
   has_and_belongs_to_many :homes
   has_and_belongs_to_many :refugees

@@ -1,3 +1,4 @@
+# 'Personnummer'
 # Refugee has date_of_birth and ssn_extension attributes, `ssns` are additional ones
 class Ssn < ApplicationRecord
   belongs_to :refugee

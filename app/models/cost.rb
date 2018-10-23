@@ -1,4 +1,5 @@
 # Cost for homes
+# 'Dygnskostnad'
 class Cost < ApplicationRecord
   belongs_to :home
 

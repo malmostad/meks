@@ -1,4 +1,4 @@
-# A.k.a. 'Schablon'
+# 'Schablongrupp'
 class RateCategory < ApplicationRecord
   # `enum` maps qualifier number in DB to the qualifiers below
   # `meth` is used for sending qualifiers to a method to select refugees

@@ -1,3 +1,4 @@
+# 'Utbetalda schabloner'
 # Parsing a tab or semicolon separated csv file with on payment on each row.
 # 4 mandatory and 1 optional field per row:
 #   dossier_number, e.g. 123456

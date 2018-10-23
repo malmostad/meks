@@ -1,3 +1,4 @@
+# 'Kön'
 class Gender < ApplicationRecord
   has_many :refugees, dependent: :nullify
 

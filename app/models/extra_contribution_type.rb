@@ -1,3 +1,4 @@
+# 'Extra insatsformer/extra kostnader'
 class ExtraContributionType < ApplicationRecord
   has_many :extra_contributions, dependent: :nullify
 

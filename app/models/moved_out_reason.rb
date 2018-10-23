@@ -1,3 +1,4 @@
+# 'Anledning till utskrivning'
 class MovedOutReason < ApplicationRecord
   has_many :placements, dependent: :nullify
 

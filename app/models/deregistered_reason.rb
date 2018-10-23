@@ -1,3 +1,4 @@
+# "Avslutsorsak"
 class DeregisteredReason < ApplicationRecord
   has_many :refugees, dependent: :nullify
 

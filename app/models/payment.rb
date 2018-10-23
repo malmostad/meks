@@ -1,3 +1,4 @@
+# 'Utbetalning'
 class Payment < ApplicationRecord
   attr_accessor :amount_as_string
 

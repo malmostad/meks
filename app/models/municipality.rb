@@ -1,3 +1,4 @@
+# 'Kommun'
 class Municipality < ApplicationRecord
   has_many :refugees, dependent: :nullify
 

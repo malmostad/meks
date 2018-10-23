@@ -1,3 +1,4 @@
+# 'Handläggare'
 class User < ApplicationRecord
   has_many :payment_imports
 

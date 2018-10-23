@@ -1,3 +1,4 @@
+# 'Lagrum'
 class LegalCode < ApplicationRecord
   has_many :placements, dependent: :nullify
 

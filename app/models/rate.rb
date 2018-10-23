@@ -1,4 +1,5 @@
-# Amount for RateCategory (Schablon)
+# 'Schablon' or 'Förväntad intäkt'
+# Amount for RateCategory ()
 class Rate < ApplicationRecord
   belongs_to :rate_category
 

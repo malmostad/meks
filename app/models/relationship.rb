@@ -1,3 +1,4 @@
+# 'Anhörig'
 class Relationship < ApplicationRecord
   belongs_to :refugee, touch: true
   belongs_to :related, class_name: 'Refugee', touch: true

@@ -1,3 +1,4 @@
+# 'Boende'
 class Home < ApplicationRecord
   enum type_of_cost: %i[
     per_day
