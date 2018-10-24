@@ -43,7 +43,9 @@ sv:
         languages: Språk
         countries: Land
         ssn: Personnummer
+        extra_ssns: Extra personnummer
         date_of_birth: Födelsedag
+        age: Ålder
         ssn_extension: Fyra sista
         ssns:
           date_of_birth: Födelsedag
@@ -74,6 +76,8 @@ sv:
         other_relateds: Anhöriga utanför systemet
         social_worker: Socialsekreterare
         in_arrival: I ankomst
+        current_placement: Aktuellt boende
+        current_asylum: Asylstatus
         placements:
           <<: *placement
 

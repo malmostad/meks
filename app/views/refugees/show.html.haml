@@ -12,50 +12,56 @@
         .secrecy= 'Sekretess'
 
     = form_for @refugee, html: { class: 'basic' } do |f|
-      = show_attribute('refugee.sof_placement', @refugee.sof_placement ? 'Ja' : 'Nej')
-      = show_attribute('refugee.name', @refugee.name)
-      = show_attribute('Personnummer', @refugee.ssn)
-      = show_attribute('Dossiernummer', @refugee.dossier_number)
-      = show_attribute('Aktuellt boende', @refugee.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(', '))
-      = show_attribute('Asylstatus', Economy::Status.new(@refugee).format_asylum)
+      = kv 'refugee.sof_placement', @refugee.sof_placement ? 'Ja' : 'Nej'
+      = kv @refugee, :name
+      = kv @refugee, :ssn
+      = kv @refugee, :dossier_number
+      = kv 'refugee.current_placement',
+           @refugee.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(', ')
+      = kv 'refugee.current_asylum', Economy::Status.new(@refugee).format_asylum
 
       %h2.group-title Personuppgifter
-      = show_attribute('Personnummer', @refugee.ssn)
-      = show_attribute('Extra personnummer', @refugee.ssns.map(&:full_ssn).join('<br>'))
+      = kv @refugee, :ssn
+      = kv 'refugee.extra_ssns', @refugee.ssns.map(&:full_ssn).join('<br>')
 
-      = show_attribute('Dossiernummer', @refugee.dossier_number)
-      = show_attribute('Extra dossiernummer', @refugee.dossier_numbers.map(&:name).join('<br>'))
-      = show_attribute('Ålder', @refugee.age)
+      = kv @refugee, :dossier_number
+      = kv 'refugee.dossier_numbers', @refugee.dossier_numbers.map(&:name).join('<br>')
+      = kv @refugee, :age
 
-      = show_attribute('refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet')
+      = kv 'refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet'
 
-      = show_attribute('refugee.languages', @refugee.languages.map(&:name).join(', '))
-      = show_attribute('refugee.countries', @refugee.countries.map(&:name).join(', '))
-      = show_attribute('refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej')
-      = show_attribute('refugee.social_worker', @refugee.social_worker)
+      = kv 'refugee.languages', @refugee.languages.map(&:name).join(', ')
+      = kv 'refugee.countries', @refugee.countries.map(&:name).join(', ')
+      = kv 'refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej'
+      = kv @refugee, :social_worker
 
       %h2.group-title Asylstatus
-      = show_attribute('refugee.registered', @refugee.registered)
-      = show_attribute('refugee.residence_permit_at', @refugee.residence_permit_at)
-      = show_attribute('refugee.checked_out_to_our_city', @refugee.checked_out_to_our_city)
-      = show_attribute('refugee.temporary_permit_starts_at', @refugee.temporary_permit_starts_at)
-      = show_attribute('refugee.temporary_permit_ends_at', @refugee.temporary_permit_ends_at)
-      = show_attribute('refugee.citizenship_at', @refugee.citizenship_at)
-      = show_attribute('refugee.municipality', @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen')
-      = show_attribute('refugee.municipality_placement_migrationsverket_at', @refugee.municipality_placement_migrationsverket_at)
-      = show_attribute('refugee.municipality_placement_per_agreement_at', @refugee.municipality_placement_per_agreement_at)
-      = show_attribute('refugee.municipality_placement_comment', @refugee.municipality_placement_comment)
-      = show_attribute('refugee.deregistered', @refugee.deregistered)
-      = show_attribute('refugee.deregistered_reason', @refugee.deregistered_reason.present? ? @refugee.deregistered_reason.name : '')
-      = show_attribute('refugee.deregistered_comment', @refugee.deregistered_comment)
+      = kv @refugee, :registered
+      = kv @refugee, :residence_permit_at
+      = kv @refugee, :checked_out_to_our_city
+      = kv @refugee, :temporary_permit_starts_at
+      = kv @refugee, :temporary_permit_ends_at
+      = kv @refugee, :citizenship_at
+      = kv 'refugee.municipality',
+        @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen'
+      = kv @refugee, :municipality_placement_migrationsverket_at
+      = kv @refugee, :municipality_placement_per_agreement_at
+      = kv @refugee, :municipality_placement_comment
+      = kv @refugee, :deregistered
+      = kv 'refugee.deregistered_reason',
+        @refugee.deregistered_reason.present? ? @refugee.deregistered_reason.name : ''
+      = kv @refugee, :deregistered_comment
 
       = render 'placements'
       = render 'relateds'
 
       %h2.group-title Ekonomi
-      = show_attribute('Total placeringskostnad', number_to_currency(Economy::Cost.for_placements_and_home(@refugee.placements), delimiter: ' '))
-      = show_attribute('Förväntad intäktkonstnad', number_to_currency(@refugee.total_rate.to_s, delimiter: ' '))
-      = show_attribute('Total utbetald schablon',    number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' '))
+      = kv 'Total placeringskostnad',
+           number_to_currency(Economy::Cost.for_placements_and_home(@refugee.placements), delimiter: ' ')
+      = kv 'Förväntad intäktkonstnad',
+           number_to_currency(@refugee.total_rate.to_s, delimiter: ' ')
+      = kv 'Total utbetald schablon',
+           number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' ')
 
       = render 'extra_contributions'
 
