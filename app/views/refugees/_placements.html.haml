@@ -13,8 +13,7 @@
       - if placement.home.use_placement_specification?
         = kv placement, :specification
 
-      = kv 'placement.legal_code',
-           placement.legal_code.present? ? placement.legal_code.name : ''
+      = kv 'placement.legal_code', placement.legal_code&.name
       = kv 'Boendetid', "#{placement.placement_time} dagar"
       = kv placement, :moved_in_at
 
@@ -27,6 +26,11 @@
            "#{number_to_currency(placement.cost_per_day, delimiter: ' ')}"
       = kv 'placement.cost',
            "#{number_to_currency(placement.cost_sum, delimiter: ' ')}"
+
+      - if placement.home.for_family_and_emergency_home?
+        - placement.placement_extra_costs.each do |placement_extra_cost|
+          = kv 'placement.extra_cost',
+               "#{placement_extra_cost.date}, #{number_to_currency(placement_extra_cost.amount, delimiter: ' ')}"
 
       - if can? :edit, @refugee
         .form-group.action
