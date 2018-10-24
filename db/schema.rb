@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_141156) do
   create_table "placement_extra_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "placement_id"
     t.date "date"
-    t.decimal "amount", precision: 10, scale: 2, default: "0.0"
+    t.decimal "amount", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["placement_id"], name: "index_placement_extra_costs_on_placement_id"
