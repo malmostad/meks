@@ -1,0 +1,10 @@
+= pec.input :name, label: 'Extra omkostnad', wrapper: :addon do
+  = pec.input_field :_destroy, as: :hidden
+
+  .input-group.placement_extra_cost.date
+    = pec.input_field :date, as: :string, class: "form-control date", placeholder: 'datum'
+    .input-group-addon= ''
+    = pec.input_field :amount, class: "form-control amount", placeholder: 'belopp'
+    %span.input-group-btn
+      %button.btn.btn-default.remove{ type: :button }
+        %span.m-icon-close-0

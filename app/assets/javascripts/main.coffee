@@ -9,6 +9,7 @@ $ ->
       todayBtn: true
       orientation: 'auto'
       keyboardNavigation: false
+    .attr('autocomplete', 'off')
 
   add_calendar()
 

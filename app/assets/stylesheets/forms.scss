@@ -65,6 +65,12 @@
         width: 6em;
       }
     }
+
+    .input-group.placement_extra_cost {
+      input {
+        width: 9em;
+      }
+    }
     .form-group.home_costs_amount,
     .form-group.rate_category_rates_amount {
       input {
