@@ -1,6 +1,6 @@
 = show_attribute('Namn', @refugee.name)
 = f.association :home,
-                collection: @homes.map { |h| [h.name, h.id, { 'data-use-specification' => h.use_placement_specification,
+                collection: @homes.map { |h| [home_and_type_of_cost(h), h.id, { 'data-use-specification' => h.use_placement_specification,
                 'data-type-of-cost' => h.type_of_cost }] },
                 input_html: { class: 'chosen' }
 
