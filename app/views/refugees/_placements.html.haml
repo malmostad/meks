@@ -6,7 +6,7 @@
 
   - @refugee.placements.order(:moved_in_at).each do |placement|
     .placement
-      = kv 'refugee.home', (link_to placement.home.name, home_path(placement.home))
+      = kv 'refugee.home', link_to(placement.home.name, home_path(placement.home))
       = kv "Aktuell dygnskostnad för #{placement.home.name}",
            "#{number_to_currency(placement.home.current_cost, delimiter: ' ')}"
 
