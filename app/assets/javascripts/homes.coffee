@@ -19,8 +19,3 @@ $ ->
     endDate = new Date("Mar 31 2017")
     days = Math.round(Math.abs((startDate.getTime() - endDate.getTime())/(oneDay)))
     days++ # includes both start and end date
-
-  toCost = (group) ->
-    days = daysInRange(startDate, endData)
-    x = [startDate, endData, seats]
-    days / seats
