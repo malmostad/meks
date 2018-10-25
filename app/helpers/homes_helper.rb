@@ -9,4 +9,8 @@ module HomesHelper
       name
     end
   end
+
+  def home_and_type_of_cost(home)
+    "#{home.name} (#{I18n.t('simple_form.options.home.type_of_cost.' + home.type_of_cost)})"
+  end
 end
