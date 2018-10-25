@@ -12,9 +12,9 @@
 = f.input :specification
 = f.input :cost
 
-.terms
-  -# = f.simple_fields_for :placement_extra_costs do |pec|
-  -#   = render "fields_for_placement_extra_cost", pec: pec
+.terms.placement_extra_costs
+  = f.simple_fields_for :placement_extra_costs do |pec|
+    = render "fields_for_placement_extra_cost", pec: pec
   .form-group
     %span.control-label
     .controls

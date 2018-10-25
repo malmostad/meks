@@ -1,5 +1,5 @@
 = pec.input :name, label: 'Extra omkostnad', wrapper: :addon do
-  = pec.input_field :_destroy, as: :hidden
+  = pec.input_field :_destroy, as: :hidden, class: :destroy
 
   .input-group.placement_extra_cost.date
     = pec.input_field :date, as: :string, class: "form-control date", placeholder: 'datum'

@@ -4,7 +4,10 @@ class Placement < ApplicationRecord
   belongs_to :home, touch: true
   belongs_to :moved_out_reason
   belongs_to :legal_code
+
   has_many :placement_extra_costs, dependent: :destroy
+  accepts_nested_attributes_for :placement_extra_costs, allow_destroy: true, reject_if: :all_blank
+  validates_associated :placement_extra_costs
 
   validates_presence_of :home
   validates_presence_of :refugee
