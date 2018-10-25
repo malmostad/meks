@@ -1,7 +1,5 @@
 # 'Boendeplacering'
 class Placement < ApplicationRecord
-  attr_reader :placement_time
-
   belongs_to :refugee, touch: true
   belongs_to :home, touch: true
   belongs_to :moved_out_reason
@@ -9,6 +7,7 @@ class Placement < ApplicationRecord
   has_many :placement_extra_costs, dependent: :destroy
 
   validates_presence_of :home
+  validates_presence_of :refugee
   validates_presence_of :moved_in_at
   validates_presence_of :legal_code
 
@@ -23,7 +22,7 @@ class Placement < ApplicationRecord
       .where('moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
   end
 
-  def self.overlapping_by_refugee(from, to, home_id)
+  def self.overlapping_by_refugee(from, to)
     # Within range
     range_from = begin; Date.parse(from).to_s; rescue; (Date.today - 10.years).to_s; end
     range_to   = begin; Date.parse(to).to_s; rescue; Date.today.to_s; end
@@ -59,12 +58,14 @@ class Placement < ApplicationRecord
 
   def placement_time
     return 0 if moved_in_at.blank?
+
     days = moved_out_at.present? ? (moved_out_at - moved_in_at).to_i : (Date.today - moved_in_at).to_i
     days + 1
   end
 
   def cost_per_day
     return 0 unless placement_time.positive?
+
     cost_sum / placement_time
   end
 

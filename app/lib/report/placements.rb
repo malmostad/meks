@@ -26,7 +26,7 @@ module Report
 
         # Select overlapping placements per refugee
         if @selection == 'overlapping'
-          placements = placements.overlapping_by_refugee(@from, @to, @home_id)
+          placements = placements.overlapping_by_refugee(@from, @to)
         end
         placements
       end
