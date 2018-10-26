@@ -1,10 +1,9 @@
 $ ->
-  $addPlacementCost = $('.form-group.add-cost')
+  $addPlacementCost = $('.form-group.add-cost, .terms.cost')
 
   # Remove home costs if use_placement_cost
   $("form").on "change", "#home_type_of_cost", (event) ->
     if $(@).val() != 'per_day'
-      $('.terms.cost').find('.fields_for_group').hide().find("input[type=hidden]").val(true)
       $addPlacementCost.hide()
     else
       $addPlacementCost.show()

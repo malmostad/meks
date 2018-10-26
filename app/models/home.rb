@@ -1,5 +1,10 @@
 # 'Boende'
 class Home < ApplicationRecord
+  # Each home is of one of those types.
+  # 'Dygnskostnad', 'Placeringskostnad', 'Familje/jourhemskostnad'
+  # :cost_per_day is set on the home
+  # :cost_per_placement is set once on placements
+  # :costs_for_family_and_emergency_home are multiple costs set on plcements
   enum type_of_cost: %i[
     per_day
     per_placement
@@ -21,6 +26,20 @@ class Home < ApplicationRecord
   validates_uniqueness_of :name, case_sensitive: false
   validates_presence_of :name
   validates_length_of :name, maximum: 191
+
+  # Remove data not allowed for the home and it's placements
+  before_save do
+    costs.destroy_all unless home.per_day? # Based on Home#type_of_cost
+
+    placements.each do |placement|
+      placement.specification = nil unless use_placement_specification?
+
+      # Based on Home#type_of_cost
+      placement.cost.destroy unless per_placement?
+      # TODO: add destroy_all for 'Familje/jourhemskostnaden' after implemented. => unless home.for_family_and_emergency_home?
+      placement.extra_costs.destroy_all unless for_family_and_emergency_home?
+    end
+  end
 
   after_save do
     # Rollback transaction if cost date ranges overlaps

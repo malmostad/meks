@@ -20,6 +20,16 @@ class Placement < ApplicationRecord
     end
   end
 
+  # Remove data not allowed for the home the placement used
+  before_save do
+    self.specification = nil unless home.use_placement_specification?
+
+    # Based on Home#type_of_cost
+    placement_extra_costs.destroy_all unless home.for_family_and_emergency_home?
+    # TODO: add destroy_all for 'Familje/jourhemskostnaden' after implemented. => unless home.for_family_and_emergency_home?
+    costs.destroy_all unless home.per_placement?
+  end
+
   def self.within_range(from, to)
     where('moved_in_at <= ?', to.to_date)
       .where('moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
