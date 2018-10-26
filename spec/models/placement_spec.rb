@@ -106,4 +106,71 @@ RSpec.describe Placement, type: :model do
       end
     end
   end
+
+  describe 'use_placement_specification' do
+    it 'placement not should have specification after home change' do
+      home = create(:home, use_placement_specification: true)
+      create(:placement, specification: 'foo', home: home)
+      home.reload
+      expect(home.placements.last.specification).to eq 'foo'
+
+      home.update_attribute(:use_placement_specification, false)
+      home.reload
+      expect(home.placements.last.specification).to be_nil
+    end
+  end
+
+  describe 'homes type_of_cost' do
+    let(:home_cost_per_day) do
+      home = create(:home, type_of_cost: :cost_per_day)
+      create(:cost, home: home)
+      home.reload
+    end
+
+    let(:home_cost_per_placement) do
+      home = create(:home, type_of_cost: :cost_per_placement)
+      create(:placement, cost: 123, home: home)
+      home.reload
+    end
+
+    let(:home_cost_for_family_and_emergency_home) do
+      home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+      placement = create(:placement, home: home)
+      create(:placement_extra_cost, placement: placement)
+      home.reload
+    end
+
+    describe 'cost_per_day' do
+      it 'should have costs destroyed after changed home to type of cost_per_placement' do
+        home = home_cost_per_day
+        expect(home.costs).not_to be_empty
+
+        home.update_attribute(:type_of_cost, :cost_per_placement)
+        home.reload
+        expect(home.costs).to be_empty
+      end
+    end
+
+    describe 'cost_per_placement' do
+      it 'should have costs destroyed after changed home to type of cost_per_day' do
+        home = home_cost_per_placement
+        expect(home.placements.first.cost).not_to be_nil
+
+        home.update_attribute(:type_of_cost, :cost_per_day)
+        home.reload
+        expect(home.placements.first.cost).to be_nil
+      end
+    end
+
+    describe 'cost_for_family_and_emergency_home' do
+      it 'should have costs destroyed after changed home to type of cost_per_day' do
+        home = home_cost_for_family_and_emergency_home
+        expect(home.placements.first.placement_extra_costs).not_to be_empty
+
+        home.update_attribute(:type_of_cost, :cost_per_day)
+        home.reload
+        expect(home.placements.first.placement_extra_costs).to be_empty
+      end
+    end
+  end
 end

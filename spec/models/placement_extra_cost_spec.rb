@@ -16,10 +16,6 @@ RSpec.describe PlacementExtraCost, type: :model do
       expect(build(:placement_extra_cost, amount: nil)).not_to be_valid
     end
 
-    it 'should require a placement' do
-      expect(build(:placement_extra_cost, placement: nil)).not_to be_valid
-    end
-
     it 'should require amount to be numericality' do
       expect(build(:placement_extra_cost, amount: 'foo')).not_to be_valid
     end
