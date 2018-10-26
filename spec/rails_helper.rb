@@ -44,6 +44,10 @@ RSpec.configure do |config|
   #   config.include ::Rails::Controller::Testing::Integration, type: type
   # end
 
+  config.before(:suite) do
+    system('rm -rf tmp')
+  end
+
   config.before(:each) do
     Capybara.reset_sessions!
   end
