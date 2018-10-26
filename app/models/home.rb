@@ -1,10 +1,9 @@
 # 'Boende'
 class Home < ApplicationRecord
   # Each home is of one of those types.
-  # 'Dygnskostnad', 'Placeringskostnad', 'Familje/jourhemskostnad'
-  # :cost_per_day is set on the home
-  # :cost_per_placement is set once on placements
-  # :cost_for_family_and_emergency_home are multiple costs set on plcements
+  # :cost_per_day is set on the home ('Dygnskostnad')
+  # :cost_per_placement is set once on placements ('Placeringskostnad')
+  # :cost_for_family_and_emergency_home are multiple costs set on plcements ('Familje/jourhemskostnad')
   enum type_of_cost: %i[
     cost_per_day
     cost_per_placement
