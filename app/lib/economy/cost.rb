@@ -20,11 +20,11 @@ module Economy
         args = [placement, from: from, to: to]
 
         # Which type_of_cost?
-        if placement.home.per_day?
+        if placement.home.cost_per_day?
           placement_home_costs(*args)
-        elsif placement.home.per_placement?
+        elsif placement.home.cost_per_placement?
           placement_cost(*args)
-        elsif placement.home.for_family_and_emergency_home?
+        elsif placement.home.cost_for_family_and_emergency_home?
           family_and_emergency_costs(*args)
         end
       end.flatten

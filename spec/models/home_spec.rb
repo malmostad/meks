@@ -106,7 +106,7 @@ RSpec.describe Home, type: :model do
     end
 
     it "home placement should have specification" do
-      home2 = create(:home)
+      home2 = create(:home, use_placement_specification: true)
       home2.placements << create(:placement, specification: 'foo', home: home2)
 
       expect(home2.placements.last.specification).to eq 'foo'

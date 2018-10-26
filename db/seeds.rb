@@ -33,9 +33,9 @@ end
     movable_seats: rand(100) + 1
   )
   if rand(0...5).zero?
-    h.update_attribute(:type_of_cost, :per_placement)
+    h.update_attribute(:type_of_cost, :cost_per_placement)
   else
-    h.update_attribute(:type_of_cost, :per_day)
+    h.update_attribute(:type_of_cost, :cost_per_day)
     h.costs << Cost.create(
       amount: rand(1000...2500),
       start_date: Date.today - rand(60...180).days,

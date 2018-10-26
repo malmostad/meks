@@ -12,9 +12,9 @@ sv:
     options:
       home:
         type_of_cost:
-          per_day: Dygnskostnad
-          per_placement: Placeringskostnad
-          for_family_and_emergency_home: Familje-/jourhemskostnad
+          cost_per_day: Dygnskostnad
+          cost_per_placement: Placeringskostnad
+          cost_for_family_and_emergency_home: Familje-/jourhemskostnad
 
     labels:
       defaults: &defaults

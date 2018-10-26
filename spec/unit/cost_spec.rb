@@ -16,7 +16,7 @@ RSpec.describe 'Cost calculation' do
     expect(cost.amount).not_to be nil
   end
 
-  describe 'Cost calculations for a home type_of_cost set to per_day' do
+  describe 'Cost calculations for a home type_of_cost set to cost_per_day' do
     it 'home should have a cost' do
       expect(home.costs.to_a.size).to eq 1
     end

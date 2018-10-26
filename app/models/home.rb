@@ -4,11 +4,11 @@ class Home < ApplicationRecord
   # 'Dygnskostnad', 'Placeringskostnad', 'Familje/jourhemskostnad'
   # :cost_per_day is set on the home
   # :cost_per_placement is set once on placements
-  # :costs_for_family_and_emergency_home are multiple costs set on plcements
+  # :cost_for_family_and_emergency_home are multiple costs set on plcements
   enum type_of_cost: %i[
-    per_day
-    per_placement
-    for_family_and_emergency_home
+    cost_per_day
+    cost_per_placement
+    cost_for_family_and_emergency_home
   ]
 
   has_many :placements, dependent: :destroy
@@ -29,15 +29,15 @@ class Home < ApplicationRecord
 
   # Remove data not allowed for the home and it's placements
   before_save do
-    costs.destroy_all unless home.per_day? # Based on Home#type_of_cost
+    costs.destroy_all unless cost_per_day? # Based on Home#type_of_cost
 
     placements.each do |placement|
       placement.specification = nil unless use_placement_specification?
 
       # Based on Home#type_of_cost
-      placement.cost.destroy unless per_placement?
-      # TODO: add destroy_all for 'Familje/jourhemskostnaden' after implemented. => unless home.for_family_and_emergency_home?
-      placement.extra_costs.destroy_all unless for_family_and_emergency_home?
+      placement.cost = nil unless cost_per_placement?
+      # TODO: add destroy_all for 'Familje/jourhemskostnaden' after implemented. => unless home.cost_for_family_and_emergency_home?
+      placement.extra_costs.destroy_all unless cost_for_family_and_emergency_home?
     end
   end
 
@@ -76,7 +76,7 @@ class Home < ApplicationRecord
   end
 
   def current_cost?
-    return true if per_placement?
+    return true if cost_per_placement?
 
     costs.each do |cost|
       return true if cost.end_date >= Date.today

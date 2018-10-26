@@ -32,9 +32,11 @@ RSpec.describe PlacementExtraCost, type: :model do
     end
 
     it 'should delete the placement_extra_cost reference for a placement' do
-      placement = create(:placement)
+      home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+      placement = create(:placement, home: home)
       placement_extra_cost = create(:placement_extra_cost, placement: placement)
       expect(placement_extra_cost.placement).not_to be_blank
+      placement.reload
       placement.destroy
       expect(PlacementExtraCost.where(id: placement_extra_cost.id)).to be_blank
     end
