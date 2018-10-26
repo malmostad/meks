@@ -112,6 +112,14 @@ RSpec.describe Home, type: :model do
       expect(home2.placements.last.specification).to eq 'foo'
     end
 
+    it "home placement should not have specification after home change" do
+      home2 = create(:home, use_placement_specification: true)
+      home2.placements << create(:placement, specification: 'foo', home: home2)
+      home2.update_attribute(:use_placement_specification, false)
+
+      expect(home2.placements.last.specification).to eq nil
+    end
+
     it "should not have a placement after the home is deleted" do
       refugee = home.placements.first.refugee
       refugee.destroy
@@ -151,8 +159,41 @@ RSpec.describe Home, type: :model do
 
   describe 'calcution' do
     it "should get number of seats right" do
-      home = Home.create(name: "Home name", guaranteed_seats: 9, movable_seats: 7)
+      home = create(:home, guaranteed_seats: 9, movable_seats: 7)
       expect(home.seats).to eq(16)
+    end
+  end
+
+  describe 'type_of_cost cost_per_day' do
+    it "should have costs destroyed after set to cost_per_placement" do
+      home = create(:home, type_of_cost: :cost_per_day)
+      create(:cost, home: home)
+      home.reload
+      expect(home.costs).not_to be_empty
+
+      home.update_attribute(:type_of_cost, :cost_per_placement)
+      home.reload
+      expect(home.costs).to be_empty
+    end
+
+    it "should have costs destroyed after set to cost_for_family_and_emergency_home" do
+      home = create(:home, type_of_cost: :cost_per_day)
+      create(:cost, home: home)
+      home.reload
+      expect(home.costs).not_to be_empty
+
+      home.update_attribute(:type_of_cost, :cost_for_family_and_emergency_home)
+      home.reload
+      expect(home.costs).to be_empty
+    end
+
+    it "should allow costs after changed to cost_per_day" do
+      home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+
+      home.update_attribute(:type_of_cost, :cost_per_day)
+      create(:cost, home: home)
+      home.reload
+      expect(home.costs).not_to be_empty
     end
   end
 end
