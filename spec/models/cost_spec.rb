@@ -35,4 +35,16 @@ RSpec.describe Cost, type: :model do
       expect(home.costs).not_to be_present
     end
   end
+
+  describe 'type_of_cost' do
+    it "should not allow costs after set cost_per_placement" do
+      home = create(:home, type_of_cost: :cost_per_placement)
+      expect(build(:cost, home: home)).not_to be_valid
+    end
+
+    it "should not allow costs after set cost_for_family_and_emergency_home" do
+      home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+      expect(build(:cost, home: home)).not_to be_valid
+    end
+  end
 end
