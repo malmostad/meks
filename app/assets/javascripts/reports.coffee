@@ -7,6 +7,8 @@ $ ->
     todayBtn: true
     orientation: 'auto'
     keyboardNavigation: false
+  .find('input')
+  .attr('autocomplete', 'off')
 
   # Check and update download status
   $reportsStatus = $('.reports.status')
