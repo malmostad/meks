@@ -9,6 +9,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:manage, Refugee.new) }
     it { should be_able_to(:manage, ExtraContribution.new) }
     it { should be_able_to(:manage, ExtraContributionType.new) }
+    it { should be_able_to(:manage, RefugeeExtraCost.new) }
     it { should be_able_to(:manage, Home.new) }
     it { should be_able_to(:manage, Placement.new) }
     it { should be_able_to(:manage, Relationship.new) }
@@ -27,6 +28,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:read, Refugee.new) }
     it { should be_able_to(:read, ExtraContribution.new) }
     it { should be_able_to(:read, ExtraContributionType.new) }
+    it { should be_able_to(:read, RefugeeExtraCost.new) }
     it { should be_able_to(:read, Home.new) }
     it { should be_able_to(:read, Placement.new) }
     it { should be_able_to(:read, Relationship.new) }
@@ -52,6 +54,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:destroy, Refugee.new) }
     it { should be_able_to(:destroy, ExtraContribution.new) }
     it { should be_able_to(:destroy, ExtraContributionType.new) }
+    it { should be_able_to(:destroy, RefugeeExtraCost.new) }
 
     it { should_not be_able_to(:destroy, Home.new) }
     it { should_not be_able_to(:create, RateCategory.new) }

@@ -32,6 +32,7 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:read, TypeOfHousing.new) }
     it { should_not be_able_to(:read, TypeOfRelationship.new) }
     it { should_not be_able_to(:manage, Refugee.new) }
+    it { should_not be_able_to(:manage, RefugeeExtraCost.new) }
     it { should_not be_able_to(:manage, ExtraContribution.new) }
     it { should_not be_able_to(:manage, ExtraContributionType.new) }
     it { should_not be_able_to(:read, ExtraContributionType.new) }
