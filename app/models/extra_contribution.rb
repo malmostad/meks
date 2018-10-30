@@ -1,6 +1,6 @@
 # "Extra insatser"
 class ExtraContribution < ApplicationRecord
-  belongs_to :refugee
+  belongs_to :refugee, touch: true
   belongs_to :extra_contribution_type
 
   validates_presence_of :period_start, :period_end,

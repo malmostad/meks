@@ -12,6 +12,7 @@
         .secrecy= 'Sekretess'
 
     = form_for @refugee, html: { class: 'basic' } do |f|
+      = kv 'refugee.updated_at', @refugee.updated_at.to_s[0..18]
       = kv 'refugee.sof_placement', @refugee.sof_placement ? 'Ja' : 'Nej'
       = kv @refugee, :name
       = kv @refugee, :ssn

@@ -199,6 +199,10 @@ module Report
         {
           heading: 'Extra dossiernummer',
           query: refugee.dossier_numbers.map(&:name).join(', ')
+        },
+        {
+          heading: 'refugee.updated_at',
+          query: refugee.updated_at.to_s[0..18]
         }
       ]
     end

@@ -1,6 +1,6 @@
 # 'Extra kostnad (knuten till barn)'
 class RefugeeExtraCost < ApplicationRecord
-  belongs_to :refugee
+  belongs_to :refugee, touch: true
 
   validates_presence_of :date, :amount
   validates :amount, numericality: true, allow_blank: true

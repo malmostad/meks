@@ -176,6 +176,10 @@ module Report
         {
           heading: 'refugee.gender',
           query: refugee.gender.try(:name)
+        },
+        {
+          heading: 'refugee.updated_at',
+          query: refugee.updated_at.to_s[0..18]
         }
       ]
     end
