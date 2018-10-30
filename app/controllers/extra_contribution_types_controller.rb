@@ -16,7 +16,7 @@ class ExtraContributionTypesController < ApplicationController
     @extra_contribution_type = ExtraContributionType.new(extra_contribution_type_params)
 
     if @extra_contribution_type.save
-      redirect_to extra_contribution_types_path, notice: 'Insatsformen/kostnaden skapades'
+      redirect_to extra_contribution_types_path, notice: 'Insatsformen skapades'
     else
       render :new
     end
@@ -24,7 +24,7 @@ class ExtraContributionTypesController < ApplicationController
 
   def update
     if @extra_contribution_type.update(extra_contribution_type_params)
-      redirect_to extra_contribution_types_path, notice: 'Insatsformen/kostnaden uppdaterades'
+      redirect_to extra_contribution_types_path, notice: 'Insatsformen uppdaterades'
     else
       render :edit
     end
@@ -32,7 +32,7 @@ class ExtraContributionTypesController < ApplicationController
 
   def destroy
     @extra_contribution_type.destroy
-    redirect_to extra_contribution_types_path, notice: 'Insatsformen/kostnaden raderades'
+    redirect_to extra_contribution_types_path, notice: 'Insatsformen raderades'
   end
 
   private
