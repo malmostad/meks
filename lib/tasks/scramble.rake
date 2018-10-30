@@ -2,9 +2,9 @@ require 'faker'
 
 namespace :scramble do
   desc 'Scramble refugees'
-  task refugees: :environment do |task|
+  task refugees: :environment do
     Refugee.find_each do |refugee|
-      refugee.name = Faker::Name.name.gsub(/(Prof.|Dr.|PhD.|Mgr.|Sr.)/, '').strip
+      refugee.name = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
       refugee.date_of_birth = Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s[0..9]
       refugee.ssn_extension = Faker::Number.number(4)
       refugee.ssns = []
@@ -22,7 +22,7 @@ namespace :scramble do
   end
 
   desc 'Scramble home names'
-  task homes: :environment do |task|
+  task homes: :environment do
     home_names = 1.upto(40).map { Faker::Ancient.titan }
     home_names << 1.upto(40).map { Faker::Ancient.hero }
     home_names << 1.upto(40).map { Faker::Ancient.titan }
