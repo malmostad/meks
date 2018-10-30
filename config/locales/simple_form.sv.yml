@@ -153,6 +153,10 @@ sv:
         fee: Arvode per månad
         expense: Omkostnad per månad
 
+      refugee_extra_cost:
+        <<: *defaults
+        amount: Kostnad
+
       payments:
         <<: *payment
         refugee_id: Barn

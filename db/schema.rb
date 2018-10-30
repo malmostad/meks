@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_112427) do
+ActiveRecord::Schema.define(version: 2018_10_30_122416) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 2018_10_24_112427) do
     t.bigint "extra_contribution_type_id"
     t.date "period_start"
     t.date "period_end"
-    t.decimal "fee", precision: 10, scale: 2, default: "0.0"
-    t.decimal "expense", precision: 10, scale: 2, default: "0.0"
+    t.decimal "fee", precision: 10, scale: 2
+    t.decimal "expense", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["extra_contribution_type_id"], name: "index_extra_contributions_on_extra_contribution_type_id"
@@ -258,6 +258,16 @@ ActiveRecord::Schema.define(version: 2018_10_24_112427) do
     t.index ["rate_category_id"], name: "index_rates_on_rate_category_id"
   end
 
+  create_table "refugee_extra_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
+    t.integer "refugee_id"
+    t.date "date"
+    t.decimal "amount", precision: 10, scale: 2
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["refugee_id"], name: "index_refugee_extra_costs_on_refugee_id"
+  end
+
   create_table "refugees", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.boolean "draft", default: false
     t.string "name"
@@ -364,6 +374,7 @@ ActiveRecord::Schema.define(version: 2018_10_24_112427) do
   add_foreign_key "placements", "legal_codes"
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "rates", "rate_categories"
+  add_foreign_key "refugee_extra_costs", "refugees"
   add_foreign_key "refugees", "deregistered_reasons"
   add_foreign_key "refugees", "genders"
   add_foreign_key "refugees", "municipalities"

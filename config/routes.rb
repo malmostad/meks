@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     end
     resources :relationships
     resources :extra_contributions, except: :index
+    resources :refugee_extra_costs, except: :index
   end
 
   resources :homes

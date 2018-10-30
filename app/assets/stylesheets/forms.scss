@@ -1,4 +1,9 @@
 .mf-v4 {
+  input.integer,
+  input.decimal {
+    width: 12em;
+  }
+
   .input-group.input-daterange {
       width: 18em;
   }

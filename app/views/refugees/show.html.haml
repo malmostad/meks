@@ -64,6 +64,7 @@
            number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' ')
 
       = render 'extra_contributions'
+      = render 'extra_costs'
 
       %h2.group-title Utbetalda schabloner
       - if @refugee.payments.blank?

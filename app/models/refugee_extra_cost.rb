@@ -1,0 +1,8 @@
+# 'Extra kostnad (knuten till barn)'
+class RefugeeExtraCost < ApplicationRecord
+  belongs_to :refugee
+
+  validates_presence_of :date, :amount
+  validates :amount, numericality: true, allow_blank: true
+  validates_length_of :comment, maximum: 191
+end

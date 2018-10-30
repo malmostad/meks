@@ -15,6 +15,7 @@ class Ability
     elsif user.has_role? :writer
       can :manage, Refugee
       can :manage, ExtraContribution
+      can :manage, RefugeeExtraCost
       cannot :destroy, Refugee
       can :read, Home
       can :manage, User
@@ -28,6 +29,7 @@ class Ability
       can :read, Home
       can [:read, :search, :suggest], Refugee
       can :read, ExtraContribution
+      can :read, RefugeeExtraCost
       can :read, User
       can :read, Relationship
       can :read, Placement

@@ -20,6 +20,11 @@ class Refugee < ApplicationRecord
     attr[:extra_contribution_type].blank?
   }
 
+  has_many :refugee_extra_costs, dependent: :destroy
+  accepts_nested_attributes_for :refugee_extra_costs, reject_if: proc { |attr|
+    attr[:date].blank?
+  }
+
   has_many :current_placements, -> { where(moved_out_at: nil).where.not(moved_in_at: nil) },
     class_name: 'Placement'
 
