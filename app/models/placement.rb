@@ -24,8 +24,6 @@ class Placement < ApplicationRecord
   before_save do
     self.specification = nil unless home.use_placement_specification?
 
-    # Based on Home#type_of_cost
-    placement_extra_costs.destroy_all unless home.cost_for_family_and_emergency_home?
     # TODO: add destroy_all for 'Familje/jourhemskostnaden' after implemented. => unless home.cost_for_family_and_emergency_home?
     self.cost = nil unless home.cost_per_placement?
   end

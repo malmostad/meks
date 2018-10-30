@@ -163,13 +163,13 @@ RSpec.describe Placement, type: :model do
     end
 
     describe 'cost_for_family_and_emergency_home' do
-      it 'should have costs destroyed after changed home to type of cost_per_day' do
+      it 'should not destroy after changed home to type of cost_per_day' do
         home = home_cost_for_family_and_emergency_home
         expect(home.placements.first.placement_extra_costs).not_to be_empty
 
         home.update_attribute(:type_of_cost, :cost_per_day)
         home.reload
-        expect(home.placements.first.placement_extra_costs).to be_empty
+        expect(home.placements.first.placement_extra_costs).not_to be_empty
       end
     end
   end

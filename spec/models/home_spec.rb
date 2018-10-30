@@ -256,7 +256,7 @@ RSpec.describe Home, type: :model do
     end
 
     describe 'cost_for_family_and_emergency_home' do
-      it 'should have home extra costs destroyed after changed to cost_per_day' do
+      it 'should not destroy extra costs after changed to cost_per_day' do
         home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
         placement = create(:placement, home: home)
         create(:placement_extra_cost, placement: placement)
@@ -265,7 +265,7 @@ RSpec.describe Home, type: :model do
 
         home.update_attribute(:type_of_cost, :cost_per_day)
         home.reload
-        expect(home.placements.first.placement_extra_costs).to be_empty
+        expect(home.placements.first.placement_extra_costs).not_to be_empty
       end
 
       it 'should not have home extra costs destroyed after other attribute change' do
@@ -280,7 +280,7 @@ RSpec.describe Home, type: :model do
         expect(home.placements.first.placement_extra_costs).not_to be_empty
       end
 
-      it 'should have home extra costs destroyed after changed to cost_per_placement' do
+      it 'should not destroy extra costs after changed to cost_per_placement' do
         home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
         placement = create(:placement, home: home)
         create(:placement_extra_cost, placement: placement)
@@ -289,7 +289,7 @@ RSpec.describe Home, type: :model do
 
         home.update_attribute(:type_of_cost, :cost_per_placement)
         home.reload
-        expect(home.placements.first.placement_extra_costs).to be_empty
+        expect(home.placements.first.placement_extra_costs).not_to be_empty
       end
 
       it 'should allow costs after changed to cost_for_family_and_emergency_home' do
