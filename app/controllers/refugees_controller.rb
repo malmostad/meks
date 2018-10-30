@@ -60,6 +60,8 @@ class RefugeesController < ApplicationController
     @offset = params[:page].to_i * @limit
     @more_request = refugees_search_path(load_more_query)
 
+    @drafts = Refugee.where(draft: true)
+
     response = Refugee.fuzzy_search(params[:q], from: @offset, size: @limit)
     if response
       @refugees = response[:refugees]
