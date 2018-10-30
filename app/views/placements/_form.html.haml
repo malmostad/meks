@@ -12,6 +12,7 @@
 = f.input :specification
 = f.input :cost
 
+%h2.group-title Extra omkostnader
 .terms.placement_extra_costs
   = f.simple_fields_for :placement_extra_costs do |pec|
     = render "fields_for_placement_extra_cost", pec: pec
@@ -21,6 +22,7 @@
       = add_placement_extra_costs_button "Lägg till extra omkostnad", f
 
 - if @placement.moved_out_at.present?
+  %h2.group-title Utskrivning
   = f.input :moved_out_at, as: :string, wrapper: :datepicker
   = f.association :moved_out_reason
 

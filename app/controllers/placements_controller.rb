@@ -73,7 +73,7 @@ class PlacementsController < ApplicationController
       params.require(:placement).permit(
         :home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id,
         :legal_code_id, :specification, :cost,
-        placement_extra_costs_attributes: %i[id _destroy date amount]
+        placement_extra_costs_attributes: %i[id _destroy date amount comment]
       )
     end
 end

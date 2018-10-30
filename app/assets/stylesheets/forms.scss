@@ -1,4 +1,11 @@
 .mf-v4 {
+  form.basic .form-group .form-group {
+    margin-bottom: 7px;
+    .control-label {
+      width: 14%;
+    }
+  }
+
   input.integer,
   input.decimal {
     width: 12em;
@@ -68,19 +75,6 @@
       }
       input.numeric.ssn-extension {
         width: 6em;
-      }
-    }
-
-    .input-group.placement_extra_cost {
-      input {
-        width: 9em;
-      }
-    }
-
-    .input-group.comment {
-      margin: .2em 0;
-      input {
-        width: 20.85em;
       }
     }
 

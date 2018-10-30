@@ -40,8 +40,6 @@ SimpleForm.setup do |config|
     b.wrapper tag: 'div', class: 'input-group date' do |ba|
       ba.use :input, class: 'form-control date', autocomplete: 'off'
     end
-    b.wrapper tag: 'span', class: 'no-control-label' do |label|
-    end
     b.wrapper tag: 'div', class: 'input-group' do |ba|
       b.use :error, wrap_with: { tag: 'span', class: 'help-block' }
       b.use :hint, wrap_with: { tag: 'p', class: 'help-block' }

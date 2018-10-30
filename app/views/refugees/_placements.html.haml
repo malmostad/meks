@@ -27,10 +27,11 @@
       = kv 'placement.cost',
            "#{number_to_currency(placement.cost_sum, delimiter: ' ')}"
 
-      - if placement.home.cost_for_family_and_emergency_home?
-        - placement.placement_extra_costs.each do |placement_extra_cost|
-          = kv 'placement.extra_cost',
-               "#{placement_extra_cost.date}, #{number_to_currency(placement_extra_cost.amount, delimiter: ' ')}"
+      - placement.placement_extra_costs.each do |placement_extra_cost|
+        = kv 'placement.extra_cost',
+             [placement_extra_cost.date.to_s,
+              number_to_currency(placement_extra_cost.amount, delimiter: ' '),
+              placement_extra_cost.comment].reject(&:empty?).join(', ')
 
       - if can? :edit, @refugee
         .form-group.action

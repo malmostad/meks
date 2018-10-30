@@ -24,6 +24,7 @@ sv:
         refugee: Ensamkommande barn
         comment: Kommentar
         date: Datum
+        amount: Belopp
         updated_at: Senast redigerad
 
       placement: &placement
