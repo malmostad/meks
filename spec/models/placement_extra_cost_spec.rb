@@ -19,6 +19,10 @@ RSpec.describe PlacementExtraCost, type: :model do
     it 'should require amount to be numericality' do
       expect(build(:placement_extra_cost, amount: 'foo')).not_to be_valid
     end
+
+    it 'should limit comment length' do
+      expect(build(:placement_extra_cost, comment: 'x' * 200)).not_to be_valid
+    end
   end
 
   describe 'destroy' do

@@ -76,6 +76,14 @@
         width: 9em;
       }
     }
+
+    .input-group.comment {
+      margin: .2em 0;
+      input {
+        width: 20.85em;
+      }
+    }
+
     .form-group.home_costs_amount,
     .form-group.rate_category_rates_amount {
       input {

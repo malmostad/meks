@@ -6,6 +6,10 @@
       = pec.input_field :amount, class: "form-control amount", placeholder: 'belopp'
       .input-group-addon= 'kr'
       = pec.input_field :date, as: :string, class: "form-control date", placeholder: 'datum'
+    .input-group.comment
+      = pec.input_field :comment, class: "form-control", placeholder: 'kommentar'
+
+    .input-group
       %span.input-group-btn
         %button.btn.btn-default.remove{ type: :button }
           %span.m-icon-close-0
