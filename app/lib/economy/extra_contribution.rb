@@ -1,4 +1,4 @@
-# Extra insatser/extra kostnader för barn
+# Extra insatser för barn
 module Economy
   class ExtraContribution < Base
     def initialize(refugee, report_range = DEFAULT_DATE_RANGE)
