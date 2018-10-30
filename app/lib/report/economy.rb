@@ -112,7 +112,7 @@ module Report
         },
         {
           heading: 'refugee.municipality',
-          query: refugee.municipality.try(:name)
+          query: refugee.municipality&.name
         },
         {
           heading: 'refugee.municipality_placement_migrationsverket_at',
@@ -175,7 +175,7 @@ module Report
         },
         {
           heading: 'refugee.gender',
-          query: refugee.gender.try(:name)
+          query: refugee.gender&.name
         },
         {
           heading: 'refugee.updated_at',

@@ -57,7 +57,7 @@ module Report
         },
         {
           heading: 'home.owner_type',
-          query: home.owner_type.try(:name)
+          query: home.owner_type&.name
         },
         {
           heading: 'home.target_groups',

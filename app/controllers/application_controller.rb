@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def default_legal_code
-    LegalCode.where(pre_selected: true).first.try(:id)
+    LegalCode.where(pre_selected: true).first&.id
   end
 
   def authenticate

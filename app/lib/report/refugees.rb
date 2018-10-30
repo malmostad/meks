@@ -74,7 +74,7 @@ module Report
         },
         {
           heading: 'refugee.gender',
-          query: refugee.gender.try(:name)
+          query: refugee.gender&.name
         },
         {
           heading: 'refugee.countries',
@@ -99,7 +99,7 @@ module Report
         },
         {
           heading: 'refugee.municipality',
-          query: refugee.municipality.try(:name)
+          query: refugee.municipality&.name
         },
         {
           heading: 'refugee.municipality_placement_migrationsverket_at',
@@ -156,7 +156,7 @@ module Report
         },
         {
           heading: 'refugee.deregistered_reason',
-          query: refugee.deregistered_reason.try(:name)
+          query: refugee.deregistered_reason&.name
         },
         {
           heading: 'refugee.deregistered_comment',

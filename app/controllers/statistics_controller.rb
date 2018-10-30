@@ -16,7 +16,7 @@ class StatisticsController < ApplicationController
       Home.maximum(:updated_at),
       Setting.maximum(:updated_at),
       Placement.maximum(:updated_at)
-    ].reject(&:blank?).sort.last.try(:utc).try(:to_s, :number)
+    ].reject(&:blank?).sort.last&.utc&.to_s(:number)
     "status/index-#{Date.today}-#{count}-#{latest_update}"
   end
 end

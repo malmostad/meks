@@ -114,7 +114,7 @@ module StatisticsHelper
   # Antalet boendeplatser räknas endast utifrån garantiplatser (ej inkluera rörliga platser).
   # Fetch from manual settings
   def number_of_homes
-    Setting.where(key: 'number_of_homes').first.try(:value)
+    Setting.where(key: 'number_of_homes').first&.value
   end
 
   def guaranteed_seats

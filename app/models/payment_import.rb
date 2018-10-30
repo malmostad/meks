@@ -25,7 +25,7 @@ class PaymentImport < ApplicationRecord
     # Log standard validation messages when pre-validation errors[:parsing] is empty
     if errors[:parsing].empty?
       error_id = Time.now.to_i
-      logger.error "[ERROR_ID #{error_id}] An error occured when #{user.try(:username)} imported a payment file. #{errors.messages}"
+      logger.error "[ERROR_ID #{error_id}] An error occured when #{user&.username} imported a payment file. #{errors.messages}"
       errors[:parsing] << "Ett oväntat fel inträffade och har loggats. [Id: #{error_id}]"
     end
   end
@@ -145,7 +145,7 @@ class PaymentImport < ApplicationRecord
   end
 
   def pre_validation_errors
-    number_of_errors = @parsing_errors.try(:size) || 0
+    number_of_errors = @parsing_errors&.size || 0
 
     if number_of_errors > 15
       @parsing_errors = @parsing_errors[0...15]

@@ -103,7 +103,7 @@ module Report
         },
         {
           heading: 'placement.moved_out_reason',
-          query: placement.moved_out_reason.try(:name)
+          query: placement.moved_out_reason&.name
         },
         {
           heading: 'refugee.deregistered',
@@ -117,7 +117,7 @@ module Report
         },
         {
           heading: 'refugee.municipality',
-          query: placement.refugee.municipality.try(:name)
+          query: placement.refugee.municipality&.name
         },
         {
           heading: 'refugee.municipality_placement_migrationsverket_at',
@@ -165,7 +165,7 @@ module Report
         },
         {
           heading: 'refugee.gender',
-          query: placement.refugee.gender.try(:name)
+          query: placement.refugee.gender&.name
         },
         {
           heading: 'refugee.countries',
@@ -190,7 +190,7 @@ module Report
         },
         {
           heading: 'refugee.deregistered_reason',
-          query: placement.refugee.deregistered_reason.try(:name)
+          query: placement.refugee.deregistered_reason&.name
         },
         {
           heading: 'refugee.deregistered_comment',
@@ -198,7 +198,7 @@ module Report
         },
         {
           heading: 'home.owner_type',
-          query: placement.home.owner_type.try(:name)
+          query: placement.home.owner_type&.name
         },
         {
           heading: 'home.target_groups',
@@ -206,7 +206,7 @@ module Report
         },
         {
           heading: 'Anledning till utskrivning',
-          query: placement.moved_out_reason.try(:name)
+          query: placement.moved_out_reason&.name
         },
         {
           heading: 'Asylstatus',
