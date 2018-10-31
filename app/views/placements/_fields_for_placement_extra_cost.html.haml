@@ -2,8 +2,8 @@
   = pec.input :sub_group, label: 'Extra omkostnad' do
     = pec.input_field :_destroy, as: :hidden, class: :destroy
     .input_group
-      = pec.input :amount
       = pec.input :date, as: :string, wrapper: :datepicker
+      = pec.input :amount
       = pec.input :comment
     .input-group
-      %button.btn.btn-danger.remove.group{ type: :button }= "Radera extra omkostnaden"
+      %button.btn.btn-sm.btn-danger.remove.group{ type: :button }= "Radera extra omkostnaden"

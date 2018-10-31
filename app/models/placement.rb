@@ -9,6 +9,10 @@ class Placement < ApplicationRecord
   accepts_nested_attributes_for :placement_extra_costs, allow_destroy: true, reject_if: :all_blank
   validates_associated :placement_extra_costs
 
+  has_many :family_and_emergency_home_costs, dependent: :destroy
+  accepts_nested_attributes_for :family_and_emergency_home_costs, allow_destroy: true, reject_if: :all_blank
+  validates_associated :family_and_emergency_home_costs
+
   validates_presence_of :home
   validates_presence_of :refugee
   validates_presence_of :moved_in_at
@@ -24,7 +28,7 @@ class Placement < ApplicationRecord
   before_save do
     self.specification = nil unless home.use_placement_specification?
 
-    # TODO: add destroy_all for 'Familje/jourhemskostnaden' after implemented. => unless home.cost_for_family_and_emergency_home?
+    family_and_emergency_home_costs.destroy_all unless home.cost_for_family_and_emergency_home?
     self.cost = nil unless home.cost_per_placement?
   end
 

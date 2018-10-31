@@ -8,6 +8,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:manage, ExtraContribution.new) }
     it { should be_able_to(:manage, RefugeeExtraCost.new) }
     it { should be_able_to(:manage, Placement.new) }
+    it { should be_able_to(:manage, FamilyAndEmergencyHomeCost.new) }
     it { should be_able_to(:manage, Relationship.new) }
     it { should be_able_to(:generate, :reports) }
     it { should be_able_to(:view, :statistics) }

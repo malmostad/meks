@@ -56,24 +56,26 @@ class PlacementsController < ApplicationController
   end
 
   private
-    def set_refugee
-      @refugee = Refugee.find(params[:refugee_id])
-      @homes = Home.where(active: true)
-    end
 
-    def set_placement
-      @refugee = Refugee.find(params[:refugee_id])
-      id = params[:id] || params[:placement_id]
-      @placement = @refugee.placements.find(id)
-      @homes = Home.where(active: true)
-    end
+  def set_refugee
+    @refugee = Refugee.find(params[:refugee_id])
+    @homes = Home.where(active: true)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def placement_params
-      params.require(:placement).permit(
-        :home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id,
-        :legal_code_id, :specification, :cost,
-        placement_extra_costs_attributes: %i[id _destroy date amount comment]
-      )
-    end
+  def set_placement
+    @refugee = Refugee.find(params[:refugee_id])
+    id = params[:id] || params[:placement_id]
+    @placement = @refugee.placements.find(id)
+    @homes = Home.where(active: true)
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def placement_params
+    params.require(:placement).permit(
+      :home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id,
+      :legal_code_id, :specification, :cost,
+      placement_extra_costs_attributes: %i[id _destroy date amount comment],
+      family_and_emergency_home_costs_attributes: %i[id _destroy period_start period_end expense fee]
+    )
+  end
 end

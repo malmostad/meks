@@ -39,6 +39,7 @@ RSpec.describe User, type: :ability do
 
     it { should_not be_able_to(:manage, Home.new) }
     it { should_not be_able_to(:manage, Placement.new) }
+    it { should_not be_able_to(:manage, FamilyAndEmergencyHomeCost.new) }
     it { should_not be_able_to(:manage, Relationship.new) }
     it { should_not be_able_to(:generate, :reports) }
 
@@ -47,12 +48,16 @@ RSpec.describe User, type: :ability do
 
     it { should be_able_to(:read, build(:home)) }
     it { should be_able_to(:read, build(:placement)) }
+    it { should be_able_to(:read, build(:family_and_emergency_home_cost)) }
     it { should be_able_to(:read, build(:relationship)) }
     it { should be_able_to(:view, :statistics) }
     it { should be_able_to(:edit, drafted_refugee) }
     it { should be_able_to(:update, drafted_refugee) }
     it { should be_able_to(:drafts, drafted_refugee) }
     it { should be_able_to(:manage, build(:placement, refugee: drafted_refugee)) }
+    it { should be_able_to(:manage, build(:family_and_emergency_home_cost, placement: build(:placement, refugee: drafted_refugee))) }
+    it { should be_able_to(:manage, build(:extra_contribution, refugee: drafted_refugee)) }
+    it { should be_able_to(:manage, build(:refugee_extra_cost, refugee: drafted_refugee)) }
     it { should be_able_to(:manage, build(:relationship, refugee_id: drafted_refugee.id)) }
   end
 end

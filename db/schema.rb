@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_111850) do
+ActiveRecord::Schema.define(version: 2018_10_31_145512) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -92,6 +92,17 @@ ActiveRecord::Schema.define(version: 2018_10_31_111850) do
     t.datetime "updated_at", null: false
     t.index ["extra_contribution_type_id"], name: "index_extra_contributions_on_extra_contribution_type_id"
     t.index ["refugee_id"], name: "index_extra_contributions_on_refugee_id"
+  end
+
+  create_table "family_and_emergency_home_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
+    t.integer "placement_id"
+    t.date "period_start"
+    t.date "period_end"
+    t.decimal "fee", precision: 10, scale: 2
+    t.decimal "expense", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["placement_id"], name: "index_family_and_emergency_home_costs_on_placement_id"
   end
 
   create_table "genders", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
@@ -367,6 +378,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_111850) do
   add_foreign_key "costs", "homes"
   add_foreign_key "extra_contributions", "extra_contribution_types"
   add_foreign_key "extra_contributions", "refugees"
+  add_foreign_key "family_and_emergency_home_costs", "placements"
   add_foreign_key "homes", "owner_types"
   add_foreign_key "payment_imports", "users"
   add_foreign_key "payments", "payment_imports"

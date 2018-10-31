@@ -35,7 +35,7 @@ class Home < ApplicationRecord
 
       # Based on Home#type_of_cost
       placement.update_attribute(:cost, nil) unless cost_per_placement?
-      # TODO: add destroy_all for 'Familje/jourhemskostnaden' after implemented. => unless home.cost_for_family_and_emergency_home?
+      placement.family_and_emergency_home_costs.destroy_all unless cost_for_family_and_emergency_home?
     end
   end
 

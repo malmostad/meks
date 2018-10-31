@@ -1,0 +1,10 @@
+.fields_for_group
+  = fae.input :sub_group, label: 'Familje/jourhemskostnad' do
+    = fae.input_field :_destroy, as: :hidden, class: :destroy
+    .input_group
+      = fae.input :period_start, as: :string, wrapper: :datepicker
+      = fae.input :period_end, as: :string, wrapper: :datepicker
+      = fae.input :expense
+      = fae.input :fee
+    .input-group
+      %button.btn.btn-sm.btn-danger.remove.group{ type: :button }= "Radera familje/jourhemskostnad"

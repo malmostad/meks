@@ -12,6 +12,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:manage, RefugeeExtraCost.new) }
     it { should be_able_to(:manage, Home.new) }
     it { should be_able_to(:manage, Placement.new) }
+    it { should be_able_to(:manage, FamilyAndEmergencyHomeCost.new) }
     it { should be_able_to(:manage, Relationship.new) }
     it { should be_able_to(:manage, Country.new) }
     it { should be_able_to(:manage, Gender.new) }
@@ -31,6 +32,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:read, RefugeeExtraCost.new) }
     it { should be_able_to(:read, Home.new) }
     it { should be_able_to(:read, Placement.new) }
+    it { should be_able_to(:read, FamilyAndEmergencyHomeCost.new) }
     it { should be_able_to(:read, Relationship.new) }
     it { should be_able_to(:read, Country.new) }
     it { should be_able_to(:read, Gender.new) }

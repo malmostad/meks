@@ -38,6 +38,7 @@ sv:
         cost_per_day: Genomsnittlig dygnskostnad
         extra_cost: Extra omkostnad
         extra_costs: Extra omkostnader
+        family_and_emergency_home_cost: Familje/jourhemskostnad
 
       placement_extra_cost:
         <<: *defaults
@@ -150,6 +151,12 @@ sv:
 
       extra_contribution:
         extra_contribution_type: Insatsform/kostnad
+        period_start: Startdatum
+        period_end: Slutdatum
+        fee: Arvode per månad
+        expense: Omkostnad per månad
+
+      family_and_emergency_home_costs:
         period_start: Startdatum
         period_end: Slutdatum
         fee: Arvode per månad
