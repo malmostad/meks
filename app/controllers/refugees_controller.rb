@@ -129,7 +129,6 @@ class RefugeesController < ApplicationController
       :sof_placement,
       :municipality_id,
       :municipality_placement_migrationsverket_at,
-      :municipality_placement_per_agreement_at,
       :municipality_placement_comment,
       :social_worker,
       :special_needs, :other_relateds, :comment_id,

@@ -12,7 +12,6 @@ RSpec.describe "refugees/show", type: :view do
     expect(rendered).to match(/#{@refugee.temporary_permit_starts_at}/)
     expect(rendered).to match(/#{@refugee.temporary_permit_ends_at}/)
     expect(rendered).to match(/#{@refugee.municipality_placement_migrationsverket_at}/)
-    expect(rendered).to match(/#{@refugee.municipality_placement_per_agreement_at}/)
     expect(rendered).to match(/#{@refugee.municipality_placement_comment}/)
     expect(rendered).to match(/#{@refugee.deregistered}/)
     expect(rendered).to match(/#{@refugee.deregistered_reason.name}/)

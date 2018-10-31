@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_144527) do
+ActiveRecord::Schema.define(version: 2018_10_31_111125) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -283,7 +283,6 @@ ActiveRecord::Schema.define(version: 2018_10_30_144527) do
     t.date "temporary_permit_ends_at"
     t.integer "municipality_id"
     t.date "municipality_placement_migrationsverket_at"
-    t.date "municipality_placement_per_agreement_at"
     t.text "municipality_placement_comment"
     t.boolean "special_needs"
     t.text "other_relateds"

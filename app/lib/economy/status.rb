@@ -63,7 +63,6 @@ module Economy
         dates = %i[
           registered
           municipality_placement_migrationsverket_at
-          municipality_placement_per_agreement_at
           residence_permit_at
           checked_out_to_our_city
           temporary_permit_starts_at

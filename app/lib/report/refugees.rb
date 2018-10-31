@@ -184,11 +184,6 @@ module Report
           query: refugee.other_relateds
         },
         {
-          heading: 'refugee.municipality_placement_per_agreement_at',
-          query: refugee.municipality_placement_per_agreement_at,
-          type: :date
-        },
-        {
           heading: 'Asylstatus',
           query: status.format_asylum
         },

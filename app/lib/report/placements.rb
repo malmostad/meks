@@ -213,11 +213,6 @@ module Report
           query: status.format_asylum
         },
         {
-          heading: 'refugee.municipality_placement_per_agreement_at',
-          query: placement.refugee.municipality_placement_per_agreement_at,
-          type: :date
-        },
-        {
           heading: 'home.phone',
           query: placement.home.phone
         },
