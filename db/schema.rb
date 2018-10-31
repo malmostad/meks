@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_111125) do
+ActiveRecord::Schema.define(version: 2018_10_31_111850) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -295,6 +295,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_111125) do
     t.text "deregistered_comment"
     t.date "citizenship_at"
     t.boolean "sof_placement", default: false
+    t.boolean "arrival"
     t.index ["deregistered_reason_id"], name: "index_refugees_on_deregistered_reason_id"
     t.index ["gender_id"], name: "index_refugees_on_gender_id"
     t.index ["municipality_id"], name: "index_refugees_on_municipality_id"

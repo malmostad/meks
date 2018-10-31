@@ -111,6 +111,10 @@ module Report
           query: refugee.sof_placement ? 'Ja' : 'Nej'
         },
         {
+          heading: 'refugee.arrival',
+          query: refugee.arrival ? 'Ja' : 'Nej'
+        },
+        {
           heading: 'refugee.municipality_placement_comment',
           query: refugee.municipality_placement_comment
         },

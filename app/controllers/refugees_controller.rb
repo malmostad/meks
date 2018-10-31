@@ -127,6 +127,7 @@ class RefugeesController < ApplicationController
       :temporary_permit_ends_at,
       :secrecy,
       :sof_placement,
+      :arrival,
       :municipality_id,
       :municipality_placement_migrationsverket_at,
       :municipality_placement_comment,
