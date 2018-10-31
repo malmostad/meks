@@ -1,8 +1,15 @@
 .mf-v4 {
+  // Sub form group with nested labels
   form.basic .form-group .form-group {
     margin-bottom: 7px;
     .control-label {
-      width: 14%;
+      display: block;
+      width: 100%;
+    }
+    .controls {
+      width: 100%;
+      margin-left: 0;
+      clear: both;
     }
   }
 

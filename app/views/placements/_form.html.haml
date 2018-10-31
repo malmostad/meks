@@ -17,9 +17,8 @@
   = f.simple_fields_for :placement_extra_costs do |pec|
     = render "fields_for_placement_extra_cost", pec: pec
   .form-group
-    %span.control-label
     .controls
-      = add_placement_extra_costs_button "Lägg till extra omkostnad", f
+      = add_placement_extra_costs_button "Ny extra omkostnad", f
 
 - if @placement.moved_out_at.present?
   %h2.group-title Utskrivning
