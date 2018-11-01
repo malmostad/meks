@@ -93,7 +93,7 @@ $ sudo monit restart delayed_job
 ## Testing
 Run tests before pushing code to the Git repository and before making a deployment. The application contains unit tests and high level integration/feature tests using RSpec, Capybara and headless Chrome.
 
-Note: Installation of Chrome, ChromeDriver and Selenium is currently not provided by the Puppet provisioning script for the Vagrant box. You need to install them manually.
+Note: Installation of Chrome, ChromeDriver and Selenium are currently not provided by the Puppet provisioning script for the Vagrant box. See `puppet/install_chrome_etc.txt` for installation commands.
 
 Run the test cases in the projects root directory in your Vagrant box:
 
