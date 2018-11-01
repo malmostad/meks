@@ -1,0 +1,33 @@
+# Install Chrome
+sudo apt-get install software-properties-common
+curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add
+echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
+sudo apt-get -y update
+sudo apt-get -y install google-chrome-stable
+google-chrome-stable --version
+
+# Install ChromeDriver
+sudo apt-get install -y unzip xvfb libxi6 libgconf-2-4
+sudo apt-get install default-jdk
+wget https://chromedriver.storage.googleapis.com/2.43/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+sudo mv chromedriver /usr/local/bin/chromedriver
+sudo chown root:root /usr/local/bin/chromedriver
+sudo chmod +x /usr/local/bin/chromedriver
+# Test it
+chromedriver --url-base=/wd/hub
+
+# Uninstall ChromeDriver RubyGem, if present, which is slow
+which chromedriver
+gem list | grep chrome
+gem uninstall chromedriver-helper
+rm /home/vagrant/.rbenv/shims/chromedriver
+rbenv rehash
+
+# Install Selenium
+wget https://selenium-release.storage.googleapis.com/3.13/selenium-server-standalone-3.14.0.jar
+sudo mv selenium-server-standalone-3.14.0.jar /usr/local/bin/selenium-server-standalone.jar
+sudo chown root:root /usr/local/bin/selenium-server-standalone.jar
+sudo chmod 0755 /usr/local/bin/selenium-server-standalone.jar
+# Test it
+xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar
