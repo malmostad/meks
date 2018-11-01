@@ -1,5 +1,5 @@
-RSpec.describe "Report", type: :feature do
-  describe "admin role" do
+RSpec.feature "Report", type: :feature do
+  feature "admin role" do
     before(:each) do
       login_user(:admin)
     end
@@ -11,7 +11,7 @@ RSpec.describe "Report", type: :feature do
     end
   end
 
-  describe "reader role" do
+  feature "reader role" do
     before(:each) do
       login_user(:reader)
     end
@@ -23,7 +23,7 @@ RSpec.describe "Report", type: :feature do
     end
   end
 
-  describe "writer role" do
+  feature "writer role" do
     before(:each) do
       login_user(:writer)
     end

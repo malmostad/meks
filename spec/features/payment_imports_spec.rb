@@ -1,7 +1,7 @@
-RSpec.describe PaymentImport, type: :feature do
+RSpec.feature PaymentImport, type: :feature do
   # TODO: below is pasted code from Language feat spec
 
-  # describe "admin role" do
+  # feature "admin role" do
   #   before(:each) do
   #     login_user(:admin)
   #   end
@@ -37,7 +37,7 @@ RSpec.describe PaymentImport, type: :feature do
   #   end
   # end
   #
-  # describe "reader role" do
+  # feature "reader role" do
   #   before(:each) do
   #     login_user(:reader)
   #   end
@@ -50,7 +50,7 @@ RSpec.describe PaymentImport, type: :feature do
   #   end
   # end
   #
-  # describe "writer role" do
+  # feature "writer role" do
   #   before(:each) do
   #     login_user(:writer)
   #   end

@@ -1,5 +1,5 @@
-RSpec.describe "Refugees", type: :feature do
-  describe "writer role" do
+RSpec.feature "Refugees", type: :feature do
+  feature "writer role" do
     before(:each) do
       login_user(:writer)
     end
@@ -48,7 +48,7 @@ RSpec.describe "Refugees", type: :feature do
     end
   end
 
-  describe "reader role" do
+  feature "reader role" do
     before(:each) do
       login_user(:reader)
     end
