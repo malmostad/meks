@@ -1,11 +1,28 @@
-RSpec.describe 'RefugeeExtraCost', type: :feature do
-  describe 'writer role' do
+RSpec.feature 'RefugeeExtraCost', type: :feature do
+  feature 'writer role' do
     before(:each) do
       login_user(:writer)
     end
 
-    describe 'Adds refugee_extra_cost' do
-      scenario 'for a refugee' do
+    feature 'Adds refugee_extra_cost' do
+      scenario 'reload the form with validation message' do
+        refugee = create(:refugee)
+
+        visit "/refugees/#{refugee.id}"
+        click_on 'Ny extra kostnad'
+        expect(current_path).to eq new_refugee_refugee_extra_cost_path(refugee)
+
+        fill_in 'refugee_extra_cost_date', with: Date.today.to_s
+        fill_in 'refugee_extra_cost_amount', with: ''
+        fill_in 'refugee_extra_cost_comment', with: 'Foo bar'
+        click_button 'Spara'
+
+        expect(current_path).to eq refugee_refugee_extra_costs_path(refugee)
+        expect(page).to have_selector('.warning', text: 'Vänligen korrigera nedanstående markerade uppgifter.')
+        expect(page).to have_selector('.help-block', text: 'måste anges')
+      end
+
+      scenario 'saves the form' do
         refugee = create(:refugee)
 
         visit "/refugees/#{refugee.id}"
@@ -22,7 +39,7 @@ RSpec.describe 'RefugeeExtraCost', type: :feature do
       end
     end
 
-    describe 'Edit refugee_extra_cost' do
+    feature 'Edit refugee_extra_cost' do
       scenario 'for a refugee' do
         refugee = create(:refugee)
         create(:refugee_extra_cost, refugee: refugee)

@@ -256,50 +256,100 @@ RSpec.describe Home, type: :model do
     end
 
     describe 'cost_for_family_and_emergency_home' do
-      it 'should not destroy extra costs after changed to cost_per_day' do
-        home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
-        placement = create(:placement, home: home)
-        create(:placement_extra_cost, placement: placement)
-        home.reload
-        expect(home.placements.first.placement_extra_costs).not_to be_nil
+      describe 'placement_extra_costs' do
+        it 'should not destroy after changed to cost_per_day' do
+          home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+          placement = create(:placement, home: home)
+          create(:placement_extra_cost, placement: placement)
+          home.reload
+          expect(home.placements.first.placement_extra_costs).not_to be_nil
 
-        home.update_attribute(:type_of_cost, :cost_per_day)
-        home.reload
-        expect(home.placements.first.placement_extra_costs).not_to be_empty
+          home.update_attribute(:type_of_cost, :cost_per_day)
+          home.reload
+          expect(home.placements.first.placement_extra_costs).not_to be_empty
+        end
+
+        it 'should not destroy after other attribute change' do
+          home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+          placement = create(:placement, home: home)
+          create(:placement_extra_cost, placement: placement)
+          home.reload
+          expect(home.placements.first.placement_extra_costs).not_to be_nil
+
+          home.update_attribute(:name, 'Foo')
+          home.reload
+          expect(home.placements.first.placement_extra_costs).not_to be_empty
+        end
+
+        it 'should not destroy after changed to cost_per_placement' do
+          home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+          placement = create(:placement, home: home)
+          create(:placement_extra_cost, placement: placement)
+          home.reload
+          expect(home.placements.first.placement_extra_costs).not_to be_nil
+
+          home.update_attribute(:type_of_cost, :cost_per_placement)
+          home.reload
+          expect(home.placements.first.placement_extra_costs).not_to be_empty
+        end
+
+        it 'should allow after changed to cost_for_family_and_emergency_home' do
+          home = create(:home, type_of_cost: :cost_per_day)
+
+          home.update_attribute(:type_of_cost, :cost_for_family_and_emergency_home)
+          placement = create(:placement, home: home)
+          create(:placement_extra_cost, placement: placement)
+          home.reload
+          expect(home.placements.first.placement_extra_costs).not_to be_nil
+        end
       end
 
-      it 'should not have home extra costs destroyed after other attribute change' do
-        home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
-        placement = create(:placement, home: home)
-        create(:placement_extra_cost, placement: placement)
-        home.reload
-        expect(home.placements.first.placement_extra_costs).not_to be_nil
+      describe 'family_and_emergency_home_cost' do
+        it 'should destroy after changed to cost_per_day' do
+          home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+          placement = create(:placement, home: home)
+          create(:family_and_emergency_home_cost, placement: placement)
+          home.reload
+          expect(home.placements.first.family_and_emergency_home_costs).not_to be_nil
 
-        home.update_attribute(:name, 'Foo')
-        home.reload
-        expect(home.placements.first.placement_extra_costs).not_to be_empty
-      end
+          home.update_attribute(:type_of_cost, :cost_per_day)
+          home.reload
+          expect(home.placements.first.family_and_emergency_home_costs).to be_empty
+        end
 
-      it 'should not destroy extra costs after changed to cost_per_placement' do
-        home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
-        placement = create(:placement, home: home)
-        create(:placement_extra_cost, placement: placement)
-        home.reload
-        expect(home.placements.first.placement_extra_costs).not_to be_nil
+        it 'should not destroy after other attribute change' do
+          home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+          placement = create(:placement, home: home)
+          create(:family_and_emergency_home_cost, placement: placement)
+          home.reload
+          expect(home.placements.first.family_and_emergency_home_costs).not_to be_empty
 
-        home.update_attribute(:type_of_cost, :cost_per_placement)
-        home.reload
-        expect(home.placements.first.placement_extra_costs).not_to be_empty
-      end
+          home.update_attribute(:name, 'Foo')
+          home.reload
+          expect(home.placements.first.family_and_emergency_home_costs).not_to be_empty
+        end
 
-      it 'should allow costs after changed to cost_for_family_and_emergency_home' do
-        home = create(:home, type_of_cost: :cost_per_day)
+        it 'should destroy after changed to cost_per_placement' do
+          home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
+          placement = create(:placement, home: home)
+          create(:family_and_emergency_home_cost, placement: placement)
+          home.reload
+          expect(home.placements.first.family_and_emergency_home_costs).not_to be_empty
 
-        home.update_attribute(:type_of_cost, :cost_for_family_and_emergency_home)
-        placement = create(:placement, home: home)
-        create(:placement_extra_cost, placement: placement)
-        home.reload
-        expect(home.placements.first.placement_extra_costs).not_to be_nil
+          home.update_attribute(:type_of_cost, :cost_per_placement)
+          home.reload
+          expect(home.placements.first.family_and_emergency_home_costs).to be_empty
+        end
+
+        it 'should allow after changed to cost_for_family_and_emergency_home' do
+          home = create(:home, type_of_cost: :cost_per_day)
+
+          home.update_attribute(:type_of_cost, :cost_for_family_and_emergency_home)
+          placement = create(:placement, home: home)
+          create(:family_and_emergency_home_cost, placement: placement)
+          home.reload
+          expect(home.placements.first.family_and_emergency_home_costs).not_to be_empty
+        end
       end
     end
   end

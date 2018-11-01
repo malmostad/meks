@@ -1,12 +1,12 @@
-RSpec.describe "Placements", type: :feature do
+RSpec.feature "Placements", type: :feature do
   # testing with out js to get rid of the testing problems with the chosen widget
 
-  describe "writer role" do
+  feature "writer role" do
     before(:each) do
       login_user(:writer)
     end
 
-    describe "Adds placement" do
+    feature "Adds placement" do
       scenario "for a refugee" do
         refugee     = create(:refugee)
         homes       = create_list(:home, 10)
@@ -45,7 +45,7 @@ RSpec.describe "Placements", type: :feature do
       end
     end
 
-    describe "Edit placement" do
+    feature "Edit placement" do
       scenario "for a refugee" do
         refugee     = create(:refugee)
         homes       = create_list(:home, 10)
@@ -84,7 +84,7 @@ RSpec.describe "Placements", type: :feature do
       end
     end
 
-    describe "Ends placement" do
+    feature "Ends placement" do
       scenario "for a refugee" do
         refugee     = create(:refugee)
         homes       = create_list(:home, 10)

@@ -1,13 +1,33 @@
-RSpec.describe 'ExtraContributions', type: :feature do
-  describe 'writer role' do
+RSpec.feature 'ExtraContributions', type: :feature do
+  feature 'writer role' do
     before(:each) do
       login_user(:writer)
     end
 
-    describe 'Adds extra_contribution' do
-      scenario 'for a refugee' do
-        refugee = create(:refugee)
+    feature 'Adds extra_contribution' do
+      scenario 'returns the form with validation messsage' do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
+        refugee = create(:refugee)
+
+        visit "/refugees/#{refugee.id}"
+        click_on 'Ny extra insats'
+        expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
+
+        select(extra_contribution_types[1].name, from: 'extra_contribution_extra_contribution_type_id')
+        fill_in 'extra_contribution_period_start', with: ''
+        fill_in 'extra_contribution_period_end', with: (Date.today + 1.year).to_s
+        fill_in 'extra_contribution_fee', with: 1234
+        fill_in 'extra_contribution_expense', with: 2345
+        click_button 'Spara'
+
+        expect(current_path).to eq refugee_extra_contributions_path(refugee)
+        expect(page).to have_selector('.warning', text: 'Vänligen korrigera nedanstående markerade uppgifter.')
+        expect(page).to have_selector('.help-block', text: 'måste anges')
+      end
+
+      scenario 'save the form' do
+        extra_contribution_types = create_list(:extra_contribution_type, 3)
+        refugee = create(:refugee)
 
         visit "/refugees/#{refugee.id}"
         click_on 'Ny extra insats'
@@ -26,7 +46,7 @@ RSpec.describe 'ExtraContributions', type: :feature do
       end
     end
 
-    describe 'Edit extra_contribution' do
+    feature 'Edit extra_contribution' do
       scenario 'for a refugee' do
         refugee = create(:refugee)
         extra_contribution_types = create_list(:extra_contribution_type, 3)

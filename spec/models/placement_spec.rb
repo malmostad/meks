@@ -137,6 +137,7 @@ RSpec.describe Placement, type: :model do
       home = create(:home, type_of_cost: :cost_for_family_and_emergency_home)
       placement = create(:placement, home: home)
       create(:placement_extra_cost, placement: placement)
+      create(:family_and_emergency_home_cost, placement: placement)
       home.reload
     end
 
@@ -170,6 +171,24 @@ RSpec.describe Placement, type: :model do
         home.update_attribute(:type_of_cost, :cost_per_day)
         home.reload
         expect(home.placements.first.placement_extra_costs).not_to be_empty
+      end
+
+      it 'should destroy after changed home to type of cost_per_day' do
+        home = home_cost_for_family_and_emergency_home
+        expect(home.placements.first.family_and_emergency_home_costs).not_to be_empty
+
+        home.update_attribute(:type_of_cost, :cost_per_day)
+        home.reload
+        expect(home.placements.first.family_and_emergency_home_costs).to be_empty
+      end
+
+      it 'should destroy after changed home to type of cost_per_placement' do
+        home = home_cost_for_family_and_emergency_home
+        expect(home.placements.first.family_and_emergency_home_costs).not_to be_empty
+
+        home.update_attribute(:type_of_cost, :cost_per_placement)
+        home.reload
+        expect(home.placements.first.family_and_emergency_home_costs).to be_empty
       end
     end
   end
