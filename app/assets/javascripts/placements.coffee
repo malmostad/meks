@@ -23,6 +23,9 @@ $ ->
     else if $homeSelect.find(':selected').attr('data-type-of-cost') is 'cost_for_family_and_emergency_home'
       $placementCost.hide()
       $familyAndEmergencyHomeCosts.show()
+    else
+      $placementCost.hide()
+      $familyAndEmergencyHomeCosts.hide()
 
   $homeSelect.change ->
     setSpecificationField()
