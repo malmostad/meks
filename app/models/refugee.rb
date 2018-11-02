@@ -1,10 +1,5 @@
 # 'Ensambkommande barn'
 class Refugee < ApplicationRecord
-  # FIXME: hard coded
-  OUR_MUNICIPALITY_DEPARTMENT_ID = 135
-  # FIXME: hard coded
-  OUR_MUNICIPALITY_IDS = [OUR_MUNICIPALITY_DEPARTMENT_ID, 136, 137, 138, 139, 140].freeze
-
   include RefugeeIndex
   include RefugeeSearch
 
@@ -36,11 +31,11 @@ class Refugee < ApplicationRecord
   }
 
   scope :in_our_municipality, -> {
-    where(municipality_id: OUR_MUNICIPALITY_IDS)
+    where(municipality: { our_municipality: true })
   }
 
   scope :in_our_municipality_department, -> {
-    where(municipality_id: OUR_MUNICIPALITY_DEPARTMENT_ID)
+    where(municipality: { our_municipality_department: true })
   }
 
   has_many :homes, through: :placements
@@ -138,11 +133,11 @@ class Refugee < ApplicationRecord
   end
 
   def in_our_municipality?
-    OUR_MUNICIPALITY_IDS.include? municipality_id
+    municipality.our_municipality?
   end
 
   def in_our_municipality_department?
-    OUR_MUNICIPALITY_DEPARTMENT_ID == municipality_id
+    municipality.our_municipality_department?
   end
 
   # Return refugees with placements within a give range

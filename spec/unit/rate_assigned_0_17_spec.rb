@@ -4,7 +4,7 @@ RSpec.describe 'Rates for assigned_0_17' do
   let(:refugee) { create(:refugee) }
 
   let(:municipality) do
-    Municipality.where(id: Refugee::OUR_MUNICIPALITY_DEPARTMENT_ID).first_or_create { |m| m.name = 'Foo City' }
+    Municipality.where(our_municipality_department: true).first_or_create { |m| m.name = 'Foo City' }
     Municipality.where(id: 1).first_or_create { |m| m.name = 'Bar Town' }
   end
 
@@ -14,7 +14,7 @@ RSpec.describe 'Rates for assigned_0_17' do
 
     # Mandatories
     # refugee.municipality_placement_migrationsverket_at (defined below)
-    refugee.municipality_id                            = Refugee::OUR_MUNICIPALITY_DEPARTMENT_ID
+    refugee.municipality.our_municipality_department   = true
 
     # Count days from the last of the following
     refugee.date_of_birth                              = '2000-07-01'

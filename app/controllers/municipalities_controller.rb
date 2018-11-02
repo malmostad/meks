@@ -43,6 +43,6 @@ class MunicipalitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def municipality_params
-      params.require(:municipality).permit(:name)
+      params.require(:municipality).permit(:name, :our_municipality, :our_municipality_department)
     end
 end
