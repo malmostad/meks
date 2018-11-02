@@ -7,7 +7,7 @@
       %p= "#{Economy::Status.in_arrival.count} barn är i ankomst i väntan på anvisning"
       %p
         = "Den centrala förvaltningen ansvarar för #{our_municipality_department_refugees.count} barn,"
-        = "varav #{srf_genders.join(', ')}"
+        = "varav #{our_municipality_department_genders.join(', ')}"
       %p= "Vanligaste nationaliteterna är #{top_countries}"
       %p= "#{refugees_waiting_for_verdict} barn är asylsökande och väntar på beslut i asylärendet"
       %p= "#{refugees_with_residence_permit} barn har PUT"

@@ -3,7 +3,7 @@ module StatisticsHelper
   # Samtliga barn som har angivet anvisningskommun med our_municipality_department: true
   # men som saknar datum för avslut
   def our_municipality_department_refugees
-    Refugee.where(deregistered: nil, our_municipality_department: true)
+    Refugee.joins(:municipality).where(deregistered: nil, municipalities: { our_municipality_department: true })
   end
 
   def our_municipality_department_genders
@@ -72,8 +72,9 @@ module StatisticsHelper
   def refugees_on_hvb
     Placement
       .current_placements
+      .joins(refugee: :municipality)
       .includes(:refugee, home: :type_of_housings)
-      .where(refugees: { municipality: { our_municipality_department: true } })
+      .where(refugees: { municipalities: { our_municipality_department: true } })
       .where(home: { type_of_housings: { id: 2 } }) # FIXME: hard coded
       .select(:refugee_id).distinct.count
   end
@@ -105,7 +106,7 @@ module StatisticsHelper
   # Samtliga barn som har our_municipality: true och our_municipality_department: false
   # angivet som anvisningskommun och som har aktuell placering.
   def refugees_in_our_municipality_not_central_department_with_placement
-    Refugee.with_current_placement.where(municipality: { our_municipality: true, our_municipality_department: false }).count
+    Refugee.with_current_placement.joins(:municipality).where(municipalities: { our_municipality: true, our_municipality_department: false }).count
   end
 
   # Samtliga aktiva boenden med boendeform "Institution" samt "Utsluss".
@@ -124,9 +125,10 @@ module StatisticsHelper
   def refugees_on_type_of_housing(id)
     Placement
       .current_placements
+      .joins(refugee: :municipality)
       .includes(:refugee, home: :type_of_housings)
       .where(home: { type_of_housings: { id: id } })
-      .where(refugees: { municipality: { our_municipality_department: true }, deregistered: nil })
+      .where(refugees: { municipalities: { our_municipality_department: true }, deregistered: nil })
       .select(:refugee_id).distinct.count
   end
 end

@@ -1,12 +1,8 @@
 # Schablonkategori Anvisad
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for assigned_0_17' do
-  let(:refugee) { create(:refugee) }
-
-  let(:municipality) do
-    Municipality.where(our_municipality_department: true).first_or_create { |m| m.name = 'Foo City' }
-    Municipality.where(id: 1).first_or_create { |m| m.name = 'Bar Town' }
-  end
+  let(:municipality) { create(:municipality, our_municipality: true) }
+  let(:refugee) { create(:refugee, municipality: municipality) }
 
   before(:each) do
     refugee.reload
@@ -14,7 +10,7 @@ RSpec.describe 'Rates for assigned_0_17' do
 
     # Mandatories
     # refugee.municipality_placement_migrationsverket_at (defined below)
-    refugee.municipality.our_municipality_department   = true
+    # refugee.in_our_municipality (defined in let() above)
 
     # Count days from the last of the following
     refugee.date_of_birth                              = '2000-07-01'
@@ -70,7 +66,8 @@ RSpec.describe 'Rates for assigned_0_17' do
   end
 
   it 'should require in_our_municipality_department' do
-    refugee.municipality_id = 1
+    municipality.update_attribute(:our_municipality, false)
+    refugee.reload
 
     rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:assigned_0_17])
