@@ -48,4 +48,15 @@ module ApplicationHelper
     value = attr_chain.inject(obj) { |o, a| o.send(a) }
     show_attribute(name, value)
   end
+
+  def popover(key)
+    {
+      class: 'icon-info',
+      title: I18n.t("simple_form.info.#{key}.title"),
+      data: {
+        toggle: :popover,
+        content: I18n.t("simple_form.info.#{key}.content")
+      }
+    }
+  end
 end

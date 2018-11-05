@@ -37,3 +37,10 @@ $ ->
       allow_single_deselect: true
 
   $('body.login #username').focus()
+
+  $('[data-toggle="popover"]').popover({container: 'body', placement: 'auto'})
+
+  # Hide popover on esc
+  $(document).on 'keydown', (event) ->
+    if event.which is 27
+      $('[data-toggle="popover"]').popover('hide')

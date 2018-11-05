@@ -179,11 +179,16 @@
 
 // Copy of .warning, for cancan
 .alert {
-    background: $warning-background;
-    border: $warning-border;
-    font-size: 14px;
-    @include radius(3px);
-    font-family: $sans-serif;
-    padding: .5em .8em;
-    margin-bottom: 1em;
+  background: $warning-background;
+  border: $warning-border;
+  font-size: 14px;
+  @include radius(3px);
+  font-family: $sans-serif;
+  padding: .5em .8em;
+  margin-bottom: 1em;
+}
+
+// Bootstrap popover override
+.popover {
+  font-family: $sans-serif;
 }

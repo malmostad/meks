@@ -36,7 +36,8 @@ module Meks
       Rails.root.join('vendor', 'malmo_shared_assets', 'stylesheets').to_s,
       Rails.root.join('vendor', 'malmo_shared_assets', 'stylesheets', 'shared').to_s,
       Rails.root.join('vendor', 'malmo_shared_assets', 'stylesheets', 'internal').to_s,
-      Rails.root.join('vendor', 'chosen').to_s
+      Rails.root.join('vendor', 'chosen').to_s,
+      Rails.root.join('vendor', 'bootstrap-tooltip').to_s
     ]
 
     config.active_job.queue_adapter = :delayed_job

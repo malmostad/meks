@@ -14,3 +14,4 @@
 //= require chosen.jquery.min
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.sv
+//= require tooltip.js
