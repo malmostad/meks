@@ -7,15 +7,11 @@ module Economy
     end
 
     def sum
-      as_hash.sum do |mac|
-        mac[:months] * mac[:costs]
-      end.round(2)
+      as_hash.sum { |mac| mac[:months] * mac[:costs] }.round(2)
     end
 
     def as_formula_array
-      as_hash.map do |mac|
-        "#{mac[:months]}*#{mac[:costs]}"
-      end
+      as_hash.map { |mac| "#{mac[:months]}*#{mac[:costs]}" }
     end
 
     def as_hash
@@ -38,8 +34,8 @@ module Economy
 
     def date_range(extra_contribution)
       {
-        from: Base.latest_date(extra_contribution.period_start, @report_range[:from]),
-        to: Base.earliest_date(extra_contribution.period_end, @report_range[:to])
+        from: self.class.latest_date(extra_contribution.period_start, @report_range[:from]),
+        to: self.class.earliest_date(extra_contribution.period_end, @report_range[:to])
       }
     end
   end
