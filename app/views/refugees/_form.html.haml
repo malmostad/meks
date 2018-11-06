@@ -11,9 +11,7 @@
 
     = f.input :name, label_html: popover('refugee.name')
 
-    %h2.group-title
-      %span> Personuppgifter
-      = popover_span('refugee.person_data')
+    %h2.group-title{ popover('refugee.person_data') } Personuppgifter
     .terms
       = f.input :date_of_birth, label: 'Personnummer', wrapper: :addon do
         .input-group.ssn.date

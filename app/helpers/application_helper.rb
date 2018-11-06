@@ -49,18 +49,14 @@ module ApplicationHelper
     show_attribute(name, value)
   end
 
+  # The key must be defined in info block in the simple_form locale file
   def popover(key)
     {
-      class: 'icon-info',
       title: I18n.t("simple_form.info.#{key}.title", default: nil),
       data: {
-        toggle: :popover,
-        content: I18n.t("simple_form.info.#{key}.content", default: nil)
+        create: :popover,
+        content: I18n.t("simple_form.info.#{key}.content")
       }
     }
-  end
-
-  def popover_span(key)
-    content_tag(:span, nil, popover(key), false)
   end
 end

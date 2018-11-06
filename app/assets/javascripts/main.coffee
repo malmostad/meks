@@ -38,9 +38,18 @@ $ ->
 
   $('body.login #username').focus()
 
+  # Create a popover span
+  $('[data-create="popover"]').append ->
+    "<span
+      class='icon-info'
+      title='#{$(@).attr("title") || ""}'
+      data-toggle='popover'
+      data-content='#{$(@).attr("data-content")}'>"
+
   $('[data-toggle="popover"]').popover({container: 'body', placement: 'bottom'})
 
-  $(document).on 'click', '.icon-info::after', (event) ->
+  # Prevent checkboxes from toggle on info click
+  $(document).on 'click', '.icon-info', (event) ->
     event.preventDefault()
 
   # Hide popover on esc
