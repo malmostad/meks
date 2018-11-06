@@ -103,5 +103,11 @@ $ bundle exec rspec
 
 Note that the environment used for RSpec is `local_test`.
 
+For some reason, some the tests in `spec/unit` fails sometimes. If you run them separatly they should succeed:
+
+```shell
+$ bundle exec rspec spec/unit
+```
+
 ## License
 Released under AGPL version 3.
