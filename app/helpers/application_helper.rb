@@ -52,11 +52,15 @@ module ApplicationHelper
   def popover(key)
     {
       class: 'icon-info',
-      title: I18n.t("simple_form.info.#{key}.title"),
+      title: I18n.t("simple_form.info.#{key}.title", default: nil),
       data: {
         toggle: :popover,
-        content: I18n.t("simple_form.info.#{key}.content")
+        content: I18n.t("simple_form.info.#{key}.content", default: nil)
       }
     }
+  end
+
+  def popover_span(key)
+    content_tag(:span, nil, popover(key), false)
   end
 end

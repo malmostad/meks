@@ -38,7 +38,10 @@ $ ->
 
   $('body.login #username').focus()
 
-  $('[data-toggle="popover"]').popover({container: 'body', placement: 'auto'})
+  $('[data-toggle="popover"]').popover({container: 'body', placement: 'bottom'})
+
+  $(document).on 'click', '.icon-info::after', (event) ->
+    event.preventDefault()
 
   # Hide popover on esc
   $(document).on 'keydown', (event) ->
