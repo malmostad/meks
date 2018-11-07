@@ -1,6 +1,6 @@
 # Extra insatser för barn
 module Economy
-  class ExtraContribution < Base
+  class ExtraContributionCost < Base
     def initialize(refugee, report_range = DEFAULT_DATE_RANGE)
       @refugee = refugee
       @report_range = report_range
