@@ -22,13 +22,13 @@ RSpec.describe 'Cost calculation' do
     end
 
     it 'refugee should have a total cost limited by cost range' do
-      expect(Economy::Cost.for_placements_and_home(refugee.placements)).to eq 37_020 + amount
+      expect(Economy::PlacementAndHomeCost.new(refugee.placements).sum).to eq 37_020 + amount
     end
 
     it 'refugee should have a total cost limited by placement range' do
       cost = create(:cost, start_date: Date.today - 60, end_date: Date.today, amount: amount)
       refugee.placements << create(:placement, moved_in_at: Date.today - 30, home: cost.home)
-      expect(Economy::Cost.for_placements_and_home(refugee.placements)).to eq 37_020 + amount
+      expect(Economy::PlacementAndHomeCost.new(refugee.placements).sum).to eq 37_020 + amount
     end
   end
 end

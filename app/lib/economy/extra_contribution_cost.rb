@@ -11,12 +11,11 @@ module Economy
     end
 
     def as_formula
-      map = as_hash.map { |mac| "#{mac[:months]}*#{mac[:costs]}" }
-      "#{map.join('+')}"
+      as_hash.map { |mac| "#{mac[:months]}*#{mac[:costs]}" }.join('+')
     end
 
     def as_hash
-      @refugee.extra_contributions.map do |extra_contribution|
+      @as_hash ||= @refugee.extra_contributions.map do |extra_contribution|
         range = date_range(extra_contribution)
         {
           months: months(range),

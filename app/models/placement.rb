@@ -85,6 +85,6 @@ class Placement < ApplicationRecord
   end
 
   def cost_sum
-    Economy::Cost.for_placements_and_home([dup])
+    Economy::PlacementAndHomeCost.new([dup]).sum
   end
 end
