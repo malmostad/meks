@@ -1,32 +1,32 @@
 module Economy
   # Refugee rates (förväntade intäkter)
   # Comments in Swedish from project specs
-  class Rates < Base
-    # Return the number of days for each rate and the rate amount
-    def self.for_all_rate_categories(refugee, range = DEFAULT_DATE_RANGE)
-      @_rate_categories_and_rates ||= RateCategory.includes(:rates).all
-      @_rate_categories_and_rates.map do |category|
-        send(
-          category.qualifier[:meth],
-          refugee,
-          category,
-          range
-        )
-      end.flatten.compact
+  class RatesForRefugee < Base
+    def initialize(refugee, range = DEFAULT_DATE_RANGE)
+      @refugee = refugee
+      @range = range
     end
 
-    def self.refugees_rates_for_category(category, range = DEFAULT_DATE_RANGE)
-      return [] if category.qualifier.nil?
+    def sum
+      as_array.sum { |x| x[:days] * x[:amount] }
+    end
 
-      @_refugees_and_payments ||= Refugee.includes(:payments).all
-      @_refugees_and_payments.map do |refugee|
-        send(
-          category.qualifier[:meth],
-          refugee,
-          category,
-          range
-        )
-      end.flatten.compact
+    def as_formula
+      as_array.map do |x|
+        next if x.value? 0
+
+        "#{x[:days]}*#{x[:amount]}"
+      end.compact.join('+')
+    end
+
+    # Return the number of days for each rate and the rate amount
+    def as_array
+      @as_array ||= begin
+        @rate_categories_and_rates ||= RateCategory.includes(:rates).all
+        @rate_categories_and_rates.map do |category|
+          send(category.qualifier[:meth], category)
+        end.flatten.compact
+      end
     end
 
     # Schablonkategori Ankomstbarn
@@ -57,27 +57,27 @@ module Economy
     #  medborgarskap
     #     :citizenship_at
     # Return the number of days for each rate and the rate amount
-    def self.arrival_0_17(refugee, category, range)
+    def arrival_0_17(category)
       return [] if
-          refugee.date_of_birth.nil? ||
-          refugee.registered.nil?
+          @refugee.date_of_birth.nil? ||
+          @refugee.registered.nil?
 
       category.rates.map do |rate|
         from = latest_date(
-          *shared_from_attr(refugee, category, range, rate),
-          refugee.registered
+          *shared_from_attr(category, rate),
+          @refugee.registered
         )
 
         to = earliest_date(
-          *shared_to_attr(refugee, category, range, rate),
-          refugee.before_deregistered,
-          refugee.before_municipality_placement_migrationsverket_at,
-          refugee.temporary_permit_starts_at,
-          refugee.residence_permit_at,
-          refugee.citizenship_at
+          *shared_to_attr(category, rate),
+          @refugee.before_deregistered,
+          @refugee.before_municipality_placement_migrationsverket_at,
+          @refugee.temporary_permit_starts_at,
+          @refugee.residence_permit_at,
+          @refugee.citizenship_at
         )
 
-        amount_and_days(from, to, rate, refugee)
+        amount_and_days(from, to, rate)
       end
     end
 
@@ -104,25 +104,25 @@ module Economy
     #   avslutad - 1 dag
     #     :deregistered
     # Returns the number of days and rate amouts in the PUT category's rates
-    def self.assigned_0_17(refugee, category, range)
+    def assigned_0_17(category)
       return [] if
-          refugee.date_of_birth.nil? ||
-          refugee.municipality_placement_migrationsverket_at.nil? ||
-          !refugee.in_our_municipality?
+          @refugee.date_of_birth.nil? ||
+          @refugee.municipality_placement_migrationsverket_at.nil? ||
+          !@refugee.in_our_municipality?
 
       category.rates.map do |rate|
         from = latest_date(
-          *shared_from_attr(refugee, category, range, rate),
-          refugee.municipality_placement_migrationsverket_at
+          *shared_from_attr(category, rate),
+          @refugee.municipality_placement_migrationsverket_at
         )
 
         to = earliest_date(
-          *shared_to_attr(refugee, category, range, rate),
-          refugee.checked_out_to_our_city,
-          refugee.before_deregistered
+          *shared_to_attr(category, rate),
+          @refugee.checked_out_to_our_city,
+          @refugee.before_deregistered
         )
 
-        amount_and_days(from, to, rate, refugee)
+        amount_and_days(from, to, rate)
       end
     end
 
@@ -156,29 +156,29 @@ module Economy
     #   avslutsdatum - 1
     #     :deregistered
     # Return the number of days for each rate and the rate amount
-    def self.temporary_permit(refugee, category, range)
+    def temporary_permit(category)
       return [] if
-          refugee.date_of_birth.nil? ||
-          refugee.temporary_permit_starts_at.nil? ||
-          refugee.temporary_permit_ends_at.nil? ||
-          refugee.checked_out_to_our_city.nil? ||
-          refugee.temporary_permit_ends_at - refugee.temporary_permit_starts_at < 365
+          @refugee.date_of_birth.nil? ||
+          @refugee.temporary_permit_starts_at.nil? ||
+          @refugee.temporary_permit_ends_at.nil? ||
+          @refugee.checked_out_to_our_city.nil? ||
+          @refugee.temporary_permit_ends_at - @refugee.temporary_permit_starts_at < 365
 
       category.rates.map do |rate|
         from = latest_date(
-          *shared_from_attr(refugee, category, range, rate),
-          refugee.before_checked_out_to_our_city,
-          refugee.temporary_permit_starts_at
+          *shared_from_attr(category, rate),
+          @refugee.before_checked_out_to_our_city,
+          @refugee.temporary_permit_starts_at
         )
 
         to = earliest_date(
-          *shared_to_attr(refugee, category, range, rate),
-          refugee.temporary_permit_ends_at,
-          refugee.residence_permit_at,
-          refugee.before_deregistered
+          *shared_to_attr(category, rate),
+          @refugee.temporary_permit_ends_at,
+          @refugee.residence_permit_at,
+          @refugee.before_deregistered
         )
 
-        amount_and_days(from, to, rate, refugee)
+        amount_and_days(from, to, rate)
       end
     end
 
@@ -207,64 +207,68 @@ module Economy
     #   avslutsdatum - 1
     #     :deregistered
     # Return the number of days for each rate and the rate amount
-    def self.residence_permit(refugee, category, range)
+    def residence_permit(category)
       return [] if
-        refugee.date_of_birth.nil? ||
-        refugee.residence_permit_at.nil? ||
-        refugee.checked_out_to_our_city.nil? ||
-        refugee.citizenship_at.present?
+        @refugee.date_of_birth.nil? ||
+        @refugee.residence_permit_at.nil? ||
+        @refugee.checked_out_to_our_city.nil? ||
+        @refugee.citizenship_at.present?
 
       category.rates.map do |rate|
         from = latest_date(
-          *shared_from_attr(refugee, category, range, rate),
-          refugee.residence_permit_at,
-          refugee.before_checked_out_to_our_city
+          *shared_from_attr(category, rate),
+          @refugee.residence_permit_at,
+          @refugee.before_checked_out_to_our_city
         )
 
         to = earliest_date(
-          *shared_to_attr(refugee, category, range, rate),
-          refugee.citizenship_at,
-          refugee.before_deregistered
+          *shared_to_attr(category, rate),
+          @refugee.citizenship_at,
+          @refugee.before_deregistered
         )
 
-        amount_and_days(from, to, rate, refugee)
+        amount_and_days(from, to, rate)
       end
     end
 
-    def self.shared_from_attr(refugee, category, range, rate)
+    private
+
+    def shared_from_attr(category, rate)
       [
-        date_at_min_age(refugee.date_of_birth, category.qualifier[:min_age]),
-        range[:from],
+        date_at_min_age(@refugee.date_of_birth, category.qualifier[:min_age]),
+        @range[:from],
         rate[:start_date]
       ]
     end
 
-    def self.shared_to_attr(refugee, category, range, rate)
+    def shared_to_attr(category, rate)
       [
-        date_at_max_age(refugee.date_of_birth, category.qualifier[:max_age]),
-        range[:to],
+        date_at_max_age(@refugee.date_of_birth, category.qualifier[:max_age]),
+        @range[:to],
         rate[:end_date]
       ]
     end
 
-    def self.amount_and_days(from, to, rate, refugee)
+    def amount_and_days(from, to, rate)
       days = number_of_days(from, to)
       return nil if days.zero?
 
-      { amount: rate.amount, days: days, refugee: refugee }
+      { amount: rate.amount, days: days }
     end
 
-    def self.age(from, to)
+    def age(from, to)
       { min: from, max: to }
     end
 
-    def self.date_at_min_age(date_of_birth, age)
+    def date_at_min_age(date_of_birth, age)
       return Date.today unless date_of_birth && age
+
       date_of_birth.to_date + age.years
     end
 
-    def self.date_at_max_age(date_of_birth, age)
+    def date_at_max_age(date_of_birth, age)
       return Date.today unless date_of_birth && age
+
       date_of_birth.to_date + age.years + 1.years - 1.day
     end
   end

@@ -27,7 +27,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   end
 
   it 'should have correct rate amount and days' do
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate[:days]).to eq 91
@@ -36,7 +36,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should respond to changed registered' do
     refugee.registered = '2018-04-06'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate[:days]).to eq 86
@@ -45,7 +45,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should respond to changed date_of_birth' do
     refugee.date_of_birth = '2018-04-06'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate[:days]).to eq 86
@@ -54,7 +54,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should respond to changed deregistered' do
     refugee.deregistered = '2018-04-06'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate[:days]).to eq 5
@@ -63,7 +63,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should respond to changed municipality_placement_migrationsverket_at' do
     refugee.residence_permit_at = '2018-06-01'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate[:days]).to eq 62
@@ -72,7 +72,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should respond to temporary_permit_starts_at' do
     refugee.temporary_permit_starts_at = '2018-05-01'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate[:days]).to eq 31
@@ -81,7 +81,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should respond to residence_permit_at' do
     refugee.residence_permit_at = '2018-05-01'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate[:days]).to eq 31
@@ -90,7 +90,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should respond to citizenship_at' do
     refugee.citizenship_at = '2018-01-01'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate).to be_nil
@@ -99,7 +99,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should require registered' do
     refugee.registered = nil
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate).to be_nil
@@ -108,7 +108,7 @@ RSpec.describe 'Rates for arrival_0_17' do
   it 'should not have refugee.citizenship_at' do
     refugee.citizenship_at = '2018-01-01'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
     expect(rate).to be_nil

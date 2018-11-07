@@ -28,7 +28,7 @@ RSpec.describe 'Rates for temporary_permit_18_20' do
   end
 
   it 'should have correct rate amount and days' do
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
 
     expect(rate[:days]).to eq 91
@@ -37,7 +37,7 @@ RSpec.describe 'Rates for temporary_permit_18_20' do
   it 'should respond to changed date_of_birth' do
     refugee.date_of_birth = '1997-04-06'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
 
     expect(rate[:days]).to eq 5
@@ -46,7 +46,7 @@ RSpec.describe 'Rates for temporary_permit_18_20' do
   it 'should respond to changed date_of_birth' do
     refugee.date_of_birth = '2000-06-20'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
 
     expect(rate[:days]).to eq 11
@@ -55,7 +55,7 @@ RSpec.describe 'Rates for temporary_permit_18_20' do
   it 'should respond to date_of_birth' do
     refugee.date_of_birth = '2001-01-01'
 
-    rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
 
     expect(rate).to be_nil

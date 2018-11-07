@@ -6,11 +6,11 @@ module Economy
     end
 
     def sum
-      as_hash.sum { |x| x[:days] * x[:amount] }
+      as_array.sum { |x| x[:days] * x[:amount] }
     end
 
     def as_formula
-      as_hash.map do |x|
+      as_array.map do |x|
         next if x.value? 0
 
         "#{x[:days]}*#{x[:amount]}"
@@ -19,8 +19,8 @@ module Economy
 
     private
 
-    def as_hash
-      @as_hash ||= placements_costs_and_days(@placements, @range)
+    def as_array
+      @as_array ||= placements_costs_and_days(@placements, @range)
     end
 
     def placements_costs_and_days(placements, range = DEFAULT_DATE_RANGE)

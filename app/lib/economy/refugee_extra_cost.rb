@@ -7,14 +7,14 @@ module Economy
     end
 
     def sum
-      as_hash.sum
+      as_array.sum
     end
 
     def as_formula
-      as_hash.join('+')
+      as_array.join('+')
     end
 
-    def as_hash
+    def as_array
       @refugee.refugee_extra_costs.where(date: @report_range[:from]..@report_range[:to]).map(&:amount)
     end
   end

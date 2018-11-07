@@ -7,19 +7,19 @@ module Economy
     end
 
     def sum
-      as_hash.sum { |mac| mac[:months] * mac[:costs] }.round(2)
+      as_array.sum { |mac| mac[:months] * mac[:costs] }.round(2)
     end
 
     def as_formula
-      as_hash.map do |mac|
+      as_array.map do |mac|
         next if mac.value? 0
 
         "#{mac[:months]}*#{mac[:costs]}"
       end.compact.join('+')
     end
 
-    def as_hash
-      @as_hash ||= @refugee.extra_contributions.map do |extra_contribution|
+    def as_array
+      @as_array ||= @refugee.extra_contributions.map do |extra_contribution|
         range = date_range(extra_contribution)
         {
           months: months(range),

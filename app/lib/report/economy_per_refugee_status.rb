@@ -50,11 +50,11 @@ module Report
     end
 
     def rates(category)
-      @rates = ::Economy::Rates.refugees_rates_for_category(category, @range)
+      @rates = ::Economy::RatesForCategory.new(category, @range).as_array
     end
 
     def placements_within_range
-      @_placements_within_range ||= begin
+      @placements_within_range ||= begin
         Placement.includes(
           :refugee,
           home: :costs

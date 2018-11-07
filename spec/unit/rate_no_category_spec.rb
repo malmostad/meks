@@ -9,7 +9,7 @@ RSpec.describe 'Rates' do
 
   describe 'refugee without properties' do
     it 'should not belong to any rate category' do
-      rates = Economy::Rates.for_all_rate_categories(refugee, UnitMacros::REPORT_RANGE)
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
       expect(rates.size).to eq 0
     end
   end

@@ -96,9 +96,7 @@ class Refugee < ApplicationRecord
   end
 
   def total_rate
-    Economy::Rates.for_all_rate_categories(self).map do |cat|
-      cat[:amount] * cat[:days]
-    end.sum
+    Economy::RatesForRefugee.new(self).sum
   end
 
   # Return a refugees placements within a give range

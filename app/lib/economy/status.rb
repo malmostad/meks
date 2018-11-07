@@ -1,5 +1,5 @@
 # Note that this is not the same as "schablongrupper" that
-# share the same names in Swedish. See Economy::Rates
+# share the same names in Swedish. See Economy::Rates*
 module Economy
   class Status < Base
     def self.statuses

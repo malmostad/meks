@@ -61,6 +61,7 @@ module Report
         },
         {
           heading: 'Förväntad intäkt',
+          # FIXME: shouldn't there be an array of rates for the refugee?
           query: record[:rate].present? ? record[:rate][:amount] * record[:rate][:days] : ''
         },
         {

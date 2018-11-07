@@ -2,9 +2,9 @@ module Report
   class Workbooks
     DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
-    def self.sum_formula(arr = [])
+    def self.sum_formula(*arr)
       arr.reject!(&:blank?)
-      return '=(0)' if arr.blank?
+      return '' if arr.blank?
 
       "=(#{arr.join('+')})"
     end
