@@ -1,3 +1,5 @@
+# Note that this is not the same as "schablongrupper" that
+# share the same names in Swedish. See Economy::Rates
 module Economy
   class Status < Base
     def self.statuses
@@ -83,6 +85,7 @@ module Economy
 
     def format_asylum
       return 'Ingen status' if asylum.blank?
+
       I18n.t('simple_form.labels.refugee.' + asylum.first) + ' ' + asylum.second.to_s
     end
   end
