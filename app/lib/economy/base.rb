@@ -15,9 +15,5 @@ module Economy
     def self.latest_date(*dates)
       dates.compact.map(&:to_date).max
     end
-
-    def self.numshort_date(date)
-      I18n.l(date, format: :numshort) unless date.nil?
-    end
   end
 end

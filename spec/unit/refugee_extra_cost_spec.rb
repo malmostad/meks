@@ -89,7 +89,7 @@ RSpec.describe 'RefugeeExtraCost' do
         from: '2018-01-01',
         to: '2018-12-31'
       )
-      expect(rec.as_formula_array).to eq ['1234.0', '2345.0']
+      expect(rec.as_formula).to eq '1234.0+2345.0'
     end
   end
 end

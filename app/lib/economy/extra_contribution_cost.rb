@@ -10,8 +10,9 @@ module Economy
       as_hash.sum { |mac| mac[:months] * mac[:costs] }.round(2)
     end
 
-    def as_formula_array
-      as_hash.map { |mac| "#{mac[:months]}*#{mac[:costs]}" }
+    def as_formula
+      map = as_hash.map { |mac| "#{mac[:months]}*#{mac[:costs]}" }
+      "#{map.join('+')}"
     end
 
     def as_hash

@@ -10,8 +10,8 @@ module Economy
       as_hash.sum
     end
 
-    def as_formula_array
-      as_hash.map(&:to_s)
+    def as_formula
+      "#{as_hash.map(&:to_s).join('+')}"
     end
 
     def as_hash

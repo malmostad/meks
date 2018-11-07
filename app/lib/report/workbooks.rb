@@ -3,7 +3,7 @@ module Report
     DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
 
     def self.sum_formula(arr = [])
-      arr.compact!
+      arr.reject!(&:blank?)
       return '=(0)' if arr.blank?
 
       "=(#{arr.join('+')})"
