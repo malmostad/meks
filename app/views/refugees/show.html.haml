@@ -58,7 +58,7 @@
 
       %h2.group-title Ekonomi
       = kv 'Total placeringskostnad',
-           number_to_currency(Economy::PlacementAndHomeCost.new(@refugee.placements), delimiter: ' ')
+           number_to_currency(Economy::PlacementAndHomeCost.new(@refugee.placements).sum, delimiter: ' ')
       = kv 'Förväntad intäktkonstnad',
            number_to_currency(@refugee.total_rate.to_s, delimiter: ' ')
       = kv 'Total utbetald schablon',
