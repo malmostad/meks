@@ -11,7 +11,7 @@ module Economy
     end
 
     def as_formula
-      "#{as_hash.map(&:to_s).join('+')}"
+      as_hash.join('+')
     end
 
     def as_hash

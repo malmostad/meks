@@ -11,7 +11,11 @@ module Economy
     end
 
     def as_formula
-      as_hash.map { |mac| "#{mac[:months]}*#{mac[:costs]}" }.join('+')
+      as_hash.map do |mac|
+        next if mac.value? 0
+
+        "#{mac[:months]}*#{mac[:costs]}"
+      end.compact.join('+')
     end
 
     def as_hash

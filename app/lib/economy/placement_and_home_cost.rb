@@ -10,7 +10,11 @@ module Economy
     end
 
     def as_formula
-      as_hash.map { |x| "#{x[:days]}*#{x[:amount]}" }.join('+')
+      as_hash.map do |x|
+        next if x.value? 0
+
+        "#{x[:days]}*#{x[:amount]}"
+      end.compact.join('+')
     end
 
     private
