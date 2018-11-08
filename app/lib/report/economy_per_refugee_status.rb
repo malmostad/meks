@@ -73,7 +73,7 @@ module Report
 
     def payments(category)
       @payments = refugees(category).map do |refugee|
-        ::Economy::Payment.new(refugee.payments, @range).amount_and_days
+        ::Economy::Payment.new(refugee.payments, @range).as_array
       end.flatten
     end
 
