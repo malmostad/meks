@@ -42,6 +42,7 @@ module Report
 
     def columns(refugee = Refugee.new, i = 0)
       refugee_placements = refugee_placements_within_range(refugee)
+      payment = ::Economy::Payment.new(refugee.payments, @range)
       [
         {
           heading: 'Dossiernummer',
@@ -159,13 +160,11 @@ module Report
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.sum_formula(self.class.days_amount_formula(
-            ::Economy::Payment.amount_and_days(refugee.payments, @range)
-          ))
+          query: self.class.sum_formula(payment.as_formula)
         },
         {
           heading: 'Kommentarer till utbetalda schabloner',
-          query: ::Economy::Payment.comments(refugee.payments, @range).compact.join("\r\x0D\x0A")
+          query: payment.comments.join("\r\x0D\x0A")
         },
         {
           heading: 'Ålder',

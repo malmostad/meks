@@ -9,16 +9,6 @@ module Report
       "=(#{arr.join('+')})"
     end
 
-    def self.days_amount_formula(days_and_amount = [])
-      return [] if days_and_amount.blank?
-
-      days_and_amount.map do |da|
-        days   = da[:days]   || 0
-        amount = da[:amount] || 0
-        "#{days}*#{amount}"
-      end
-    end
-
     def initialize(options = {})
       @filename   = options[:filename] || 'Utan titel.xlsx'
       @from       = options[:from]     || DEFAULT_DATE_RANGE[:from]

@@ -38,8 +38,8 @@ module Economy
 
     def date_range(extra_contribution)
       {
-        from: self.class.latest_date(extra_contribution.period_start, @report_range[:from]),
-        to: self.class.earliest_date(extra_contribution.period_end, @report_range[:to])
+        from: latest_date(extra_contribution.period_start, @report_range[:from]),
+        to: earliest_date(extra_contribution.period_end, @report_range[:to])
       }
     end
   end

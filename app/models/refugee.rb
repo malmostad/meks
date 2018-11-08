@@ -131,11 +131,11 @@ class Refugee < ApplicationRecord
   end
 
   def in_our_municipality?
-    municipality.our_municipality?
+    municipality&.our_municipality?
   end
 
   def in_our_municipality_department?
-    municipality.our_municipality_department?
+    municipality&.our_municipality_department?
   end
 
   # Return refugees with placements within a give range

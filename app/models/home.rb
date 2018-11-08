@@ -82,11 +82,6 @@ class Home < ApplicationRecord
     false
   end
 
-  def payments(range = DEFAULT_DATE_RANGE)
-    refugees_payments = refugees.map(&:payments).flatten.compact
-    Economy::Payment.amount_and_days(refugees_payments, range)
-  end
-
   private
 
   def overlapping_cost(cost1, cost2)
