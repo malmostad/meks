@@ -5,23 +5,11 @@ module Economy
       @range = range
     end
 
-    def sum
-      as_array.sum { |x| x[:days] * x[:amount] }
-    end
-
-    def as_formula
-      as_array.map do |x|
-        next if x.value? 0
-
-        "#{x[:days]}*#{x[:amount]}"
-      end.compact.join('+')
-    end
-
-    private
-
     def as_array
       @as_array ||= placements_costs_and_days(@placements, @range)
     end
+
+    private
 
     def placements_costs_and_days(placements, range = DEFAULT_DATE_RANGE)
       placements.map do |placement|

@@ -6,18 +6,6 @@ module Economy
       @range = range
     end
 
-    def sum
-      as_array.sum { |x| x[:days] * x[:amount] }
-    end
-
-    def as_formula
-      as_array.map do |x|
-        next if x.value? 0
-
-        "#{x[:days]}*#{x[:amount]}"
-      end.compact.join('+')
-    end
-
     # Returns an array with hashes containing :refugee, :amount and :days
     def as_array
       @as_array ||= begin

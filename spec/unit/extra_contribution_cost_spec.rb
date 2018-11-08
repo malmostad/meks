@@ -45,7 +45,7 @@ RSpec.describe 'ExtraContributionCost' do
       from: '2018-01-01',
       to: '2018-01-10'
     )
-    expect(ecc.sum).to eq 11_548.71
+    expect(ecc.sum.round).to eq 11_549
   end
 
   it 'should have correct cost formula' do
@@ -75,7 +75,7 @@ RSpec.describe 'ExtraContributionCost' do
         from: '2017-06-11',
         to: '2018-04-15'
       )
-      expect(ecc.sum).to eq 1_217_478.67
+      expect(ecc.sum.round).to eq 1_217_479
     end
 
     it 'should have correct cost formula' do

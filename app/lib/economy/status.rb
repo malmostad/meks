@@ -1,7 +1,7 @@
 # Note that this is not the same as "schablongrupper" that
 # share the same names in Swedish. See Economy::Rates*
 module Economy
-  class Status < Base
+  class Status
     def self.statuses
       [
         { name: 'refugee.in_arrival', refugees: :in_arrival },

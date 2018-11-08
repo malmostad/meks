@@ -6,18 +6,6 @@ module Economy
       @range = range
     end
 
-    def sum
-      as_array.sum { |x| x[:days] * x[:amount] }
-    end
-
-    def as_formula
-      as_array.map do |x|
-        next if x.value? 0
-
-        "#{x[:days]}*#{x[:amount]}"
-      end.compact.join('+')
-    end
-
     # Calculate daily amount and number of days for payments based on
     #  * the report range
     #  * each payment's range and amount

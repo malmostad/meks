@@ -7,7 +7,7 @@ module Economy
     end
 
     def sum
-      as_array.sum { |mac| mac[:months] * mac[:costs] }.round(2)
+      as_array.sum { |mac| mac[:months] * mac[:costs] }
     end
 
     def as_formula
