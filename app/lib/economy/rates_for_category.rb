@@ -16,7 +16,7 @@ module Economy
           rfr = RatesForRefugee.new(refugee, @range)
 
           # Get amount and days for the `refugee` in `category`
-          arr = rfr.send(@category.qualifier[:meth], @category).compact!
+          arr = rfr.send(@category.qualifier[:meth], @category).reject(&:blank?)
           next if arr.blank?
 
           # The refugee instance is needed for sub-sheets in reports

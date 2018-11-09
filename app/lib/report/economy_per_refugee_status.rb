@@ -65,7 +65,7 @@ module Report
     def costs(category)
       costs = refugees(category).map do |refugee|
         placements = refugee_placements_within_range(refugee)
-        ::Economy::PlacementAndHomeCost.new(placements, @range)
+        ::Economy::PlacementAndHomeCost.new(placements, @range).as_array
       end
 
       @costs = costs.flatten
