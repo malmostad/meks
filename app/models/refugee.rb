@@ -138,6 +138,27 @@ class Refugee < ApplicationRecord
     municipality&.our_municipality_department?
   end
 
+  # Returns the asylum event for the refugee with latest date
+  def asylum
+    dates = %i[
+      registered
+      municipality_placement_migrationsverket_at
+      residence_permit_at
+      checked_out_to_our_city
+      temporary_permit_starts_at
+      temporary_permit_ends_at
+      deregistered
+    ]
+
+    # Create a key/value hash from the array
+    Hash[dates.map! { |k| [k.to_s, send(k)] }]
+
+    dates = dates.delete_if { |_k, v| v.blank? }
+
+    # Get the event with the latest date
+    dates.max_by { |_k, v| v }
+  end
+
   # Return refugees with placements within a give range
   # Example:
   #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')

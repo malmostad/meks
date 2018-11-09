@@ -4,7 +4,7 @@
     %h1.box-title= h1
     .box-content.basic
       %h2.group-title= 'Aktuella ärenden'
-      %p= "#{Economy::Status.in_arrival.count} barn är i ankomst i väntan på anvisning"
+      %p= "#{in_arrival} barn är i ankomst i väntan på anvisning"
       %p
         = "Den centrala förvaltningen ansvarar för #{our_municipality_department_refugees.count} barn,"
         = "varav #{our_municipality_department_genders.join(', ')}"

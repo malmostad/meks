@@ -1,4 +1,11 @@
 module RefugeesHelper
+  def asylum_status(refugee)
+    asylum = refugee.asylum
+    return 'Ingen status' if asylum.blank?
+
+    I18n.t('simple_form.labels.refugee.' + asylum.first) + ' ' + asylum.second.to_s
+  end
+
   def add_dossier_numbers_button(name, form)
     new_dossier_number = DossierNumber.new
     id = new_dossier_number.object_id

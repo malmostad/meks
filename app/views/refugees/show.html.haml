@@ -20,7 +20,7 @@
       = kv @refugee, :dossier_number
       = kv 'refugee.current_placement',
            @refugee.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(', ')
-      = kv 'refugee.current_asylum', Economy::Status.new(@refugee).format_asylum
+      = kv 'refugee.current_asylum', asylum_status(@refugee)
 
       %h2.group-title Personuppgifter
       = kv @refugee, :ssn

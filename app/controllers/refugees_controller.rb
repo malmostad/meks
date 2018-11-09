@@ -7,7 +7,6 @@ class RefugeesController < ApplicationController
       extra_contributions: :extra_contribution_type,
       payments: :payment_import
     ).find(params[:id])
-    @status = Economy::Status.new(@refugee)
   end
 
   def new

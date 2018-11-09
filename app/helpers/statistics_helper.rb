@@ -120,6 +120,42 @@ module StatisticsHelper
     Home.where(active: true).sum(:guaranteed_seats)
   end
 
+  # Comment in Swedish are from project specifications
+  # Ankomstbarn typ 1:
+  # - ska ha inskrivningsdatum
+  # - ska inte ha anvisningskommun
+  # - ska inte ha anvisningsdatum
+  # - ska inte ha status avslutat
+  # - ska inte datum för PUT
+  # - ska inte datum för TUT
+  # - ska inte datum för medborgarskap
+  # - ska inte ha SoF-placering
+  #
+  # Ankomstbarn typ 2:
+  # - ska ha inskrivningsdatum
+  # - ska ha anvisningskommun
+  # - ska ha anvisningsdatum där anvisningsdatumet ligger i framtiden
+  # - ska inte ha status avslutat
+  def in_arrival
+    type1 = Refugee
+            .where.not(registered: nil)
+            .where(deregistered: nil)
+            .where(municipality: nil)
+            .where(municipality_placement_migrationsverket_at: nil)
+            .where(residence_permit_at: nil)
+            .where(temporary_permit_starts_at: nil)
+            .where(citizenship_at: nil)
+            .where(sof_placement: false)
+
+    type2 = Refugee
+            .where.not(registered: nil)
+            .where.not(municipality: nil)
+            .where('municipality_placement_migrationsverket_at > ?', Date.today)
+            .where(deregistered: nil)
+
+    (type1 + type2).uniq.size
+  end
+
   private
 
   def refugees_on_type_of_housing(id)

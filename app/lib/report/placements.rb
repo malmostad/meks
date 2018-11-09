@@ -1,5 +1,7 @@
 module Report
   class Placements < Workbooks
+    include RefugeesHelper
+
     attr_accessor :record
 
     def initialize(options = {})
@@ -41,7 +43,6 @@ module Report
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
     def columns(placement = Placement.new(refugee: Refugee.new, home: Home.new), i = 0)
-      status = ::Economy::Status.new(placement.refugee)
       [
         {
           heading: 'Dossiernummer',
@@ -214,7 +215,7 @@ module Report
         },
         {
           heading: 'Asylstatus',
-          query: status.format_asylum
+          query: asylum_status(placement.refugee)
         },
         {
           heading: 'home.phone',

@@ -1,5 +1,7 @@
 module Report
   class Refugees < Workbooks
+    include RefugeesHelper
+
     def initialize(options = {})
       # Used for sheet name
       options[:from] = options[:registered_from]
@@ -53,7 +55,6 @@ module Report
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
     def columns(refugee = Refugee.new, i = 0)
-      status = ::Economy::Status.new(refugee)
       [
         {
           heading: 'refugee.name',
@@ -189,7 +190,7 @@ module Report
         },
         {
           heading: 'Asylstatus',
-          query: status.format_asylum
+          query: asylum_status(refugee)
         },
         {
           heading: 'Extra personnummer',
