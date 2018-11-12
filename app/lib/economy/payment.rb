@@ -1,4 +1,3 @@
-# TODO: Specs
 module Economy
   class Payment < Base
     def initialize(payments, range = DEFAULT_DATE_RANGE)
