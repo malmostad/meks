@@ -152,15 +152,18 @@ module Report
               ::Economy::PlacementAndHomeCost.new(refugee_placements, @range).as_formula,
               ::Economy::ExtraContributionCost.new(refugee, @range).as_formula,
               ::Economy::RefugeeExtraCost.new(refugee, @range).as_formula
-          )
+          ),
+          style: 'currency'
         },
         {
           heading: 'Förväntad intäkt',
-          query: self.class.sum_formula(::Economy::RatesForRefugee.new(refugee, @range).as_formula)
+          query: self.class.sum_formula(::Economy::RatesForRefugee.new(refugee, @range).as_formula),
+          style: 'currency'
         },
         {
           heading: 'Utbetald schablon',
-          query: self.class.sum_formula(payment.as_formula)
+          query: self.class.sum_formula(payment.as_formula),
+          style: 'currency'
         },
         {
           heading: 'Kommentarer till utbetalda schabloner',

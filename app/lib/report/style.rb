@@ -56,7 +56,7 @@ module Report
         font_name: @font,
         fg_color: '000000',
         alignment: @align_top,
-        format_code: '# ##0'
+        format_code: '#&quot; &quot;##0&quot;,&quot;00&quot; kr&quot;;[Red]-#&quot; &quot;##0&quot;,&quot;00&quot; kr&quot;'
       )
     end
 
