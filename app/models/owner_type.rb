@@ -1,4 +1,4 @@
-# 'Boenden, ägarforme'
+# 'Boenden, ägarformer'
 class OwnerType < ApplicationRecord
   has_many :homes, dependent: :nullify
 
