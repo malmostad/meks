@@ -8,13 +8,13 @@ class Ability
       cannot :destroy, Home
       cannot :create, RateCategory
       cannot :destroy, RateCategory
-      cannot :manage, Rate
       cannot [:edit, :update], PaymentImport
       cannot [:edit, :update], Payment
 
     elsif user.has_role? :writer
       can :manage, Refugee
       cannot :destroy, Refugee
+      can :manage, DossierNumber
       can :manage, ExtraContribution
       can :manage, RefugeeExtraCost
       can :read, Home
@@ -44,6 +44,7 @@ class Ability
       can :manage, FamilyAndEmergencyHomeCost, placement: { refugee: { draft: true } }
       can :manage, ExtraContribution, refugee: { draft: true }
       can :manage, RefugeeExtraCost, refugee: { draft: true }
+      cannot :destroy, Relationship
       cannot :destroy, Placement
       cannot :destroy, FamilyAndEmergencyHomeCost
       cannot :destroy, ExtraContribution

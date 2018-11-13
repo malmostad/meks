@@ -58,11 +58,12 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:destroy, ExtraContributionType.new) }
     it { should be_able_to(:destroy, RefugeeExtraCost.new) }
 
+    it { should be_able_to(:manage, Rate.new) }
+    it { should be_able_to(:edit, Rate.new) }
+
     it { should_not be_able_to(:destroy, Home.new) }
     it { should_not be_able_to(:create, RateCategory.new) }
     it { should_not be_able_to(:destroy, RateCategory.new) }
-    it { should_not be_able_to(:manage, Rate.new) }
-    it { should_not be_able_to(:edit, Rate.new) }
 
     it { should_not be_able_to(:edit, payment_import) }
     it { should_not be_able_to(:update, payment_import) }
