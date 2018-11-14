@@ -7,11 +7,11 @@ module Report
     end
 
     def heading
-      @axlsx.workbook.styles.add_style(heading_base_style)
+      @heading ||= @axlsx.workbook.styles.add_style(heading_base_style)
     end
 
     def heading_with_tooltip
-      @axlsx.workbook.styles.add_style(
+      @heading_with_tooltip ||= @axlsx.workbook.styles.add_style(
         heading_base_style.merge!(
           border: { style: :thick, color: 'FF0000', edges: [:bottom] }
         )
@@ -19,7 +19,7 @@ module Report
     end
 
     def normal
-      @axlsx.workbook.styles.add_style(
+      @normal ||= @axlsx.workbook.styles.add_style(
         font_name: @font,
         fg_color: '000000',
         alignment: @align_top
@@ -27,7 +27,7 @@ module Report
     end
 
     def link
-      @axlsx.workbook.styles.add_style(
+      @link ||= @axlsx.workbook.styles.add_style(
         font_name: @font,
         fg_color: '0066cc',
         alignment: @align_top
@@ -35,7 +35,7 @@ module Report
     end
 
     def wrap
-      @axlsx.workbook.styles.add_style(
+      @wrap ||= @axlsx.workbook.styles.add_style(
         font_name: @font,
         fg_color: '000000',
         alignment: @align_top.merge(wrap_text: true)
@@ -43,7 +43,7 @@ module Report
     end
 
     def date
-      @axlsx.workbook.styles.add_style(
+      @date ||= @axlsx.workbook.styles.add_style(
         font_name: @font,
         fg_color: '000000',
         alignment: @align_top,
@@ -52,16 +52,16 @@ module Report
     end
 
     def currency
-      @axlsx.workbook.styles.add_style(
+      @currency ||= @axlsx.workbook.styles.add_style(
         font_name: @font,
         fg_color: '000000',
         alignment: @align_top,
-        format_code: '#&quot; &quot;##0&quot;,&quot;00&quot; kr&quot;;[Red]-#&quot; &quot;##0&quot;,&quot;00&quot; kr&quot;'
+        format_code: '###&#32;###&#32;##0.00'
       )
     end
 
     def heading_base_style
-      {
+      @heading_base_style ||= {
         font_name: @font,
         bg_color: '000000',
         fg_color: 'FFFFFF',

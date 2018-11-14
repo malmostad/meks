@@ -26,6 +26,7 @@ module Report
 
       fill_sheet
 
+      Delayed::Worker.logger.info axlsx.validate
       axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
 
@@ -94,8 +95,12 @@ module Report
         @sheet.add_row(
           row.map { |cell| cell[:query] },
           # :style and :type creates invalid xlsx file if the record set is large
-          # style: row.map { |cell| cell_style(cell[:style]) },
-          # types: row.map { |cell| cell_type(cell[:type]) }
+          style: row.map { |cell| cell_style(cell[:style]) },
+          types: row.map do |cell|
+            next :float if cell[:style] == :currency
+
+            cell_type(cell[:type])
+          end
         )
       end
       add_last_row
@@ -116,7 +121,7 @@ module Report
       @style.send(style)
     end
 
-    def cell_type(type = :string)
+    def cell_type(type)
       type
     end
 
