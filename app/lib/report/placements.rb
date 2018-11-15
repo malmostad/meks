@@ -21,7 +21,7 @@ module Report
       ).within_range(@from, @to)
 
       # Selected one home or all
-      placements = placements.where(home_id: @home_id) if @home_id.present?
+      placements = placements.where(home_id: @home_id) if @home_id.present? && @home_id.reject(&:empty?).present?
 
       # Select overlapping placements per refugee
       placements = placements.overlapping_by_refugee(@from, @to) if @selection == 'overlapping'
