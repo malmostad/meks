@@ -77,9 +77,19 @@ module Report
         next unless tooltip
 
         cell.style = @style.heading_with_tooltip
+
+        # Creates huge comment boxes, use add_data_validation instead
+        # @sheet.add_comment(
+        #   ref: cell.r,
+        #   author: 'Kolumnförklaring',
+        #   text: tooltip,
+        #   visible: false
+        # )
+
         @sheet.add_data_validation(
           cell.r,
           type: :textLength,
+          operator: :lessThan, # Needed to create valid office ML
           style: @style.heading_with_tooltip,
           showInputMessage: true,
           promptTitle: 'Kolumnförklaring:',
