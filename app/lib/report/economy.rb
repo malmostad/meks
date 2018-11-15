@@ -16,32 +16,19 @@ module Report
     def records
       # Since each record is placement centered we get dublicates for each refugee.
       # Select uniq refugees
-      placements_within_range.map(&:refugee).uniq
-    end
-
-    # Returns all placements within the range
-    def placements_within_range
-      @_placements_within_range ||= begin
-        Placement.includes(
-          :moved_out_reason, :legal_code,
-          refugee: %i[countries languages ssns dossier_numbers
-                      gender homes placements municipality
-                      deregistered_reason payments],
-          home: %i[languages type_of_housings
-                   owner_type target_groups languages costs]
-        ).within_range(@from, @to)
-      end
-    end
-
-    # Returns a single refugee's all placements within the range
-    def refugee_placements_within_range(refugee)
-      placements_within_range.map do |pl|
-        pl if pl.refugee.id == refugee.id
-      end.compact
+      Placement.includes(
+        :moved_out_reason, :legal_code,
+        refugee: [:countries, :languages, :ssns, :dossier_numbers,
+                  :gender, :homes, :municipality,
+                  :deregistered_reason, :payments,
+                  :refugee_extra_costs, :extra_contributions,
+                  placements: [:legal_code]],
+        home: %i[languages type_of_housings
+                 owner_type target_groups languages costs]
+      ).within_range(@from, @to).map(&:refugee).uniq
     end
 
     def columns(refugee = Refugee.new, i = 0)
-      refugee_placements = refugee_placements_within_range(refugee)
       payment = ::Economy::Payment.new(refugee.payments, @range)
       [
         {
@@ -66,11 +53,11 @@ module Report
         },
         {
           heading: 'Lagrum',
-          query: refugee_placements.map(&:legal_code).try(:map, &:name).join(', ')
+          query: refugee.placements.map(&:legal_code).try(:map, &:name).join(', ')
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: refugee_placements.map do |pl|
+          query: refugee.placements.map do |pl|
             "#{pl.home.name} (#{pl.moved_in_at}–#{pl.moved_out_at})"
           end.join(', ')
         },
@@ -81,11 +68,11 @@ module Report
         },
         {
           heading: 'Placeringsdatum',
-          query: refugee_placements.map(&:moved_in_at).join(', ')
+          query: refugee.placements.map(&:moved_in_at).join(', ')
         },
         {
           heading: 'Utskrivningsdatum',
-          query: refugee_placements.map(&:moved_out_at).join(', ')
+          query: refugee.placements.map(&:moved_out_at).join(', ')
         },
         {
           heading: 'refugee.deregistered',
@@ -103,7 +90,7 @@ module Report
         },
         {
           heading: 'Boendeformer',
-          query: refugee_placements
+          query: refugee.placements
             .map(&:home)
             .map(&:type_of_housings)
             .first
@@ -149,7 +136,7 @@ module Report
         {
           heading: 'Budgeterad kostnad',
           query: self.class.sum_formula(
-              ::Economy::PlacementAndHomeCost.new(refugee_placements, @range).as_formula,
+              ::Economy::PlacementAndHomeCost.new(refugee.placements, @range).as_formula,
               ::Economy::ExtraContributionCost.new(refugee, @range).as_formula,
               ::Economy::RefugeeExtraCost.new(refugee, @range).as_formula
           ),
