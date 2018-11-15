@@ -11,33 +11,25 @@ module Report
     end
 
     def records
-      @_records ||= begin
-        placements = Placement.includes(
-          :home, :moved_out_reason, :legal_code,
-          refugee: %i[countries languages ssns dossier_numbers
-                      gender homes placements municipality
-                      deregistered_reason],
-          home: %i[languages type_of_housings placements
-                   owner_type target_groups languages]
-        ).within_range(@from, @to)
+      placements = Placement.includes(
+        :home, :moved_out_reason, :legal_code,
+        refugee: [:countries, :languages, :ssns, :dossier_numbers,
+                  :gender, :homes, :municipality,
+                  :deregistered_reason, placements: [:legal_code]],
+        home: %i[languages type_of_housings placements
+                 owner_type target_groups languages]
+      ).within_range(@from, @to)
 
-        # Selected one home or all
-        if @home_id.present? && @home_id.reject(&:empty?).present?
-          placements = placements.where(home_id: @home_id)
-        end
-
-        # Select overlapping placements per refugee
-        if @selection == 'overlapping'
-          placements = placements.overlapping_by_refugee(@from, @to)
-        end
-        placements
+      # Selected one home or all
+      if @home_id.present? && @home_id.reject(&:empty?).present?
+        placements = placements.where(home_id: @home_id)
       end
-    end
 
-    def refugee_placements_within_range(refugee)
-      records.map do |record|
-        record if record.refugee.id == refugee.id
-      end.compact.flatten
+      # Select overlapping placements per refugee
+      if @selection == 'overlapping'
+        placements = placements.overlapping_by_refugee(@from, @to)
+      end
+      placements
     end
 
     # The strucure is built to make it easy to re-arrange columns
@@ -70,7 +62,7 @@ module Report
         },
         {
           heading: 'Alla lagrum inom angivet datumintervall',
-          query: refugee_placements_within_range(placement.refugee).map(&:legal_code).map(&:name).join(', '),
+          query: placement.refugee.placements.map(&:legal_code).map(&:name).join(', '),
           tooltip: 'Lagrum för alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },
         {
@@ -80,7 +72,7 @@ module Report
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: refugee_placements_within_range(placement.refugee).map do |rp|
+          query: placement.refugee.placements.map do |rp|
             "#{rp.home.name} (#{rp.moved_in_at}–#{rp.moved_out_at})"
           end.join(', '),
           tooltip: 'Alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
