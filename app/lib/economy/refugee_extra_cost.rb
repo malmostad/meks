@@ -1,8 +1,8 @@
 # Extra kostnader för barn
 module Economy
   class RefugeeExtraCost < Base
-    def initialize(refugee, report_range = DEFAULT_DATE_RANGE)
-      @refugee = refugee
+    def initialize(refugee_extra_costs, report_range = DEFAULT_DATE_RANGE)
+      @refugee_extra_costs = refugee_extra_costs
       @report_range = report_range
     end
 
@@ -15,7 +15,7 @@ module Economy
     end
 
     def as_array
-      @refugee.refugee_extra_costs.where(date: @report_range[:from]..@report_range[:to]).map(&:amount)
+      @refugee_extra_costs.map(&:amount)
     end
   end
 end
