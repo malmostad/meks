@@ -21,15 +21,12 @@ module Report
       ).within_range(@from, @to)
 
       # Selected one home or all
-      if @home_id.present? && @home_id.reject(&:empty?).present?
-        placements = placements.where(home_id: @home_id)
-      end
+      placements = placements.where(home_id: @home_id) if @home_id.present?
 
       # Select overlapping placements per refugee
-      if @selection == 'overlapping'
-        placements = placements.overlapping_by_refugee(@from, @to)
-      end
-      placements
+      placements = placements.overlapping_by_refugee(@from, @to) if @selection == 'overlapping'
+
+      placements.find_each.lazy
     end
 
     # The strucure is built to make it easy to re-arrange columns
