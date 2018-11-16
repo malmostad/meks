@@ -161,13 +161,16 @@ class Refugee < ApplicationRecord
     dates.sort_by { |_k, v| v }.last
   end
 
-  # Return refugees with placements within a give range
-  # Example:
-  #   refugees = Refugee.includes(placements: :home).with_placements_within('2017-05-01', '2017-07-01')
   def self.with_placements_within(from, to)
-    joins(:placements)
-      .where('placements.moved_in_at <= ?', to.to_date)
-      .where('placements.moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
+    includes(:countries, :languages, :ssns, :dossier_numbers,
+             :gender, :municipality,
+             :refugee_extra_costs, :extra_contributions,
+             :deregistered_reason, :payments,
+             placements: [:moved_out_reason, :legal_code,
+             home: [:owner_type, :target_groups, :languages, :type_of_housings, :costs]])
+      .references(:placements)
+      .where('placements.moved_in_at <= ?', to)
+      .where('placements.moved_out_at is ? or placements.moved_out_at >= ?', nil, from)
   end
 
   def self.per_type_of_housing(type_of_housing, registered = DEFAULT_DATE_RANGE)
