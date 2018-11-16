@@ -1,7 +1,5 @@
 # 'Boendeplacering'
 class Placement < ApplicationRecord
-  default_scope { order(:moved_in_at) }
-
   belongs_to :refugee, touch: true
   belongs_to :home, touch: true
   belongs_to :moved_out_reason

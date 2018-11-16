@@ -1,7 +1,5 @@
 # 'Extra kostnad (knuten till barn)'
 class RefugeeExtraCost < ApplicationRecord
-  default_scope { order(:date) }
-
   belongs_to :refugee, touch: true
 
   validates_presence_of :date, :amount

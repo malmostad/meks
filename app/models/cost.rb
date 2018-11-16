@@ -1,8 +1,6 @@
 # Cost for homes
 # 'Dygnskostnad'
 class Cost < ApplicationRecord
-  default_scope { order(:start_date) }
-
   belongs_to :home
 
   default_scope { order(:start_date) }

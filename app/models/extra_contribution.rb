@@ -1,7 +1,5 @@
 # "Extra insatser"
 class ExtraContribution < ApplicationRecord
-  default_scope { order(:period_start) }
-
   belongs_to :refugee, touch: true
   belongs_to :extra_contribution_type
 
