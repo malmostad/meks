@@ -72,7 +72,7 @@ Rails.application.configure do
     # Bullet.alert = true
     Bullet.bullet_logger = true
     Bullet.console = true
-    Bullet.rails_logger = false
+    Bullet.rails_logger = true
     # Bullet.honeybadger = true
     # Bullet.bugsnag = true
     # Bullet.airbrake = true
