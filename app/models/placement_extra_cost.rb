@@ -1,5 +1,7 @@
 # 'Extra omkostnad (knuten till placering)'
 class PlacementExtraCost < ApplicationRecord
+  default_scope { order(:date) }
+
   belongs_to :placement, touch: true
 
   validates_presence_of :date, :amount

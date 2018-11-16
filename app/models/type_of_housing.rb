@@ -1,5 +1,7 @@
 # 'Boendenformer'
 class TypeOfHousing < ApplicationRecord
+  default_scope { order(:name) }
+
   has_and_belongs_to_many :homes
 
   validates_uniqueness_of :name, case_sensitive: false
