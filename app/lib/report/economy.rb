@@ -127,7 +127,7 @@ module Report
           query: self.class.sum_formula(
               ::Economy::PlacementAndHomeCost.new(refugee.placements, @range).as_formula,
               ::Economy::ExtraContributionCost.new(refugee, @range).as_formula,
-              ::Economy::RefugeeExtraCost.new(refugee.refugee_extra_costs, @range).as_formula
+              ::Economy::RefugeeExtraCost.new(refugee, @range).as_formula
           ),
           style: 'currency'
         },
