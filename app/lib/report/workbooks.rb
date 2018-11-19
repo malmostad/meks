@@ -105,10 +105,12 @@ module Report
         @sheet.add_row(
           row.map { |cell| cell[:query] },
           # :style and :type creates invalid xlsx file if the record set is large
-          style: row.map { |cell| cell_style(cell[:style]) },
+          style: row.map do |cell|
+            cell[:style] = :date if cell[:style].blank? && cell[:type] == :date
+            cell_style(cell[:style])
+          end,
           types: row.map do |cell|
-            next :float if cell[:style] == :currency
-
+            cell[:type] = :float if cell[:type].blank? && cell[:style] == :currency
             cell_type(cell[:type])
           end
         )
@@ -132,7 +134,7 @@ module Report
     end
 
     def cell_type(type)
-      type
+      type || :string
     end
 
     def records
