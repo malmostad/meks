@@ -1,4 +1,4 @@
-namespace :report do
+namespace :reports do
   desc 'Cleanup reports directory'
   task cleanup: :environment do |task|
     FileUtils.rm_rf Dir.glob(File.join(reports_dir, '*'))
