@@ -1,6 +1,6 @@
 class PlacementsController < ApplicationController
   before_action :set_refugee, only: [
-    :new, :create, :edit, :move_out, :update, :move_out_update, :destroy]
+    :new, :create]
   before_action :set_placement, only: [
     :edit, :move_out, :update, :move_out_update, :destroy]
 

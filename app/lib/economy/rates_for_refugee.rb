@@ -2,8 +2,6 @@ module Economy
   # Refugee rates (förväntade intäkter)
   # Comments in Swedish from project specs
   class RatesForRefugee < Base
-    RATE_CATEGORIES_AND_RATES = RateCategory.includes(:rates).all
-
     def initialize(refugee, range = DEFAULT_DATE_RANGE)
       @refugee = refugee
       @range = range
@@ -12,7 +10,7 @@ module Economy
     # Return the number of days for each rate and the rate amount
     def as_array
       @as_array ||= begin
-        RATE_CATEGORIES_AND_RATES.map do |category|
+        RateCategory.includes(:rates).all.map do |category|
           send(category.qualifier[:meth], category)
         end.flatten.compact
       end
