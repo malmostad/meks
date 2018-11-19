@@ -42,11 +42,11 @@ module Report
         },
         {
           heading: 'Lagrum',
-          query: refugee.placements.map(&:legal_code).try(:map, &:name).join(', ')
+          query: refugee.placements.sort_by(&:moved_in_at).map(&:legal_code).try(:map, &:name).join(', ')
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: refugee.placements.map do |pl|
+          query: refugee.placements.sort_by(&:moved_in_at).map do |pl|
             "#{pl.home.name} (#{pl.moved_in_at}–#{pl.moved_out_at})"
           end.join(', ')
         },
@@ -57,11 +57,11 @@ module Report
         },
         {
           heading: 'Placeringsdatum',
-          query: refugee.placements.map(&:moved_in_at).join(', ')
+          query: refugee.placements.sort_by(&:moved_in_at).map(&:moved_in_at).compact.join(', ')
         },
         {
           heading: 'Utskrivningsdatum',
-          query: refugee.placements.map(&:moved_out_at).join(', ')
+          query: refugee.placements.sort_by(&:moved_in_at).map(&:moved_out_at).compact.join(', ')
         },
         {
           heading: 'refugee.deregistered',
@@ -79,7 +79,9 @@ module Report
         },
         {
           heading: 'Boendeformer',
-          query: refugee.placements
+          query: refugee
+            .placements
+            .sort_by(&:moved_in_at)
             .map(&:home)
             .map(&:type_of_housings)
             .first
