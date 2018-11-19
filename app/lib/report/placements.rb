@@ -11,14 +11,7 @@ module Report
     end
 
     def records
-      placements = Placement.includes(
-        :home, :moved_out_reason, :legal_code,
-        refugee: [:countries, :languages, :ssns, :dossier_numbers,
-                  :gender, :homes, :municipality,
-                  :deregistered_reason, placements: [:legal_code]],
-        home: %i[languages type_of_housings placements
-                 owner_type target_groups languages]
-      ).within_range(@from, @to)
+      placements = Placement.within_range(@from, @to)
 
       # Selected one home or all
       placements = placements.where(home_id: @home_id) if @home_id.present? && @home_id.reject(&:empty?).present?
@@ -32,6 +25,7 @@ module Report
     # The strucure is built to make it easy to re-arrange columns
     #   and still keep headings and data cells in sync with each other
     def columns(placement = Placement.new(refugee: Refugee.new, home: Home.new), i = 0)
+      placements_within_range = placement.refugee.placements_within(@from, @to).sort_by(&:moved_in_at)
       [
         {
           heading: 'Dossiernummer',
@@ -59,7 +53,7 @@ module Report
         },
         {
           heading: 'Alla lagrum inom angivet datumintervall',
-          query: placement.refugee.placements.map(&:legal_code).map(&:name).join(', '),
+          query: placements_within_range.map(&:legal_code).map(&:name).join(', '),
           tooltip: 'Lagrum för alla boenden som barnet varit placerat på under rapportens valda tidsintervall'
         },
         {
@@ -69,7 +63,7 @@ module Report
         },
         {
           heading: 'Alla boenden inom angivet datumintervall',
-          query: placement.refugee.placements.map do |rp|
+          query: placements_within_range.map do |rp|
             "#{rp.home.name} (#{rp.moved_in_at}–#{rp.moved_out_at})"
           end.join(', '),
           tooltip: 'Alla boenden som barnet varit placerat på under rapportens valda tidsintervall'

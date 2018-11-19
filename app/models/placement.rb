@@ -33,8 +33,16 @@ class Placement < ApplicationRecord
   end
 
   def self.within_range(from, to)
-    where('moved_in_at <= ?', to.to_date)
-      .where('moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
+    includes(
+      :home, :moved_out_reason, :legal_code,
+      refugee: [:countries, :languages, :ssns, :dossier_numbers,
+                :gender, :homes, :municipality,
+                :deregistered_reason, placements: [:legal_code]],
+      home: %i[languages type_of_housings placements
+               owner_type target_groups languages]
+    )
+    .where('moved_in_at <= ?', to.to_date)
+    .where('moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
   end
 
   def self.overlapping_by_refugee(from, to)
