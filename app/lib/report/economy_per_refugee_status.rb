@@ -50,7 +50,7 @@ module Report
     end
 
     def rates(category)
-      @rates = ::Economy::RatesForCategory.new(category, @range).as_array
+      @rates = ::Economy::RatesForCategory.new(category, @interval).as_array
     end
 
     def placements_within_range
@@ -65,7 +65,7 @@ module Report
     def costs(category)
       costs = refugees(category).map do |refugee|
         placements = refugee_placements_within_range(refugee)
-        ::Economy::PlacementAndHomeCost.new(placements, @range).as_array
+        ::Economy::PlacementAndHomeCost.new(placements, @interval).as_array
       end
 
       @costs = costs.flatten
@@ -73,7 +73,7 @@ module Report
 
     def payments(category)
       @payments = refugees(category).map do |refugee|
-        ::Economy::Payment.new(refugee.payments, @range).as_array
+        ::Economy::Payment.new(refugee.payments, @interval).as_array
       end.flatten
     end
 

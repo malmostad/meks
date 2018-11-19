@@ -1,13 +1,13 @@
 module Economy
   class Payment < Base
-    def initialize(payments, range = DEFAULT_DATE_RANGE)
+    def initialize(payments, interval = DEFAULT_INTERVAL)
       @payments = payments
-      @range = range
+      @interval = interval
     end
 
     # Calculate daily amount and number of days for payments based on
-    #  * the report range
-    #  * each payment's range and amount
+    #  * the report interval
+    #  * each payment's interval and amount
     # Returns an array of hashes
     def as_array
       @payments.map do |payment|
@@ -16,7 +16,7 @@ module Economy
       end
     end
 
-    # Returns comments for payments within range
+    # Returns comments for payments within interval
     def comments
       @payments.map do |payment|
         payment.comment if days(payment).positive?
@@ -25,10 +25,10 @@ module Economy
 
     private
 
-    # Returns the number of days the payment spans over within the range
+    # Returns the number of days the payment spans over within the interval
     def days(payment)
-      from = latest_date(payment.period_start, @range[:from])
-      to   = earliest_date(payment.period_end, @range[:to])
+      from = latest_date(payment.period_start, @interval[:from])
+      to   = earliest_date(payment.period_end, @interval[:to])
       number_of_days(from, to)
     end
   end

@@ -1,9 +1,9 @@
 module Economy
   # Rates for rate category
   class RatesForCategory < Base
-    def initialize(category, range = DEFAULT_DATE_RANGE)
+    def initialize(category, interval = DEFAULT_INTERVAL)
       @category = category
-      @range = range
+      @interval = interval
     end
 
     # Returns an array with hashes containing :refugee, :amount and :days
@@ -13,7 +13,7 @@ module Economy
 
         @refugees_and_payments ||= Refugee.includes(:payments).all
         @refugees_and_payments.map do |refugee|
-          rfr = RatesForRefugee.new(refugee, @range)
+          rfr = RatesForRefugee.new(refugee, @interval)
 
           # Get amount and days for the `refugee` in `category`
           arr = rfr.send(@category.qualifier[:meth], @category).reject(&:blank?)

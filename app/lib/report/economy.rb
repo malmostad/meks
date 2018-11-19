@@ -1,24 +1,24 @@
 module Report
   # The rows in this spreadsheet are refugee centered.
   # Refugees that have one or more placements within the
-  #   range are collected.
+  #   interval are collected.
   # Each selected refugee's row is populated with data
-  #   containing all the refugee's placements within the range
+  #   containing all the refugee's placements within the interval
   #   and data related to those placements.
   # Formulas in the spreadsheet contains rates, costs, and payments
-  #   associated with the refugee and it's placements within the range.
+  #   associated with the refugee and it's placements within the interval.
   class Economy < Workbooks
     def initialize(options = {})
       super(options)
     end
 
-    # Returns all refugees with placements within the range
+    # Returns all refugees with placements within the interval
     def records
       Refugee.with_placements_within(@from, @to)
     end
 
     def columns(refugee = Refugee.new, i = 0)
-      payment = ::Economy::Payment.new(refugee.payments, @range)
+      payment = ::Economy::Payment.new(refugee.payments, @interval)
       [
         {
           heading: 'Dossiernummer',
@@ -127,15 +127,15 @@ module Report
         {
           heading: 'Budgeterad kostnad',
           query: self.class.sum_formula(
-              ::Economy::PlacementAndHomeCost.new(refugee.placements, @range).as_formula,
-              ::Economy::ExtraContributionCost.new(refugee, @range).as_formula,
-              ::Economy::RefugeeExtraCost.new(refugee, @range).as_formula
+              ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).as_formula,
+              ::Economy::ExtraContributionCost.new(refugee, @interval).as_formula,
+              ::Economy::RefugeeExtraCost.new(refugee, @interval).as_formula
           ),
           style: 'currency'
         },
         {
           heading: 'Förväntad intäkt',
-          query: self.class.sum_formula(::Economy::RatesForRefugee.new(refugee, @range).as_formula),
+          query: self.class.sum_formula(::Economy::RatesForRefugee.new(refugee, @interval).as_formula),
           style: 'currency'
         },
         {

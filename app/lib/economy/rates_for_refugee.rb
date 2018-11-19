@@ -2,9 +2,9 @@ module Economy
   # Refugee rates (förväntade intäkter)
   # Comments in Swedish from project specs
   class RatesForRefugee < Base
-    def initialize(refugee, range = DEFAULT_DATE_RANGE)
+    def initialize(refugee, interval = DEFAULT_INTERVAL)
       @refugee = refugee
-      @range = range
+      @interval = interval
     end
 
     # Return the number of days for each rate and the rate amount
@@ -223,7 +223,7 @@ module Economy
     def shared_from_attr(category, rate)
       [
         date_at_min_age(@refugee.date_of_birth, category.qualifier[:min_age]),
-        @range[:from],
+        @interval[:from],
         rate[:start_date]
       ]
     end
@@ -231,7 +231,7 @@ module Economy
     def shared_to_attr(category, rate)
       [
         date_at_max_age(@refugee.date_of_birth, category.qualifier[:max_age]),
-        @range[:to],
+        @interval[:to],
         rate[:end_date]
       ]
     end

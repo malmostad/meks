@@ -1,6 +1,6 @@
 module Economy
   class Base
-    DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
+    DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
 
     def sum
       as_array.sum { |x| x[:days] * x[:amount] }

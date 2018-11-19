@@ -1,9 +1,9 @@
 # Extra kostnader för barn
 module Economy
   class RefugeeExtraCost < Base
-    def initialize(refugee, report_range = DEFAULT_DATE_RANGE)
+    def initialize(refugee, interval = DEFAULT_INTERVAL)
       @refugee = refugee
-      @report_range = report_range
+      @interval = interval
     end
 
     def sum
@@ -16,7 +16,7 @@ module Economy
 
     def as_array
       @refugee.refugee_extra_costs.map do |rec|
-        rec if rec.date >= @report_range[:from].to_date && rec.date <= @report_range[:to].to_date
+        rec if rec.date >= @interval[:from].to_date && rec.date <= @interval[:to].to_date
       end.compact.map(&:amount)
     end
   end

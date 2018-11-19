@@ -173,7 +173,7 @@ class Refugee < ApplicationRecord
       .where('placements.moved_out_at is ? or placements.moved_out_at >= ?', nil, from)
   end
 
-  def self.per_type_of_housing(type_of_housing, registered = DEFAULT_DATE_RANGE)
+  def self.per_type_of_housing(type_of_housing, registered = DEFAULT_INTERVAL)
     includes(:payments, placements: { home: [:type_of_housings, :costs] })
       .where(placements: { home: { type_of_housings: { id: type_of_housing.id } } })
       .where(registered: registered[:from]..registered[:to])

@@ -1,6 +1,6 @@
 module Report
   class Workbooks
-    DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
+    DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
 
     def self.sum_formula(*arr)
       arr.reject!(&:blank?)
@@ -11,9 +11,9 @@ module Report
 
     def initialize(options = {})
       @filename   = options[:filename] || 'Utan titel.xlsx'
-      @from       = options[:from]     || DEFAULT_DATE_RANGE[:from]
-      @to         = options[:to]       || DEFAULT_DATE_RANGE[:to]
-      @range      = { from: @from, to: @to }
+      @from       = options[:from]     || DEFAULT_INTERVAL[:from]
+      @to         = options[:to]       || DEFAULT_INTERVAL[:to]
+      @interval   = { from: @from, to: @to }
       @sheet_name = format_sheet_name
     end
 

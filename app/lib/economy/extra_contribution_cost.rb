@@ -1,9 +1,9 @@
 # Extra insatser för barn
 module Economy
   class ExtraContributionCost < Base
-    def initialize(refugee, report_range = DEFAULT_DATE_RANGE)
+    def initialize(refugee, interval = DEFAULT_INTERVAL)
       @refugee = refugee
-      @report_range = report_range
+      @interval = interval
     end
 
     def sum
@@ -20,9 +20,9 @@ module Economy
 
     def as_array
       @as_array ||= @refugee.extra_contributions.map do |extra_contribution|
-        range = date_range(extra_contribution)
+        interval = date_interval(extra_contribution)
         {
-          months: months(range),
+          months: months(interval),
           costs: (extra_contribution.fee + extra_contribution.expense).to_f
         }
       end
@@ -30,16 +30,16 @@ module Economy
 
     private
 
-    def months(range)
-      (range[:from]..range[:to]).sum do |date|
+    def months(interval)
+      (interval[:from]..interval[:to]).sum do |date|
         1.to_f / (date.end_of_month - date.beginning_of_month + 1)
       end
     end
 
-    def date_range(extra_contribution)
+    def date_interval(extra_contribution)
       {
-        from: latest_date(extra_contribution.period_start, @report_range[:from]),
-        to: earliest_date(extra_contribution.period_end, @report_range[:to])
+        from: latest_date(extra_contribution.period_start, @interval[:from]),
+        to: earliest_date(extra_contribution.period_end, @interval[:to])
       }
     end
   end

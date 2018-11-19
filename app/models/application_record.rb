@@ -1,5 +1,5 @@
 class ApplicationRecord < ActiveRecord::Base
-  DEFAULT_DATE_RANGE = { from: Date.new(0), to: Date.today }.freeze
+  DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
   self.abstract_class = true
 
   def date_format(field_name)
