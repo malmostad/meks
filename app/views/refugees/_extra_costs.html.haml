@@ -3,7 +3,7 @@
   - if @refugee.refugee_extra_costs.blank?
     %p Inga extra kostnader är registrerade
   - else
-    - @refugee.refugee_extra_costs.each do |extra_cost|
+    - @refugee.refugee_extra_costs.sort_by(&:date).each do |extra_cost|
       .extra_cost
         = kv extra_cost, :date
         = kv 'refugee_extra_cost.amount', number_to_currency(extra_cost.amount.to_s, delimiter: ' ')

@@ -4,7 +4,7 @@
     = kv 'Total boendetid',
          "#{number_with_delimiter(@refugee.total_placement_time, delimiter: ' ')} dagar"
 
-  - @refugee.placements.order(:moved_in_at).each do |placement|
+  - @refugee.placements.sort_by(&:moved_in_at).each do |placement|
     .placement
       = kv 'refugee.home', link_to(placement.home.name, home_path(placement.home))
       = kv "Aktuell dygnskostnad för #{placement.home.name}",
@@ -28,10 +28,10 @@
            "#{number_to_currency(placement.cost_sum, delimiter: ' ')}"
 
       - if placement.home.cost_for_family_and_emergency_home?
-        - placement.family_and_emergency_home_costs.each do |cost|
+        - placement.family_and_emergency_home_costs.sort_by(&:period_start).each do |cost|
           = kv 'placement.family_and_emergency_home_cost', family_and_emergency_home_cost(cost)
 
-      - placement.placement_extra_costs.each do |cost|
+      - placement.placement_extra_costs.sort_by(&:date).each do |cost|
         = kv 'placement.extra_cost', extra_cost(cost)
 
       - if can? :edit, @refugee

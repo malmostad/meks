@@ -3,7 +3,7 @@
   - if @refugee.extra_contributions.blank?
     %p Inga extra insatser är registrerade
   - else
-    - @refugee.extra_contributions.each do |extra_contribution|
+    - @refugee.extra_contributions.sort_by(&:period_start).each do |extra_contribution|
       .extra_contribution
         = show_attribute('extra_contribution.extra_contribution_type', extra_contribution.extra_contribution_type.name)
         = show_attribute('extra_contribution.period_start', extra_contribution.period_start)

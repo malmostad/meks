@@ -3,7 +3,7 @@ class RefugeesController < ApplicationController
     @refugee = Refugee.includes(
       :placements,
       relationships: [:type_of_relationship, :related],
-      placements: [:home, :moved_out_reason, :legal_code],
+      placements: [:home, :moved_out_reason, :legal_code, :placement_extra_costs],
       extra_contributions: :extra_contribution_type,
       payments: :payment_import
     ).find(params[:id])

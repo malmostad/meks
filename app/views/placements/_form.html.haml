@@ -15,7 +15,7 @@
 .family_and_emergency_home_costs
   %h2.group-title Familje/jourhemskostnader
   .terms
-    = f.simple_fields_for :family_and_emergency_home_costs do |fae|
+    = f.simple_fields_for :family_and_emergency_home_costs, f.object.family_and_emergency_home_costs.order(:period_start) do |fae|
       = render "fields_for_family_and_emergency_home_cost", fae: fae
     .form-group
       .controls
@@ -23,7 +23,7 @@
 
 %h2.group-title Extra omkostnader
 .terms
-  = f.simple_fields_for :placement_extra_costs do |pec|
+  = f.simple_fields_for :placement_extra_costs, f.object.placement_extra_costs.order(:date) do |pec|
     = render "fields_for_placement_extra_cost", pec: pec
   .form-group
     .controls
