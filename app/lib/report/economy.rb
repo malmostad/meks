@@ -127,9 +127,10 @@ module Report
         {
           heading: 'Budgeterad kostnad',
           query: self.class.sum_formula(
-              ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).as_formula,
-              ::Economy::ExtraContributionCost.new(refugee, @interval).as_formula,
-              ::Economy::RefugeeExtraCost.new(refugee, @interval).as_formula
+            ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).as_formula,
+            ::Economy::ExtraContributionCost.new(refugee, @interval).as_formula,
+            ::Economy::RefugeeExtraCost.new(refugee, @interval).as_formula,
+            ::Economy::PlacementExtraCost.new(refugee.placements, @interval).as_formula
           ),
           style: 'currency'
         },

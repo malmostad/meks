@@ -166,7 +166,7 @@ class Refugee < ApplicationRecord
              :gender, :municipality,
              :refugee_extra_costs, :extra_contributions,
              :deregistered_reason, :payments,
-             placements: [:moved_out_reason, :legal_code,
+             placements: [:moved_out_reason, :legal_code, :placement_extra_costs,
              home: [:owner_type, :target_groups, :languages, :type_of_housings, :costs]])
       .references(:placements)
       .where('placements.moved_in_at <= ?', to)
