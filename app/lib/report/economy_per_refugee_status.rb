@@ -64,7 +64,10 @@ module Report
 
     def costs(category)
       costs = refugees(category).map do |refugee|
-        ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).as_array
+        ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).as_array.map do |x|
+          # The refugee is needed for the sub sheets that lists refugees
+          x.merge(refugee: refugee)
+        end
       end
 
       @costs = costs.flatten
