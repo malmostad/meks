@@ -130,7 +130,8 @@ module Report
             ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).as_formula,
             ::Economy::ExtraContributionCost.new(refugee, @interval).as_formula,
             ::Economy::RefugeeExtraCost.new(refugee, @interval).as_formula,
-            ::Economy::PlacementExtraCost.new(refugee.placements, @interval).as_formula
+            ::Economy::PlacementExtraCost.new(refugee.placements, @interval).as_formula,
+            ::Economy::FamilyAndEmergencyHomeCost.new(refugee.placements, @interval).as_formula
           ),
           style: 'currency'
         },

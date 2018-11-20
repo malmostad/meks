@@ -1,4 +1,4 @@
-RSpec.describe 'Cost calculation' do
+RSpec.describe 'PlacementAndHomeCost calculations' do
   let(:amount) { 1234 }
   let(:home) { create(:home) }
   let(:refugee) { create(:refugee) }

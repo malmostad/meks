@@ -20,27 +20,12 @@ module Economy
 
     def as_array
       @as_array ||= @refugee.extra_contributions.map do |extra_contribution|
-        interval = date_interval(extra_contribution)
+        interval = date_interval(extra_contribution.period_start, extra_contribution.period_end, @interval)
         {
-          months: months(interval),
+          months: number_of_months(interval),
           costs: (extra_contribution.fee + extra_contribution.expense).to_f
         }
       end
-    end
-
-    private
-
-    def months(interval)
-      (interval[:from]..interval[:to]).sum do |date|
-        1.to_f / (date.end_of_month - date.beginning_of_month + 1)
-      end
-    end
-
-    def date_interval(extra_contribution)
-      {
-        from: latest_date(extra_contribution.period_start, @interval[:from]),
-        to: earliest_date(extra_contribution.period_end, @interval[:to])
-      }
     end
   end
 end

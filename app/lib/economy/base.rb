@@ -34,5 +34,21 @@ module Economy
     def latest_date(*dates)
       dates.compact.map(&:to_date).max
     end
+
+    # Returns the number of months as a float
+    #   calculated from the total days in each month
+    def number_of_months(interval)
+      (interval[:from]..interval[:to]).sum do |date|
+        1.to_f / (date.end_of_month - date.beginning_of_month + 1)
+      end
+    end
+
+    # Returns the minimum section of the cost interval and the report interval
+    def date_interval(period_start, period_end, report_interval)
+      {
+        from: latest_date(period_start, report_interval[:from]),
+        to: earliest_date(period_end, report_interval[:to])
+      }
+    end
   end
 end
