@@ -95,6 +95,18 @@ class Refugee < ApplicationRecord
     placements.map(&:placement_time).inject(&:+) || 0
   end
 
+  def total_placement_and_home_costs
+    Economy::PlacementAndHomeCost.new(placements).sum +
+      Economy::FamilyAndEmergencyHomeCost.new(placements).sum
+  end
+
+  def total_costs
+    total_placement_and_home_costs +
+      Economy::PlacementExtraCost.new(placements).sum +
+      Economy::ExtraContributionCost.new(self).sum +
+      Economy::RefugeeExtraCost.new(self).sum
+  end
+
   def total_rate
     Economy::RatesForRefugee.new(self).sum
   end

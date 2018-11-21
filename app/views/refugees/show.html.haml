@@ -2,7 +2,7 @@
 %section.box.show.refugee
   %h1.box-title
     = h1
-    = "#{@refugee.draft? ?   '(Utkast)'  : ''}"
+    "#{@refugee.draft? ? '(Utkast)' : ''}"
   .box-content.basic.form-data
     .form-group
       - if can? :edit, @refugee
@@ -11,7 +11,7 @@
       - if @refugee.secrecy?
         .secrecy= 'Sekretess'
 
-    = form_for @refugee, html: { class: 'basic' } do |f|
+    = form_for @refugee, html: { class: 'basic' } do
       = kv 'refugee.updated_at', @refugee.updated_at.to_s[0..18]
       = kv 'refugee.sof_placement', @refugee.sof_placement ? 'Ja' : 'Nej'
       = kv 'refugee.arrival', @refugee.arrival ? 'Ja' : 'Nej'
@@ -57,8 +57,10 @@
       = render 'relateds'
 
       %h2.group-title Ekonomi
-      = kv 'Total placeringskostnad',
-           number_to_currency(Economy::PlacementAndHomeCost.new(@refugee.placements).sum, delimiter: ' ')
+      = kv 'Totala kostnader',
+           number_to_currency(@refugee.total_costs, delimiter: ' ')
+      = kv 'Totala placeringskostnader',
+           number_to_currency(@refugee.total_placement_and_home_costs, delimiter: ' ')
       = kv 'Förväntad intäkt',
            number_to_currency(@refugee.total_rate.to_s, delimiter: ' ')
       = kv 'Total utbetald schablon',
@@ -89,6 +91,6 @@
                 %td= payment.period_start
                 %td= payment.period_end
                 %td= payment.days
-                %td= "#{number_to_currency(payment.amount, delimiter: ' ')}"
-                %td= "#{number_to_currency(payment.per_day, delimiter: ' ')}"
+                %td "#{number_to_currency(payment.amount, delimiter: ' ')}"
+                %td "#{number_to_currency(payment.per_day, delimiter: ' ')}"
                 %td= payment.comment
