@@ -63,4 +63,8 @@ module UnitMacros
       r.save!
     end
   end
+
+  def read_report(filename)
+    File.read(File.join(Rails.root, 'reports', filename))
+  end
 end
