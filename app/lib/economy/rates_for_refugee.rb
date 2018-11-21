@@ -9,6 +9,24 @@ module Economy
       @interval = interval
     end
 
+    # Select the refugees placements that has a legal code with #exempt_from_rate
+    # Returns and array of hashes with date intervals for those periods
+    def periods_with_exempt_from_rate
+      placements = @refugee.placements
+                           .includes(:legal_code)
+                           .where('moved_in_at <= ?', @interval[:to])
+                           .where('moved_out_at is ? or moved_out_at >= ?', nil, @interval[:from])
+                           .where(legal_codes: { exempt_from_rate: true })
+                           .pluck(:moved_in_at, :moved_out_at)
+
+      placements.map do |dates|
+        {
+          start: [dates[0], @interval[:from].to_date].compact.max,
+          end: [dates[1], @interval[:to].to_date].compact.min
+        }
+      end
+    end
+
     # Return the number of days for each rate and the rate amount
     def as_array
       @as_array ||= begin
