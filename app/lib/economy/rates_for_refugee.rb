@@ -220,6 +220,8 @@ module Economy
       end
     end
 
+    private
+
     # General purpose:
     # If the refugee has placements with a legal_code that has the attribute #exempt_from_rate set to true, then
     # 1. The periods for those placement must not be calulate for rates.
@@ -242,8 +244,6 @@ module Economy
                 }
               end
     end
-
-    private
 
     # Takes the arguments from and to for the qualified rate period and the rate object
     # Returns a hash with :amount and :days for the rate with exempt from rate days deducted

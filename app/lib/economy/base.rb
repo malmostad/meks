@@ -54,5 +54,33 @@ module Economy
         to: earliest_date(period_end, report_interval[:to])
       }
     end
+
+    # Brute force method for merging an array of date intervals that may overlap
+    # Slow for large intervals.
+    # The date intervals must be in the form { from: Date, to: Date }
+    # Returns an array of merged and uniqe intervals
+    def merge_overlapping_date_intervals(intervals)
+      # Create a sorted array of all individual days in the given intervals
+      days = intervals.map do |interval|
+        (interval[:from]..interval[:to]).to_a
+      end.flatten.sort.uniq
+
+      # Iterate over the array and check:
+      #   If `from` is nil, start a new interval
+      #   If the next item in the array isn't nil (end of array) or not
+      #   the day after the given day, end the interval
+      from = nil
+      days.each_with_index.map do |day, i|
+        from ||= day
+        next unless days[i + 1].nil? || days[i + 1] != day + 1.day
+
+        extracted_interval = { from: from, to: day }
+
+        # Create a new interval in next loop
+        from = nil
+
+        extracted_interval
+      end.compact
+    end
   end
 end
