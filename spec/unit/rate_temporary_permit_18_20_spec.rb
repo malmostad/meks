@@ -60,4 +60,35 @@ RSpec.describe 'Rates for temporary_permit_18_20' do
 
     expect(rate).to be_nil
   end
+
+  describe 'deduction of days for placements with legal_code#exempt_from_rate' do
+    it 'should have no rate for placement covering report range' do
+      create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_RANGE[:from])
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+      rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
+
+      expect(rate).to eq nil
+    end
+
+    it 'should have a reduced number of days rate' do
+      create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_RANGE[:from].to_date + 1)
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+      rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
+
+      expect(rate[:days]).to eq 1
+    end
+
+    it 'should have a reduced number of days rate' do
+      create(
+        :placement_with_rate_exempt,
+        refugee: refugee,
+        moved_in_at: UnitMacros::REPORT_RANGE[:from].to_date + 10,
+        moved_out_at: UnitMacros::REPORT_RANGE[:to].to_date - 10
+      )
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+      rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
+
+      expect(rate[:days]).to eq 20
+    end
+  end
 end

@@ -13,4 +13,13 @@ RSpec.describe 'Rates' do
       expect(rates.size).to eq 0
     end
   end
+
+  describe 'deduction of days for placements with legal_code#exempt_from_rate' do
+    it 'should have no rate for placement covering report range' do
+      create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_RANGE[:from])
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+
+      expect(rates.size).to eq 0
+    end
+  end
 end
