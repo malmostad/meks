@@ -143,5 +143,31 @@ RSpec.describe 'Rates for arrival_0_17' do
 
       expect(rate[:days]).to eq 20
     end
+
+    it 'should have a reduced number of days rate' do
+      create(
+        :placement_with_rate_exempt,
+        refugee: refugee,
+        moved_in_at: UnitMacros::REPORT_INTERVAL[:from].to_date + 10,
+        moved_out_at: UnitMacros::REPORT_INTERVAL[:to].to_date + 10
+      )
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
+      rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
+
+      expect(rate[:days]).to eq 10
+    end
+
+    it 'should not have a reduced number of days rate' do
+      create(
+        :placement_with_rate_exempt,
+        refugee: refugee,
+        moved_in_at: UnitMacros::REPORT_INTERVAL[:to].to_date + 1,
+        moved_out_at: UnitMacros::REPORT_INTERVAL[:to].to_date + 10
+      )
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
+      rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
+
+      expect(rate[:days]).to eq 91
+    end
   end
 end
