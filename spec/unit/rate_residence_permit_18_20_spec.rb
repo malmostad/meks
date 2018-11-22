@@ -32,7 +32,7 @@ RSpec.describe 'Rates for residence_permit_18_20' do
   end
 
   it 'should have correct rate amount and days' do
-    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_18_20])
 
     expect(rate[:days]).to eq 91
@@ -41,7 +41,7 @@ RSpec.describe 'Rates for residence_permit_18_20' do
   it 'should respond to changed date_of_birth' do
     refugee.date_of_birth = '1997-04-06'
 
-    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_18_20])
 
     expect(rate[:days]).to eq 5
@@ -50,7 +50,7 @@ RSpec.describe 'Rates for residence_permit_18_20' do
   it 'should respond to changed date_of_birth' do
     refugee.date_of_birth = '2000-06-20'
 
-    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_18_20])
 
     expect(rate[:days]).to eq 11
@@ -59,7 +59,7 @@ RSpec.describe 'Rates for residence_permit_18_20' do
   it 'should respond to date_of_birth' do
     refugee.date_of_birth = '2001-01-01'
 
-    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_18_20])
 
     expect(rate).to be_nil
@@ -67,16 +67,16 @@ RSpec.describe 'Rates for residence_permit_18_20' do
 
   describe 'deduction of days for placements with legal_code#exempt_from_rate' do
     it 'should have no rate for placement covering report range' do
-      create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_RANGE[:from])
-      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+      create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_INTERVAL[:from])
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_18_20])
 
       expect(rate).to eq nil
     end
 
     it 'should have a reduced number of days rate' do
-      create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_RANGE[:from].to_date + 1)
-      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+      create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_INTERVAL[:from].to_date + 1)
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_18_20])
 
       expect(rate[:days]).to eq 1
@@ -86,10 +86,10 @@ RSpec.describe 'Rates for residence_permit_18_20' do
       create(
         :placement_with_rate_exempt,
         refugee: refugee,
-        moved_in_at: UnitMacros::REPORT_RANGE[:from].to_date + 10,
-        moved_out_at: UnitMacros::REPORT_RANGE[:to].to_date - 10
+        moved_in_at: UnitMacros::REPORT_INTERVAL[:from].to_date + 10,
+        moved_out_at: UnitMacros::REPORT_INTERVAL[:to].to_date - 10
       )
-      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_RANGE).as_array
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_18_20])
 
       expect(rate[:days]).to eq 20

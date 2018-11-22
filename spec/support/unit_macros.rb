@@ -8,7 +8,7 @@ module UnitMacros
     residence_permit_18_20: 1976
   }.freeze
 
-  REPORT_RANGE = { from: '2018-04-01', to: '2018-06-30' }.freeze
+  REPORT_INTERVAL = { from: '2018-04-01', to: '2018-06-30' }.freeze
 
   def detect_rate_by_amount(rates, amount)
     rates.detect { |rate| rate[:amount] == amount }
