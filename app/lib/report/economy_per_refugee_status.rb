@@ -1,5 +1,5 @@
 module Report
-  class EconomyPerRefugeeStatus < Economy
+  class EconomyPerRefugeeStatus < Report::Economy
     def create!
       @axlsx    = Axlsx::Package.new
       @workbook = @axlsx.workbook

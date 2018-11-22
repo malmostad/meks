@@ -9,25 +9,7 @@ module Economy
       @interval = interval
     end
 
-    # Select the refugees placements that has a legal code with #exempt_from_rate
-    # Returns and array of hashes with date intervals for those periods
-    def periods_with_exempt_from_rate
-      placements = @refugee.placements
-                           .includes(:legal_code)
-                           .where('moved_in_at <= ?', @interval[:to])
-                           .where('moved_out_at is ? or moved_out_at >= ?', nil, @interval[:from])
-                           .where(legal_codes: { exempt_from_rate: true })
-                           .pluck(:moved_in_at, :moved_out_at)
-
-      placements.map do |dates|
-        {
-          start: [dates[0], @interval[:from].to_date].compact.max,
-          end: [dates[1], @interval[:to].to_date].compact.min
-        }
-      end
-    end
-
-    # Return the number of days for each rate and the rate amount
+    # Returns the number of days for the rate and the rate amount, or nil
     def as_array
       @as_array ||= begin
         RATE_CATEGORIES_AND_RATES.map do |category|
@@ -63,7 +45,7 @@ module Economy
     #      :residence_permit_at
     #  medborgarskap
     #     :citizenship_at
-    # Return the number of days for each rate and the rate amount
+    # Returns the number of days for the rate and the rate amount, or nil
     def arrival_0_17(category)
       return [] if
           @refugee.date_of_birth.nil? ||
@@ -162,7 +144,7 @@ module Economy
     #     :residence_permit_at
     #   avslutsdatum - 1
     #     :deregistered
-    # Return the number of days for each rate and the rate amount
+    # Returns the number of days for the rate and the rate amount, or nil
     def temporary_permit(category)
       return [] if
           @refugee.date_of_birth.nil? ||
@@ -213,7 +195,7 @@ module Economy
     #     :citizenship_at
     #   avslutsdatum - 1
     #     :deregistered
-    # Return the number of days for each rate and the rate amount
+    # Returns the number of days for the rate and the rate amount, or nil
     def residence_permit(category)
       return [] if
         @refugee.date_of_birth.nil? ||
@@ -238,7 +220,59 @@ module Economy
       end
     end
 
+    # General purpose:
+    # If the refugee has placements with a legal_code that has the attribute #exempt_from_rate set to true, then
+    # 1. The periods for those placement must not be calulate for rates.
+    # 2. All the actual costs for the refugee within those periods must be included instead
+    #
+    # This method:
+    # Selects the refugees placements that has a legal_code with #exempt_from_rate set to true
+    # Returns and array of hashes with date intervals for those periods
+    def periods_with_exempt_from_rate
+      @refugee.placements
+              .includes(:legal_code)
+              .where('moved_in_at <= ?', @interval[:to])
+              .where('moved_out_at is ? or moved_out_at >= ?', nil, @interval[:from])
+              .where(legal_codes: { exempt_from_rate: true })
+              .pluck(:moved_in_at, :moved_out_at)
+              .map do |dates|
+                {
+                  from: latest_date(dates[0], @interval[:from]),
+                  to: earliest_date(dates[1], @interval[:to])
+                }
+              end
+    end
+
     private
+
+    # Takes the arguments from and to for the qualified rate period and the rate object
+    # Returns a hash with :amount and :days for the rate with exempt from rate days deducted
+    def amount_and_days(from, to, rate)
+      days = number_of_days_with_exempt_from_rate_deducted(from, to)
+      return nil if days.zero?
+
+      { amount: rate.amount, days: days }
+    end
+
+    # Takes the arguments from and to for a rate period
+    #   and deducts days within the period that must not be calulate for rate
+    #   See doc at #periods_with_exempt_from_rate above
+    # Returns the number of qualified days for the rate
+    def number_of_days_with_exempt_from_rate_deducted(from, to)
+      return 0 unless (to.to_date - from.to_date).positive?
+
+      # Create a range of dates in the rate period and convert it to an array
+      days_with_rate = (from.to_date..to.to_date).to_a
+
+      # Create a range of dates in the exempt_from_rate periods and convert it to an array
+      days_with_exempt_from_rate = periods_with_exempt_from_rate.map do |period|
+        (period[:from].to_date..period[:to].to_date).to_a
+      end.flatten
+
+      # Deduct the exempt_from_rate days array from the rate days array
+      #   to get rate qualified days. Return the size of the array, i.e. the number of days
+      (days_with_rate - days_with_exempt_from_rate).size
+    end
 
     def shared_from_attr(category, rate)
       [
@@ -254,13 +288,6 @@ module Economy
         @interval[:to],
         rate[:end_date]
       ]
-    end
-
-    def amount_and_days(from, to, rate)
-      days = number_of_days(from, to)
-      return nil if days.zero?
-
-      { amount: rate.amount, days: days }
     end
 
     def age(from, to)
