@@ -57,8 +57,8 @@ module Economy
 
     # Brute force method for merging an array of date intervals that may overlap
     # Slow for large intervals.
-    # The date intervals must be in the form { from: Date, to: Date }
-    # Returns an array of merged and uniqe intervals
+    # Each date interval in hte array must be of the form `{ from: Date, to: Date }`
+    # Returns an array of merged and uniqe intervals in the same form
     def merge_overlapping_date_intervals(intervals)
       # Create a sorted array of all individual days in the given intervals
       days = intervals.map do |interval|
