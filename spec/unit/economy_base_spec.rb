@@ -1,18 +1,4 @@
 RSpec.describe Economy::Base do
-  it 'should return correct merged intervals' do
-    intervals = [
-      { from: '2018-01-01'.to_date, to: '2018-03-01'.to_date },
-      { from: '2018-02-01'.to_date, to: '2018-03-10'.to_date },
-      { from: '2018-04-01'.to_date, to: '2018-05-01'.to_date }
-    ]
-    merged_intervals = Economy::Base.new.send(:merge_overlapping_date_intervals, intervals)
-
-    expect(merged_intervals).to eq [
-      { from: '2018-01-01'.to_date, to: '2018-03-10'.to_date },
-      { from: '2018-04-01'.to_date, to: '2018-05-01'.to_date }
-    ]
-  end
-
   it 'should remove overlaps in intervals' do
     intervals = [
       { from: '2018-01-01'.to_date, to: '2018-03-01'.to_date },
