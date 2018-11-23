@@ -12,7 +12,32 @@ module Economy
       @intervals_with_exempt = intervals_with_exempt
     end
 
-    # Returns the number of days for the costs and the cost amount
+    # See doc at #as_array
+    def sum
+      as_array.sum do |x|
+        next x if x.is_a? BigDecimal
+        next x[:days] * x[:amount] unless x[:days].nil?
+
+        x[:months] * x[:costs]
+      end
+    end
+
+    # See doc at #as_array
+    def as_formula
+      as_array.map do |x|
+        next x.to_s if x.is_a? BigDecimal
+        next if x.value? 0
+
+        next "#{x[:days]}*#{x[:amount]}" unless x[:days].nil?
+
+        "#{x[:months]}*#{x[:costs]}"
+      end.compact.join('+')
+    end
+
+    # Returns an array. Note that each hash can be of one of those three forms
+    # { days: Integer, amount: Float }
+    # { months: Float, costs: Float }
+    # Float
     def as_array
       return [] if @intervals_with_exempt.empty?
 

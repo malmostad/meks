@@ -61,6 +61,8 @@ module Economy
     def remove_overlaps_in_date_intervals(intervals)
       intervals.map! do |interval|
         (intervals - [interval]).each do |other_interval|
+          next if other_interval.nil?
+
           if (other_interval[:from]..other_interval[:to]).cover? interval[:from]
             interval[:from] = other_interval[:to] + 1.day
           end

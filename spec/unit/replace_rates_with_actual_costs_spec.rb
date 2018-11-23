@@ -18,21 +18,21 @@ RSpec.describe Economy::ReplaceRatesWithActualCosts do
     placement.reload
   end
 
-  it 'should calulate number of days and rate' do
+  it 'should calulate cost' do
     expect(Economy::ReplaceRatesWithActualCosts.new(refugee).sum).to eq((97 + 1) * 1234)
   end
 
-  it 'should calulate number of days and rate limited by report interval' do
+  it 'should calulate cost limited by report interval' do
     expect(Economy::ReplaceRatesWithActualCosts.new(
       refugee, from: '2018-02-01', to: '2018-03-31'
     ).sum).to eq((16 + 1) * 1234)
   end
 
-  it 'should calulate number of days and rate and return a string' do
+  it 'should return an array of days and amount as a string' do
     expect(Economy::ReplaceRatesWithActualCosts.new(refugee).as_formula).to eq '98*1234'
   end
 
-  it 'should have a reduced number of days rate' do
+  it 'should return an array of days and amount' do
     expect(Economy::ReplaceRatesWithActualCosts.new(refugee).as_array).to eq([days: 98, amount: 1234])
   end
 end

@@ -34,4 +34,12 @@ RSpec.describe 'Home Cost calculations' do
       refugee.placements, from: '2018-02-01', to: '2018-03-31'
     ).sum).to eq (16 + 1) * 1234
   end
+
+  it 'should return an array of days and amount as a string' do
+    expect(Economy::PlacementAndHomeCost.new(refugee.placements).as_formula).to eq '98*1234'
+  end
+
+  it 'should return an array of days and amount' do
+    expect(Economy::PlacementAndHomeCost.new(refugee.placements).as_array).to eq([days: 98, amount: 1234])
+  end
 end
