@@ -137,7 +137,11 @@ module Report
         },
         {
           heading: 'Förväntad intäkt',
-          query: self.class.sum_formula(::Economy::RatesForRefugee.new(refugee, @interval).as_formula),
+          query: self.class.sum_formula(
+            ::Economy::RatesForRefugee.new(refugee, @interval).as_formula,
+            # Special case, see class doc
+            ::Economy::ReplaceRatesWithActualCosts.new(refugee, @interval).as_formula
+          ),
           style: 'currency'
         },
         {

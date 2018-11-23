@@ -7,9 +7,10 @@ module Economy
     def initialize(refugee, interval = DEFAULT_INTERVAL)
       @refugee = refugee
       @interval = interval
+      @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, @interval)
     end
 
-    # Returns the number of days for the rate and the rate amount, or nil
+    # Returns the number of days for the rate and the rate amount
     def as_array
       @as_array ||= begin
         RATE_CATEGORIES_AND_RATES.map do |category|
@@ -222,31 +223,8 @@ module Economy
 
     private
 
-    # General purpose:
-    # If the refugee has placements with a legal_code that has the attribute #exempt_from_rate set to true, then
-    # 1. The periods for those placement must not be calulate for rates.
-    # 2. All the actual costs for the refugee within those periods must be included instead
-    #
-    # This method:
-    # Selects the refugees placements that has a legal_code with #exempt_from_rate set to true
-    # Returns and array of hashes with date intervals for those periods
-    def periods_with_exempt_from_rate
-      @refugee.placements
-              .includes(:legal_code)
-              .where('moved_in_at <= ?', @interval[:to])
-              .where('moved_out_at is ? or moved_out_at >= ?', nil, @interval[:from])
-              .where(legal_codes: { exempt_from_rate: true })
-              .pluck(:moved_in_at, :moved_out_at)
-              .map do |dates|
-                {
-                  from: latest_date(dates[0], @interval[:from]),
-                  to: earliest_date(dates[1], @interval[:to])
-                }
-              end
-    end
-
     # Takes the arguments from and to for the qualified rate period and the rate object
-    # Returns a hash with :amount and :days for the rate with exempt from rate days deducted
+    # Returns a hash with :amount and :days for the rate
     def amount_and_days(from, to, rate)
       days = number_of_days_with_exempt_from_rate_deducted(from, to)
       return nil if days.zero?
@@ -256,7 +234,7 @@ module Economy
 
     # Takes the arguments from and to for a rate period
     #   and deducts days within the period that must not be calulate for rate
-    #   See doc at #periods_with_exempt_from_rate above
+    #   See doc in Economy::ReplaceRatesWithActualCosts
     # Returns the number of qualified days for the rate
     def number_of_days_with_exempt_from_rate_deducted(from, to)
       return 0 unless (to.to_date - from.to_date).positive?
@@ -264,14 +242,11 @@ module Economy
       # Create a range of dates in the rate period and convert it to an array
       days_with_rate = (from.to_date..to.to_date).to_a
 
-      # Create a range of dates in the exempt_from_rate periods and convert it to an array
-      days_with_exempt_from_rate = periods_with_exempt_from_rate.map do |period|
-        (period[:from].to_date..period[:to].to_date).to_a
-      end.flatten
-
       # Deduct the exempt_from_rate days array from the rate days array
-      #   to get rate qualified days. Return the size of the array, i.e. the number of days
-      (days_with_rate - days_with_exempt_from_rate).size
+      #   to get rate qualified days.
+      # Return the number qualified days by reducing the
+      #   days_with_rate with the exempt_days_array
+      (days_with_rate - @replace_rates.exempt_days_array).size
     end
 
     def shared_from_attr(category, rate)
