@@ -14,11 +14,15 @@ module Economy
 
     # Returns the number of days for the costs and the cost amount
     def as_array
-      ::Economy::PlacementAndHomeCost.new(@refugee.placements, @intervals_with_exempt).as_array +
-        ::Economy::ExtraContributionCost.new(@refugee, @intervals_with_exempt).as_array +
-        ::Economy::RefugeeExtraCost.new(@refugee, @intervals_with_exempt).as_array +
-        ::Economy::PlacementExtraCost.new(@refugee.placements, @intervals_with_exempt).as_array +
-        ::Economy::FamilyAndEmergencyHomeCost.new(@refugee.placements, @intervals_with_exempt).as_array
+      return [] if @intervals_with_exempt.empty?
+
+      @intervals_with_exempt.map do |interval_with_exempt|
+        ::Economy::PlacementAndHomeCost.new(@refugee.placements, interval_with_exempt).as_array +
+          ::Economy::ExtraContributionCost.new(@refugee, interval_with_exempt).as_array +
+          ::Economy::RefugeeExtraCost.new(@refugee, interval_with_exempt).as_array +
+          ::Economy::PlacementExtraCost.new(@refugee.placements, interval_with_exempt).as_array +
+          ::Economy::FamilyAndEmergencyHomeCost.new(@refugee.placements, interval_with_exempt).as_array
+      end.flatten.compact
     end
 
     # Returns an array of days that has exempt_from_rate
