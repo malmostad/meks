@@ -55,6 +55,19 @@ module Economy
       }
     end
 
+    def remove_overlaps_in_date_intervals(intervals)
+      intervals.map! do |interval|
+        (intervals - [interval]).each do |other_interval|
+          if (other_interval[:from]..other_interval[:to]).cover? interval[:from]
+            interval[:from] = other_interval[:to] + 1.day
+          end
+        end
+        next nil if interval[:from] > interval[:to]
+
+        interval
+      end.compact
+    end
+
     # Brute force method for merging an array of date intervals that may overlap
     # Slow for large intervals.
     # Each date interval in hte array must be of the form `{ from: Date, to: Date }`
