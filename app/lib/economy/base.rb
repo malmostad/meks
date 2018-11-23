@@ -55,6 +55,9 @@ module Economy
       }
     end
 
+    # Removes overlaps in date intervals
+    # Takes an array of date intervals of the form { from: Date, to: Date }
+    # Returns an array of hashes in the same format
     def remove_overlaps_in_date_intervals(intervals)
       intervals.map! do |interval|
         (intervals - [interval]).each do |other_interval|
