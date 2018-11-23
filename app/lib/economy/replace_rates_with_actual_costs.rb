@@ -63,20 +63,14 @@ module Economy
     # Selects the refugees placements that has a legal_code with #exempt_from_rate set to true
     # Returns and array of hashes with date intervals for those periods
     def intervals_with_exempt
-      placement_intervals =
-        @refugee
-        .placements
-        .includes(:legal_code)
-        .where('moved_in_at <= ?', @interval[:to])
-        .where('moved_out_at is ? or moved_out_at >= ?', nil, @interval[:from])
-        .where(legal_codes: { exempt_from_rate: true })
-        .pluck(:moved_in_at, :moved_out_at)
-        .map do |dates|
-          {
-            from: latest_date(dates[0], @interval[:from]),
-            to: earliest_date(dates[1], @interval[:to])
-          }
-        end
+      placement_intervals = @refugee.placements.map do |placement|
+        next unless placement.legal_code.exempt_from_rate?
+
+        {
+          from: latest_date(placement.moved_in_at, @interval[:from]),
+          to: earliest_date(placement.moved_out_at, @interval[:to])
+        }
+      end.compact
 
       remove_overlaps_in_date_intervals(placement_intervals)
     end
