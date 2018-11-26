@@ -2,8 +2,6 @@ module Report
   class Placements < Workbooks
     include RefugeesHelper
 
-    attr_accessor :record
-
     def initialize(options = {})
       super(options)
       @selection = options[:selection]
