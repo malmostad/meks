@@ -125,7 +125,7 @@ module Report
           type: :date
         },
         {
-          heading: 'Budgeterad kostnad',
+          heading: 'Kostnad',
           query: self.class.sum_formula(
             ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).as_formula,
             ::Economy::ExtraContributionCost.new(refugee, @interval).as_formula,
