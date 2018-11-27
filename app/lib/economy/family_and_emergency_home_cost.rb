@@ -28,10 +28,13 @@ module Economy
           months = number_of_months(from: from, to: to)
           next if months.zero?
 
+          fee = cost.fee || 0
+          expense = cost.expense || 0
+          pu_extra = cost.pu_extra || 0
+
           {
             months: months,
-            costs: (cost.fee + cost.expense).to_f,
-            # refugee: placement.refugee
+            costs: (fee + expense + pu_extra).to_f
           }
         end
       end.flatten.compact
