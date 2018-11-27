@@ -22,7 +22,8 @@
         - if placement.moved_out_reason.present?
           = kv 'placement.moved_out_reason', placement.moved_out_reason.name
 
-      = kv 'placement.cost', number_to_currency(placement.cost, delimiter: ' ')
+      - if placement.home.cost_per_placement?
+        = kv 'placement.cost', number_to_currency(placement.cost, delimiter: ' ')
 
       - if placement.home.cost_for_family_and_emergency_home?
         - placement.family_and_emergency_home_costs.sort_by(&:period_start).each do |cost|
