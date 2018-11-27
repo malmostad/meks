@@ -85,14 +85,4 @@ class Placement < ApplicationRecord
     days = moved_out_at.present? ? (moved_out_at - moved_in_at).to_i : (Date.today - moved_in_at).to_i
     days + 1
   end
-
-  def cost_per_day
-    return 0 unless placement_time.positive?
-
-    cost_sum / placement_time
-  end
-
-  def cost_sum
-    Economy::PlacementAndHomeCost.new([dup]).sum
-  end
 end
