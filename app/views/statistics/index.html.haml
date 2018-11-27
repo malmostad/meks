@@ -3,22 +3,21 @@
   %section.box.show.statistics
     %h1.box-title= h1
     .box-content.basic
-      %h2.group-title= 'Aktuella ärenden'
-      %p= "#{in_arrival} barn är i ankomst i väntan på anvisning"
+      %h2.group-title Aktuella ärenden
+      %p #{in_arrival} barn är i ankomst i väntan på anvisning
       %p
-        = "Den centrala förvaltningen ansvarar för #{our_municipality_department_refugees.count} barn,"
-        = "varav #{our_municipality_department_genders.join(', ')}"
-      %p= "Vanligaste nationaliteterna är #{top_countries}"
-      %p= "#{refugees_waiting_for_verdict} barn är asylsökande och väntar på beslut i asylärendet"
-      %p= "#{refugees_with_residence_permit} barn har PUT"
-      %p= "#{refugees_with_temporary_permit} barn har TUT"
-      %p= "#{refugees_with_citizenship} barn har erhållit svenskt medborgarskap"
+        Malmö stad ansvarar för #{our_municipality_refugees.count} barn,
+        varav #{our_municipality_genders.join(', ')}
+      %p Vanligaste nationaliteterna är #{top_countries}
+      %p #{refugees_waiting_for_verdict} barn är asylsökande och väntar på beslut i asylärendet
+      %p #{refugees_with_residence_permit} barn har PUT
+      %p #{refugees_with_temporary_permit} barn har TUT
+      %p #{refugees_with_citizenship} barn har erhållit svenskt medborgarskap
 
       %h2.group-title Placeringar och boenden
-      %p= "#{refugees_on_hvb} barn är placerade på kommunala och upphandlade HVB"
-      %p= "#{externaly_placed_refugees} barn är externt placerade"
-      %p= "#{refugees_on_emergency_home} barn är placerade i jourhem"
-      %p= "#{refugees_on_family_home} barn är placerade i familjehem"
-      %p= "#{refugees_on_outward_home} barn är placerade på utslussboende"
-      %p= "#{refugees_in_our_municipality_not_central_department_with_placement} barn tillhörande vår kommun (men inte centrala förvaltningen) är placerade på centrala förvaltningens boenden"
-      %p= "Den centrala förvaltningen har #{number_of_homes} kommunala och upphandlade HVB med #{guaranteed_seats} boendeplatser"
+      %p #{refugees_on_hvb} barn är placerade på kommunala och upphandlade HVB
+      %p #{externaly_placed_refugees} barn är externt placerade
+      %p #{refugees_on_emergency_home} barn är placerade i jourhem
+      %p #{refugees_on_family_home} barn är placerade i familjehem
+      %p #{refugees_on_outward_home} barn är placerade på utslussboende
+      %p Malmö stad har #{number_of_homes} kommunala och upphandlade HVB med #{guaranteed_seats} boendeplatser

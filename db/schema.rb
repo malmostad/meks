@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_27_103021) do
+ActiveRecord::Schema.define(version: 2018_11_27_130045) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -192,7 +192,6 @@ ActiveRecord::Schema.define(version: 2018_11_27_103021) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "our_municipality"
-    t.boolean "our_municipality_department"
     t.index ["name"], name: "index_municipalities_on_name", unique: true
   end
 

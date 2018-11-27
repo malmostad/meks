@@ -5,7 +5,7 @@
 # in rate_residence_permit_0_17_spec.rb. Only conditionals for date of birth differs
 RSpec.describe 'Rates for residence_permit_18_20' do
   let(:municipality) do
-    Municipality.where(our_municipality_department: true).first_or_create { |m| m.name = 'Foo City' }
+    Municipality.where(our_municipality: true).first_or_create { |m| m.name = 'Foo City' }
   end
 
   let(:refugee) { create(:refugee) }

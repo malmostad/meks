@@ -2,7 +2,7 @@
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for residence_permit_0_17' do
   let(:municipality) do
-    Municipality.where(our_municipality_department: true).first_or_create { |m| m.name = 'Foo City' }
+    Municipality.where(our_municipality: true).first_or_create { |m| m.name = 'Foo City' }
   end
 
   let(:refugee) { create(:refugee) }

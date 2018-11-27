@@ -65,7 +65,7 @@ RSpec.describe 'Rates for assigned_0_17' do
     expect(rate[:days]).to eq 61
   end
 
-  it 'should require in_our_municipality_department' do
+  it 'should require our_municipality' do
     municipality.update_attribute(:our_municipality, false)
     refugee.reload
 

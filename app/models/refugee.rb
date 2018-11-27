@@ -34,10 +34,6 @@ class Refugee < ApplicationRecord
     where(municipality: { our_municipality: true })
   }
 
-  scope :in_our_municipality_department, -> {
-    where(municipality: { our_municipality_department: true })
-  }
-
   has_many :homes, through: :placements
   accepts_nested_attributes_for :placements,
     reject_if: proc { |attr| attr[:home_id].blank? }
@@ -146,10 +142,6 @@ class Refugee < ApplicationRecord
 
   def in_our_municipality?
     municipality&.our_municipality?
-  end
-
-  def in_our_municipality_department?
-    municipality&.our_municipality_department?
   end
 
   # Returns the asylum event for the refugee with latest date

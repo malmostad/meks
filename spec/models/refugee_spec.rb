@@ -51,15 +51,6 @@ RSpec.describe Refugee, type: :model do
     end
   end
 
-  describe 'in our_municipality_department' do
-    let(:municipality) { create(:municipality, our_municipality_department: true) }
-    let(:refugee) { create(:refugee, municipality: municipality) }
-
-    it 'should be in our_municipality_department' do
-      expect(refugee.in_our_municipality_department?).to be true
-    end
-  end
-
   describe 'associations' do
     let(:refugee) { create(:refugee) }
 

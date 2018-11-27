@@ -146,7 +146,6 @@ sv:
       municipality:
         <<: *defaults
         our_municipality: Vår kommun
-        our_municipality_department: Vår kommun, central förvaltning
 
       payment_import: &payment_import
         <<: *defaults

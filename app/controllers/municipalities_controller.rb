@@ -36,13 +36,14 @@ class MunicipalitiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_municipality
-      @municipality = Municipality.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def municipality_params
-      params.require(:municipality).permit(:name, :our_municipality, :our_municipality_department)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_municipality
+    @municipality = Municipality.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def municipality_params
+    params.require(:municipality).permit(:name, :our_municipality)
+  end
 end
