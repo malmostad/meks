@@ -27,7 +27,7 @@ module PlacementsHelper
     fee = number_to_currency(cost.fee || 0, delimiter: ' ')
     pu_extra = number_to_currency(cost.pu_extra || 0, delimiter: ' ')
 
-    "Avtalsperiod: #{period}, arvode: #{expense}, omkostnad: #{fee} PU-pålägg: #{pu_extra}"
+    "Avtalsperiod: #{period}, arvode: #{expense}, omkostnad: #{fee} PO-pålägg: #{pu_extra}"
   end
 
   def extra_cost(cost)
