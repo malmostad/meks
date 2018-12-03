@@ -1,4 +1,4 @@
-# 'Boendenformer'
+# 'Boendeformer'
 class TypeOfHousing < ApplicationRecord
   has_and_belongs_to_many :homes
 
