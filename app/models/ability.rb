@@ -17,20 +17,18 @@ class Ability
       cannot %i[edit update], Payment
 
     elsif user.has_role? :writer
-      can :manage, Refugee
-      cannot :destroy, Refugee
       can :manage, DossierNumber
       can :manage, ExtraContribution
+      can %i[read create edit update], FamilyAndEmergencyHomeCost
+      can %i[read create edit update], Placement
+      can %i[read create edit update], PlacementExtraCost
+      can %i[read create edit update], Refugee
       can :manage, RefugeeExtraCost
+      can :manage, Relationship
+      can :manage, Ssn
+      can :read, Cost
       can :read, Home
       can :read, User
-      can :manage, Relationship
-      can :manage, Placement
-      cannot :destroy, Placement
-      can :manage, PlacementExtraCost
-      cannot :destroy, PlacementExtraCost
-      can :manage, FamilyAndEmergencyHomeCost
-      cannot :destroy, FamilyAndEmergencyHomeCost
       can :generate, :reports
       can :view, :statistics
 
