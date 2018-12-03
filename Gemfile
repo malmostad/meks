@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.1'
+gem 'rails', '5.2.1.1'
 gem 'haml-rails', '1.0.0'
 gem 'sass-rails', '5.0.7'
-gem 'uglifier', '4.1.19'
+gem 'uglifier', '4.1.20'
 gem 'coffee-rails', '4.2.2'
 
 # Version 1.5 that is included in Malmo Global Assets have bugs in the date range selector
 gem 'bootstrap-datepicker-rails', '1.8.0.1'
 
-gem 'simple_form', '4.0.1'
+gem 'simple_form', '4.1.0'
 gem 'mysql2', '0.5.2'
 gem 'dalli', '2.7.9'
 gem 'elasticsearch-model', '6.0.0'
