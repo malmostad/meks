@@ -5,13 +5,13 @@
     - if can? :manage, Refugee
       = f.input :draft, wrapper: :vertical_radio_and_checkboxes
     = f.input :secrecy, wrapper: :vertical_radio_and_checkboxes
-    = f.input :sof_placement, label_html: popover('refugee.sof_placement'),
+    = f.input :sof_placement,
               wrapper: :vertical_radio_and_checkboxes
     = f.input :arrival, wrapper: :vertical_radio_and_checkboxes
 
-    = f.input :name, label_html: popover('refugee.name')
+    = f.input :name
 
-    %h2.group-title{ popover('refugee.person_data') } Personuppgifter
+    %h2.group-title Personuppgifter
     .terms
       = f.input :date_of_birth, label: 'Personnummer', wrapper: :addon do
         .input-group.ssn.date

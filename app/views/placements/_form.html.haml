@@ -21,7 +21,7 @@
       .controls
         = add_family_and_emergency_home_costs_button "Ny familje/jourhemskostnad", f
 
-%h2.group-title Extra omkostnader
+%h2.group-title{ popover('placement.placement_extra_costs') }  Extra omkostnader
 .terms
   = f.simple_fields_for :placement_extra_costs, f.object.placement_extra_costs.order(:date) do |pec|
     = render "fields_for_placement_extra_cost", pec: pec

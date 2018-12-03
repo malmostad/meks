@@ -20,14 +20,13 @@ sv:
     # :title is optional. Always end :content with a period.
     info:
       refugee:
-        sof_placement:
-          title: SoF-placering
-          content: Kommer att tas bort i januari 2019.
-        name:
-          title: Barnets namn
-          content: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        person_data:
-          content: Denna sektionen fyller du i så gott du kan.
+        extra_contributions:
+          title: Extra omkostnader
+          content: Om förändringar sker enligt avtal skall ny insats registreras. Redigera endast extra insatser om felaktiga uppgifter har registrerats.
+      placement:
+        placement_extra_costs:
+          title: Extra insatser
+          content: Om förändringar sker enligt avtal skall ny insats registreras. Redigera endast extra insatser om felaktiga uppgifter har registrerats.
 
     labels:
       defaults: &defaults
