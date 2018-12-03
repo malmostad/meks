@@ -22,7 +22,10 @@ class Ability
       can :manage, Relationship
       can :manage, Placement
       cannot :destroy, Placement
+      can :manage, PlacementExtraCost
+      cannot :destroy, PlacementExtraCost
       can :manage, FamilyAndEmergencyHomeCost
+      cannot :destroy, FamilyAndEmergencyHomeCost
       can :generate, :reports
       can :view, :statistics
 
@@ -40,14 +43,18 @@ class Ability
       can :create, Refugee
       can [:edit, :update, :drafts], Refugee, draft: true
       can :manage, Relationship, refugee: { draft: true }
-      can :manage, Placement, refugee: { draft: true }
-      can :manage, FamilyAndEmergencyHomeCost, placement: { refugee: { draft: true } }
-      can :manage, ExtraContribution, refugee: { draft: true }
-      can :manage, RefugeeExtraCost, refugee: { draft: true }
+      cannot :destroy, DossierNumber
+      can :manage, DossierNumber, refugee: { draft: true }
       cannot :destroy, Relationship
+      can :manage, Placement, refugee: { draft: true }
       cannot :destroy, Placement
+      can :manage, PlacementExtraCost, placement: { refugee: { draft: true } }
+      cannot :destroy, PlacementExtraCost
+      can :manage, FamilyAndEmergencyHomeCost, placement: { refugee: { draft: true } }
       cannot :destroy, FamilyAndEmergencyHomeCost
+      can :manage, ExtraContribution, refugee: { draft: true }
       cannot :destroy, ExtraContribution
+      can :manage, RefugeeExtraCost, refugee: { draft: true }
       cannot :destroy, RefugeeExtraCost
 
       # Model-less controllers

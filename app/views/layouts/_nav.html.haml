@@ -2,7 +2,8 @@
   %h1 MEKS
   %ul
     %li.refugees= link_to "Ensamkommande barn", refugees_path
-    %li.homes= link_to "Boenden", homes_path
+    - if can? :read, :homes
+      %li.homes= link_to "Boenden", homes_path
     %li.statistics= link_to "Översikt", statistics_path
     - if can? :manage, :payment_imports
       %li.payment_imports= link_to "Utbetalda schabloner", payment_imports_path
