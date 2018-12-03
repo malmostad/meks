@@ -3,6 +3,8 @@ require 'faker'
 namespace :scramble do
   desc 'Scramble refugees'
   task refugees: :environment do
+    countries = Country.where(id: [313, 251, 318])
+
     Refugee.find_each do |refugee|
       refugee.name = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
       refugee.date_of_birth = Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s[0..9]
@@ -11,7 +13,7 @@ namespace :scramble do
       refugee.dossier_number = Faker::Number.number(10)
       refugee.dossier_numbers = []
       refugee.social_worker = ''
-      refugee.countries = []
+      refugee.countries = [countries[rand(3)]]
       refugee.languages = []
       refugee.deregistered_comment = ''
       refugee.municipality_placement_comment = ''
