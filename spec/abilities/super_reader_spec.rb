@@ -41,7 +41,6 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:read, Municipality.new) }
     it { should_not be_able_to(:read, OwnerType.new) }
     it { should_not be_able_to(:read, Setting.new) }
-    it { should_not be_able_to(:read, Ssn.new) }
     it { should_not be_able_to(:read, TargetGroup.new) }
     it { should_not be_able_to(:read, TypeOfHousing.new) }
     it { should_not be_able_to(:read, TypeOfRelationship.new) }
@@ -54,6 +53,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:read, Placement.new) }
     it { should be_able_to(:read, Refugee.new) }
     it { should be_able_to(:read, Relationship.new) }
+    it { should be_able_to(:read, Ssn.new) }
     it { should be_able_to(:read, User.new) }
 
     it { should be_able_to(:view, :statistics) }

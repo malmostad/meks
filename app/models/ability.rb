@@ -20,9 +20,9 @@ class Ability
       can :manage, DossierNumber
       can :manage, ExtraContribution
       can %i[read create edit update], FamilyAndEmergencyHomeCost
-      can %i[read create edit update], Placement
+      can %i[read create edit update move_out move_out_update], Placement
       can %i[read create edit update], PlacementExtraCost
-      can %i[read create edit update], Refugee
+      can %i[read search create edit update], Refugee
       can :manage, RefugeeExtraCost
       can :manage, Relationship
       can :manage, Ssn
@@ -45,13 +45,16 @@ class Ability
       can %i[read create edit update], Ssn, refugee: { draft: true }
 
       can :read, Cost
+      can :read, DossierNumber
       can :read, ExtraContribution
       can :read, FamilyAndEmergencyHomeCost
       can :read, Home
       can :read, Placement
+      can :read, PlacementExtraCost
       can %i[read search suggest], Refugee
       can :read, RefugeeExtraCost
       can :read, Relationship
+      can :read, Ssn
       can :read, User
 
       # Model-less controllers
