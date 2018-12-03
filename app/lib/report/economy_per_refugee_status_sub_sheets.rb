@@ -56,7 +56,7 @@ module Report
           query: record[:refugee]&.dossier_number
         },
         {
-          heading: 'Budgeterad kostnad',
+          heading: 'Kostnad',
           query: record[:costs]&.map { |cost| cost[:amount] * cost[:days] }&.sum
         },
         {

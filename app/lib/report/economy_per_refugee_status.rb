@@ -87,7 +87,7 @@ module Report
           query: category.human_name
         },
         {
-          heading: 'Budgeterad kostnad',
+          heading: 'Kostnad',
           query: costs(category).map { |cost| cost[:amount] * cost[:days] }.sum
         },
         {
