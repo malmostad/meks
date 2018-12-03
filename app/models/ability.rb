@@ -33,32 +33,26 @@ class Ability
       can :view, :statistics
 
     elsif user.has_role?(:reader) || user.has_role?(:super_reader)
-      can :read, Home
-      can [:read, :search, :suggest], Refugee
-      can :read, ExtraContribution
-      can :read, RefugeeExtraCost
-      can :read, User
-      can :read, Relationship
-      can :read, Placement
-      can :read, FamilyAndEmergencyHomeCost
-
-      # 'reader' create, and edit and list refugee drafts
+      can %i[read create edit update], DossierNumber, refugee: { draft: true }
+      can %i[read create edit update], ExtraContribution, refugee: { draft: true }
+      can %i[read create edit update], FamilyAndEmergencyHomeCost, placement: { refugee: { draft: true } }
+      can %i[read create edit update], Placement, refugee: { draft: true }
+      can %i[read create edit update], PlacementExtraCost, placement: { refugee: { draft: true } }
       can :create, Refugee
-      can [:edit, :update, :drafts], Refugee, draft: true
-      can :manage, Relationship, refugee: { draft: true }
-      cannot :destroy, DossierNumber
-      can :manage, DossierNumber, refugee: { draft: true }
-      cannot :destroy, Relationship
-      can :manage, Placement, refugee: { draft: true }
-      cannot :destroy, Placement
-      can :manage, PlacementExtraCost, placement: { refugee: { draft: true } }
-      cannot :destroy, PlacementExtraCost
-      can :manage, FamilyAndEmergencyHomeCost, placement: { refugee: { draft: true } }
-      cannot :destroy, FamilyAndEmergencyHomeCost
-      can :manage, ExtraContribution, refugee: { draft: true }
-      cannot :destroy, ExtraContribution
-      can :manage, RefugeeExtraCost, refugee: { draft: true }
-      cannot :destroy, RefugeeExtraCost
+      can %i[edit update drafts], Refugee, draft: true
+      can %i[read create edit update], RefugeeExtraCost, refugee: { draft: true }
+      can %i[read create edit update], Relationship, refugee: { draft: true }
+      can %i[read create edit update], Ssn, refugee: { draft: true }
+
+      can :read, Cost
+      can :read, ExtraContribution
+      can :read, FamilyAndEmergencyHomeCost
+      can :read, Home
+      can :read, Placement
+      can %i[read search suggest], Refugee
+      can :read, RefugeeExtraCost
+      can :read, Relationship
+      can :read, User
 
       # Model-less controllers
       can :view, :statistics
