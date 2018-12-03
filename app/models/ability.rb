@@ -4,12 +4,17 @@ class Ability
   def initialize(user)
     if user.has_role? :admin
       can :manage, :all
-      can :destroy, Refugee
+      cannot :manage, LegalCode
+      cannot :manage, TypeOfHousing
+      cannot :manage, User
+      can :read, User
       cannot :destroy, Home
       cannot :create, RateCategory
       cannot :destroy, RateCategory
-      cannot [:edit, :update], PaymentImport
-      cannot [:edit, :update], Payment
+      cannot :create, Setting
+      cannot :destroy, Setting
+      cannot %i[edit update], PaymentImport
+      cannot %i[edit update], Payment
 
     elsif user.has_role? :writer
       can :manage, Refugee
