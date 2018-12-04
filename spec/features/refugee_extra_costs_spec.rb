@@ -58,4 +58,19 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
       end
     end
   end
+
+  feature 'reader role' do
+    before(:each) do
+      login_user(:reader)
+    end
+
+    scenario "can't add an extra cost" do
+      refugee = create(:refugee)
+
+      visit "/refugees/#{refugee.id}/refugee_extra_costs/new"
+
+      expect(current_path).to eq root_path
+      expect(page).to have_selector('.alert', text: 'Din roll saknar behörighet')
+    end
+  end
 end

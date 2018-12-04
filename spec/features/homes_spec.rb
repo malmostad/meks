@@ -45,5 +45,12 @@ RSpec.feature "Homes", type: :feature do
     before(:each) do
       login_user(:writer)
     end
+
+    scenario "can't add a home" do
+      visit "/homes/new"
+
+      expect(current_path).to eq root_path
+      expect(page).to have_selector(".alert", text: "Din roll saknar behörighet")
+    end
   end
 end

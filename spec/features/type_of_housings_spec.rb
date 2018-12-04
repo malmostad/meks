@@ -1,5 +1,17 @@
 RSpec.feature "Type of housings", type: :feature do
   # Ability is currently disabled
+  feature "admin role" do
+    before(:each) do
+      login_user(:admin)
+    end
+
+    scenario "can't add a type_of_housing" do
+      visit "/type_of_housings/new"
+
+      expect(current_path).to eq root_path
+      expect(page).to have_selector(".alert", text: "Din roll saknar behörighet")
+    end
+  end
 
   # feature "admin role" do
   #   before(:each) do

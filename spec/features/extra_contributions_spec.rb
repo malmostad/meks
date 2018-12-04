@@ -69,4 +69,20 @@ RSpec.feature 'ExtraContributions', type: :feature do
       end
     end
   end
+
+  feature 'reader role' do
+    before(:each) do
+      login_user(:reader)
+    end
+
+    scenario "can't add an extra contribution" do
+      create_list(:extra_contribution_type, 3)
+      refugee = create(:refugee)
+
+      visit "/refugees/#{refugee.id}/extra_contributions/new"
+
+      expect(current_path).to eq root_path
+      expect(page).to have_selector('.alert', text: 'Din roll saknar behörighet')
+    end
+  end
 end
