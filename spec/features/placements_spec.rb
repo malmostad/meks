@@ -1,15 +1,24 @@
 RSpec.feature 'Placements', type: :feature do
   feature 'writer role' do
+    let(:refugee) { create(:refugee) }
+    let(:legal_codes) { create_list(:legal_code, 10) }
+    let(:homes) { create_list(:home, 10) }
+    let(:placement) { create(:placement, refugee: refugee, home: homes.first, legal_code: legal_codes.first) }
+    let(:moved_out_reasons) { create_list(:moved_out_reason, 5) }
+    let(:cost_per_day_home) { create(:home, type_of_cost: 'cost_per_day') }
+    let(:cost_per_placement_home) { create(:home, type_of_cost: 'cost_per_placement') }
+    let(:cost_for_family_and_emergency_home_home) { create(:home, type_of_cost: 'cost_for_family_and_emergency_home') }
+
     before(:each) do
       login_user(:writer)
+
+      [refugee, placement, cost_per_day_home, cost_per_placement_home,
+       cost_for_family_and_emergency_home_home].each(&:reload)
+      [legal_codes, homes, moved_out_reasons].each { |list| list.each(&:reload) }
     end
 
     feature 'Adds placement' do
       scenario 'for a refugee' do
-        refugee     = create(:refugee)
-        homes       = create_list(:home, 10)
-        legal_codes = create_list(:legal_code, 10)
-
         visit "/refugees/#{refugee.id}"
         click_on 'Ny placering'
         expect(current_path).to eq new_refugee_placement_path(refugee)
@@ -25,9 +34,51 @@ RSpec.feature 'Placements', type: :feature do
         expect(page).to have_selector('.placement .controls', text: legal_codes[1].name)
       end
 
+      scenario 'with extra cost', js: true do
+        visit "/refugees/#{refugee.id}"
+        click_on 'Ny placering'
+        expect(current_path).to eq new_refugee_placement_path(refugee)
+
+        select_from_chosen(homes[1].name, from: 'placement_home_id')
+        select(legal_codes[1].name, from: 'placement_legal_code_id')
+        fill_in 'placement_moved_in_at', with: Date.today.to_s
+
+        click_on 'Ny extra omkostnad'
+        page.all('.placement_placement_extra_costs_date input').first.fill_in with: '2018-12-01'
+        page.all('.placement_placement_extra_costs_amount input').first.fill_in with: 123
+        page.all('.placement_placement_extra_costs_comment input').first.fill_in with: 'Foo bar kommentar'
+
+        click_button 'Spara'
+
+        expect(page).to have_selector(
+          'div', text: 'Datum: 2018-12-01, belopp: 123,00 kr, kommentar: Foo bar kommentar'
+        )
+      end
+
+      scenario 'with cost for family and emergency_home', js: true do
+        visit "/refugees/#{refugee.id}"
+        click_on 'Ny placering'
+        expect(current_path).to eq new_refugee_placement_path(refugee)
+
+        select_from_chosen(cost_for_family_and_emergency_home_home.name, from: 'placement_home_id')
+        select(legal_codes[1].name, from: 'placement_legal_code_id')
+        fill_in 'placement_moved_in_at', with: Date.today.to_s
+
+        click_on 'Ny familje/jourhemskostnad'
+        page.all('.placement_family_and_emergency_home_costs_period_start input').first.fill_in with: '2018-12-01'
+        page.all('.placement_family_and_emergency_home_costs_period_end input').first.fill_in with: '2018-12-31'
+        page.all('.placement_family_and_emergency_home_costs_fee input').first.fill_in with: 4567
+        page.all('.placement_family_and_emergency_home_costs_expense input').first.fill_in with: 1234
+        page.all('.placement_family_and_emergency_home_costs_pu_extra input').first.fill_in with: 87
+
+        click_button 'Spara'
+
+        expect(page).to have_selector(
+          'div', text: 'Avtalsperiod: 2018-12-01–2018-12-31, arvode: 1 234,00 kr, omkostnad: 4 567,00 kr PO-pålägg: 87,00 kr'
+        )
+      end
+
       scenario 'shows and hides the specification field', js: true do
-        refugee = create(:refugee)
-        homes = create_list(:home, 10)
         homes << create(:home, use_placement_specification: true)
 
         visit "/refugees/#{refugee.id}"
@@ -43,11 +94,6 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'shows and hides family_and_emergency_home_cost field', js: true do
-        refugee = create(:refugee)
-        cost_per_day_home = create(:home, type_of_cost: 'cost_per_day')
-        cost_per_placement_home = create(:home, type_of_cost: 'cost_per_placement')
-        cost_for_family_and_emergency_home_home = create(:home, type_of_cost: 'cost_for_family_and_emergency_home')
-
         visit "/refugees/#{refugee.id}"
         click_on 'Ny placering'
 
@@ -67,9 +113,6 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'shows and hides family_and_emergency_home_cost form fields', js: true do
-        refugee = create(:refugee)
-        cost_for_family_and_emergency_home_home = create(:home, type_of_cost: 'cost_for_family_and_emergency_home')
-
         visit "/refugees/#{refugee.id}"
         click_on 'Ny placering'
         page.execute_script("$('#placement_home_id').val(#{cost_for_family_and_emergency_home_home.id}).change()")
@@ -84,8 +127,6 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'shows and hides extra_costs form fields', js: true do
-        refugee = create(:refugee)
-
         visit "/refugees/#{refugee.id}"
         click_on 'Ny placering'
 
@@ -99,11 +140,6 @@ RSpec.feature 'Placements', type: :feature do
 
     feature 'Edit placement' do
       scenario 'for a refugee' do
-        refugee     = create(:refugee)
-        homes       = create_list(:home, 10)
-        legal_codes = create_list(:legal_code, 10)
-        placement   = create(:placement, refugee: refugee, home: homes.first, legal_code: legal_codes.first)
-
         visit "/refugees/#{refugee.id}"
         click_link('Redigera placeringen')
         expect(current_path).to eq edit_refugee_placement_path(refugee, refugee.placements.first)
@@ -120,11 +156,8 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'show and hide specification field', js: true do
-        refugee = create(:refugee)
-        homes = create_list(:home, 10)
         homes << create(:home, use_placement_specification: true)
-
-        create(:placement, refugee: refugee, home: homes.last)
+        placement.update_attribute(:home, homes.last)
 
         visit "/refugees/#{refugee.id}"
         click_link('Redigera placeringen')
@@ -138,12 +171,6 @@ RSpec.feature 'Placements', type: :feature do
 
     feature 'Ends placement' do
       scenario 'for a refugee' do
-        refugee     = create(:refugee)
-        homes       = create_list(:home, 10)
-        legal_codes = create_list(:legal_code, 10)
-        placement   = create(:placement, refugee: refugee, home: homes.first, legal_code: legal_codes.first)
-        moved_out_reasons = create_list(:moved_out_reason, 5)
-
         visit "/refugees/#{refugee.id}"
         click_link('Utskrivning')
 
@@ -157,12 +184,6 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'can’t end before it was started' do
-        refugee     = create(:refugee)
-        homes       = create_list(:home, 10)
-        legal_codes = create_list(:legal_code, 10)
-        placement   = create(:placement, refugee: refugee, home: homes.first, legal_code: legal_codes.first)
-        moved_out_reasons = create_list(:moved_out_reason, 5)
-
         visit "/refugees/#{refugee.id}"
         click_link('Utskrivning')
 

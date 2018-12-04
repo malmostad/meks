@@ -36,6 +36,7 @@ RSpec.configure do |config|
   config.include ModelMacros, type: :model
   config.include IntegrationMacros, type: :controller
   config.include IntegrationMacros, type: :view
+  config.include IntegrationMacros, type: :feature
   config.include ApplicationHelper, type: :view
 
   # [:controller, :view, :request].each do |type|

@@ -27,4 +27,10 @@ module IntegrationMacros
     session[:renewed_at] = Time.now + 1.day
     { user_id: current_user.id }
   end
+
+  def select_from_chosen(item_text, options)
+    field = find_field(options[:from], visible: false)
+    find("##{field[:id]}_chosen").click
+    find("##{field[:id]}_chosen ul.chosen-results li", text: item_text).click
+  end
 end
