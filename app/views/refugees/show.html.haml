@@ -2,7 +2,7 @@
 %section.box.show.refugee
   %h1.box-title
     = h1
-    "#{@refugee.draft? ? '(Utkast)' : ''}"
+    = @refugee.draft? ? '(Utkast)' : ''
   .box-content.basic.form-data
     .form-group
       - if can? :edit, @refugee
