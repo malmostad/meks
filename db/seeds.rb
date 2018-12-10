@@ -32,15 +32,18 @@ end
     guaranteed_seats: rand(100) + 1,
     movable_seats: rand(100) + 1
   )
-  if rand(0...5).zero?
+  type = rand(3)
+  if type.zero?
     h.update_attribute(:type_of_cost, :cost_per_placement)
-  else
+  elsif type == 1
     h.update_attribute(:type_of_cost, :cost_per_day)
     h.costs << Cost.create(
       amount: rand(1000...2500),
       start_date: Date.today - rand(60...180).days,
       end_date: Date.today - rand(-180...59).days
     )
+  else
+    h.update_attribute(:type_of_cost, :cost_for_family_and_emergency_home)
   end
 end
 
