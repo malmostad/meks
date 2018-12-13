@@ -21,12 +21,12 @@ sv:
     info:
       refugee:
         extra_contributions:
-          title: Extra omkostnader
-          content: Om förändringar sker enligt avtal skall ny insats registreras. Redigera endast extra insatser om felaktiga uppgifter har registrerats.
+          title: Extra insatser
+          content: Om förändringar sker enligt avtal skall ny extra insats registreras. Redigera endast extra insatser om felaktiga uppgifter har registrerats.
       placement:
         placement_extra_costs:
-          title: Extra insatser
-          content: Om förändringar sker enligt avtal skall ny insats registreras. Redigera endast extra insatser om felaktiga uppgifter har registrerats.
+          title: Extra omkostnader
+          content: Om förändringar sker enligt avtal skall ny extra omkostnad registreras. Redigera endast extra omkostnader om felaktiga uppgifter har registrerats.
 
     labels:
       defaults: &defaults
