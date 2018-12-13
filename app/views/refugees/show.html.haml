@@ -91,6 +91,6 @@
                 %td= payment.period_start
                 %td= payment.period_end
                 %td= payment.days
-                %td "#{number_to_currency(payment.amount, delimiter: ' ')}"
-                %td "#{number_to_currency(payment.per_day, delimiter: ' ')}"
+                %td= number_to_currency(payment.amount, delimiter: ' ')
+                %td= number_to_currency(payment.per_day, delimiter: ' ')
                 %td= payment.comment
