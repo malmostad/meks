@@ -56,12 +56,12 @@ module Report
           tooltip: 'Anger det datum då barnet registreras i MEKS för första gången'
         },
         {
-          heading: 'Placeringsdatum',
-          query: refugee.placements.sort_by(&:moved_in_at).map(&:moved_in_at).compact.join(', ')
+          heading: 'Senaste placeringsdatum',
+          query: refugee.placements.map(&:moved_in_at).compact.max
         },
         {
-          heading: 'Utskrivningsdatum',
-          query: refugee.placements.sort_by(&:moved_in_at).map(&:moved_out_at).compact.join(', ')
+          heading: 'Senaste utskrivningsdatum',
+          query: refugee.placements.map(&:moved_out_at).compact.max
         },
         {
           heading: 'refugee.deregistered',
