@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_27_130045) do
+ActiveRecord::Schema.define(version: 2018_12_13_084339) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -102,7 +102,6 @@ ActiveRecord::Schema.define(version: 2018_11_27_130045) do
     t.decimal "expense", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "pu_extra", precision: 12, scale: 2
     t.index ["placement_id"], name: "index_family_and_emergency_home_costs_on_placement_id"
   end
 

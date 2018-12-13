@@ -177,7 +177,6 @@ sv:
         period_end: Slutdatum
         fee: Arvode per månad
         expense: Omkostnad per månad
-        pu_extra: PO-pålägg per månad
 
       refugee_extra_cost:
         <<: *defaults

@@ -69,12 +69,11 @@ RSpec.feature 'Placements', type: :feature do
         page.all('.placement_family_and_emergency_home_costs_period_end input').first.fill_in with: '2018-12-31'
         page.all('.placement_family_and_emergency_home_costs_fee input').first.fill_in with: 4567
         page.all('.placement_family_and_emergency_home_costs_expense input').first.fill_in with: 1234
-        page.all('.placement_family_and_emergency_home_costs_pu_extra input').first.fill_in with: 87
 
         click_button 'Spara'
 
         expect(page).to have_selector(
-          'div', text: 'Avtalsperiod: 2018-12-01–2018-12-31, arvode: 1 234,00 kr, omkostnad: 4 567,00 kr PO-pålägg: 87,00 kr'
+          'div', text: 'Avtalsperiod: 2018-12-01–2018-12-31, arvode: 1 234,00 kr, omkostnad: 4 567,00 kr'
         )
       end
 

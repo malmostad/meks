@@ -30,11 +30,10 @@ module Economy
 
           fee = cost.fee || 0
           expense = cost.expense || 0
-          pu_extra = cost.pu_extra || 0
 
           {
             months: months,
-            costs: (fee + expense + pu_extra).to_f
+            costs: (fee + expense).to_f
           }
         end
       end.flatten.compact

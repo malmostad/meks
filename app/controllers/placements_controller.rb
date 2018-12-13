@@ -75,7 +75,7 @@ class PlacementsController < ApplicationController
       :home_id, :refugee_id, :moved_in_at, :moved_out_at, :moved_out_reason_id,
       :legal_code_id, :specification, :cost,
       placement_extra_costs_attributes: %i[id _destroy date amount comment],
-      family_and_emergency_home_costs_attributes: %i[id _destroy period_start period_end expense fee pu_extra]
+      family_and_emergency_home_costs_attributes: %i[id _destroy period_start period_end expense fee]
     )
   end
 end
