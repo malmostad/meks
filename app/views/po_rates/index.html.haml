@@ -1,0 +1,22 @@
+- title 'Perioder för PO-pålägg'
+%section.box.index
+  %h1.box-title= h1
+
+  %table.full.wrap
+    %thead
+      %tr
+        %th Period
+        %th Under 65 år
+        %th Från 65 år
+        %th
+
+    %tbody
+      - @po_rates.each do |po_rate|
+        %tr
+          %td= link_to "#{po_rate.start_date}–#{po_rate.end_date}", edit_po_rate_path(po_rate)
+          %td= number_to_percentage(po_rate.rate_under_65)
+          %td= number_to_percentage(po_rate.rate_from_65)
+          %td.delete= button_to t('actions.delete'), po_rate, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+      %tr
+        %td{ colspan: 2 }
+          .actions= link_to t('actions.new'), new_po_rate_path, class: "btn btn-primary"
