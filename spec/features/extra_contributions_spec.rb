@@ -18,6 +18,10 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_period_end', with: (Date.today + 1.year).to_s
         fill_in 'extra_contribution_fee', with: 1234
         fill_in 'extra_contribution_expense', with: 2345
+
+        fill_in 'extra_contribution_contractor_name', with: 'Firstname Familyname'
+        fill_in 'extra_contribution_contractor_birthday', with: '1950-04-15'
+        fill_in 'extra_contribution_contactor_employee_number', with: '987_543'
         click_button 'Spara'
 
         expect(current_path).to eq refugee_extra_contributions_path(refugee)
@@ -38,6 +42,9 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_period_end', with: (Date.today + 1.year).to_s
         fill_in 'extra_contribution_fee', with: 1234
         fill_in 'extra_contribution_expense', with: 2345
+        fill_in 'extra_contribution_contractor_name', with: 'Firstname Familyname'
+        fill_in 'extra_contribution_contractor_birthday', with: '1950-04-15'
+        fill_in 'extra_contribution_contactor_employee_number', with: '987_543'
         click_button 'Spara'
 
         expect(current_path).to eq refugee_path(refugee)
@@ -61,6 +68,9 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_period_end', with: (Date.today + 2.year).to_s
         fill_in 'extra_contribution_fee', with: 321
         fill_in 'extra_contribution_expense', with: 123
+        fill_in 'extra_contribution_contractor_name', with: 'Firstname Familyname'
+        fill_in 'extra_contribution_contractor_birthday', with: '1950-04-15'
+        fill_in 'extra_contribution_contactor_employee_number', with: '987_543'
         click_button 'Spara'
 
         expect(current_path).to eq refugee_path(refugee)
