@@ -47,6 +47,12 @@ module Economy
       end
     end
 
+    # Rule: Contractors should have reached 65 years at the start of the year for a rate of >65 years to apply
+    # Returns the date of the first day of the year that the rule qualifies
+    def contractor_cutoff_age(birthdate)
+      birthdate.beginning_of_year + 65.years
+    end
+
     # Returns the minimum section of the cost interval and the report interval
     def date_interval(period_start, period_end, report_interval)
       {

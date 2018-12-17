@@ -21,12 +21,16 @@ module Economy
     def as_array
       @as_array ||= @placements.map do |placement|
         placement.family_and_emergency_home_costs.map do |cost|
-          next unless placement.home.cost_for_family_and_emergency_home?
-
           from = latest_date(placement.moved_in_at, @interval[:from], cost.period_start)
-          to   = earliest_date(placement.moved_out_at, @interval[:to], cost.period_end)
+          to = earliest_date(placement.moved_out_at, @interval[:to], cost.period_end)
+
           months = number_of_months(from: from, to: to)
           next if months.zero?
+
+          cutoff_age_date = contractor_cutoff_age(cost.contractor_birthday)
+          # months_under_65 = number_of_months(from: from, to: to)
+          # months_over_65 = number_of_months(from: from, to: to)
+          # next if months_under_65.zero? && months_over_65.zero?
 
           fee = cost.fee || 0
           expense = cost.expense || 0
