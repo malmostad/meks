@@ -171,12 +171,18 @@ sv:
         period_end: Slutdatum
         fee: Arvode per månad
         expense: Omkostnad per månad
+        contractor_name: Uppdragstagare
+        contractor_birthday: Uppdragstagares födelsedag
+        contactor_employee_number: Uppdragstagares anställningsnummer
 
       family_and_emergency_home_costs:
         period_start: Startdatum
         period_end: Slutdatum
         fee: Arvode per månad
         expense: Omkostnad per månad
+        contractor_name: Uppdragstagare
+        contractor_birthday: Uppdragstagares födelsedag
+        contactor_employee_number: Uppdragstagares anställningsnummer
 
       refugee_extra_cost:
         <<: *defaults

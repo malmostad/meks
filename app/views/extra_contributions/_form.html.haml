@@ -4,4 +4,8 @@
 = f.input :period_end, as: :string, wrapper: :datepicker
 = f.input :fee, input_html: { placeholder: 'kr', value: number_with_precision(f.object.fee, precision: 2, separator: '.') }
 = f.input :expense, input_html: { placeholder: 'kr', value: number_with_precision(f.object.expense, precision: 2, separator: '.') }
+= f.input :contractor_name
+= f.input :contractor_birthday, as: :string, wrapper: :datepicker
+= f.input :contactor_employee_number
+
 = render 'application/submit', form: f, cancel_path: refugee_path(@refugee)

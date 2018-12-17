@@ -26,7 +26,10 @@ module PlacementsHelper
     expense = number_to_currency(cost.expense || 0, delimiter: ' ')
     fee = number_to_currency(cost.fee || 0, delimiter: ' ')
 
-    "Avtalsperiod: #{period}, arvode: #{expense}, omkostnad: #{fee}"
+    "Avtalsperiod: #{period}, arvode: #{expense}, omkostnad: #{fee},
+    uppdragstagare: #{cost.contractor_name},
+    uppdragstagares födelsedag: #{cost.contractor_birthday},
+    uppdragstagares anställningsnummer: #{cost.contactor_employee_number}"
   end
 
   def extra_cost(cost)

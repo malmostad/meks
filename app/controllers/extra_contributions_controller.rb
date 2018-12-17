@@ -57,7 +57,10 @@ class ExtraContributionsController < ApplicationController
       :period_start,
       :period_end,
       :fee,
-      :expense
+      :expense,
+      :contractor_name,
+      :contractor_birthday,
+      :contactor_employee_number
     )
   end
 end
