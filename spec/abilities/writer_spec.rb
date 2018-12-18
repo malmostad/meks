@@ -9,7 +9,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(%i[read create edit update], FamilyAndEmergencyHomeCost.new) }
     it { should be_able_to(%i[read create edit update], Placement.new) }
     it { should be_able_to(%i[read create edit update], PlacementExtraCost.new) }
-    it { should be_able_to(%i[read create edit update], Refugee.new) }
+    it { should be_able_to(%i[read search suggest create edit update], Refugee.new) }
     it { should be_able_to(:manage, RefugeeExtraCost.new) }
     it { should be_able_to(:manage, Relationship.new) }
     it { should be_able_to(:manage, Ssn.new) }

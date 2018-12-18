@@ -51,7 +51,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:read, FamilyAndEmergencyHomeCost.new) }
     it { should be_able_to(:read, Home.new) }
     it { should be_able_to(:read, Placement.new) }
-    it { should be_able_to(:read, Refugee.new) }
+    it { should be_able_to(%i[read search suggest], Refugee.new) }
     it { should be_able_to(:read, Relationship.new) }
     it { should be_able_to(:read, Ssn.new) }
     it { should be_able_to(:read, User.new) }
