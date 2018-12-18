@@ -75,7 +75,7 @@ class PaymentImport < ApplicationRecord
   def parse_row(row, row_number)
     fields = extract_fields(row, row_number) || return
 
-    refugee        = refugee_by_dossier_number(fields[0], row_number) || return
+    refugee        = refugee_by_dossier_number(fields[0]) || return
     period_start   = parse_date(fields[1], row_number)                || return
     period_end     = parse_date(fields[2], row_number)                || return
     amount         = parse_amount(fields[3], row_number)              || return
@@ -108,16 +108,12 @@ class PaymentImport < ApplicationRecord
     fields
   end
 
-  def refugee_by_dossier_number(str, row_number)
+  def refugee_by_dossier_number(str)
     dossier_number = str.gsub(/\D/, '')
     refugee = Refugee.where(dossier_number: dossier_number).first
-    if refugee.blank?
-      parsing_error "Inget barn hittades med dossiernumret #{dossier_number} [rad #{row_number}]"
-      return
-    end
 
-    # Skip refugees not belonging to our own municipality
-    return unless refugee.in_our_municipality?
+    # Skip refugees not found or not #in_our_municipality?
+    return unless refugee.present? && refugee.in_our_municipality?
 
     refugee
   end

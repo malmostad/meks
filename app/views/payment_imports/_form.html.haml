@@ -1,24 +1,30 @@
 .box-content
-  = simple_form_for @payment_import, html: { class: "basic" } do |f|
+  = simple_form_for @payment_import, html: { class: 'basic' } do |f|
     - if @payment_import.errors.any?
       .warning
-        %p= 'Utbetalningarna kunde inte sparas. Följande fel upptäcktes:'
+        %p Utbetalningarna kunde inte sparas. Följande fel upptäcktes:
         %ul
           - @payment_import.errors.messages[:parsing].each do |msg|
             %li= msg
 
     .help-block.file_instructions
-      %p= 'Välj ”Spara som...” i Excel och välj filformatet CSV UTF-8 med semikolon- eller tab-separerade fält.'
-      %p= 'MEKS tar bort allt utom siffror för fälten dossiernummer och datum.'
-      %p= 'Barn som inte tillhör "Malmö kommun, Srf" (id 135) ignoreras.'
-      %p= 'Använd inga kolumnrubriker och använd följande kolumnordning:'
+      %p
+        Välj ”Spara som...” i Excel och välj filformatet CSV UTF-8
+        med semikolon- eller tab-separerade fält.
+
+      %ul
+        %li MEKS tar bort allt utom siffror för fälten dossiernummer och datum.
+        %li Barn som inte tillhör Malmö stad importeras inte.
+        %li Barn där dossiernumret inte finns i MEKS importeras inte
+        %li Använd inga kolumnrubriker och använd följande kolumnordning:
+
       %ol
         %li Dossiernummer: måste matcha ett befintligt dossiernummer exakt
         %li Från-datum: format ÅÅÅÅMMDD
         %li Till-datum: format som från-datum
         %li Utbetalt belopp: svenskt hel- eller decimal-tal
         %li Kommentar (frivilligt)
-      %p= 'Övriga kolumner ignoreras.'
+      %p Övriga kolumner ignoreras.
 
     = f.input :file, as: :file
 
