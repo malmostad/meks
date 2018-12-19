@@ -5,7 +5,6 @@ class PoRate < ApplicationRecord
   validates :rate_under_65, :rate_from_65, :start_date, :end_date, presence: true
   validates :rate_under_65, :rate_from_65, numericality: true
   validate do
-    date_format(:rate_under_65)
-    date_range(:rate_under_65, start_date, end_date)
+    date_range(:start_date, start_date, end_date)
   end
 end
