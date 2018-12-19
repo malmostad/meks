@@ -39,6 +39,39 @@ module Economy
       dates.compact.map(&:to_date).max
     end
 
+    def number_of_months_with_po_rates(interval, cutoff_age)
+      # [
+      #   { '32.14': 12.0 },
+      #   { '31.24': 2.32 }
+      # ]
+      po_rates_and_months = {}
+      (interval[:from]..interval[:to]).map do |date|
+        rate = po_rate_for_date(date, cutoff_age)
+
+        po_rates_and_months[rate.to_s] ||= 0
+        po_rates_and_months[rate.to_s] += 1.to_f / (date.end_of_month - date.beginning_of_month + 1)
+      end
+
+      # [
+      #   { months: 12.0, po_rate: 32.14 },
+      #   { months: 2.32, po_rate: 31.24 }
+      # ]
+      #
+      po_rates_and_months.map do |rate|
+        key = rate.keys.first
+        { po_rate: key.to_f, months: rate[key] }
+      end
+    end
+
+    def po_rate_for_date(date, cutoff_age)
+      po_rate = PoRate.where('start_date <= ?', date).where('end_date >= ?', date).first
+      if date < cutoff_age
+        po_rate.rate_under_65
+      else
+        po_rate.rate_from_65
+      end
+    end
+
     # Returns the number of months as a float
     #   calculated from the total days in each month
     def number_of_months(interval)
@@ -49,8 +82,8 @@ module Economy
 
     # Rule: Contractors should have reached 65 years at the start of the year for a rate of >65 years to apply
     # Returns the date of the first day of the year that the rule qualifies
-    def contractor_cutoff_age(birthdate)
-      birthdate.beginning_of_year + 65.years
+    def contractor_cutoff_age(birthday)
+      birthday.beginning_of_year + 65.years
     end
 
     # Returns the minimum section of the cost interval and the report interval
