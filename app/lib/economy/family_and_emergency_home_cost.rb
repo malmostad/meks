@@ -24,21 +24,17 @@ module Economy
           from = latest_date(placement.moved_in_at, @interval[:from], cost.period_start)
           to = earliest_date(placement.moved_out_at, @interval[:to], cost.period_end)
 
-          months = number_of_months(from: from, to: to)
-          next if months.zero?
-
-          cutoff_age_date = contractor_cutoff_age(cost.contractor_birthday)
-          # months_under_65 = number_of_months(from: from, to: to)
-          # months_over_65 = number_of_months(from: from, to: to)
-          # next if months_under_65.zero? && months_over_65.zero?
+          months_with_po_rates = months_and_po_rates(cost.contractor_birthday, from: from, to: to)
 
           fee = cost.fee || 0
           expense = cost.expense || 0
 
-          {
-            months: months,
-            costs: (fee + expense).to_f
-          }
+          months_with_po_rates.map do |months_and_rate|
+            {
+              months: months_and_rate[:months].round(2),
+              costs: (fee * months_and_rate[:po_rate] + expense).to_f
+            }
+          end
         end
       end.flatten.compact
     end

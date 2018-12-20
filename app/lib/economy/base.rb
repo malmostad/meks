@@ -18,7 +18,7 @@ module Economy
       end.compact.join('+')
     end
 
-    protected
+    # protected
 
     def as_array(*_args)
       raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"
@@ -39,16 +39,17 @@ module Economy
       dates.compact.map(&:to_date).max
     end
 
-    def number_of_months_with_po_rates(interval, cutoff_age)
+    def months_and_po_rates(contractor_birthday, interval)
+      cutoff_age = contractor_cutoff_age(contractor_birthday)
       # [
       #   { '32.14': 12.0 },
       #   { '31.24': 2.32 }
       # ]
       po_rates_and_months = {}
-      (interval[:from]..interval[:to]).map do |date|
+      (interval[:from]..interval[:to]).each do |date|
         rate = po_rate_for_date(date, cutoff_age)
 
-        po_rates_and_months[rate.to_s] ||= 0
+        po_rates_and_months[rate.to_s] ||= 0.0
         po_rates_and_months[rate.to_s] += 1.to_f / (date.end_of_month - date.beginning_of_month + 1)
       end
 
@@ -57,9 +58,8 @@ module Economy
       #   { months: 2.32, po_rate: 31.24 }
       # ]
       #
-      po_rates_and_months.map do |rate|
-        key = rate.keys.first
-        { po_rate: key.to_f, months: rate[key] }
+      po_rates_and_months.keys.map do |key|
+        { po_rate: key.to_f, months: po_rates_and_months[key] }
       end
     end
 
