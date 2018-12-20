@@ -8,20 +8,22 @@ module Economy
     end
 
     def sum
-      as_array.sum { |mac| mac[:months] * mac[:costs] }
+      as_array.sum do |hash|
+        hash[:months] * (hash[:fee] + hash[:po_cost] + hash[:expense])
+      end
     end
 
     def as_formula
-      as_array.map do |mac|
-        next if mac.value? 0
+      as_array.map do |hash|
+        next if hash[:months].zero?
 
-        "#{mac[:months]}*#{mac[:costs]}"
+        "#{hash[:months]}*(#{hash[:fee]}+#{hash[:po_cost]}+#{hash[:expense]})"
       end.compact.join('+')
     end
 
     def as_array
       @as_array ||= begin
-        # Only FamilyAndEmergencyHomeCost belongs to placements
+        # Only FamilyAndEmergencyHomeCost belongs to a placement
         from = latest_date(@cost.period_start, @cost&.placement&.moved_in_at, @interval[:from])
         to = earliest_date(@cost.period_end, @cost&.placement&.moved_out_at, @interval[:to])
 
@@ -33,7 +35,9 @@ module Economy
         months_with_po_rates.map do |months_and_rate|
           {
             months: months_and_rate[:months].round(2),
-            costs: (fee * months_and_rate[:po_rate] + expense).to_f
+            fee: fee,
+            po_cost: fee * months_and_rate[:po_rate] / 100,
+            expense: expense
           }
         end
       end.flatten.compact
