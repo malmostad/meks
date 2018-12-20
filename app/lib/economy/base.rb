@@ -64,7 +64,12 @@ module Economy
     end
 
     def po_rate_for_date(date, cutoff_age)
-      po_rate = PoRate.where('start_date <= ?', date).where('end_date >= ?', date).first
+      @po_rates ||= PoRate.all
+
+      po_rate = @po_rates.find do |rate|
+        rate.start_date <= date && rate.end_date >= date
+      end
+
       return 0 unless po_rate
 
       if date < cutoff_age
