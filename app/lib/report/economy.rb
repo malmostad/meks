@@ -10,6 +10,7 @@ module Report
   class Economy < Workbooks
     def initialize(options = {})
       super(options)
+      @po_rates = PoRate.all
     end
 
     # Returns all refugees with placements within the interval
@@ -128,10 +129,14 @@ module Report
           heading: 'Kostnad',
           query: self.class.sum_formula(
             ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).as_formula,
-            ::Economy::ExtraContributionCost.new(refugee, @interval).as_formula,
+            ::Economy::ExtraContributionCost.new(refugee, @interval.merge(po_rates: @po_rates)).as_formula,
             ::Economy::RefugeeExtraCost.new(refugee, @interval).as_formula,
-            ::Economy::PlacementExtraCost.new(refugee.placements, @interval).as_formula,
-            ::Economy::FamilyAndEmergencyHomeCost.new(refugee.placements, @interval).as_formula
+            ::Economy::PlacementExtraCost.new(
+              refugee.placements, @interval.merge(po_rates: @po_rates)
+            ).as_formula,
+            ::Economy::FamilyAndEmergencyHomeCost.new(
+              refugee.placements, @interval.merge(po_rates: @po_rates)
+            ).as_formula
           ),
           style: 'currency'
         },
@@ -140,7 +145,9 @@ module Report
           query: self.class.sum_formula(
             ::Economy::RatesForRefugee.new(refugee, @interval).as_formula,
             # Special case, see class doc
-            ::Economy::ReplaceRatesWithActualCosts.new(refugee, @interval).as_formula
+            ::Economy::ReplaceRatesWithActualCosts.new(
+              refugee, @interval.merge(po_rates: @po_rates)
+            ).as_formula
           ),
           style: 'currency'
         },

@@ -13,7 +13,7 @@ module Economy
         interval = date_interval(extra_contribution.period_start, extra_contribution.period_end, @interval)
 
         ::Economy::CostWithPoRate.new(
-          extra_contribution, from: interval[:form], to: interval[:to], po_rates: @po_rates
+          extra_contribution, interval.merge(po_rates: @po_rates)
         ).as_array
       end.flatten.compact
     end
