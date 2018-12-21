@@ -1,12 +1,12 @@
-# Calulates costs of type FamilyAndEmergencyHomeCost and ExtraContribution¨
-#   that requires PoRate for a contractor
 module Economy
+  # Calulates costs of type FamilyAndEmergencyHomeCost and ExtraContribution¨
+  #   that requires PoRate for a contractor
   class CostWithPoRate < Base
-    def initialize(cost, interval = DEFAULT_INTERVAL)
+    def initialize(cost, options = {})
       @cost = cost
-      @interval = interval
+      @interval = { from: (options[:from] || cost.period_start), to: (options[:to] || Date.today) }
+      @po_rates = options[:po_rates] || PoRate.all
       @cutoff_age = contractor_cutoff_age(@cost.contractor_birthday)
-      @po_rates = PoRate.all
     end
 
     def sum
@@ -25,9 +25,8 @@ module Economy
 
     def as_array
       @as_array ||= begin
-        # Only FamilyAndEmergencyHomeCost belongs to a placement
-        from = latest_date(@cost.period_start, @cost&.placement&.moved_in_at, @interval[:from])
-        to = earliest_date(@cost.period_end, @cost&.placement&.moved_out_at, @interval[:to])
+        from = latest_date(@cost.period_start, @interval[:from])
+        to = earliest_date(@cost.period_end, @interval[:to])
 
         fee = @cost.fee || 0
         expense = @cost.expense || 0

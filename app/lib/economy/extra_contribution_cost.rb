@@ -1,31 +1,21 @@
-# Extra insatser för barn
 module Economy
-  class ExtraContributionCost < Base
-    def initialize(refugee, interval = DEFAULT_INTERVAL)
+  # Extra insatser för barn
+  # Calculation of ExtraContributionCost for a refugee
+  class ExtraContributionCost < CostWithPoRate
+    def initialize(refugee, options = {})
       @refugee = refugee
-      @interval = interval
-    end
-
-    def sum
-      as_array.sum { |mac| mac[:months] * mac[:costs] }
-    end
-
-    def as_formula
-      as_array.map do |mac|
-        next if mac.value? 0
-
-        "#{mac[:months]}*#{mac[:costs]}"
-      end.compact.join('+')
+      @interval = { from: options[:from], to: (options[:to] || Date.today) }
+      @po_rates = options[:po_rates] || PoRate.all
     end
 
     def as_array
       @as_array ||= @refugee.extra_contributions.map do |extra_contribution|
         interval = date_interval(extra_contribution.period_start, extra_contribution.period_end, @interval)
-        {
-          months: number_of_months(interval),
-          costs: (extra_contribution.fee + extra_contribution.expense).to_f
-        }
-      end
+
+        ::Economy::CostWithPoRate.new(
+          extra_contribution, from: interval[:form], to: interval[:to], po_rates: @po_rates
+        ).as_array
+      end.flatten.compact
     end
   end
 end
