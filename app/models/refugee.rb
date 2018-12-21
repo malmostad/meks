@@ -93,7 +93,8 @@ class Refugee < ApplicationRecord
 
   def total_placement_and_home_costs
     Economy::PlacementAndHomeCost.new(placements).sum +
-      Economy::FamilyAndEmergencyHomeCost.new(placements).sum
+      # TODO: re-implement
+      0 #Economy::FamilyAndEmergencyHomeCost.new(placements).sum
   end
 
   def total_costs
