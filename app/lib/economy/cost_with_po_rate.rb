@@ -1,5 +1,5 @@
 module Economy
-  # Calulates costs of type FamilyAndEmergencyHomeCost and ExtraContribution¨
+  # Calulates costs of type FamilyAndEmergencyHomeCost and ExtraContribution
   #   that requires PoRate for a contractor
   class CostWithPoRate < Base
     def initialize(cost, options = {})
@@ -33,7 +33,7 @@ module Economy
 
         months_and_po_rates(from: from, to: to).map do |months_and_rate|
           {
-            months: months_and_rate[:months].round(2),
+            months: months_and_rate[:months],
             fee: fee,
             po_cost: fee * months_and_rate[:po_rate] / 100,
             expense: expense
