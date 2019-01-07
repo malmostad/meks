@@ -45,6 +45,8 @@ module Economy
     private
 
     def months_and_po_rates(interval)
+      # Collect matched rates and build an array of hashes with
+      #   the rates as keys and the number of months as values, e.g.:
       # [
       #   { '32.14': 12.0 },
       #   { '31.24': 2.32 }
@@ -57,9 +59,10 @@ module Economy
         po_rates_and_months[rate.to_s] += 1.to_f / (date.end_of_month - date.beginning_of_month + 1)
       end
 
+      # Restructure the hashes in the array to with named keys for po_rate and months, e.g.:
       # [
-      #   { months: 12.0, po_rate: 32.14 },
-      #   { months: 2.32, po_rate: 31.24 }
+      #   { po_rate: 32.14, months: 12.0 },
+      #   { po_rate: 31.24, months: 2.32 }
       # ]
       #
       po_rates_and_months.keys.map do |key|
