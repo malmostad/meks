@@ -19,7 +19,7 @@ module Economy
       as_array.map do |hash|
         next if hash[:months].zero?
 
-        "#{hash[:months]}*(#{hash[:fee]}+#{hash[:po_cost]}+#{hash[:expense]})"
+        "#{hash[:months].round(10)}*(#{hash[:fee]}+#{hash[:po_cost]}+#{hash[:expense]})"
       end.compact.join('+')
     end
 
