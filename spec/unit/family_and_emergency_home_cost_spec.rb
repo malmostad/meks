@@ -98,6 +98,6 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
       from: '2018-01-01',
       to: '2018-01-10'
     )
-    expect(costs.as_formula).to eq '0.32258064516129026*(12345.0+3743.004+23456.0)'
+    expect(costs.as_formula).to eq '0.3225806452*(12345.0+3743.004+23456.0)'
   end
 end
