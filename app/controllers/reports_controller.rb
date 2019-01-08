@@ -73,6 +73,10 @@ class ReportsController < ApplicationController
       :placements_to,
       :economy_uppbokning_placements_from,
       :economy_uppbokning_placements_to,
+      :economy_per_refugee_status_placements_to,
+      :economy_per_refugee_status_placements_from,
+      :economy_placements_to,
+      :economy_placements_from,
       :placements_selection,
       :refugees_born_after,
       :refugees_born_before,
@@ -119,8 +123,6 @@ class ReportsController < ApplicationController
       'Ekonomi, uppbokning'
     when 'economy_per_refugee_status'
       'Per barns asylstatus'
-    when 'economy_per_type_of_housing'
-      'Per boendeform'
     when 'homes'
       'Boenden'
     when 'placements'
