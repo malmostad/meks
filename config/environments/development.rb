@@ -47,6 +47,9 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  # https://github.com/sass/sassc-rails#inline-source-maps
+  config.sass.inline_source_maps = true
+
   config.log_formatter = ::Logger::Formatter.new
 
   # Use a different logger for distributed setups.
