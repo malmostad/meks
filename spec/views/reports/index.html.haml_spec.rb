@@ -1,6 +1,7 @@
 RSpec.describe "reports/index", type: :view do
   before(:each) do
     assign(:homes, create_list(:home, 2))
+    assign(:our_municipalities, create_list(:municipality, 2))
     assign(:pre_generated_reports, [])
   end
 
