@@ -21,20 +21,6 @@ RSpec.feature PaymentImport, type: :feature do
       expect(page).to have_selector('.notice', text: 'Importen sparades')
     end
 
-    scenario 'uploads a valid payment file' do
-      create(:refugee, dossier_number: '1234')
-
-      visit '/payment_imports'
-      click_link 'Lägg till'
-      expect(current_path).to eq new_payment_import_path
-
-      attach_file('payment_import[file]', File.join(fixture_path, 'payments.csv'))
-
-      click_button 'Spara'
-      expect(current_path).to eq payment_imports_path
-      expect(page).to have_selector('.warning', text: 'Inget barn hittades med dossiernumret')
-    end
-
     scenario 'deletes an import', js: true do
       payment_import = create(:payment_import)
       visit '/payment_imports'
