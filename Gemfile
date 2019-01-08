@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.2.2'
 gem 'haml-rails', '1.0.0'
-gem 'sass-rails', '5.0.7'
+gem 'sassc-rails', '2.1.0'
 gem 'uglifier', '4.1.20'
 gem 'coffee-rails', '4.2.2'
 
@@ -14,7 +14,7 @@ gem 'mysql2', '0.5.2'
 gem 'dalli', '2.7.9'
 gem 'elasticsearch-model', '6.0.0'
 gem 'elasticsearch-rails', '6.0.0'
-gem 'daemons', '1.2.6'
+gem 'daemons', '1.3.1'
 
 gem 'net-ldap', '0.16.1'
 gem 'cancancan', '2.3.0'
@@ -39,7 +39,7 @@ group :development do
   gem 'capistrano', '3.11.0', require: false
   gem 'capistrano-rails', '1.4.0', require: false
   gem 'capistrano-rbenv', '2.1.4', require: false
-  gem 'capistrano-bundler', '1.4.0', require: false
+  gem 'capistrano-bundler', '1.5.0', require: false
   gem 'bullet'
   gem 'listen'
 end
