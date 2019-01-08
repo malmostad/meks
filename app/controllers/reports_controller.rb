@@ -5,6 +5,12 @@ class ReportsController < ApplicationController
 
   def index
     @homes = Home.order(:name)
+
+    # Used for form select
+    @our_municipalities = { 'Alla i Malmö stad' => 'all' }
+    Municipality.where(our_municipality: true).each do |municipality|
+      @our_municipalities[municipality.name] = municipality.id
+    end
   end
 
   def generate
@@ -64,8 +70,10 @@ class ReportsController < ApplicationController
       :homes_free_seats,
       :homes_owner_type,
       :placements_from,
-      :placements_selection,
       :placements_to,
+      :economy_uppbokning_placements_from,
+      :economy_uppbokning_placements_to,
+      :placements_selection,
       :refugees_born_after,
       :refugees_born_before,
       :refugees_include_without_date_of_birth,
@@ -90,6 +98,8 @@ class ReportsController < ApplicationController
     case params[:report_type]
     when 'economy'
       GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
+    when 'economy_uppbokning'
+      GenerateReportJob::EconomyUppbokning.perform_later(report_params.to_h, file_id)
     when 'economy_per_refugee_status'
       GenerateReportJob::EconomyPerRefugeeStatus.perform_later(report_params.to_h, file_id)
     when 'homes'
@@ -105,6 +115,8 @@ class ReportsController < ApplicationController
     case params[:report_type]
     when 'economy'
       'Ekonomi'
+    when 'economy_uppbokning'
+      'Ekonomi, uppbokning'
     when 'economy_per_refugee_status'
       'Per barns asylstatus'
     when 'economy_per_type_of_housing'
@@ -121,11 +133,10 @@ class ReportsController < ApplicationController
   # From http://guides.rubyonrails.org/security.html
   def sanitize_filename(filename)
     filename.strip.tap do |name|
-      # get only the fil
-      name.sub! /\A.*(\\|\/)/, ''
+      name.sub!(/\A.*(\\|\/)/, '')
       # Replace all non alphanumeric, underscore
       # or periods with underscore
-      name.gsub! /[^\w\.\-]/, '_'
+      name.gsub!(/[^\w\.\-]/, '_')
     end
   end
 end

@@ -2,20 +2,22 @@
   %h2.group-title Ekonomi – uppbokning
   .form-group
     %span.control-label
-      %label{ for: 'placements_from' } Placerade mellan:
+      %label{ for: 'economy_uppbokning_placements_from' } Placerade mellan:
     .controls
       .input-group.input-daterange
-        = text_field_tag 'placements_from', DateTime.now.beginning_of_quarter.to_date - 3.months,
+        = text_field_tag 'economy_uppbokning_placements_from',
+          DateTime.now.beginning_of_quarter.to_date - 3.months,
           class: 'form-control'
         %span.input-group-addon och
-        = text_field_tag 'placements_to', DateTime.now.beginning_of_quarter.to_date - 1.day,
+        = text_field_tag 'economy_uppbokning_placements_to',
+          DateTime.now.beginning_of_quarter.to_date - 1.day,
           class: 'form-control'
 
   .form-group
     %span.control-label
       %label{ for: 'municipality' } Urval:
     .controls
-      = select_tag('municipality', options_for_select("Alla" => 'all', "Barn med överlappande placeringar" => 'overlapping'),
+      = select_tag('municipality', options_for_select(@our_municipalities),
         class: 'form-control chosen')
 
   .form-group
