@@ -4,7 +4,7 @@ module Report
 
     def self.sum_formula(*arr)
       arr.reject!(&:blank?)
-      return '' if arr.blank?
+      return '=(0)' if arr.blank?
 
       "=(#{arr.join('+')})"
     end
@@ -124,7 +124,8 @@ module Report
 
       row = last_row(data_rows + 1)
       @sheet.add_row(
-        row.map { |cell| cell }
+        row.map { |cell| cell },
+        style: @style.send(:currency)
       )
     end
 
