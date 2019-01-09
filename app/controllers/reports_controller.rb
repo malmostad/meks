@@ -57,7 +57,7 @@ class ReportsController < ApplicationController
 
     if File.exist? file_with_path
       response.headers['Content-Length'] = File.size(file_with_path).to_s
-      send_xlsx file_with_path, "#{report_name_prefix}_#{Time.now.to_formatted_s(:number)}.xlsx"
+      send_xlsx file_with_path, "#{report_name_prefix}_#{Time.now.strftime('%Y-%m-%d_%H%M%S')}.xlsx"
     else
       render :report_not_found
     end
@@ -83,6 +83,7 @@ class ReportsController < ApplicationController
       :refugees_include_without_date_of_birth,
       :refugees_registered_from,
       :refugees_registered_to,
+      :municipality,
       :report_type,
       placements_home_id: [],
       refugees_asylum: []
@@ -120,7 +121,7 @@ class ReportsController < ApplicationController
     when 'economy'
       'Ekonomi'
     when 'economy_uppbokning'
-      'Ekonomi, uppbokning'
+      'Ekonomi uppbokning'
     when 'economy_per_refugee_status'
       'Per barns asylstatus'
     when 'homes'
