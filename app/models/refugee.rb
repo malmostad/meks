@@ -30,8 +30,21 @@ class Refugee < ApplicationRecord
       .order('placements.moved_in_at desc')
   }
 
+  scope :with_placements_within, -> (from, to) {
+    includes(:countries, :languages, :ssns, :dossier_numbers,
+             :gender, :municipality,
+             :refugee_extra_costs, :extra_contributions,
+             :deregistered_reason, :payments,
+             placements: [:moved_out_reason, :legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
+             home: [:owner_type, :target_groups, :languages, :type_of_housings, :costs]])
+      .references(:placements)
+      .where('placements.moved_in_at <= ?', to)
+      .where('placements.moved_out_at is ? or placements.moved_out_at >= ?', nil, from)
+  }
+
   scope :in_our_municipality, -> {
-    where(municipality: { our_municipality: true })
+    includes(:municipality)
+      .where(municipalities: { our_municipality: true })
   }
 
   has_many :homes, through: :placements
@@ -165,18 +178,6 @@ class Refugee < ApplicationRecord
     # FIXME: sort and max yields different results when there are multiple latest dates that are the same
     # dates.max_by { |_k, v| v }
     dates.sort_by { |_k, v| v }.last
-  end
-
-  def self.with_placements_within(from, to)
-    includes(:countries, :languages, :ssns, :dossier_numbers,
-             :gender, :municipality,
-             :refugee_extra_costs, :extra_contributions,
-             :deregistered_reason, :payments,
-             placements: [:moved_out_reason, :legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
-             home: [:owner_type, :target_groups, :languages, :type_of_housings, :costs]])
-      .references(:placements)
-      .where('placements.moved_in_at <= ?', to)
-      .where('placements.moved_out_at is ? or placements.moved_out_at >= ?', nil, from)
   end
 
   def self.per_type_of_housing(type_of_housing, registered = DEFAULT_INTERVAL)
