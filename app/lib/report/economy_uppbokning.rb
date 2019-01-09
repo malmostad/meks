@@ -6,7 +6,7 @@ module Report
 
     # Returns all refugees with placements within the interval
     def records
-      Refugee.with_placements_within(@from, @to)
+      Refugee.in_our_municipality.with_placements_within(@from, @to)
     end
 
     def columns(refugee = Refugee.new, i = 0)
@@ -25,6 +25,10 @@ module Report
         {
           heading: 'Extra personnummer',
           query: refugee.ssns.map(&:full_ssn).join(', ')
+        },
+        {
+          heading: 'Kommun',
+          query: refugee.municipality&.name
         },
         {
           heading: 'Förväntad intäkt',
@@ -53,9 +57,10 @@ module Report
         'SUMMA:',
         '',
         '',
-        "=SUM(D2:D#{row})",
+        '',
         "=SUM(E2:E#{row})",
-        "=SUM(F2:F#{row})"
+        "=SUM(F2:F#{row})",
+        "=SUM(G2:G#{row})"
       ]
     end
   end
