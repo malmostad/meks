@@ -47,7 +47,7 @@ namespace :delayed_job do
   desc 'Restart delayed job daemon'
   task :restart do
     on roles(:app) do
-      execute "cd #{fetch(:deploy_to)}/current && bin/delayed_job restart RAILS_ENV=#{fetch(:rails_env)}"
+      execute "cd #{fetch(:deploy_to)}/current && ./bin/delayed_job restart RAILS_ENV=#{fetch(:rails_env)}"
     end
   end
 end
@@ -56,7 +56,7 @@ namespace :cache do
   desc 'Clear Rails cache with rake task'
   task :clear do
     on roles(:app) do
-      execute "cd #{fetch(:deploy_to)}/current && bin/bundle exec rake cache:clear RAILS_ENV=#{fetch(:rails_env)}"
+      execute "cd #{fetch(:deploy_to)}/current && ./bin/rake cache:clear RAILS_ENV=#{fetch(:rails_env)}"
     end
   end
 end
