@@ -90,14 +90,20 @@ namespace :deploy do
     end
   end
 
-  namespace :monit do
-    desc "Restart delayed job"
-    task :restart_delayed_job do
-      on roles(:app) do |server|
-        puts ''
-        puts '     NOTE: You need to restart delayed job manually in the server:'
-        puts '     sudo monit restart delayed_job'
-        puts ''
+  namespace :delayed_job do
+    desc 'Restart delayed job daemon'
+    task :restart do
+      on roles(:app) do
+        run("cd #{fetch(deploy_to)}/current && bin/delayed_job restart RAILS_ENV=#{fetch(:rails_env)}")
+      end
+    end
+  end
+
+  namespace :cache do
+    desc 'Clear Rails cache with rake task'
+    task :clear do
+      on roles(:app) do
+        run("cd #{fetch(deploy_to)}/current && bundle exec rake cache:clear RAILS_ENV=#{fetch(:rails_env)}")
       end
     end
   end
@@ -106,6 +112,7 @@ namespace :deploy do
   before :starting,       'deploy:check_revision'
   before :compile_assets, 'deploy:copy_vendor_statics'
   after  :publishing,     'unicorn:restart'
+  after  :publishing,     'cache:clear'
+  after  :publishing,     'delayed_job:restart'
   after  :finishing,      'deploy:cleanup'
-  after  :finishing,      'monit:restart_delayed_job'
 end
