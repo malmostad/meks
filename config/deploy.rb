@@ -5,6 +5,10 @@ I18n.config.enforce_available_locales = false
 
 set :rbenv_type, :user
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :default_env, { path: '$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH' }
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_ruby, File.read('.ruby-version').strip
+set :rbenv_roles, :all
 
 set :application, 'meks'
 set :repo_url, "https://github.com/malmostad/#{fetch(:application)}.git"
@@ -22,7 +26,6 @@ set :forward_agent, true
 set :linked_files, %w{config/database.yml config/secrets.yml }
 set :linked_dirs, %w{log tmp/pids tmp/sockets reports}
 
-set :default_env, { path: '$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH' }
 set :keep_releases, 5
 
 namespace :unicorn do
@@ -39,6 +42,24 @@ namespace :unicorn do
   task :stop_start do
     on roles(:app) do
       execute "/etc/init.d/unicorn_#{fetch(:application)} stop && sleep 5 && /etc/init.d/unicorn_#{fetch(:application)} start"
+    end
+  end
+end
+
+namespace :delayed_job do
+  desc 'Restart delayed job daemon'
+  task :restart do
+    on roles(:app) do
+      execute "cd #{fetch(:deploy_to)}/current && RAILS_ENV=#{fetch(:rails_env)} $HOME/.rbenv/bin/rbenv exec bundle exec ./bin/delayed_job restart"
+    end
+  end
+end
+
+namespace :cache do
+  desc 'Clear Rails cache with rake task'
+  task :clear do
+    on roles(:app) do
+      execute "cd #{fetch(:deploy_to)}/current && $HOME/.rbenv/bin/rbenv exec bundle exec rake cache:clear RAILS_ENV=#{fetch(:rails_env)}"
     end
   end
 end
@@ -86,24 +107,6 @@ namespace :deploy do
         exit
       else
         puts "Deployment starting"
-      end
-    end
-  end
-
-  namespace :delayed_job do
-    desc 'Restart delayed job daemon'
-    task :restart do
-      on roles(:app) do
-        run("cd #{fetch(deploy_to)}/current && bin/delayed_job restart RAILS_ENV=#{fetch(:rails_env)}")
-      end
-    end
-  end
-
-  namespace :cache do
-    desc 'Clear Rails cache with rake task'
-    task :clear do
-      on roles(:app) do
-        run("cd #{fetch(deploy_to)}/current && bundle exec rake cache:clear RAILS_ENV=#{fetch(:rails_env)}")
       end
     end
   end
