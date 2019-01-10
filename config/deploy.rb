@@ -43,6 +43,24 @@ namespace :unicorn do
   end
 end
 
+namespace :delayed_job do
+  desc 'Restart delayed job daemon'
+  task :restart do
+    on roles(:app) do
+      execute "cd #{fetch(:deploy_to)}/current && bin/delayed_job restart RAILS_ENV=#{fetch(:rails_env)}"
+    end
+  end
+end
+
+namespace :cache do
+  desc 'Clear Rails cache with rake task'
+  task :clear do
+    on roles(:app) do
+      execute "cd #{fetch(:deploy_to)}/current && bundle exec rake cache:clear RAILS_ENV=#{fetch(:rails_env)}"
+    end
+  end
+end
+
 namespace :deploy do
   desc "Copy vendor statics"
   task :copy_vendor_statics do
@@ -86,24 +104,6 @@ namespace :deploy do
         exit
       else
         puts "Deployment starting"
-      end
-    end
-  end
-
-  namespace :delayed_job do
-    desc 'Restart delayed job daemon'
-    task :restart do
-      on roles(:app) do
-        run("cd #{fetch(deploy_to)}/current && bin/delayed_job restart RAILS_ENV=#{fetch(:rails_env)}")
-      end
-    end
-  end
-
-  namespace :cache do
-    desc 'Clear Rails cache with rake task'
-    task :clear do
-      on roles(:app) do
-        run("cd #{fetch(deploy_to)}/current && bundle exec rake cache:clear RAILS_ENV=#{fetch(:rails_env)}")
       end
     end
   end
