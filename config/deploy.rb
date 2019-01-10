@@ -50,7 +50,7 @@ namespace :delayed_job do
   desc 'Restart delayed job daemon'
   task :restart do
     on roles(:app) do
-      execute "cd #{fetch(:deploy_to)}/current && RAILS_ENV=#{fetch(:rails_env)} ./bin/delayed_job restart"
+      execute "cd #{fetch(:deploy_to)}/current && RAILS_ENV=#{fetch(:rails_env)} $HOME/.rbenv/bin/rbenv exec bundle exec ./bin/delayed_job restart"
     end
   end
 end
