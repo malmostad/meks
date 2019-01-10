@@ -170,6 +170,7 @@ sv:
         period_start: Startdatum
         period_end: Slutdatum
         fee: Arvode per månad
+        po_extra: PO-pålägg
         expense: Omkostnad per månad
         contractor_name: Uppdragstagare
         contractor_birthday: Uppdragstagares födelsedag
