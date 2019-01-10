@@ -2,12 +2,12 @@
   %h2.group-title Prognosbild per asylstatus
   .form-group
     %span.control-label
-      %label{for: 'placements_from'} Placerade mellan:
+      %label{for: 'economy_per_refugee_status_placements_from'} Placerade mellan:
     .controls
       .input-group.input-daterange
-        = text_field_tag 'placements_from', DateTime.now.beginning_of_quarter.to_date - 3.months, class: 'form-control'
+        = text_field_tag 'economy_per_refugee_status_placements_from', DateTime.now.beginning_of_quarter.to_date - 3.months, class: 'form-control'
         %span.input-group-addon och
-        = text_field_tag 'placements_to', DateTime.now.beginning_of_quarter.to_date - 1.day, class: 'form-control'
+        = text_field_tag 'economy_per_refugee_status_placements_to', DateTime.now.beginning_of_quarter.to_date - 1.day, class: 'form-control'
 
   .form-group
     %span.no-control-label
