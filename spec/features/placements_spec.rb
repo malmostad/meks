@@ -84,7 +84,7 @@ RSpec.feature 'Placements', type: :feature do
         click_button 'Spara'
 
         expect(page).to have_selector(
-          'div', text: 'Avtalsperiod: 2018-12-01–2018-12-31, arvode: 1 234,00 kr, PO-pålägg 374,15, omkostnad: 4 567,00 kr, uppdragstagare: Firstname Familyname, uppdragstagares födelsedag: 1950-04-15, uppdragstagares anställningsnummer: 987543'
+          'div', text: 'Avtalsperiod: 2018-12-01–2018-12-31, arvode: 4 567,00 kr, PO-pålägg 1 399,33 kr, omkostnad: 1 234,00 kr, uppdragstagare: Firstname Familyname, uppdragstagares födelsedag: 1950-04-15, uppdragstagares anställningsnummer: 987543'
         )
       end
 
