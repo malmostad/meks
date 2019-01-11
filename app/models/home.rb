@@ -23,7 +23,7 @@ class Home < ApplicationRecord
   belongs_to :owner_type
 
   validates_uniqueness_of :name, case_sensitive: false
-  validates_presence_of :name
+  validates_presence_of :name, :type_of_cost
   validates_length_of :name, maximum: 191
 
   # Remove data not allowed for the home and it's placements
