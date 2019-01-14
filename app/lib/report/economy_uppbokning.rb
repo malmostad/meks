@@ -11,7 +11,6 @@ module Report
 
     def columns(refugee = Refugee.new, i = 0)
       row = i + 2
-      payment = ::Economy::Payment.new(refugee.payments, @interval)
 
       [
         {
@@ -38,16 +37,6 @@ module Report
             ::Economy::ReplaceRatesWithActualCosts.new(refugee, @interval).as_formula
           ),
           style: 'currency'
-        },
-        {
-          heading: 'Utbetald schablon',
-          query: self.class.sum_formula(payment.as_formula),
-          style: 'currency'
-        },
-        {
-          heading: 'Avvikelse mellan förväntad intäkt och utbetald schablon',
-          query: "=E#{row}-D#{row}",
-          style: 'currency'
         }
       ]
     end
@@ -58,9 +47,7 @@ module Report
         '',
         '',
         '',
-        "=SUM(E2:E#{row})",
-        "=SUM(F2:F#{row})",
-        "=SUM(G2:G#{row})"
+        "=SUM(E2:E#{row})"
       ]
     end
   end
