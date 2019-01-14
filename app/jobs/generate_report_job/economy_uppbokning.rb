@@ -4,8 +4,7 @@ class GenerateReportJob
       workbook = Report::EconomyUppbokning.new(
         filename: "#{file_id}.xlsx",
         from: params[:economy_uppbokning_placements_from],
-        to: params[:economy_uppbokning_placements_to],
-        municipality: params[:municipality]
+        to: params[:economy_uppbokning_placements_to]
       )
       workbook.create!
     end

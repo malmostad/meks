@@ -14,13 +14,6 @@
           class: 'form-control'
 
   .form-group
-    %span.control-label
-      %label{ for: 'municipality' } Urval:
-    .controls
-      = select_tag('municipality', options_for_select(@our_municipalities),
-        class: 'form-control chosen')
-
-  .form-group
     %span.no-control-label
     .controls
       = hidden_field_tag(:report_type, 'economy_uppbokning')
