@@ -7,7 +7,7 @@ namespace :scramble do
 
     Refugee.find_each do |refugee|
       refugee.name = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
-      refugee.date_of_birth = Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s[0..9]
+      refugee.date_of_birth = Faker::Time.between(DateTime.now - 22.year, DateTime.now - 4.year).to_s[0..9]
       refugee.ssn_extension = Faker::Number.number(4)
       refugee.ssns = []
       refugee.dossier_number = Faker::Number.number(10)

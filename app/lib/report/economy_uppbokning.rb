@@ -5,11 +5,35 @@ module Report
     end
 
     def records
-      {
+      tut_0_17  = RateCategory.where(name: 'temporary_permit_0_17').first
+      put_0_17  = RateCategory.where(name: 'residence_permit_0_17').first
+      tut_18_20 = RateCategory.where(name: 'temporary_permit_18_20').first
+      put_18_20 = RateCategory.where(name: 'residence_permit_18_20').first
+
+      per_legal_code = {
         sol: refugees_with_legal_code(1),
         lvu_and_sol_lvu: refugees_with_legal_code(2, 3),
         all: refugees_with_legal_code
       }
+
+      {
+        sol_tut_put_0_17: per_rate_category(per_legal_code[:sol], tut_0_17, put_0_17),
+        sol_tut_put_18_20: per_rate_category(per_legal_code[:sol], tut_18_20, put_18_20)
+      }
+    end
+
+    def per_rate_category(refugees, *categories)
+      refugees.map do |refugee|
+        rates_for_refugee = ::Economy::RatesForRefugee.new(refugee, from: @from, to: @to)
+
+        days_and_amounts = categories.map do |category|
+          rates_for_refugee.send(category.qualifier[:meth], category)
+        end.flatten.compact
+
+        next if days_and_amounts.empty?
+
+        { refugee: refugee, data: days_and_amounts }
+      end.reject(&:blank?)
     end
 
     def refugees_with_legal_code(*ids)
