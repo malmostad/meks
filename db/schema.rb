@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 2018_12_17_132252) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "use_placement_specification", default: false
+    t.boolean "use_placement_cost", default: false
     t.integer "type_of_cost"
     t.index ["name"], name: "index_homes_on_name", unique: true
     t.index ["owner_type_id"], name: "index_homes_on_owner_type_id"
