@@ -18,7 +18,7 @@ module Economy
       end.compact.join('+')
     end
 
-    protected
+    # protected
 
     def as_array(*_args)
       raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"

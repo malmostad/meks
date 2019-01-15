@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_13_084339) do
+ActiveRecord::Schema.define(version: 2018_12_17_132252) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -90,6 +90,9 @@ ActiveRecord::Schema.define(version: 2018_12_13_084339) do
     t.decimal "expense", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contractor_name"
+    t.date "contractor_birthday"
+    t.integer "contactor_employee_number"
     t.index ["extra_contribution_type_id"], name: "index_extra_contributions_on_extra_contribution_type_id"
     t.index ["refugee_id"], name: "index_extra_contributions_on_refugee_id"
   end
@@ -102,6 +105,9 @@ ActiveRecord::Schema.define(version: 2018_12_13_084339) do
     t.decimal "expense", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contractor_name"
+    t.date "contractor_birthday"
+    t.integer "contactor_employee_number"
     t.index ["placement_id"], name: "index_family_and_emergency_home_costs_on_placement_id"
   end
 
@@ -128,6 +134,7 @@ ActiveRecord::Schema.define(version: 2018_12_13_084339) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "use_placement_specification", default: false
+    t.boolean "use_placement_cost", default: false
     t.integer "type_of_cost"
     t.index ["name"], name: "index_homes_on_name", unique: true
     t.index ["owner_type_id"], name: "index_homes_on_owner_type_id"
@@ -251,6 +258,15 @@ ActiveRecord::Schema.define(version: 2018_12_13_084339) do
     t.index ["legal_code_id"], name: "index_placements_on_legal_code_id"
     t.index ["moved_out_reason_id"], name: "index_placements_on_moved_out_reason_id"
     t.index ["refugee_id"], name: "index_placements_on_refugee_id"
+  end
+
+  create_table "po_rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
+    t.decimal "rate_under_65", precision: 5, scale: 2
+    t.decimal "rate_from_65", precision: 5, scale: 2
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rate_categories", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|

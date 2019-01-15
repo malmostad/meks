@@ -8,12 +8,21 @@ RSpec.feature 'Placements', type: :feature do
     let(:cost_per_day_home) { create(:home, type_of_cost: 'cost_per_day') }
     let(:cost_per_placement_home) { create(:home, type_of_cost: 'cost_per_placement') }
     let(:cost_for_family_and_emergency_home_home) { create(:home, type_of_cost: 'cost_for_family_and_emergency_home') }
+    let(:po_rate) {
+      create(
+        :po_rate,
+        rate_under_65: 30.32,
+        rate_from_65: 30.64,
+        start_date: '2018-01-01',
+        end_date: '2018-12-31'
+      )
+    }
 
     before(:each) do
       login_user(:writer)
 
       [refugee, placement, cost_per_day_home, cost_per_placement_home,
-       cost_for_family_and_emergency_home_home].each(&:reload)
+       cost_for_family_and_emergency_home_home, po_rate].each(&:reload)
       [legal_codes, homes, moved_out_reasons].each { |list| list.each(&:reload) }
     end
 
@@ -69,11 +78,13 @@ RSpec.feature 'Placements', type: :feature do
         page.all('.placement_family_and_emergency_home_costs_period_end input').first.fill_in with: '2018-12-31'
         page.all('.placement_family_and_emergency_home_costs_fee input').first.fill_in with: 4567
         page.all('.placement_family_and_emergency_home_costs_expense input').first.fill_in with: 1234
-
+        page.all('.placement_family_and_emergency_home_costs_contractor_name input').first.fill_in with: 'Firstname Familyname'
+        page.all('.placement_family_and_emergency_home_costs_contractor_birthday input').first.fill_in with: '1950-04-15'
+        page.all('.placement_family_and_emergency_home_costs_contactor_employee_number input').first.fill_in with: '987_543'
         click_button 'Spara'
 
         expect(page).to have_selector(
-          'div', text: 'Avtalsperiod: 2018-12-01–2018-12-31, arvode: 1 234,00 kr, omkostnad: 4 567,00 kr'
+          'div', text: 'Avtalsperiod: 2018-12-01–2018-12-31, arvode: 4 567,00 kr, PO-pålägg 1 399,33 kr, omkostnad: 1 234,00 kr, uppdragstagare: Firstname Familyname, uppdragstagares födelsedag: 1950-04-15, uppdragstagares anställningsnummer: 987543'
         )
       end
 

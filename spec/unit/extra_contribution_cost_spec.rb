@@ -11,9 +11,20 @@ RSpec.describe 'ExtraContributionCost' do
     )
   end
 
+  let(:po_rate) do
+    create(
+      :po_rate,
+      rate_under_65: 30.32,
+      rate_from_65: 30.64,
+      start_date: '2018-01-01',
+      end_date: '2018-12-31'
+    )
+  end
+
   before do
     refugee.reload
     extra_contribution.reload
+    po_rate.reload
   end
 
   it 'should have correct cost for a complete extra_contribution period' do
@@ -22,7 +33,7 @@ RSpec.describe 'ExtraContributionCost' do
       from: '2018-01-01',
       to: '2018-12-31'
     )
-    expect(ecc.sum).to eq 429_612
+    expect(ecc.sum.round(2)).to eq 474_528.05
   end
 
   it 'should use default report range' do
@@ -36,7 +47,7 @@ RSpec.describe 'ExtraContributionCost' do
       from: '2018-01-01',
       to: '2018-03-31'
     )
-    expect(ecc.sum).to eq 107_403
+    expect(ecc.sum.round(2)).to eq 118_632.01
   end
 
   it 'should have correct cost for a limiting partial month report period' do
@@ -45,7 +56,7 @@ RSpec.describe 'ExtraContributionCost' do
       from: '2018-01-01',
       to: '2018-01-10'
     )
-    expect(ecc.sum.round).to eq 11_549
+    expect(ecc.sum.round(2)).to eq 12_756.13
   end
 
   it 'should have correct cost formula' do
@@ -54,37 +65,50 @@ RSpec.describe 'ExtraContributionCost' do
       from: '2018-01-01',
       to: '2018-01-10'
     )
-    expect(ecc.as_formula).to eq '0.3225806451612903*35801.0'
+    expect(ecc.as_formula).to eq '0.3225806452*(12345.0+3743.004+23456.0)'
   end
 
   describe 'multiple extra contributions' do
-    let(:extra_contribution) do
+    let(:extra_contribution2) do
       create(
         :extra_contribution,
-        period_start: '2017-01-15',
-        period_end: '2019-01-10',
+        period_start: '2019-01-01',
+        period_end: '2019-06-30',
         fee: 54_321,
         expense: 65_431,
         refugee: refugee
       )
     end
 
-    it 'should have correct cost for a limiting partial month over several years report period' do
-      ecc = Economy::ExtraContributionCost.new(
-        refugee,
-        from: '2017-06-11',
-        to: '2018-04-15'
+    let(:po_rate2) do
+      create(
+        :po_rate,
+        rate_under_65: 31.32,
+        rate_from_65: 31.64,
+        start_date: '2019-01-01',
+        end_date: '2019-12-31'
       )
-      expect(ecc.sum.round).to eq 1_217_479
+    end
+
+    let(:ecc) do
+      Economy::ExtraContributionCost.new(
+        refugee,
+        from: '2018-07-01',
+        to: '2019-06-30'
+      )
+    end
+
+    before do
+      extra_contribution2.reload
+      po_rate2.reload
+    end
+
+    it 'should have correct cost for a limiting partial month over several years report period' do
+      expect(ecc.sum.round(2)).to eq 1_057_856.05
     end
 
     it 'should have correct cost formula' do
-      ecc = Economy::ExtraContributionCost.new(
-        refugee,
-        from: '2017-06-11',
-        to: '2018-04-15'
-      )
-      expect(ecc.as_formula).to eq '10.166666666666666*119752.0'
+      expect(ecc.as_formula).to eq '6.0*(12345.0+3743.004+23456.0)+6.0*(54321.0+17013.3372+65431.0)'
     end
   end
 end

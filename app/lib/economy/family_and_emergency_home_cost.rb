@@ -1,40 +1,21 @@
-# 'Familje/jourhemskostnad'
 module Economy
-  class FamilyAndEmergencyHomeCost < Base
-    def initialize(placements, interval = DEFAULT_INTERVAL)
+  # 'Familje/jourhemskostnad'
+  # Calculation of FamilyAndEmergencyHomeCost for an array of placements
+  class FamilyAndEmergencyHomeCost < CostWithPoRate
+    def initialize(placements, options = {})
       @placements = placements
-      @interval = interval
-    end
-
-    def sum
-      as_array.sum { |mac| mac[:months] * mac[:costs] }
-    end
-
-    def as_formula
-      as_array.map do |mac|
-        next if mac.value? 0
-
-        "#{mac[:months]}*#{mac[:costs]}"
-      end.compact.join('+')
+      @interval = { from: options[:from], to: (options[:to] || Date.today) }
+      @po_rates = options[:po_rates] || PoRate.all
     end
 
     def as_array
       @as_array ||= @placements.map do |placement|
+        interval = date_interval(placement.moved_in_at, placement.moved_out_at, @interval)
+
         placement.family_and_emergency_home_costs.map do |cost|
-          next unless placement.home.cost_for_family_and_emergency_home?
-
-          from = latest_date(placement.moved_in_at, @interval[:from], cost.period_start)
-          to   = earliest_date(placement.moved_out_at, @interval[:to], cost.period_end)
-          months = number_of_months(from: from, to: to)
-          next if months.zero?
-
-          fee = cost.fee || 0
-          expense = cost.expense || 0
-
-          {
-            months: months,
-            costs: (fee + expense).to_f
-          }
+          ::Economy::CostWithPoRate.new(
+            cost, from: interval[:form], to: interval[:to], po_rates: @po_rates
+          ).as_array
         end
       end.flatten.compact
     end

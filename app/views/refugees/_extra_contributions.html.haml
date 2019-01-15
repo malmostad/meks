@@ -9,7 +9,11 @@
         = show_attribute('extra_contribution.period_start', extra_contribution.period_start)
         = show_attribute('extra_contribution.period_end', extra_contribution.period_end)
         = show_attribute('extra_contribution.fee', number_to_currency(extra_contribution.fee.to_s, delimiter: ' '))
+        = show_attribute('extra_contribution.po_extra', po_extra(extra_contribution))
         = show_attribute('extra_contribution.expense', number_to_currency(extra_contribution.expense.to_s, delimiter: ' '))
+        = show_attribute('extra_contribution.contractor_name', extra_contribution.contractor_name)
+        = show_attribute('extra_contribution.contractor_birthday', extra_contribution.contractor_birthday)
+        = show_attribute('extra_contribution.contactor_employee_number', extra_contribution.contactor_employee_number)
 
         - if can? :edit, @refugee
           .form-group.action

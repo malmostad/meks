@@ -170,13 +170,20 @@ sv:
         period_start: Startdatum
         period_end: Slutdatum
         fee: Arvode per månad
+        po_extra: PO-pålägg
         expense: Omkostnad per månad
+        contractor_name: Uppdragstagare
+        contractor_birthday: Uppdragstagares födelsedag
+        contactor_employee_number: Uppdragstagares anställningsnummer
 
       family_and_emergency_home_costs:
         period_start: Startdatum
         period_end: Slutdatum
         fee: Arvode per månad
         expense: Omkostnad per månad
+        contractor_name: Uppdragstagare
+        contractor_birthday: Uppdragstagares födelsedag
+        contactor_employee_number: Uppdragstagares anställningsnummer
 
       refugee_extra_cost:
         <<: *defaults
@@ -185,6 +192,12 @@ sv:
       payments:
         <<: *payment
         refugee_id: Barn
+
+      po_rate:
+        rate_under_65: Procentsats, under 65 år
+        rate_from_65: Procentsats, från 65 år
+        start_date: Startdatum
+        end_date: Slutdatum
 
       settings: &settings
         <<: *defaults

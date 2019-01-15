@@ -14,7 +14,10 @@ RSpec.describe ExtraContributionsController, type: :controller do
       period_start: '2018-01-01',
       period_end: '2018-12-31',
       fee: 1234,
-      expense: 4321
+      expense: 4321,
+      contractor_name: 'Firstname familyname',
+      contractor_birthday: '1980-01-15',
+      contactor_employee_number: 123_456
     }
   }
 

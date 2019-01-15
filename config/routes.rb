@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   resources :type_of_relationships, except: :show
   resources :municipalities, except: :show
   resources :countries, except: :show
+  resources :po_rates, except: :show
   resources :languages, except: :show
   resources :genders, except: :show
   resources :rate_categories, only: [:index, :edit, :update]

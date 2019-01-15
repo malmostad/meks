@@ -27,4 +27,9 @@ module RefugeesHelper
       name
     end
   end
+
+  def po_extra(cost)
+    po_cost = Economy::CostWithPoRate.new(cost).as_array.sum { |x| x[:po_cost] }
+    number_to_currency(po_cost || 0, delimiter: ' ')
+  end
 end

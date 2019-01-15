@@ -24,9 +24,15 @@ module PlacementsHelper
   def family_and_emergency_home_cost(cost)
     period = "#{cost.period_start}–#{cost.period_end}"
     expense = number_to_currency(cost.expense || 0, delimiter: ' ')
+
+    po_costs = Economy::CostWithPoRate.new(cost).as_array.sum { |x| x[:po_cost] }
+    po_costs = number_to_currency(po_costs || 0, delimiter: ' ')
     fee = number_to_currency(cost.fee || 0, delimiter: ' ')
 
-    "Avtalsperiod: #{period}, arvode: #{expense}, omkostnad: #{fee}"
+    "Avtalsperiod: #{period}, arvode: #{fee}, PO-pålägg #{po_costs}, omkostnad: #{expense},
+    uppdragstagare: #{cost.contractor_name},
+    uppdragstagares födelsedag: #{cost.contractor_birthday},
+    uppdragstagares anställningsnummer: #{cost.contactor_employee_number}"
   end
 
   def extra_cost(cost)
