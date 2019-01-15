@@ -5,20 +5,28 @@ module Report
     end
 
     def records
-      tut_0_17  = RateCategory.where(name: 'temporary_permit_0_17').first
-      put_0_17  = RateCategory.where(name: 'residence_permit_0_17').first
-      tut_18_20 = RateCategory.where(name: 'temporary_permit_18_20').first
-      put_18_20 = RateCategory.where(name: 'residence_permit_18_20').first
+      # Rate categories (Schablonkategorier)
+      assigned_0_17 = RateCategory.where(name: 'assigned_0_17').first
+      tut_0_17      = RateCategory.where(name: 'temporary_permit_0_17').first
+      put_0_17      = RateCategory.where(name: 'residence_permit_0_17').first
+      tut_18_20     = RateCategory.where(name: 'temporary_permit_18_20').first
+      put_18_20     = RateCategory.where(name: 'residence_permit_18_20').first
+      arrival_0_17  = RateCategory.where(name: 'arrival_0_17').first
 
-      per_legal_code = {
-        sol: refugees_with_legal_code(1),
-        lvu_and_sol_lvu: refugees_with_legal_code(2, 3),
-        all: refugees_with_legal_code
-      }
+      # Refugees with placements with specific legal codes by ID(s) (Lagrum)
+      sol = refugees_with_legal_code(1)
+      lvu_and_sol_lvu = refugees_with_legal_code(2, 3)
+      all = refugees_with_legal_code # All refugees
 
+      # Refugees with combination of given rate categories and legal codes (as above)
       {
-        sol_tut_put_0_17: per_rate_category(per_legal_code[:sol], tut_0_17, put_0_17),
-        sol_tut_put_18_20: per_rate_category(per_legal_code[:sol], tut_18_20, put_18_20)
+        sol_assigned_0_17: per_rate_category(sol, assigned_0_17),
+        sol_tut_put_0_17: per_rate_category(sol, tut_0_17, put_0_17),
+        sol_tut_put_18_20: per_rate_category(sol, tut_18_20, put_18_20),
+        lvu_and_sol_lvu_assigned_0_17: per_rate_category(lvu_and_sol_lvu, assigned_0_17),
+        lvu_and_sol_lvu_tut_put_0_17: per_rate_category(lvu_and_sol_lvu, tut_0_17, put_0_17),
+        lvu_and_sol_lvu_tut_put_18_20: per_rate_category(lvu_and_sol_lvu, tut_18_20, put_18_20),
+        arrival: per_rate_category(all, arrival_0_17)
       }
     end
 
@@ -36,6 +44,7 @@ module Report
       end.reject(&:blank?)
     end
 
+    # Returns refugees with placements that matches the given id(s) for legal code(s)
     def refugees_with_legal_code(*ids)
       refugees =
         Refugee
