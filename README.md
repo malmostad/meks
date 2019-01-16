@@ -74,6 +74,16 @@ The environment should now be ready for application deployment as described belo
 
 The user `app_runner` must be used for all deployment task and for command executions related to the Rails application on the server. Rbenv is configured for that specific user only. The Rack application server, Unicorn, is run by `app_runner`.
 
+## Post Provisioning on Server
+To let `systemd` manage the `delayed_job` service on the server, edit the `RAILS_ENV` variable in `config/delayed_job.service`. Install the file in `/etc/systemd/system/` on the server and run:
+
+```shell
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable delayed_job
+$ sudo service delayed_job start
+$ sudo service delayed_job status
+```
+
 ## Build and Deployment
 Build and deployment is made with Capistrano 3.
 
