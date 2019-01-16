@@ -1,4 +1,11 @@
 module Report
+  # The rows in this multi sheet spreadsheet are refugee centered
+  #   except for the first sheet that contains a summary
+  # Refugees are selected with a exclusive combination of:
+  #   1. legal_codes for their placements
+  #   2. rate_categories they belong to
+  # One refugee can fall into several such combinations and occur on
+  #   more than one sheet.
   class EconomyUppbokning < Workbooks
     def initialize(options = {})
       super(options)
@@ -66,6 +73,8 @@ module Report
         }
       ]
     end
+
+    private
 
     # Refugees with combination of given rate categories and legal codes (as above)
     def statuses
