@@ -4,17 +4,17 @@ module Report
       super(options)
 
       # Rate categories (Schablonkategorier)
-      @assigned_0_17 = RateCategory.where(name: 'assigned_0_17').first
-      @tut_0_17      = RateCategory.where(name: 'temporary_permit_0_17').first
-      @put_0_17      = RateCategory.where(name: 'residence_permit_0_17').first
-      @tut_18_20     = RateCategory.where(name: 'temporary_permit_18_20').first
-      @put_18_20     = RateCategory.where(name: 'residence_permit_18_20').first
-      @arrival_0_17  = RateCategory.where(name: 'arrival_0_17').first
+      @assigned_0_17   = RateCategory.where(name: 'assigned_0_17').first
+      @tut_0_17        = RateCategory.where(name: 'temporary_permit_0_17').first
+      @put_0_17        = RateCategory.where(name: 'residence_permit_0_17').first
+      @tut_18_20       = RateCategory.where(name: 'temporary_permit_18_20').first
+      @put_18_20       = RateCategory.where(name: 'residence_permit_18_20').first
+      @arrival_0_17    = RateCategory.where(name: 'arrival_0_17').first
 
       # Refugees with placements with specific legal codes by ID(s) (Lagrum)
-      @sol = refugees_with_legal_code(1)
+      @sol             = refugees_with_legal_code(1)
       @lvu_and_sol_lvu = refugees_with_legal_code(2, 3)
-      @all = refugees_with_legal_code # All refugees
+      @all             = refugees_with_legal_code # All refugees
     end
 
     def records
