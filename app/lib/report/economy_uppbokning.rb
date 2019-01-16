@@ -4,24 +4,51 @@ module Report
       super(options)
 
       # Rate categories (Schablonkategorier)
-      @assigned_0_17   = RateCategory.where(name: 'assigned_0_17').first
-      @tut_0_17        = RateCategory.where(name: 'temporary_permit_0_17').first
-      @put_0_17        = RateCategory.where(name: 'residence_permit_0_17').first
-      @tut_18_20       = RateCategory.where(name: 'temporary_permit_18_20').first
-      @put_18_20       = RateCategory.where(name: 'residence_permit_18_20').first
-      @arrival_0_17    = RateCategory.where(name: 'arrival_0_17').first
+      @assigned_0_17 = RateCategory.where(name: 'assigned_0_17').first
+      @tut_0_17      = RateCategory.where(name: 'temporary_permit_0_17').first
+      @put_0_17      = RateCategory.where(name: 'residence_permit_0_17').first
+      @tut_18_20     = RateCategory.where(name: 'temporary_permit_18_20').first
+      @put_18_20     = RateCategory.where(name: 'residence_permit_18_20').first
+      @arrival_0_17  = RateCategory.where(name: 'arrival_0_17').first
 
       # Refugees with placements with specific legal codes by ID(s) (Lagrum)
       @sol             = refugees_with_legal_code(1)
       @lvu_and_sol_lvu = refugees_with_legal_code(2, 3)
       @all             = refugees_with_legal_code # All refugees
+
+      @statuses = statuses
+    end
+
+    def create!
+      axlsx = Axlsx::Package.new
+      axlsx.use_shared_strings = true
+      @workbook = axlsx.workbook
+      @style = Style.new(axlsx)
+      @sheet = @workbook.add_worksheet(name: @sheet_name)
+
+      create_sub_sheets
+      fill_sheet
+
+      Delayed::Worker.logger.info axlsx.validate
+      axlsx.serialize File.join(Rails.root, 'reports', @filename)
+    end
+
+    def create_sub_sheets
+      @statuses.each do |status|
+        Report::EconomyUppbokningSubSheet.new(
+          sheet_name: status[:name],
+          refugees: status[:refugees],
+          workbook: @workbook,
+          style: @style
+        ).create!
+      end
     end
 
     def records
-      sub_sheets.map do |sub_sheet|
+      @statuses.map do |status|
         {
-          name: sub_sheet[:name],
-          refugees: sub_sheet[:refugees]
+          name: status[:name],
+          refugees: status[:refugees]
         }
       end
     end
@@ -34,14 +61,14 @@ module Report
         },
         {
           heading: 'Förväntad intäkt',
-          query: self.class.sum_formula(record[:refugees].sum { |r| r[:data].sum { |d| d[:amount] * d[:days] } }),
+          query: "=SUM('#{record[:name]}'!E#{record[:refugees].size + 2})",
           style: 'currency'
         }
       ]
     end
 
     # Refugees with combination of given rate categories and legal codes (as above)
-    def sub_sheets
+    def statuses
       [
         {
           name: 'SoL, Anvisade barn, 0–17',
@@ -84,7 +111,7 @@ module Report
 
         next if days_and_amounts.empty?
 
-        { refugee: refugee, data: days_and_amounts }
+        { refugee: refugee, rates: days_and_amounts }
       end.reject(&:blank?)
     end
 
@@ -106,42 +133,6 @@ module Report
       return refugees.where(placements: { legal_code: ids }) unless ids.blank?
 
       refugees
-    end
-
-    def sub_sheet_columns(refugee = Refugee.new, i = 0)
-      row = i + 2
-
-      [
-        {
-          heading: 'Dossiernummer',
-          query: refugee.dossier_number
-        },
-        {
-          heading: 'Personnummer',
-          query: refugee.ssn
-        },
-        {
-          heading: 'Extra personnummer',
-          query: refugee.ssns.map(&:full_ssn).join(', ')
-        },
-        {
-          heading: 'Kommun',
-          query: refugee.municipality&.name
-        },
-        {
-          heading: 'Förväntad intäkt',
-          query: self.class.sum_formula(
-            ::Economy::RatesForRefugee.new(refugee, @interval).as_formula,
-            # Special case, see class doc
-            ::Economy::ReplaceRatesWithActualCosts.new(refugee, @interval).as_formula
-          ),
-          style: 'currency'
-        },
-        {
-          heading: 'Antal dygn',
-          query: 'todo'
-        }
-      ]
     end
   end
 end
