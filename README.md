@@ -84,11 +84,8 @@ $ bundle exec cap staging deploy
 $ bundle exec cap production deploy
 ```
 
-The worker for delayed job that is used for gererating reports is watched by Monit. It must be restarted using sudo after deployment:
+The worker for delayed job that is used for gererating reports is managed by `systemd`. The process is killed after a deployment and `systemd` is starting it automaticaly.
 
-```shell
-$ sudo monit restart delayed_job
-```
 
 ## Testing
 Run tests before pushing code to the Git repository and before making a deployment. The application contains unit tests and high level integration/feature tests using RSpec, Capybara and headless Chrome.
