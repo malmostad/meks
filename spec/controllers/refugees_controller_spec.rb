@@ -51,40 +51,40 @@ RSpec.describe RefugeesController, type: :controller do
     context "with valid params" do
       it "creates a new Refugee" do
         expect {
-          post :create, params: {refugee: valid_attributes}, session: valid_session
+          post :create, params: { refugee: valid_attributes }, session: valid_session
         }.to change(Refugee, :count).by(1)
       end
 
       it "assigns a newly created refugee as @refugee" do
-        post :create, params: {refugee: valid_attributes}, session: valid_session
+        post :create, params: { refugee: valid_attributes }, session: valid_session
         expect(assigns(:refugee)).to be_a(Refugee)
         expect(assigns(:refugee)).to be_persisted
       end
 
       it "redirects to the created refugee" do
-        post :create, params: {refugee: valid_attributes}, session: valid_session
+        post :create, params: { refugee: valid_attributes }, session: valid_session
         expect(response).to redirect_to(Refugee.last)
       end
 
       it "make @refugee a draft if reader role" do
-        post :create, params: {refugee: valid_attributes}, session: valid_session(role: :reader)
+        post :create, params: { refugee: valid_attributes }, session: valid_session(role: :reader)
         expect(Refugee.last.draft).to eq(true)
       end
 
       it "don't make @refugee a draft if writer role" do
-        post :create, params: {refugee: valid_attributes}, session: valid_session(role: :writer)
+        post :create, params: { refugee: valid_attributes }, session: valid_session(role: :writer)
         expect(Refugee.last.draft).to eq(false)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved refugee as @refugee" do
-        post :create, params: {refugee: invalid_attributes}, session: valid_session
+        post :create, params: { refugee: invalid_attributes }, session: valid_session
         expect(assigns(:refugee)).to be_a_new(Refugee)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {refugee: invalid_attributes}, session: valid_session
+        post :create, params: { refugee: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
     end

@@ -34,35 +34,35 @@ RSpec.describe MovedOutReasonsController, type: :controller do
     context "with valid params" do
       it "creates a new MovedOutReason" do
         expect {
-          post :create, params: {moved_out_reason: valid_attributes}, session: valid_session
+          post :create, params: { moved_out_reason: valid_attributes }, session: valid_session
         }.to change(MovedOutReason, :count).by(1)
       end
 
       it "assigns a newly created moved_out_reason as @moved_out_reason" do
-        post :create, params: {moved_out_reason: valid_attributes}, session: valid_session
+        post :create, params: { moved_out_reason: valid_attributes }, session: valid_session
         expect(assigns(:moved_out_reason)).to be_a(MovedOutReason)
         expect(assigns(:moved_out_reason)).to be_persisted
       end
 
       it "redirects to the created moved_out_reason" do
-        post :create, params: {moved_out_reason: valid_attributes}, session: valid_session
+        post :create, params: { moved_out_reason: valid_attributes }, session: valid_session
         expect(response).to redirect_to(moved_out_reasons_url)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved moved_out_reason as @moved_out_reason" do
-        post :create, params: {moved_out_reason: invalid_attributes}, session: valid_session
+        post :create, params: { moved_out_reason: invalid_attributes }, session: valid_session
         expect(assigns(:moved_out_reason)).to be_a_new(MovedOutReason)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {moved_out_reason: invalid_attributes}, session: valid_session
+        post :create, params: { moved_out_reason: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
 
       it "too long name" do
-        post :create, params: {moved_out_reason: { name: 'x' * 200 }}, session: valid_session
+        post :create, params: { moved_out_reason: { name: 'x' * 200 } }, session: valid_session
         expect(response).to render_template("new")
       end
     end

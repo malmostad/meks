@@ -34,30 +34,30 @@ RSpec.describe TypeOfRelationshipsController, type: :controller do
     context "with valid params" do
       it "creates a new TypeOfRelationship" do
         expect {
-          post :create, params: {type_of_relationship: valid_attributes}, session: valid_session
+          post :create, params: { type_of_relationship: valid_attributes }, session: valid_session
         }.to change(TypeOfRelationship, :count).by(1)
       end
 
       it "assigns a newly created type_of_relationship as @type_of_relationship" do
-        post :create, params: {type_of_relationship: valid_attributes}, session: valid_session
+        post :create, params: { type_of_relationship: valid_attributes }, session: valid_session
         expect(assigns(:type_of_relationship)).to be_a(TypeOfRelationship)
         expect(assigns(:type_of_relationship)).to be_persisted
       end
 
       it "redirects to the type_of_relationships index" do
-        post :create, params: {type_of_relationship: valid_attributes}, session: valid_session
+        post :create, params: { type_of_relationship: valid_attributes }, session: valid_session
         expect(response).to redirect_to(TypeOfRelationship)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved type_of_relationship as @type_of_relationship" do
-        post :create, params: {type_of_relationship: invalid_attributes}, session: valid_session
+        post :create, params: { type_of_relationship: invalid_attributes }, session: valid_session
         expect(assigns(:type_of_relationship)).to be_a_new(TypeOfRelationship)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {type_of_relationship: invalid_attributes}, session: valid_session
+        post :create, params: { type_of_relationship: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
     end

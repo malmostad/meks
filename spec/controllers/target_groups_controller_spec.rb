@@ -35,30 +35,30 @@ RSpec.describe TargetGroupsController, type: :controller do
     context "with valid params" do
       it "creates a new TargetGroup" do
         expect {
-          post :create, params: {target_group: valid_attributes}, session: valid_session
+          post :create, params: { target_group: valid_attributes }, session: valid_session
         }.to change(TargetGroup, :count).by(1)
       end
 
       it "assigns a newly created target_group as @target_group" do
-        post :create, params: {target_group: valid_attributes}, session: valid_session
+        post :create, params: { target_group: valid_attributes }, session: valid_session
         expect(assigns(:target_group)).to be_a(TargetGroup)
         expect(assigns(:target_group)).to be_persisted
       end
 
       it "redirects to the target_group index" do
-        post :create, params: {target_group: valid_attributes}, session: valid_session
+        post :create, params: { target_group: valid_attributes }, session: valid_session
         expect(response).to redirect_to(TargetGroup)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved target_group as @target_group" do
-        post :create, params: {target_group: invalid_attributes}, session: valid_session
+        post :create, params: { target_group: invalid_attributes }, session: valid_session
         expect(assigns(:target_group)).to be_a_new(TargetGroup)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {target_group: invalid_attributes}, session: valid_session
+        post :create, params: { target_group: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
     end

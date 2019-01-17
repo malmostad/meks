@@ -34,30 +34,30 @@ RSpec.describe ExtraContributionTypesController, type: :controller do
     context 'with valid params' do
       it 'creates a new ExtraContributionType' do
         expect {
-          post :create, params: {extra_contribution_type: valid_attributes}, session: valid_session
+          post :create, params: { extra_contribution_type: valid_attributes }, session: valid_session
         }.to change(ExtraContributionType, :count).by(1)
       end
 
       it 'assigns a newly created extra_contribution_type as @extra_contribution_type' do
-        post :create, params: {extra_contribution_type: valid_attributes}, session: valid_session
+        post :create, params: { extra_contribution_type: valid_attributes }, session: valid_session
         expect(assigns(:extra_contribution_type)).to be_a(ExtraContributionType)
         expect(assigns(:extra_contribution_type)).to be_persisted
       end
 
       it 'redirects to the extra_contribution_types index' do
-        post :create, params: {extra_contribution_type: valid_attributes}, session: valid_session
+        post :create, params: { extra_contribution_type: valid_attributes }, session: valid_session
         expect(response).to redirect_to(extra_contribution_types_path)
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved extra_contribution_type as @extra_contribution_type' do
-        post :create, params: {extra_contribution_type: invalid_attributes}, session: valid_session
+        post :create, params: { extra_contribution_type: invalid_attributes }, session: valid_session
         expect(assigns(:extra_contribution_type)).to be_a_new(ExtraContributionType)
       end
 
       it 're-renders the "new" template' do
-        post :create, params: {extra_contribution_type: invalid_attributes}, session: valid_session
+        post :create, params: { extra_contribution_type: invalid_attributes }, session: valid_session
         expect(response).to render_template('new')
       end
     end

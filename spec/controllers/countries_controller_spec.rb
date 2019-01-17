@@ -34,35 +34,35 @@ RSpec.describe CountriesController, type: :controller do
     context "with valid params" do
       it "creates a new Country" do
         expect {
-          post :create, params: {country: valid_attributes}, session: valid_session
+          post :create, params: { country: valid_attributes }, session: valid_session
         }.to change(Country, :count).by(1)
       end
 
       it "assigns a newly created country as @country" do
-        post :create, params: {country: valid_attributes}, session: valid_session
+        post :create, params: { country: valid_attributes }, session: valid_session
         expect(assigns(:country)).to be_a(Country)
         expect(assigns(:country)).to be_persisted
       end
 
       it "redirects to the created country" do
-        post :create, params: {country: valid_attributes}, session: valid_session
+        post :create, params: { country: valid_attributes }, session: valid_session
         expect(response).to redirect_to(countries_url)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved country as @country" do
-        post :create, params: {country: invalid_attributes}, session: valid_session
+        post :create, params: { country: invalid_attributes }, session: valid_session
         expect(assigns(:country)).to be_a_new(Country)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {country: invalid_attributes}, session: valid_session
+        post :create, params: { country: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
 
       it "too long name" do
-        post :create, params: {country: { name: 'x' * 200 }}, session: valid_session
+        post :create, params: { country: { name: 'x' * 200 } }, session: valid_session
         expect(response).to render_template("new")
       end
     end

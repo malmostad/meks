@@ -34,35 +34,35 @@ RSpec.describe DeregisteredReasonsController, type: :controller do
     context "with valid params" do
       it "creates a new DeregisteredReason" do
         expect {
-          post :create, params: {deregistered_reason: valid_attributes}, session: valid_session
+          post :create, params: { deregistered_reason: valid_attributes }, session: valid_session
         }.to change(DeregisteredReason, :count).by(1)
       end
 
       it "assigns a newly created deregistered_reason as @deregistered_reason" do
-        post :create, params: {deregistered_reason: valid_attributes}, session: valid_session
+        post :create, params: { deregistered_reason: valid_attributes }, session: valid_session
         expect(assigns(:deregistered_reason)).to be_a(DeregisteredReason)
         expect(assigns(:deregistered_reason)).to be_persisted
       end
 
       it "redirects to the created deregistered_reason" do
-        post :create, params: {deregistered_reason: valid_attributes}, session: valid_session
+        post :create, params: { deregistered_reason: valid_attributes }, session: valid_session
         expect(response).to redirect_to(deregistered_reasons_url)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved deregistered_reason as @deregistered_reason" do
-        post :create, params: {deregistered_reason: invalid_attributes}, session: valid_session
+        post :create, params: { deregistered_reason: invalid_attributes }, session: valid_session
         expect(assigns(:deregistered_reason)).to be_a_new(DeregisteredReason)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {deregistered_reason: invalid_attributes}, session: valid_session
+        post :create, params: { deregistered_reason: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
 
       it "too long name" do
-        post :create, params: {deregistered_reason: { name: 'x' * 200 }}, session: valid_session
+        post :create, params: { deregistered_reason: { name: 'x' * 200 } }, session: valid_session
         expect(response).to render_template("new")
       end
     end

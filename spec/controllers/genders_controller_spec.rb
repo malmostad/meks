@@ -34,35 +34,35 @@ RSpec.describe GendersController, type: :controller do
     context "with valid params" do
       it "creates a new Gender" do
         expect {
-          post :create, params: {gender: valid_attributes}, session: valid_session
+          post :create, params: { gender: valid_attributes }, session: valid_session
         }.to change(Gender, :count).by(1)
       end
 
       it "assigns a newly created gender as @gender" do
-        post :create, params: {gender: valid_attributes}, session: valid_session
+        post :create, params: { gender: valid_attributes }, session: valid_session
         expect(assigns(:gender)).to be_a(Gender)
         expect(assigns(:gender)).to be_persisted
       end
 
       it "redirects to the created gender" do
-        post :create, params: {gender: valid_attributes}, session: valid_session
+        post :create, params: { gender: valid_attributes }, session: valid_session
         expect(response).to redirect_to(genders_url)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved gender as @gender" do
-        post :create, params: {gender: invalid_attributes}, session: valid_session
+        post :create, params: { gender: invalid_attributes }, session: valid_session
         expect(assigns(:gender)).to be_a_new(Gender)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {gender: invalid_attributes}, session: valid_session
+        post :create, params: { gender: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
 
       it "too long name" do
-        post :create, params: {gender: { name: 'x' * 200 }}, session: valid_session
+        post :create, params: { gender: { name: 'x' * 200 } }, session: valid_session
         expect(response).to render_template("new")
       end
     end

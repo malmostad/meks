@@ -42,30 +42,30 @@ RSpec.describe HomesController, type: :controller do
     context "with valid params" do
       it "creates a new Home" do
         expect {
-          post :create, params: {home: valid_attributes}, session: valid_session
+          post :create, params: { home: valid_attributes }, session: valid_session
         }.to change(Home, :count).by(1)
       end
 
       it "assigns a newly created home as @home" do
-        post :create, params: {home: valid_attributes}, session: valid_session
+        post :create, params: { home: valid_attributes }, session: valid_session
         expect(assigns(:home)).to be_a(Home)
         expect(assigns(:home)).to be_persisted
       end
 
       it "redirects to the created home" do
-        post :create, params: {home: valid_attributes}, session: valid_session
+        post :create, params: { home: valid_attributes }, session: valid_session
         expect(response).to redirect_to(Home.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved home as @home" do
-        post :create, params: {home: invalid_attributes}, session: valid_session
+        post :create, params: { home: invalid_attributes }, session: valid_session
         expect(assigns(:home)).to be_a_new(Home)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {home: invalid_attributes}, session: valid_session
+        post :create, params: { home: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
     end

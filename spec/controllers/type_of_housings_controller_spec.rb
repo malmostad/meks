@@ -36,30 +36,30 @@ RSpec.describe TypeOfHousingsController, type: :controller do
   #   context "with valid params" do
   #     it "creates a new TypeOfHousing" do
   #       expect {
-  #         post :create, params: {type_of_housing: valid_attributes}, session: valid_session
+  #         post :create, params: { type_of_housing: valid_attributes }, session: valid_session
   #       }.to change(TypeOfHousing, :count).by(1)
   #     end
   #
   #     it "assigns a newly created type_of_housing as @type_of_housing" do
-  #       post :create, params: {type_of_housing: valid_attributes}, session: valid_session
+  #       post :create, params: { type_of_housing: valid_attributes }, session: valid_session
   #       expect(assigns(:type_of_housing)).to be_a(TypeOfHousing)
   #       expect(assigns(:type_of_housing)).to be_persisted
   #     end
   #
   #     it "redirects to the type_of_housings index" do
-  #       post :create, params: {type_of_housing: valid_attributes}, session: valid_session
+  #       post :create, params: { type_of_housing: valid_attributes }, session: valid_session
   #       expect(response).to redirect_to(TypeOfHousing)
   #     end
   #   end
   #
   #   context "with invalid params" do
   #     it "assigns a newly created but unsaved type_of_housing as @type_of_housing" do
-  #       post :create, params: {type_of_housing: invalid_attributes}, session: valid_session
+  #       post :create, params: { type_of_housing: invalid_attributes }, session: valid_session
   #       expect(assigns(:type_of_housing)).to be_a_new(TypeOfHousing)
   #     end
   #
   #     it "re-renders the 'new' template" do
-  #       post :create, params: {type_of_housing: invalid_attributes}, session: valid_session
+  #       post :create, params: { type_of_housing: invalid_attributes }, session: valid_session
   #       expect(response).to render_template("new")
   #     end
   #   end

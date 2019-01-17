@@ -35,30 +35,30 @@ RSpec.describe OwnerTypesController, type: :controller do
     context "with valid params" do
       it "creates a new OwnerType" do
         expect {
-          post :create, params: {owner_type: valid_attributes}, session: valid_session
+          post :create, params: { owner_type: valid_attributes }, session: valid_session
         }.to change(OwnerType, :count).by(1)
       end
 
       it "assigns a newly created owner_type as @owner_type" do
-        post :create, params: {owner_type: valid_attributes}, session: valid_session
+        post :create, params: { owner_type: valid_attributes }, session: valid_session
         expect(assigns(:owner_type)).to be_a(OwnerType)
         expect(assigns(:owner_type)).to be_persisted
       end
 
       it "redirects to the owner_types index" do
-        post :create, params: {owner_type: valid_attributes}, session: valid_session
+        post :create, params: { owner_type: valid_attributes }, session: valid_session
         expect(response).to redirect_to(owner_types_path)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved owner_type as @owner_type" do
-        post :create, params: {owner_type: invalid_attributes}, session: valid_session
+        post :create, params: { owner_type: invalid_attributes }, session: valid_session
         expect(assigns(:owner_type)).to be_a_new(OwnerType)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {owner_type: invalid_attributes}, session: valid_session
+        post :create, params: { owner_type: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
     end

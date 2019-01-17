@@ -34,35 +34,35 @@ RSpec.describe MunicipalitiesController, type: :controller do
     context "with valid params" do
       it "creates a new Municipality" do
         expect {
-          post :create, params: {municipality: valid_attributes}, session: valid_session
+          post :create, params: { municipality: valid_attributes }, session: valid_session
         }.to change(Municipality, :count).by(1)
       end
 
       it "assigns a newly created municipality as @municipality" do
-        post :create, params: {municipality: valid_attributes}, session: valid_session
+        post :create, params: { municipality: valid_attributes }, session: valid_session
         expect(assigns(:municipality)).to be_a(Municipality)
         expect(assigns(:municipality)).to be_persisted
       end
 
       it "redirects to the created municipality" do
-        post :create, params: {municipality: valid_attributes}, session: valid_session
+        post :create, params: { municipality: valid_attributes }, session: valid_session
         expect(response).to redirect_to(municipalities_url)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved municipality as @municipality" do
-        post :create, params: {municipality: invalid_attributes}, session: valid_session
+        post :create, params: { municipality: invalid_attributes }, session: valid_session
         expect(assigns(:municipality)).to be_a_new(Municipality)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {municipality: invalid_attributes}, session: valid_session
+        post :create, params: { municipality: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
 
       it "too long name" do
-        post :create, params: {municipality: { name: 'x' * 200 }}, session: valid_session
+        post :create, params: { municipality: { name: 'x' * 200 } }, session: valid_session
         expect(response).to render_template("new")
       end
     end
