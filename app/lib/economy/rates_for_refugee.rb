@@ -237,8 +237,6 @@ module Economy
     #   See doc in Economy::ReplaceRatesWithActualCosts
     # Returns the number of qualified days for the rate
     def number_of_days_with_exempt_from_rate_deducted(from, to)
-      return 0 unless (to.to_date - from.to_date).positive?
-
       # Create a range of dates in the rate period and convert it to an array
       days_with_rate = (from.to_date..to.to_date).to_a
 
