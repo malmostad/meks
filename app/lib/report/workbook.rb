@@ -3,8 +3,8 @@ module Report
     DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
 
     def self.sum_formula(*arr)
-      arr.reject!(&:blank?)
-      return '' if arr.blank?
+      arr.flatten.reject!(&:blank?)
+      return '=(0)' if arr.blank?
 
       "=(#{arr.join('+')})"
     end
@@ -124,7 +124,8 @@ module Report
 
       row = last_row(data_rows + 1)
       @sheet.add_row(
-        row.map { |cell| cell }
+        row.map { |cell| cell },
+        style: @style.send(:currency)
       )
     end
 
