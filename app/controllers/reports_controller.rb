@@ -65,8 +65,6 @@ class ReportsController < ApplicationController
       :homes_owner_type,
       :placements_from,
       :placements_to,
-      :economy_per_refugee_status_placements_to,
-      :economy_per_refugee_status_placements_from,
       :economy_placements_to,
       :economy_placements_from,
       :placements_selection,
@@ -94,8 +92,6 @@ class ReportsController < ApplicationController
     case params[:report_type]
     when 'economy'
       GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
-    when 'economy_per_refugee_status'
-      GenerateReportJob::EconomyPerRefugeeStatus.perform_later(report_params.to_h, file_id)
     when 'homes'
       GenerateReportJob::Homes.perform_later(report_params.to_h, file_id)
     when 'placements'
@@ -109,8 +105,6 @@ class ReportsController < ApplicationController
     case params[:report_type]
     when 'economy'
       'Ekonomi'
-    when 'economy_per_refugee_status'
-      'Per barns asylstatus'
     when 'homes'
       'Boenden'
     when 'placements'

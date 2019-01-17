@@ -24,10 +24,4 @@ RSpec.feature 'Reports generation' do
     Report::Refugees.new(filename: filename, from: Date.today - 2.years, to: Date.today).create!
     expect(read_report(filename)[0..1]).to eq 'PK'
   end
-
-  scenario 'generate an EconomyPerRefugeeStatus report' do
-    filename = "#{Time.now.to_f}_spec.xlsx"
-    Report::EconomyPerRefugeeStatus.new(filename: filename, from: Date.today - 2.years, to: Date.today).create!
-    expect(read_report(filename)[0..1]).to eq 'PK'
-  end
 end
