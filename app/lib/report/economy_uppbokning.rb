@@ -6,7 +6,7 @@ module Report
   #   2. rate_categories they belong to
   # One refugee can fall into several such combinations and occur on
   #   more than one sheet.
-  class EconomyUppbokning < Workbooks
+  class EconomyUppbokning < Workbook
     def initialize(options = {})
       super(options)
       @statuses = statuses

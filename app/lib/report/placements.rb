@@ -1,5 +1,5 @@
 module Report
-  class Placements < Workbooks
+  class Placements < Workbook
     include RefugeesHelper
 
     def initialize(options = {})

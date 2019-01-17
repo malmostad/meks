@@ -73,8 +73,6 @@ class ReportsController < ApplicationController
       :placements_to,
       :economy_uppbokning_placements_from,
       :economy_uppbokning_placements_to,
-      :economy_per_refugee_status_placements_to,
-      :economy_per_refugee_status_placements_from,
       :economy_placements_to,
       :economy_placements_from,
       :placements_selection,
@@ -105,8 +103,6 @@ class ReportsController < ApplicationController
       GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
     when 'economy_uppbokning'
       GenerateReportJob::EconomyUppbokning.perform_later(report_params.to_h, file_id)
-    when 'economy_per_refugee_status'
-      GenerateReportJob::EconomyPerRefugeeStatus.perform_later(report_params.to_h, file_id)
     when 'homes'
       GenerateReportJob::Homes.perform_later(report_params.to_h, file_id)
     when 'placements'
@@ -122,8 +118,6 @@ class ReportsController < ApplicationController
       'Ekonomi'
     when 'economy_uppbokning'
       'Ekonomi uppbokning'
-    when 'economy_per_refugee_status'
-      'Per barns asylstatus'
     when 'homes'
       'Boenden'
     when 'placements'

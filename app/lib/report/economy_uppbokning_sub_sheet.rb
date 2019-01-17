@@ -1,5 +1,5 @@
 module Report
-  class EconomyUppbokningSubSheet < Workbooks
+  class EconomyUppbokningSubSheet < Workbook
     def initialize(options = {})
       super(options)
       @sheet_name = options[:sheet_name]
