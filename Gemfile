@@ -22,6 +22,7 @@ gem 'ruby-saml', '1.9.0'
 
 gem 'rubyzip', '~> 1.2.2'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c593a08'
+gem 'axlsx_rails'
 gem 'delayed_job_active_record', '4.1.3'
 
 gem 'whenever', '0.10.0', require: false
