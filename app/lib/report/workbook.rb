@@ -3,7 +3,8 @@ module Report
     DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
 
     def self.sum_formula(*arr)
-      arr.flatten.reject!(&:blank?)
+      arr.flatten!
+      arr&.reject!(&:blank?)
       return '=(0)' if arr.blank?
 
       "=(#{arr.join('+')})"
