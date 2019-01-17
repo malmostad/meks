@@ -7,7 +7,7 @@ module Report
   #   and data related to those placements.
   # Formulas in the spreadsheet contains rates, costs, and payments
   #   associated with the refugee and it's placements within the interval.
-  class Economy < Workbooks
+  class Economy < Workbook
     def initialize(options = {})
       super(options)
       @po_rates = PoRate.all

@@ -1,5 +1,5 @@
 module Report
-  class Homes < Workbooks
+  class Homes < Workbook
     def initialize(options = {})
       super(options)
       @owner_type = options[:owner_type]

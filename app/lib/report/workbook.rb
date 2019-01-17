@@ -1,5 +1,5 @@
 module Report
-  class Workbooks
+  class Workbook
     DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
 
     def self.sum_formula(*arr)
