@@ -5,7 +5,7 @@ RSpec.describe "type_of_housings/index", type: :view do
 
   it "renders a list of type_of_housings" do
     render
-    assert_select "tr>td", :text => @type_of_housings.first.name, :count => 1
-    assert_select "tr>td", :text => @type_of_housings.second.name, :count => 1
+    assert_select "tr>td", text: @type_of_housings.first.name, count: 1
+    assert_select "tr>td", text: @type_of_housings.second.name, count: 1
   end
 end

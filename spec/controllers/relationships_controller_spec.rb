@@ -37,7 +37,7 @@ RSpec.describe RelationshipsController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested relationship as @relationship" do
       relationship = Relationship.create! valid_attributes
-      get :edit, params: {refugee_id: refugee.id, :id => relationship.to_param }, session: valid_session
+      get :edit, params: { refugee_id: refugee.id, id: relationship.to_param }, session: valid_session
       expect(assigns(:relationship)).to eq(relationship)
     end
   end
@@ -46,30 +46,30 @@ RSpec.describe RelationshipsController, type: :controller do
     context "with valid params" do
       it "creates a new Relationship" do
         expect {
-          post :create, params: {refugee_id: refugee.id, :relationship => valid_attributes}, session: valid_session
+          post :create, params: { refugee_id: refugee.id, relationship: valid_attributes }, session: valid_session
         }.to change(Relationship, :count).by(1)
       end
 
       it "assigns a newly created relationship as @relationship" do
-        post :create, params: {refugee_id: refugee.id, :relationship => valid_attributes}, session: valid_session
+        post :create, params: { refugee_id: refugee.id, relationship: valid_attributes }, session: valid_session
         expect(assigns(:relationship)).to be_a(Relationship)
         expect(assigns(:relationship)).to be_persisted
       end
 
       it "redirects to the show refugee" do
-        post :create, params: {refugee_id: refugee.id, :relationship => valid_attributes}, session: valid_session
+        post :create, params: { refugee_id: refugee.id, relationship: valid_attributes }, session: valid_session
         expect(response).to redirect_to(refugee_path(refugee))
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved relationship as @relationship" do
-        post :create, params: {refugee_id: refugee.id, :relationship => invalid_attributes}, session: valid_session
+        post :create, params: { refugee_id: refugee.id, relationship: invalid_attributes }, session: valid_session
         expect(assigns(:relationship)).to be_a_new(Relationship)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {refugee_id: refugee.id, :relationship => invalid_attributes}, session: valid_session
+        post :create, params: { refugee_id: refugee.id, relationship: invalid_attributes }, session: valid_session
         expect(response).to render_template("new")
       end
     end
@@ -77,19 +77,19 @@ RSpec.describe RelationshipsController, type: :controller do
 
   describe "Inverse relationship" do
     it "assigns a newly created relationship as @relationship" do
-      post :create, params: {refugee_id: refugee.id, :relationship => valid_attributes}, session: valid_session
+      post :create, params: { refugee_id: refugee.id, relationship: valid_attributes }, session: valid_session
       expect(related_refugee.inverse_relationships.first).to be_a(Relationship)
     end
 
     it "creates a new inverse related" do
       expect {
-        post :create, params: {refugee_id: refugee.id, :relationship => valid_attributes}, session: valid_session
+        post :create, params: { refugee_id: refugee.id, relationship: valid_attributes }, session: valid_session
       }.to change(related_refugee.inverse_relateds, :count).by(1)
     end
 
     it "creates a new inverse relationship" do
       expect {
-        post :create, params: {refugee_id: refugee.id, :relationship => valid_attributes}, session: valid_session
+        post :create, params: { refugee_id: refugee.id, relationship: valid_attributes }, session: valid_session
       }.to change(related_refugee.inverse_relationships, :count).by(1)
     end
   end
@@ -110,20 +110,20 @@ RSpec.describe RelationshipsController, type: :controller do
 
       it "updates the requested relationship" do
         relationship = Relationship.create! valid_attributes
-        put :update, params: {refugee_id: refugee.id, :id => relationship.to_param, :relationship => new_attributes}, session: valid_session
+        put :update, params: { refugee_id: refugee.id, id: relationship.to_param, relationship: new_attributes }, session: valid_session
         relationship.reload
         expect(relationship.related_id).to eq(new_attributes[:related_id])
       end
 
       it "assigns the requested relationship as @relationship" do
         relationship = Relationship.create! valid_attributes
-        put :update, params: {refugee_id: refugee.id, :id => relationship.to_param, :relationship => valid_attributes}, session: valid_session
+        put :update, params: { refugee_id: refugee.id, id: relationship.to_param, relationship: valid_attributes }, session: valid_session
         expect(assigns(:relationship)).to eq(relationship)
       end
 
       it "redirects to show refugee" do
         relationship = Relationship.create! valid_attributes
-        put :update, params: { refugee_id: refugee.id, :id => relationship.to_param, :relationship => valid_attributes}, session: valid_session
+        put :update, params: { refugee_id: refugee.id, id: relationship.to_param, relationship: valid_attributes}, session: valid_session
         expect(response).to redirect_to(refugee_path(refugee))
       end
     end
@@ -131,13 +131,13 @@ RSpec.describe RelationshipsController, type: :controller do
     context "with invalid params" do
       it "assigns the relationship as @relationship" do
         relationship = Relationship.create! valid_attributes
-        put :update, params: {refugee_id: refugee.id, :id => relationship.to_param, :relationship => invalid_attributes}, session: valid_session
+        put :update, params: { refugee_id: refugee.id, id: relationship.to_param, relationship: invalid_attributes }, session: valid_session
         expect(assigns(:relationship)).to eq(relationship)
       end
 
       it "re-renders the 'edit' template" do
         relationship = Relationship.create! valid_attributes
-        put :update, params: {refugee_id: refugee.id, :id => relationship.to_param, :relationship => invalid_attributes}, session: valid_session
+        put :update, params: { refugee_id: refugee.id, id: relationship.to_param, relationship: invalid_attributes }, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -147,13 +147,13 @@ RSpec.describe RelationshipsController, type: :controller do
     it "destroys the requested relationship" do
       relationship = Relationship.create! valid_attributes
       expect {
-        delete :destroy, params: {refugee_id: refugee.id, :id => relationship.to_param }, session: valid_session
+        delete :destroy, params: { refugee_id: refugee.id, id: relationship.to_param }, session: valid_session
       }.to change(Relationship, :count).by(-1)
     end
 
     it "redirects to the show refugee" do
       relationship = Relationship.create! valid_attributes
-      delete :destroy, params: {refugee_id: refugee.id, :id => relationship.to_param }, session: valid_session
+      delete :destroy, params: { refugee_id: refugee.id, id: relationship.to_param }, session: valid_session
       expect(response).to redirect_to(refugee_relationships_url(refugee))
     end
   end

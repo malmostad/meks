@@ -2,7 +2,7 @@
   %h2.group-title Placeringar
   .form-group
     %span.control-label
-      %label{for: 'placements_from'} Har bott på boendet under tiden:
+      %label{ for: 'placements_from' } Har bott på boendet under tiden:
     .controls
       .input-group.input-daterange
         = text_field_tag 'placements_from', DateTime.now.beginning_of_quarter.to_date, class: 'form-control'
@@ -11,14 +11,14 @@
 
   .form-group
     %span.control-label
-      %label{for: 'placements_selection'} Urval:
+      %label{ for: 'placements_selection' } Urval:
     .controls
       = select_tag('placements_selection', options_for_select("Alla" => 'all', "Barn med överlappande placeringar" => 'overlapping'),
         class: 'form-control chosen')
 
   .form-group
     %span.control-label
-      %label{for: 'placements_home_id_'} På boende:
+      %label{ for: 'placements_home_id_' } På boende:
     .controls
       = collection_select(:placements_home_id, nil, @homes, :id, :name, { prompt: 'Alla' }, { class: 'form-control chosen' })
 

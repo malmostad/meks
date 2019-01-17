@@ -3,14 +3,14 @@
 
   .form-group
     %span.control-label
-      %label{for: 'homes_free_seats'} Urval:
+      %label{ for: 'homes_free_seats' } Urval:
     .controls
       = select_tag('homes_free_seats', options_for_select("Alla" => nil, "Endast med lediga platser" => 'with'),
         class: 'form-control chosen')
 
   .form-group
     %span.control-label
-      %label{for: 'homes_owner_type'} Ägarform:
+      %label{ for: 'homes_owner_type' } Ägarform:
     .controls
       = select_tag('homes_owner_type', options_for_select({ "Alla" => nil }.merge Hash[OwnerType.all.map { |ot| [ot.name, ot.id] }]),
         class: 'form-control chosen')

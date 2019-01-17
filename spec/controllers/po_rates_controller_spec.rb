@@ -37,35 +37,35 @@ RSpec.describe PoRatesController, type: :controller do
     context 'with valid params' do
       it 'creates a new PoRate' do
         expect {
-          post :create, params: {po_rate: valid_attributes}, session: valid_session
+          post :create, params: { po_rate: valid_attributes }, session: valid_session
         }.to change(PoRate, :count).by(1)
       end
 
       it 'assigns a newly created po_rate as @po_rate' do
-        post :create, params: {po_rate: valid_attributes}, session: valid_session
+        post :create, params: { po_rate: valid_attributes }, session: valid_session
         expect(assigns(:po_rate)).to be_a(PoRate)
         expect(assigns(:po_rate)).to be_persisted
       end
 
       it 'redirects to the created po_rate' do
-        post :create, params: {po_rate: valid_attributes}, session: valid_session
+        post :create, params: { po_rate: valid_attributes }, session: valid_session
         expect(response).to redirect_to(po_rates_url)
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved po_rate as @po_rate' do
-        post :create, params: {po_rate: invalid_attributes}, session: valid_session
+        post :create, params: { po_rate: invalid_attributes }, session: valid_session
         expect(assigns(:po_rate)).to be_a_new(PoRate)
       end
 
       it 're-renders the "new" template' do
-        post :create, params: {po_rate: invalid_attributes}, session: valid_session
+        post :create, params: { po_rate: invalid_attributes }, session: valid_session
         expect(response).to render_template('new')
       end
 
       it 'too long name' do
-        post :create, params: {po_rate: { name: 'x' * 200 }}, session: valid_session
+        post :create, params: { po_rate: { name: 'x' * 200 } }, session: valid_session
         expect(response).to render_template('new')
       end
     end
