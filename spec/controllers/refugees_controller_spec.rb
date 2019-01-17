@@ -152,13 +152,8 @@ RSpec.describe RefugeesController, type: :controller do
   end
 
   describe 'Placement nested attributes' do
-    let(:home) {
-      Home.create!(name: "Valid home")
-    }
-
-    let(:legal_code) {
-      LegalCode.create!(name: "Valid code")
-    }
+    let(:home) { create(:home) }
+    let(:legal_code) { create(:legal_code) }
 
     let(:placement_attributes) {
       {

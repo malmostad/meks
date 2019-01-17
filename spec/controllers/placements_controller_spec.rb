@@ -3,14 +3,8 @@ RSpec.describe PlacementsController, type: :controller do
       Refugee.create!(name: 'Valid refugee')
     }
 
-    let(:valid_home) {
-      Home.create!(name: 'Valid home')
-    }
-
-    let(:legal_code) {
-      LegalCode.create!(name: 'Valid legal code')
-    }
-
+    let(:valid_home) { create(:home) }
+    let(:legal_code) { create(:legal_code) }
     let(:valid_attributes) {
       {
         home_id: valid_home.id,

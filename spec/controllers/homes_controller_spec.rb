@@ -1,6 +1,6 @@
 RSpec.describe HomesController, type: :controller do
   let(:valid_attributes) {
-    { name: 'Home'}
+    { name: 'Home', type_of_cost: 'cost_per_day' }
   }
 
   let(:invalid_attributes) {
@@ -114,15 +114,13 @@ RSpec.describe HomesController, type: :controller do
   end
 
   describe 'Cost nested attributes' do
-    let(:home) {
-      Home.create!(name: "Valid home")
-    }
-
     it "new home not to have a cost" do
       attributes = {
         name: "Firstname Lastname",
+        type_of_cost: 'cost_per_day',
         costs_attributes: []
       }
+
       post :create, params: { :home => attributes }, session: valid_session
       expect(assigns(:home)).to be_persisted
       expect(Home.last.costs.size).to eq(0)
