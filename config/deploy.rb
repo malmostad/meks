@@ -50,7 +50,7 @@ namespace :delayed_job do
   desc 'Kill delayed job daemon, will be started up again by systemd'
   task :restart do
     on roles(:app) do
-      execute "kill `cat #{fetch(:deploy_to)}/tmp/pids/delayed_job.pid`"
+      execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
     end
   end
 end
