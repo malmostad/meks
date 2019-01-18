@@ -150,5 +150,13 @@ module Report
     def columns(*_args)
       raise NotImplementedError, "Implement #{__method__} method in your #{self.class.name} subclass"
     end
+
+    def earliest_date(*dates)
+      dates.flatten.compact.map(&:to_date).min
+    end
+
+    def latest_date(*dates)
+      dates.flatten.compact.map(&:to_date).max
+    end
   end
 end

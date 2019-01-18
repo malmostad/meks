@@ -42,7 +42,11 @@ module Report
           query: self.class.sum_formula(
             record[:rates]&.map { |x| "#{x[:days]}*#{x[:amount]}" }&.compact&.join('+'),
             # Special case, see class doc
-            ::Economy::ReplaceRatesWithActualCosts.new(refugee, @interval).as_formula
+            ::Economy::ReplaceRatesWithActualCosts.new(
+              refugee,
+              from: record[:from],
+              to: record[:to]
+            ).as_formula
           ),
           style: 'currency'
         },

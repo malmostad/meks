@@ -111,7 +111,12 @@ module Report
 
     def per_rate_category(refugees, *categories)
       refugees.map do |refugee|
-        rates_for_refugee = ::Economy::RatesForRefugee.new(refugee, from: @from, to: @to)
+        qualified_from = earliest_date(refugee.placements.map(&:moved_in_at))
+        qualified_to   = latest_date(refugee.placements.map(&:moved_out_at))
+        from           = latest_date(qualified_from, @from)
+        to             = earliest_date(qualified_to, @to)
+
+        rates_for_refugee = ::Economy::RatesForRefugee.new(refugee, from: from, to: to)
 
         days_and_amounts = categories.map do |category|
           rates_for_refugee.send(category.qualifier[:meth], category)
@@ -119,7 +124,7 @@ module Report
 
         next if days_and_amounts.empty?
 
-        { refugee: refugee, rates: days_and_amounts }
+        { refugee: refugee, rates: days_and_amounts, from: from, to: to }
       end.reject(&:blank?)
     end
 
