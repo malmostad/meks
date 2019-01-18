@@ -51,6 +51,14 @@ namespace :scramble do
     end
   end
 
+  desc 'Scramble placements'
+  task placements: :environment do
+    Placement.find_each do |placement|
+      placement.specification = nil
+      placement.save!
+    end
+  end
+
   desc 'Run all'
-  task all: [:environment, 'scramble:refugees', 'scramble:homes']
+  task all: [:environment, 'scramble:refugees', 'scramble:homes', 'scramble:placements']
 end

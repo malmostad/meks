@@ -10,9 +10,9 @@ module Economy
     end
 
     def sum
-      as_array.sum do |hash|
+      as_array.map do |hash|
         hash[:months] * (hash[:fee] + hash[:po_cost] + hash[:expense])
-      end
+      end.compact.sum
     end
 
     def as_formula

@@ -16,13 +16,13 @@ module Economy
 
     # See doc at #as_array
     def sum
-      as_array.sum do |x|
+      as_array.map do |x|
         next x if x.is_a? BigDecimal
 
         next x[:days] * x[:amount] if days_hash?(x)
         next x[:months] * x[:costs] if months_hash?(x)
         next x[:months] * (x[:fee] + x[:po_cost] + x[:expense]) if po_cost_hash?(x)
-      end
+      end.compact.sum
     end
 
     # See doc at #as_array
