@@ -7,7 +7,7 @@ module Economy
     end
 
     def sum
-      as_array.sum
+      as_array.compact.sum
     end
 
     def as_formula

@@ -5,7 +5,7 @@ module Economy
     # Implement a #sum method in the subclass if the hashes in the as_array
     #   doesn't have :days and :amount
     def sum
-      as_array.sum { |x| x[:days] * x[:amount] }
+      as_array.map { |x| x[:days] * x[:amount] }.compact.sum
     end
 
     # Implement a #as_formula method in the subclass if the hashes in the as_array
