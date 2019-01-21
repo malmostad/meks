@@ -114,11 +114,13 @@ module Report
     # Refugees that don't fall into any rate category are ignored.
     def per_rate_category(refugees, *categories)
       refugees.map do |refugee|
-        # The qualified dates
+        # The max range the refugee qualifies for the legal code(s)
         qualified_from = earliest_date(refugee.placements.map(&:moved_in_at))
         qualified_to   = latest_date(refugee.placements.map(&:moved_out_at))
-        from           = latest_date(qualified_from, @from)
-        to             = earliest_date(qualified_to, @to)
+
+        # Cut of the qualified range with the report range to get the actual range
+        from = latest_date(qualified_from, @from)
+        to   = earliest_date(qualified_to, @to)
 
         rates_for_refugee = ::Economy::RatesForRefugee.new(refugee, from: from, to: to)
 
