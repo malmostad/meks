@@ -51,7 +51,7 @@ module Report
           style: 'currency'
         },
         {
-          heading: 'Antal dygn med schablonintäkt',
+          heading: "Dygn med schablonintäkt och status: #{@sheet_name}",
           query: "=#{record[:rates]&.sum { |x| x[:days] }}"
         }
       ]
