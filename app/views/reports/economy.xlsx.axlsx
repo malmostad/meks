@@ -1,9 +1,10 @@
-@workbook.add_worksheet(name: 'Foo') do |sheet|
+@workbook.add_worksheet(name: @first_sheetname) do |sheet|
   sheet.add_row [
     'ID',
     'Namn',
     'Förvald'
   ]
+
   @legal_codes.find_each do |legal_code|
     sheet.add_row [
       legal_code.id,
