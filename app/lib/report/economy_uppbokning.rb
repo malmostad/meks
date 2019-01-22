@@ -1,7 +1,7 @@
 module Report
-  # The rows in this multi sheet spreadsheet are refugee centered
+  # The rows in this multi sheet workbook are refugee centered
   #   except for the first sheet that contains a summary
-  # Refugees are selected with a exclusive combination of:
+  # Refugees are selected with an exclusive combination of:
   #   1. legal_codes for their placements
   #   2. rate_categories they belong to
   # One refugee can fall into several such combinations and occur on
@@ -110,19 +110,13 @@ module Report
     end
 
     # Returns and array with the given refugees with a hash for each refugee
-    # containing the days and amount of the given rate categories
+    # containing the Economy::RatesForRefugee data of the given rate categories
+    # with the refugee record and date interval added.
     # Refugees that don't fall into any rate category are ignored.
     def per_rate_category(refugees, *categories)
       refugees.map do |refugee|
-        # The max range the refugee qualifies for the legal code(s)
-        qualified_from = earliest_date(refugee.placements.map(&:moved_in_at))
-        qualified_to   = latest_date(refugee.placements.map(&:moved_out_at))
-
-        # Cut of the qualified range with the report range to get the actual range
-        from = latest_date(qualified_from, @from)
-        to   = earliest_date(qualified_to, @to)
-
-        rates_for_refugee = ::Economy::RatesForRefugee.new(refugee, from: from, to: to)
+        interval = qualified_interval(refugee)
+        rates_for_refugee = ::Economy::RatesForRefugee.new(refugee, interval)
 
         days_and_amounts = categories.map do |category|
           rates_for_refugee.send(category.qualifier[:meth], category)
@@ -130,7 +124,7 @@ module Report
 
         next if days_and_amounts.empty?
 
-        { refugee: refugee, rates: days_and_amounts, from: from, to: to }
+        { refugee: refugee, rates: days_and_amounts }.merge(interval)
       end.reject(&:blank?)
     end
 
@@ -152,6 +146,20 @@ module Report
       return refugees.where(placements: { legal_code: ids }) unless ids.blank?
 
       refugees
+    end
+
+    # Returns a hash with the date interval a refugee is qualified.
+    # The interval is cut of with the report interval
+    def qualified_interval(refugee)
+      # The max range the refugee qualifies for the legal code(s)
+      qualified_from = earliest_date(refugee.placements.map(&:moved_in_at))
+      qualified_to   = latest_date(refugee.placements.map(&:moved_out_at))
+
+      # Cut of the qualified range with the report range to get the actual range
+      {
+        from: latest_date(qualified_from, @from),
+        to: earliest_date(qualified_to, @to)
+      }
     end
   end
 end
