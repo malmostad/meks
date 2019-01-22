@@ -1,21 +1,17 @@
 # rr = RefugeesReport.new(registered_from: "2019-01-01", registered_to: "2019-01-22", born_after: "2001-01-22", born_before: "2019-01-22")
 class RefugeesReport < ApplicationReport
-  def initialize(options = {})
-    @registered_from = options[:registered_from]
-    @registered_to = options[:registered_to]
-    @born_after = options[:born_after]
-    @born_before = options[:born_before]
-    @include_without_date_of_birth = options[:include_without_date_of_birth]
-    @asylum = options[:asylum]
+  def initialize(params = {})
+    @params = params
 
-    options[:locals] = { refugees: records.to_a }
+    options = {}
     options[:report_name] = 'Ensamkommande barn'
-    options[:first_sheetname] = "#{options[:registered_from]}–#{options[:registered_to]}"
+    options[:first_sheetname] = "#{params[:registered_from]}–#{params[:registered_to]}"
+    options[:locals] = { refugees: refugees }
     super(options)
   end
 
-  def records
-    refugees = Refugee.includes(
+  def refugees
+    query = Refugee.includes(
       :countries, :languages, :ssns, :dossier_numbers,
       :gender, :homes, :municipality, :deregistered_reason,
       relationships: %i[type_of_relationship refugee],
@@ -23,23 +19,24 @@ class RefugeesReport < ApplicationReport
       current_placements: [home: :type_of_housings]
     )
 
-    if @registered_from.present? && @registered_to.present?
-      refugees = refugees.where(registered: @registered_from..@registered_to)
+    if @params[:registered_from].present? && @params[:registered_to].present?
+      query = query.where(registered: @params[:registered_from]..@params[:registered_to])
     end
 
-    query = [(@born_after..@born_before)]
-    query << nil if @include_without_date_of_birth
+    dob = [(@params[:born_after]..@params[:born_before])]
+    dob << nil if @params[:include_without_date_of_birth]
 
-    refugees = refugees.where(date_of_birth: query) if @born_after.present? && @born_before.present?
+    query = query.where(date_of_birth: dob) if @params[:born_after].present? &&
+                                               @params[:born_before].present?
 
-    if @asylum.present?
-      query = []
+    if @params[:asylum].present?
+      sql = []
 
-      query << 'refugees.residence_permit_at is not null' if @asylum.include? 'put'
-      query << 'refugees.temporary_permit_starts_at is not null' if @asylum.include? 'tut'
-      query << 'refugees.municipality_id is not null' if @asylum.include? 'municipality'
-      refugees = refugees.where(query.join(' or '))
+      sql << 'refugees.residence_permit_at is not null' if @params[:asylum].include? 'put'
+      sql << 'refugees.temporary_permit_starts_at is not null' if @params[:asylum].include? 'tut'
+      sql << 'refugees.municipality_id is not null' if @params[:asylum].include? 'municipality'
+      query = query.where(sql.join(' or '))
     end
-    refugees
+    query
   end
 end
