@@ -1,43 +1,6 @@
-@workbook.add_worksheet(name: @first_sheetname) do |sheet|
-  sheet.add_row [
-    'Namn',
-    'Personnummer',
-    'Ålder',
-    'Dossiernummer',
-    'Kön',
-    'Länder',
-    'Språk',
-    'Registrerad',
-    'Aktuellt boende',
-    'Aktuell boendeform',
-    'Kommun',
-    'Utskriven till Malmö',
-    'SoF-placering',
-    'Ankomst',
-    'Anvisad, kommentar',
-    'PUT',
-    'Utskriven till Malmö',
-    'TUT startar',
-    'TUT slutar',
-    'Medborgarskap erhölls',
-    'Socialsekreterare',
-    'Insatsbild',
-    'Avregistrerad',
-    'Avslutsorsak',
-    'Avslutsorsak, kommentar',
-    'Alla boenden',
-    'Total placeringstid (dagar)',
-    'Anhöriga',
-    'Angiven som anhöriga till',
-    'Övriga anhöriga',
-    'Asylstatus',
-    'Extra personnummer',
-    'Extra dossiernummer',
-    'Senast uppdaterad'
-  ]
-
-  @refugees.each do |refugee|
-    sheet.add_row [
+@refugees.each_with_index do |refugee, row|
+  sheet.add_row(
+    [
       refugee.name,
       refugee.ssn,
       refugee.age,
@@ -47,7 +10,7 @@
       refugee.languages.map(&:name).join(', '),
       refugee.registered,
       refugee.current_placements.map(&:home).map(&:name).join(', '),
-      refugee.current_placements.map { |cp| cp.home.type_of_housings.map { |toh| toh.name  } }.join(', '),
+      refugee.current_placements.map { |cp| cp.home.type_of_housings.map { |toh| toh.name } }.join(', '),
       refugee.municipality&.name,
       refugee.municipality_placement_migrationsverket_at,
       refugee.sof_placement ? 'Ja' : 'Nej',
@@ -72,6 +35,11 @@
       refugee.ssns.map(&:full_ssn).join(', '),
       refugee.dossier_numbers.map(&:name).join(', '),
       refugee.updated_at.to_s[0..18]
-    ]
+    ],
+    style: @style.normal
+  )
+
+  [7, 11, 15, 16, 17, 18, 19, 22].each do |col|
+    sheet.rows[row + 1].cells[col].style = @style.date
   end
 end

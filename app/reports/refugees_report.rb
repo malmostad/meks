@@ -1,5 +1,4 @@
-# rr = RefugeesReport.new(registered_from: "2019-01-01", registered_to: "2019-01-22", born_after: "2001-01-22", born_before: "2019-01-22")
-class RefugeesReport < ApplicationReport
+class RefugeesReport < ApplicationReport::Base
   def initialize(params = {})
     @params = params
 
