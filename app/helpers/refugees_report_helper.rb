@@ -1,4 +1,4 @@
-module RefugeestReporHelper
+module RefugeesReportHelper
   def asylum_status(refugee)
     asylum = refugee.asylum
     return 'Ingen status' if asylum.blank?
