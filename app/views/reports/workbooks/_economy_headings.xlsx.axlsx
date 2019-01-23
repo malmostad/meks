@@ -1,0 +1,39 @@
+# Dummy comment to keep the line numbers in sync
+# with the _rows partial
+sheet.add_row(
+  [
+    'Dossiernummer',
+    'Extra dossiernummer',
+    'Namn',
+    'Personnummer',
+    'Extra personnummer',
+    'Lagrum',
+    'Alla boenden inom angivet datumintervall',
+    'Inskriven',
+    'Senaste placeringsdatum',
+    'Senaste utskrivningsdatum',
+    'Avslutad',
+    'Avslutsorsak',
+    'Avslutsorsak, kommentar',
+    'Boendeformer',
+    'Anvisningskommun',
+    'Anvisningsdatum',
+    'PUT',
+    'Utskriven till Malmö',
+    'TUT startar',
+    'TUT slutar',
+    'Medborgarskap erhölls',
+    'Kostnad',
+    'Förväntad intäkt',
+    'Utbetald schablon',
+    'Kommentarer till utbetalda schabloner',
+    'Ålder',
+    'Kön',
+    'Senast redigerad'
+  ],
+  style: @style.heading
+)
+
+heading_comment(sheet, 'H', 'Anger det datum då barnet registreras i MEKS för första gången')
+heading_comment(sheet, 'K', 'Anger datum för när socialtjänstansvaret för barnet är avslutat')
+heading_comment(sheet, 'R', 'Det datum då barnet skrivs ut från Migrationsverket')

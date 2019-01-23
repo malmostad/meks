@@ -1,0 +1,43 @@
+@refugees.each_with_index do |refugee, row|
+  sheet.add_row(
+    [
+      refugee.dossier_number,
+      refugee.dossier_numbers.map(&:name).join(', '),
+      refugee.name,
+      refugee.ssn,
+      refugee.ssns.map(&:full_ssn).join(', '),
+      refugee.placements.sort_by(&:moved_in_at).map(&:legal_code).try(:map, &:name).join(', '),
+      refugee.placements.sort_by(&:moved_in_at).map { |pl| "#{pl.home.name} (#{pl.moved_in_at}–#{pl.moved_out_at})" }.join(', '),
+      refugee.registered,
+      refugee.placements.map(&:moved_in_at).compact.max,
+      refugee.placements.map(&:moved_out_at).compact.max,
+      refugee.deregistered,
+      refugee.deregistered_reason&.name,
+      refugee.deregistered_comment,
+      refugee.placements.sort_by(&:moved_in_at).map(&:home).map(&:type_of_housings).first.try(:map, &:name).try(:compact).try(:join, ', '),
+      refugee.municipality&.name,
+      refugee.municipality_placement_migrationsverket_at,
+      refugee.residence_permit_at,
+      refugee.checked_out_to_our_city,
+      refugee.temporary_permit_starts_at,
+      refugee.temporary_permit_ends_at,
+      refugee.citizenship_at,
+      cost(refugee, @interval, @po_rates),
+      expected_income(refugee, @interval, @po_rates),
+      payment(refugee, @interval),
+      payment_comments(refugee, @interval),
+      refugee.age,
+      refugee.gender&.name,
+      refugee.updated_at.to_s[0..18]
+    ],
+    style: @style.normal
+  )
+
+  [7, 8, 9, 10, 15, 16, 17, 18, 19, 20].each do |col|
+    sheet.rows[row + 1].cells[col].style = @style.date
+  end
+
+  [21, 22, 23].each do |col|
+    sheet.rows[row + 1].cells[col].style = @style.currency
+  end
+end

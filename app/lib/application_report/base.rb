@@ -1,13 +1,21 @@
-# reload!; RefugeesReport.new(registered_from: "2019-01-01", registered_to: "2019-01-22", born_after: "2001-01-22", born_before: "2019-01-22").generate!
-# arr.map.each_with_index { |r, i| next i  if r[:type] == :date }.compact
-# arr.map.each_with_index { |r, i| next [i, r[:tooltip]] if r[:tooltip] }.compact
-# arr.map.each_with_index { |r, i| next [i, r[:style]] if r[:style] }.compact
+# reload!; RefugeesReport.new(filename: 'refugees.xlsx', registered_from: "2019-01-01", registered_to: "2019-01-22", born_after: "2001-01-22", born_before: "2019-01-22").generate!
+# reload!; EconomyReport.new(filename: 'economy.xlsx', from: "2018-10-01", to: "2018-12-31").generate!
+# columns.map.each_with_index { |r, i| next i  if r[:type] == :date }.compact
+# columns.map.each_with_index { |r, i| next [i, r[:tooltip]] if r[:tooltip] }.compact
+# columns.map.each_with_index { |r, i| next [i, r[:style]] if r[:style] }.compact
 
 module ApplicationReport
   class Base
+    DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
+
     def initialize(options)
       @options = options
-      @basename = @options[:basename] || 'Utan titel'
+
+      @filename   = options[:filename] || 'Utan titel.xlsx'
+      @from       = options[:from]     || DEFAULT_INTERVAL[:from]
+      @to         = options[:to]       || DEFAULT_INTERVAL[:to]
+      @interval   = { from: @from, to: @to }
+      @sheet_name = format_sheet_name
 
       create_workbook
       include_helpers
@@ -15,7 +23,7 @@ module ApplicationReport
 
     def generate!
       @action_view.render template: "reports/workbooks/#{view_name}.xlsx.axlsx"
-      @axlsx.serialize File.join(Rails.root, 'reports', "#{@basename}.xlsx")
+      @axlsx.serialize File.join(Rails.root, 'reports', "#{@filename}")
     end
 
     protected
@@ -38,13 +46,16 @@ module ApplicationReport
     private
 
     def create_workbook
-      first_sheetname = @options[:first_sheetname] || @basename
-
       @axlsx = Axlsx::Package.new
       @workbook = @axlsx.workbook
       @style = ApplicationReport::Style.new(@axlsx)
 
-      locals = { workbook: @workbook, style: @style, first_sheetname: first_sheetname }
+      locals = {
+        workbook: @workbook,
+        style: @style,
+        first_sheetname: @sheet_name,
+        interval: @interval
+      }
       locals.merge!(@options[:locals]) unless @options[:locals].empty?
 
       @action_view = ActionView::Base.new(ActionController::Base.view_paths, locals)
@@ -56,6 +67,10 @@ module ApplicationReport
 
       require filename
       true
+    end
+
+    def format_sheet_name
+      @from && @to ? "#{@from.to_date}–#{@to.to_date}" : 'Inget intervall'
     end
 
     def view_name

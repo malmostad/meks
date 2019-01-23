@@ -3,10 +3,10 @@ class RefugeesReport < ApplicationReport::Base
     @params = params
 
     options = {}
-    options[:report_name] = 'Ensamkommande barn'
-    options[:first_sheetname] = "#{params[:registered_from]}–#{params[:registered_to]}"
+    options[:from] = options[:registered_from]
+    options[:to] = options[:registered_to]
     options[:locals] = { refugees: refugees }
-    super(options)
+    super(options.merge(params))
   end
 
   def refugees
