@@ -1,0 +1,62 @@
+@placements.each_with_index do |placement, row|
+  placements_within_range = within_range(placement, @interval)
+  sheet.add_row(
+    [
+      placement.refugee.dossier_number,
+      placement.refugee.dossier_numbers.map(&:name).join(', '),
+      placement.refugee.name,
+      placement.refugee.ssn,
+      placement.refugee.ssns.map(&:full_ssn).join(', '),
+      placement.home.name,
+      placements_within_range.map(&:legal_code).map(&:name).join(', '),
+      placement.specification,
+      placements_within_range.map { |rp| "#{rp.home.name} (#{rp.moved_in_at}–#{rp.moved_out_at})" }.join(', '),
+      placement.refugee.registered,
+      placement.moved_in_at,
+      placement.moved_out_at,
+      placement.moved_out_reason&.name,
+      placement.refugee.deregistered,
+      placement.home.type_of_housings.map(&:name).join(', '),
+      placement.refugee.municipality&.name,
+      placement.refugee.municipality_placement_migrationsverket_at,
+      placement.refugee.sof_placement ? 'Ja' : 'Nej',
+      placement.refugee.arrival ? 'Ja' : 'Nej',
+      placement.refugee.municipality_placement_comment,
+      placement.refugee.residence_permit_at,
+      placement.refugee.checked_out_to_our_city,
+      placement.refugee.temporary_permit_starts_at,
+      placement.refugee.temporary_permit_ends_at,
+      placement.refugee.citizenship_at,
+      placement.refugee.age,
+      placement.refugee.gender&.name,
+      placement.refugee.countries.map(&:name).join(', '),
+      placement.refugee.languages.map(&:name).join(', '),
+      placement.refugee.social_worker,
+      placement.refugee.special_needs? ? 'Ja' : 'Nej',
+      placement.placement_time,
+      placement.refugee.deregistered_reason&.name,
+      placement.refugee.deregistered_comment,
+      placement.home.owner_type&.name,
+      placement.home.target_groups.map(&:name).join(', '),
+      placement.moved_out_reason&.name,
+      asylum_status(placement.refugee),
+      placement.home.phone,
+      placement.home.fax,
+      placement.home.address,
+      placement.home.post_code,
+      placement.home.postal_town,
+      placement.home.languages.map(&:name).join(', '),
+      placement.home.comment,
+      placement.home.guaranteed_seats,
+      (placement.home.guaranteed_seats.to_i + placement.home.movable_seats.to_i) - placement.home.placements.select { |p| p.moved_out_at.nil?  }.size,
+      placement.home.movable_seats,
+      placement.home.seats,
+      placement.home.active? ? 'Ja' : 'Nej'
+    ],
+    style: @style.normal
+  )
+
+  [9, 10, 11, 13, 16, 20, 21, 22, 23, 24].each do |col|
+    sheet.rows[row + 1].cells[col].style = @style.date
+  end
+end
