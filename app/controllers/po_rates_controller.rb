@@ -16,7 +16,7 @@ class PoRatesController < ApplicationController
     @po_rate = PoRate.new(po_rate_params)
 
     if @po_rate.save
-      redirect_to po_rates_path, notice: 'PO-påläggsbeloppen skapades'
+      redirect_to po_rates_path, notice: 'Arbetsgivaravgiften skapades'
     else
       render :new
     end
@@ -24,7 +24,7 @@ class PoRatesController < ApplicationController
 
   def update
     if @po_rate.update(po_rate_params)
-      redirect_to po_rates_path, notice: 'PO-påläggsbeloppen uppdaterades'
+      redirect_to po_rates_path, notice: 'Arbetsgivaravgiften uppdaterades'
     else
       render :edit
     end
@@ -32,7 +32,7 @@ class PoRatesController < ApplicationController
 
   def destroy
     @po_rate.destroy
-    redirect_to po_rates_path, notice: 'PO-påläggsbeloppen raderades'
+    redirect_to po_rates_path, notice: 'Arbetsgivaravgiften raderades'
   end
 
   private
