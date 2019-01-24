@@ -1,0 +1,26 @@
+# Dummy comment to keep the line numbers in sync
+# with the _rows partial
+sheet.add_row(
+  [
+    'Namn',
+    'Telefonnummer',
+    'Faxnummer',
+    'Adress',
+    'Postnummer',
+    'Postort',
+    'Boendeformer',
+    'Ägarform',
+    'Målgrupp',
+    'Språk',
+    'Kommentar',
+    'Aktuella placeringar',
+    'Placeringar totalt',
+    'Total placeringstid (dagar)',
+    'Garantiplatser',
+    'Lediga platser',
+    'Rörliga platser',
+    'Summa platser',
+    'Aktivt'
+  ],
+  style: @style.heading
+)

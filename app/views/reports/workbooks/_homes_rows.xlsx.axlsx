@@ -1,0 +1,26 @@
+@homes.each_with_index do |home, row|
+  sheet.add_row(
+    [
+      home.name,
+      home.phone,
+      home.fax,
+      home.address,
+      home.post_code,
+      home.postal_town,
+      home.type_of_housings.map(&:name).join(', '),
+      home.owner_type&.name,
+      home.target_groups.map(&:name).join(', '),
+      home.languages.map(&:name).join(', '),
+      home.comment,
+      home.placements.select { |p| p.moved_out_at.nil? }.size,
+      home.placements.size,
+      home.total_placement_time,
+      home.guaranteed_seats,
+      (home.guaranteed_seats.to_i + home.movable_seats.to_i) - home.placements.select { |p| p.moved_out_at.nil?  }.size,
+      home.movable_seats,
+      home.seats,
+      home.active? ? 'Ja' : 'Nej'
+    ],
+    style: @style.normal
+  )
+end

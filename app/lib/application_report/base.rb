@@ -16,7 +16,7 @@ module ApplicationReport
       @from       = options[:from]     || DEFAULT_INTERVAL[:from]
       @to         = options[:to]       || DEFAULT_INTERVAL[:to]
       @interval   = { from: @from, to: @to }
-      @sheet_name = format_sheet_name
+      @sheet_name = options[:sheet_name] ||= format_sheet_name
 
       create_workbook
       include_helpers
