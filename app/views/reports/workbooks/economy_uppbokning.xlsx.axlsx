@@ -1,0 +1,26 @@
+first_sheet = @workbook.add_worksheet(name: @first_sheetname)
+
+@statuses.each do |status|
+  @workbook.add_worksheet(name: status[:name]) do |sheet|
+    render partial: 'reports/workbooks/economy_uppbokning_headings', locals: { sheet: sheet, status: status }
+    render partial: 'reports/workbooks/economy_uppbokning_rows', locals: { sheet: sheet, status: status }
+  end
+end
+
+first_sheet.add_row(
+  [
+    'Barnens status',
+    'Förväntad intäkt'
+  ],
+  style: @style.heading
+)
+
+@statuses.each do |status|
+  first_sheet.add_row(
+    [
+      status[:name],
+      "=SUM('#{status[:name]}'!E#{status[:records].size + 2})"
+    ],
+    style: [@style.normal, @style.currency]
+  )
+end

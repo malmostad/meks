@@ -1,0 +1,11 @@
+sheet.add_row(
+  [
+    'Dossiernummer',
+    'Personnummer',
+    'Extra personnummer',
+    'Kommun',
+    'Förväntad intäkt',
+    "Dygn med schablonintäkt och status: #{status[:name]}"
+  ],
+  style: @style.heading
+)
