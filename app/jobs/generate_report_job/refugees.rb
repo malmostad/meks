@@ -1,7 +1,7 @@
 class GenerateReportJob
   class Refugees < ApplicationJob
     def perform(params, file_id)
-      workbook = Report::Refugees.new(
+      workbook = RefugeesReport.new(
         filename: "#{file_id}.xlsx",
         registered_from: params[:refugees_registered_from],
         registered_to: params[:refugees_registered_to],
@@ -10,7 +10,7 @@ class GenerateReportJob
         include_without_date_of_birth: params[:refugees_include_without_date_of_birth],
         asylum: params[:refugees_asylum]
       )
-      workbook.create!
+      workbook.generate!
     end
   end
 end
