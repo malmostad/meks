@@ -1,11 +1,5 @@
-# reload!; RefugeesReport.new(filename: 'refugees.xlsx', registered_from: "2019-01-01", registered_to: "2019-01-22", born_after: "2001-01-22", born_before: "2019-01-22").generate!
-# reload!; EconomyReport.new(filename: 'economy.xlsx', from: "2018-10-01", to: "2018-12-31").generate!
-# reload!; EconomyUppbokningReport.new(filename: 'economy_uppbokning.xlsx', from: "2018-10-01", to: "2018-12-31").generate!
-# reload!; PlacementsReport.new(filename: 'placements.xlsx', from: "2018-10-01", to: "2018-12-31").generate!
-# columns.map.each_with_index { |r, i| next i  if r[:type] == :date }.compact
-# columns.map.each_with_index { |r, i| next [i, r[:tooltip]] if r[:tooltip] }.compact
-# columns.map.each_with_index { |r, i| next [i, r[:style]] if r[:style] }.compact
-
+# This is an abstract class used for subclassing Excel report generation classes.
+# See app/reports for implementation examples
 module ApplicationReport
   class Base
     DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
@@ -25,7 +19,7 @@ module ApplicationReport
 
     def generate!
       @action_view.render template: "reports/workbooks/#{view_name}.xlsx.axlsx"
-      @axlsx.serialize File.join(Rails.root, 'reports', "#{@filename}")
+      @axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
 
     protected
