@@ -29,7 +29,7 @@ module PlacementsHelper
     po_costs = number_to_currency(po_costs || 0, delimiter: ' ')
     fee = number_to_currency(cost.fee || 0, delimiter: ' ')
 
-    "Avtalsperiod: #{period}, arvode: #{fee}, PO-pålägg #{po_costs}, omkostnad: #{expense},
+    "Avtalsperiod: #{period}, arvode: #{fee}, arbetsgivaravgift #{po_costs}, omkostnad: #{expense},
     uppdragstagare: #{cost.contractor_name},
     uppdragstagares födelsedag: #{cost.contractor_birthday},
     uppdragstagares anställningsnummer: #{cost.contactor_employee_number}"

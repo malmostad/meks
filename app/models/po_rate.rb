@@ -1,4 +1,4 @@
-# 'Procentsatser för PO-pålägg'
+# 'Procentsatser för arbetsgivaravgift, tidigare "PO-pålägg"'
 # Used for calcuation of FamilyAndEmergencyHomeCost and ExtraContributionCost
 class PoRate < ApplicationRecord
   default_scope { order(:start_date) }
