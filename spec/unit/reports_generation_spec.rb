@@ -2,33 +2,33 @@
 RSpec.feature 'Reports generation' do
   scenario 'generate an Economy report' do
     filename = "#{Time.now.to_f}_spec.xlsx"
-    Report::Economy.new(filename: filename, from: Date.today - 2.years, to: Date.today).create!
+    EconomyReport.new(filename: filename, from: Date.today - 2.years, to: Date.today).generate!
     expect(read_report(filename)[0..1]).to eq 'PK'
   end
 
   scenario 'generate an Economy uppbokning report' do
     filename = "#{Time.now.to_f}_spec.xlsx"
-    Report::EconomyUppbokning.new(
+    EconomyUppbokningReport.new(
       filename: filename, from: Date.today - 2.years, to: Date.today
-    ).create!
+    ).generate!
     expect(read_report(filename)[0..1]).to eq 'PK'
   end
 
   scenario 'generate a Homes report' do
     filename = "#{Time.now.to_f}_spec.xlsx"
-    Report::Homes.new(filename: filename, from: Date.today - 2.years, to: Date.today).create!
+    HomesReport.new(filename: filename, from: Date.today - 2.years, to: Date.today).generate!
     expect(read_report(filename)[0..1]).to eq 'PK'
   end
 
   scenario 'generate a Placements report' do
     filename = "#{Time.now.to_f}_spec.xlsx"
-    Report::Placements.new(filename: filename, from: Date.today - 2.years, to: Date.today).create!
+    PlacementsReport.new(filename: filename, from: Date.today - 2.years, to: Date.today).generate!
     expect(read_report(filename)[0..1]).to eq 'PK'
   end
 
   scenario 'generate a Refugees report' do
     filename = "#{Time.now.to_f}_spec.xlsx"
-    Report::Refugees.new(filename: filename, from: Date.today - 2.years, to: Date.today).create!
+    RefugeesReport.new(filename: filename, from: Date.today - 2.years, to: Date.today).generate!
     expect(read_report(filename)[0..1]).to eq 'PK'
   end
 end
