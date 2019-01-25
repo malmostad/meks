@@ -1,9 +1,9 @@
-@refugees.each_with_index do |refugee, row|
+refugees.each_with_index do |refugee, row|
   sheet.add_row(
     [
-      'åldersgrupp',
+      age_group,
       refugee.municipality&.name,
-      refugee.current_placements.map { |cp| cp.home.type_of_housings.map { |toh| toh.name } }.join(', '),
+      refugee.current_placements.map { |cp| cp.home&.type_of_housings&.map(&:name) }.join(', '),
       refugee.name,
       refugee.dossier_number,
       refugee.ssn,

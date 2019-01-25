@@ -1,4 +1,9 @@
 @workbook.add_worksheet(name: @first_sheetname) do |sheet|
   render partial: 'reports/workbooks/economy_followup_headings', locals: { sheet: sheet}
-  render partial: 'reports/workbooks/economy_followup_rows', locals: { sheet: sheet }
+  render partial: 'reports/workbooks/economy_followup_rows', locals: {
+    sheet: sheet, refugees: @children, age_group: 'Barn & ungdomar'
+  }
+  render partial: 'reports/workbooks/economy_followup_rows', locals: {
+    sheet: sheet, refugees: @adults, age_group: 'Vuxna'
+  }
 end
