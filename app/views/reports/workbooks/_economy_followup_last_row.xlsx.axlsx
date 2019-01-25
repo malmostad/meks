@@ -5,9 +5,10 @@ sheet.add_row(
     'Summa',
     (1..9).map { nil },
     (10..49).map { |i| "=SUM(#{Axlsx.col_ref(i)}3:#{Axlsx.col_ref(i)}#{last_row})" }
-  ].flatten
+  ].flatten,
+  style: @style.normal
 )
 
-[6, (10..49).map(&:itself)].flatten.each do |col|
+[6, (11..47).step(3).to_a, (12..48).step(3).to_a, 49].flatten.each do |col|
   sheet.rows.last.cells[col].style = @style.currency
 end

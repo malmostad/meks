@@ -6,7 +6,7 @@ class EconomyFollowupReport < ApplicationReport::Base
 
     options = {}
     options[:sheet_name] = params[:year]
-    options[:locals] = { children: children, adults: adults }
+    options[:locals] = { children: children, adults: adults, year: @year }
     super(options.merge(params))
   end
 

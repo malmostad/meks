@@ -13,7 +13,7 @@ refugees.each do |refugee|
       refugee.registered,
       refugee.municipality_placement_migrationsverket_at,
       refugee.deregistered,
-      (10..45).map { '=(0)' },
+      economy_per_month(refugee),
       "=(#{step_sum(row_ref, 10..43, 3)})",
       "=(#{step_sum(row_ref, 11..44, 3)})",
       "=(#{step_sum(row_ref, 12..45, 3)})",
