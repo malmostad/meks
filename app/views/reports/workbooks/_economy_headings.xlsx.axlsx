@@ -1,5 +1,4 @@
-# Dummy comment to keep the line numbers in sync
-# with the _rows partial
+# Dummy comment to keep the line numbers in sync with the _rows partial
 sheet.add_row(
   [
     'Dossiernummer',

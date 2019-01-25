@@ -71,6 +71,7 @@ class ReportsController < ApplicationController
       :homes_owner_type,
       :placements_from,
       :placements_to,
+      :economy_followup_year,
       :economy_uppbokning_placements_from,
       :economy_uppbokning_placements_to,
       :economy_placements_to,
@@ -103,6 +104,8 @@ class ReportsController < ApplicationController
       GenerateReportJob::Economy.perform_later(report_params.to_h, file_id)
     when 'economy_uppbokning'
       GenerateReportJob::EconomyUppbokning.perform_later(report_params.to_h, file_id)
+    when 'economy_followup'
+      GenerateReportJob::EconomyFollowup.perform_later(report_params.to_h, file_id)
     when 'homes'
       GenerateReportJob::Homes.perform_later(report_params.to_h, file_id)
     when 'placements'
@@ -118,6 +121,8 @@ class ReportsController < ApplicationController
       'Ekonomi'
     when 'economy_uppbokning'
       'Ekonomi uppbokning'
+    when 'economy_followup'
+      'Ekonomi uppföljning'
     when 'homes'
       'Boenden'
     when 'placements'

@@ -1,0 +1,25 @@
+@refugees.each_with_index do |refugee, row|
+  sheet.add_row(
+    [
+      'åldersgrupp',
+      refugee.municipality&.name,
+      refugee.current_placements.map { |cp| cp.home.type_of_housings.map { |toh| toh.name } }.join(', '),
+      refugee.name,
+      refugee.dossier_number,
+      refugee.ssn,
+      '=(0)',
+      refugee.registered,
+      refugee.municipality_placement_migrationsverket_at,
+      refugee.deregistered
+    ],
+    style: @style.normal
+  )
+
+  [7, 8, 9].each do |col|
+    sheet.rows[row + 2].cells[col].style = @style.date
+  end
+
+  [6].each do |col|
+    sheet.rows[row + 2].cells[col].style = @style.currency
+  end
+end

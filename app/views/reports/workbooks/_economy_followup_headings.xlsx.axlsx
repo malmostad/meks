@@ -1,0 +1,41 @@
+months = %i[Januari Februari Mars April Maj Juni Juli Augusti September Oktober November December Totalt]
+
+sheet.add_row(
+  [
+    (0..9).map { nil },
+    months.map { |month| [month, nil, nil] },
+    nil
+  ].flatten,
+  style: [(0..9).map { nil }, (10..49).map { @style.heading }].flatten
+)
+
+month_cols = %i[Dygn Kostnad Intäkt]
+
+sheet.add_row(
+  [
+    'Åldersgrupp',
+    'Kommun',
+    'Aktuell boendeform',
+    'Namn',
+    'Dossiernummer',
+    'Personnummer',
+    'Boendekostnad/dygn',
+    'Inskriven',
+    'Anvisningsdatum',
+    'Avslutad',
+    (0..12).map { month_cols },
+    'Avvikelse'
+  ].flatten,
+  style: @style.heading
+)
+
+sheet.merge_cells sheet.rows.first.cells[(0..9)]
+(10..43).step(3).each { |i| sheet.merge_cells(sheet.rows.first.cells[i..(i + 2)]) }
+sheet.merge_cells sheet.rows.first.cells[(46..49)]
+
+sheet.sheet_view.pane do |pane|
+  pane.active_pane = :bottom_right
+  pane.state = :frozen
+  pane.y_split = 2
+  pane.x_split = 10
+end

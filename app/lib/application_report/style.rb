@@ -66,7 +66,8 @@ module ApplicationReport
         bg_color: '000000',
         fg_color: 'FFFFFF',
         alignment: @align_top,
-        width: 10
+        width: 10,
+        border: { style: :thin, color: 'FFFFFF', edges: %i[right bottom] }
       }
     end
   end

@@ -1,0 +1,15 @@
+= form_tag reports_generate_path, class: "basic" do
+  %h2.group-title Ekonomi – Uppföljning
+
+  .form-group
+    %span.control-label
+      %label{ for: 'economy_followup_year' } År:
+    .controls
+      = select_tag('economy_followup_year', options_for_select(2015..Date.today.year, Date.today.year),
+        class: 'form-control chosen')
+
+  .form-group
+    %span.no-control-label
+    .controls
+      = hidden_field_tag(:report_type, 'economy_followup')
+      = submit_tag 'Skapa rapport', name: nil, class: "btn btn-primary"
