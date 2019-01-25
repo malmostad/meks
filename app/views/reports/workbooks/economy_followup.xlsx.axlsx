@@ -6,4 +6,5 @@
   render partial: 'reports/workbooks/economy_followup_rows', locals: {
     sheet: sheet, refugees: @adults, age_group: 'Vuxna'
   }
+  render partial: 'reports/workbooks/economy_followup_last_row', locals: { sheet: sheet}
 end

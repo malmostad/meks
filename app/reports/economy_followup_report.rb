@@ -24,6 +24,5 @@ class EconomyFollowupReport < ApplicationReport::Base
 
   def refugees
     Refugee.includes(:municipality, current_placements: [home: :type_of_housings])
-    # .limit(100).order('id desc')
   end
 end

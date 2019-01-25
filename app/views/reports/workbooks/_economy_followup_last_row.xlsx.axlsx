@@ -1,0 +1,13 @@
+last_row = sheet.rows.size
+
+sheet.add_row(
+  [
+    'Summa',
+    (1..9).map { nil },
+    (10..49).map { |i| "=SUM(#{Axlsx.col_ref(i)}3:#{Axlsx.col_ref(i)}#{last_row})" }
+  ].flatten
+)
+
+[6, (10..49).map(&:itself)].flatten.each do |col|
+  sheet.rows.last.cells[col].style = @style.currency
+end

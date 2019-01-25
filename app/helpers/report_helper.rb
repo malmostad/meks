@@ -17,4 +17,8 @@ module ReportHelper
 
     I18n.t('simple_form.labels.refugee.' + asylum.first) + ' ' + asylum.second.to_s
   end
+
+  def step_sum(row, range, step)
+    range.step(step).map { |x| "#{Axlsx.col_ref(x)}#{row}" }.join('+')
+  end
 end

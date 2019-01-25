@@ -1,4 +1,6 @@
-refugees.each_with_index do |refugee, row|
+refugees.each do |refugee|
+  row_ref = sheet.rows.size + 1
+
   sheet.add_row(
     [
       age_group,
@@ -10,16 +12,21 @@ refugees.each_with_index do |refugee, row|
       '=(0)',
       refugee.registered,
       refugee.municipality_placement_migrationsverket_at,
-      refugee.deregistered
-    ],
+      refugee.deregistered,
+      (10..45).map { '=(0)' },
+      "=(#{step_sum(row_ref, 10..43, 3)})",
+      "=(#{step_sum(row_ref, 11..44, 3)})",
+      "=(#{step_sum(row_ref, 12..45, 3)})",
+      "=(#{Axlsx.col_ref(48)}#{row_ref}-#{Axlsx.col_ref(47)}#{row_ref})"
+    ].flatten,
     style: @style.normal
   )
 
   [7, 8, 9].each do |col|
-    sheet.rows[row + 2].cells[col].style = @style.date
+    sheet.rows.last.cells[col].style = @style.date
   end
 
-  [6].each do |col|
-    sheet.rows[row + 2].cells[col].style = @style.currency
+  [6, (11..47).step(3).to_a, (12..48).step(3).to_a, 49].flatten.each do |col|
+    sheet.rows.last.cells[col].style = @style.currency
   end
 end
