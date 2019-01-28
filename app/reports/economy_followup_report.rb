@@ -8,10 +8,6 @@ class EconomyFollowupReport < ApplicationReport::Base
     options[:sheet_name] = params[:year]
     options[:locals] = { children: children, adults: adults, year: @year, po_rates: PoRate.all }
 
-    Rails.logger.debug "XYEAR: #{@year}"
-    Rails.logger.debug "XSHEETNAME: #{options[:sheet_name]}"
-    Rails.logger.debug "XOPTIONS: #{options}"
-
     super(options.merge(params))
   end
 
