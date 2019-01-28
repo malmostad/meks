@@ -3,9 +3,9 @@ refugees.each do |refugee|
 
   sheet.add_row(
     [
-      age_group,
+      age_group == :under_18 ? 'Barn & ungdom' : 'Vuxen',
       refugee.municipality&.name,
-      refugee.current_placements.map { |cp| cp.home&.type_of_housings&.map(&:name) }.join(', '),
+      refugee.placements.map { |cp| cp.home&.type_of_housings&.map(&:name) }.join(', '),
       refugee.name,
       refugee.dossier_number,
       refugee.ssn,
@@ -13,7 +13,7 @@ refugees.each do |refugee|
       refugee.registered,
       refugee.municipality_placement_migrationsverket_at,
       refugee.deregistered,
-      economy_per_month(refugee),
+      economy_per_month(refugee, age_group, @po_rates),
       "=(#{step_sum(row_ref, 10..43, 3)})",
       "=(#{step_sum(row_ref, 11..44, 3)})",
       "=(#{step_sum(row_ref, 12..45, 3)})",

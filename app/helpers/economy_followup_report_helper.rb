@@ -1,10 +1,11 @@
 module EconomyFollowupReportHelper
-  def economy_per_month(refugee)
+  def economy_per_month(refugee, age_group, po_rates)
     (1..12).map do |month|
+      interval = age_cutoff(month, refugee, age_group)
       [
         days(refugee, month),
-        cost(refugee, month),
-        expected_income(refugee, month)
+        refugee_cost(refugee, interval, po_rates),
+        refugee_expected_income(refugee, interval, po_rates)
       ]
     end.flatten
   end
@@ -14,13 +15,21 @@ module EconomyFollowupReportHelper
     Time.days_in_month(month, @year)
   end
 
-  # TODO: implement
-  def cost(refugee, month)
-    '=(0)'
-  end
+  private
 
-  # TODO: implement
-  def expected_income(refugee, month)
-    '=(0)'
+  def age_cutoff(month, refugee, age_group, cut_of_upper = true)
+    date = Date.new(@year, month)
+    from = date.beginning_of_month
+    to = date.end_of_month
+
+    if age_group == :under_18
+      to = earliest_date(to, refugee.date_of_birth + 18.years - 1.day)
+    else
+      from = latest_date(from, refugee.date_of_birth + 18.years)
+      # FIXME: use the new CSN age calculation
+      to = earliest_date(to, refugee.date_of_birth + 21.years - 1.day) if cut_of_upper
+    end
+
+    { from: from, to: to }
   end
 end

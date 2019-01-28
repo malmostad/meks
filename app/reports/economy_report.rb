@@ -3,10 +3,7 @@ class EconomyReport < ApplicationReport::Base
     @params = params
 
     options = {}
-    options[:locals] = {
-      refugees: refugees,
-      po_rates: PoRate.all
-    }
+    options[:locals] = { refugees: refugees, po_rates: PoRate.all }
     super(options.merge(params))
   end
 

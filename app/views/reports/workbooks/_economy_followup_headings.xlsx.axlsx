@@ -9,7 +9,7 @@ sheet.add_row(
   style: [(0..9).map { nil }, (10..49).map { @style.heading }].flatten
 )
 
-month_cols = %i[Dygn Kostnad Intäkt]
+month_cols = ['Dygn', 'Kostnad', 'Förväntad intäkt']
 
 sheet.add_row(
   [
