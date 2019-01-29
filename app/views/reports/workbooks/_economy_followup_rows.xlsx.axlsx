@@ -3,9 +3,9 @@ refugees.each do |refugee|
 
   sheet.add_row(
     [
-      age_group == :under_18 ? 'Barn & ungdom' : 'Vuxen',
+      age_group == :children ? 'Barn & ungdom' : 'Vuxen',
       refugee.municipality&.name,
-      refugee.placements.map { |cp| cp.home&.type_of_housings&.map(&:name) }.join(', '),
+      type_of_housings(refugee),
       refugee.name,
       refugee.dossier_number,
       refugee.ssn,

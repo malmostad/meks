@@ -15,7 +15,7 @@ sheet.add_row(
   [
     'Åldersgrupp',
     'Kommun',
-    'Aktuell boendeform',
+    'Boendeformer under året',
     'Namn',
     'Dossiernummer',
     'Personnummer',

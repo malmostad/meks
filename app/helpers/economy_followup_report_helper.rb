@@ -15,6 +15,16 @@ module EconomyFollowupReportHelper
     Time.days_in_month(month, @year)
   end
 
+  def type_of_housings(refugee)
+    refugee.placements.map do |placement|
+      # Only this years placements
+      next unless placement.moved_out_at.nil? ||
+                  placement.moved_out_at >= Date.new(@year).beginning_of_year
+
+      placement.home&.type_of_housings&.map(&:name)
+    end.compact.join(', ')
+  end
+
   private
 
   def age_cutoff(month, refugee, age_group, cut_of_upper = true)
@@ -22,7 +32,7 @@ module EconomyFollowupReportHelper
     from = date.beginning_of_month
     to = date.end_of_month
 
-    if age_group == :under_18
+    if age_group == :children
       to = earliest_date(to, refugee.date_of_birth + 18.years - 1.day)
     else
       from = latest_date(from, refugee.date_of_birth + 18.years)
