@@ -25,7 +25,11 @@ class EconomyFollowupReport < ApplicationReport::Base
 
   # Returns all refugees with placements within the @year
   def refugees
-    date = Date.new(@year)
-    Refugee.with_placements_within(date.beginning_of_year.to_s, date.end_of_year.to_s)
+    Refugee.includes(
+      :municipality,
+      :refugee_extra_costs, :extra_contributions,
+      placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
+                   home: [:owner_type, :type_of_housings, :costs]]
+    )
   end
 end
