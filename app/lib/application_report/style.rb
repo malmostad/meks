@@ -1,5 +1,7 @@
 module ApplicationReport
   class Style
+    attr_reader :top_border
+
     def initialize(axlsx)
       @axlsx = axlsx
       @font = 'Calibri'
@@ -23,6 +25,16 @@ module ApplicationReport
         font_name: @font,
         fg_color: '000000',
         alignment: @align_top
+      )
+    end
+
+    def sum
+      @sum ||= @axlsx.workbook.styles.add_style(
+        font_name: @font,
+        fg_color: '000000',
+        alignment: @align_top,
+        format_code: '###&#32;###&#32;##0.00',
+        border: { style: :thin, color: '000000', edges: %i[top] }
       )
     end
 
