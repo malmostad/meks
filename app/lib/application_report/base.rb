@@ -3,6 +3,8 @@
 module ApplicationReport
   class Base
     DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
+    HELPERS_PATH = File.join(Rails.root, 'app', 'reports', 'helpers').freeze
+    $LOAD_PATH.unshift(HELPERS_PATH)
 
     def initialize(options)
       @options = options
@@ -25,7 +27,7 @@ module ApplicationReport
     protected
 
     def include_helpers
-      require_helper(ReportHelper)
+      require_helper('ReportHelper')
       helpers = [ReportHelper]
 
       class_name = self.class.name
@@ -58,7 +60,7 @@ module ApplicationReport
     end
 
     def require_helper(helper_class)
-      filename = File.join(Rails.root, 'app', 'helpers', helper_class.to_s.underscore)
+      filename = File.join(HELPERS_PATH, helper_class.to_s.underscore)
       return false unless File.exist? "#{filename}.rb"
 
       require filename
