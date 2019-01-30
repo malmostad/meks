@@ -13,7 +13,7 @@ class EconomyFollowupReport < ApplicationReport::Base
 
   # Under 18 on the first day of given year
   def children
-    @refugees.where('refugees.date_of_birth >= ?', Date.new(@year - 18))
+    @refugees.where('refugees.date_of_birth > ?', Date.new(@year - 18))
   end
 
   # Over 18 on the last day of given year
