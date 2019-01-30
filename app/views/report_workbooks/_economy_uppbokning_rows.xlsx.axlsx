@@ -23,8 +23,9 @@ if status[:records].present?
       '',
       '',
       '',
-      "=SUM(E2:E#{status[:records].size + 1})"
+      "=SUM(E2:E#{status[:records].size + 1})",
+      "=SUM(F2:F#{status[:records].size + 1})"
     ],
-    style: [@style.normal, @style.normal, @style.normal, @style.normal, @style.currency]
+    style: @style.sum
   )
 end
