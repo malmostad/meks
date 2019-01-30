@@ -20,7 +20,7 @@ module ApplicationReport
     end
 
     def generate!
-      @action_view.render template: "reports/workbooks/#{view_name}.xlsx.axlsx"
+      @action_view.render template: "report_workbooks/#{view_name}.xlsx.axlsx"
       @axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
 

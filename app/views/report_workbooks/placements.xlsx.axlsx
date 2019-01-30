@@ -1,0 +1,5 @@
+@workbook.add_worksheet(name: @first_sheetname) do |sheet|
+  render partial: 'report_workbooks/placements_headings', locals: { sheet: sheet }
+  render partial: 'report_workbooks/placements_rows', locals: { sheet: sheet }
+  sheet.column_widths(*(0..sheet.cols.size).map { 18 })
+end

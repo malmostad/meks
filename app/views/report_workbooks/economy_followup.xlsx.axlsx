@@ -1,0 +1,12 @@
+@workbook.add_worksheet(name: @first_sheetname) do |sheet|
+  render partial: 'report_workbooks/economy_followup_headings', locals: { sheet: sheet}
+  render partial: 'report_workbooks/economy_followup_rows', locals: {
+    sheet: sheet, refugees: @children, age_group: :children
+  }
+  render partial: 'report_workbooks/economy_followup_rows', locals: {
+    sheet: sheet, refugees: @adults, age_group: :adults
+  }
+  render partial: 'report_workbooks/economy_followup_last_row', locals: { sheet: sheet}
+
+  sheet.column_widths(*(0..sheet.cols.size).map { 18 })
+end
