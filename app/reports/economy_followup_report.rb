@@ -25,11 +25,14 @@ class EconomyFollowupReport < ApplicationReport::Base
 
   # Returns all refugees with placements within the @year
   def refugees
-    Refugee.includes(
-      :municipality,
-      :refugee_extra_costs, :extra_contributions,
-      placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
-                   home: [:owner_type, :type_of_housings, :costs]]
-    )
+    Refugee
+      .includes(
+        :municipality,
+        :refugee_extra_costs, :extra_contributions,
+        placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
+                     home: [:owner_type, :type_of_housings, :costs]]
+      )
+      .where('registered <= ?', Date.new(@year).end_of_year)
+      .where('not deregistered < ?or deregistered is ?', Date.new(@year).beginning_of_year, nil)
   end
 end
