@@ -31,10 +31,3 @@ sheet.add_row(
 sheet.merge_cells sheet.rows.first.cells[(0..8)]
 (9..42).step(3).each { |i| sheet.merge_cells(sheet.rows.first.cells[i..(i + 2)]) }
 sheet.merge_cells sheet.rows.first.cells[(45..48)]
-
-sheet.sheet_view.pane do |pane|
-  pane.active_pane = :bottom_right
-  pane.state = :frozen
-  pane.y_split = 2
-  pane.x_split = 9
-end
