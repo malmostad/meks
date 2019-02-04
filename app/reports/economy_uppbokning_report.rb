@@ -7,10 +7,12 @@ class EconomyUppbokningReport < ApplicationReport::Base
     super(options.merge(params))
   end
 
-  # private
+  private
 
   # Refugees with combination of given rate categories and legal codes
   def statuses
+    @refugees = refugees
+
     # Rate categories ("Schablonkategorier")
     assigned_0_17   = RateCategory.where(name: 'assigned_0_17').first
     tut_0_17        = RateCategory.where(name: 'temporary_permit_0_17').first
@@ -22,7 +24,6 @@ class EconomyUppbokningReport < ApplicationReport::Base
     # Refugees with placements with specific legal codes by ID(s) ("Lagrum")
     sol             = refugees_with_legal_code(1)
     lvu_and_sol_lvu = refugees_with_legal_code(2, 3)
-    all             = refugees_with_legal_code # All refugees
 
     [
       {
@@ -51,7 +52,7 @@ class EconomyUppbokningReport < ApplicationReport::Base
       },
       {
         name: 'Alla lagrum, Ankomstbarn, 0–17',
-        records: per_rate_category(all, arrival_0_17)
+        records: per_rate_category(@refugees, arrival_0_17)
       }
     ]
   end
@@ -75,24 +76,21 @@ class EconomyUppbokningReport < ApplicationReport::Base
     end.reject(&:blank?)
   end
 
-  # Returns refugees with placements that matches the given id(s) for legal code(s)
+  def refugees
+    Refugee.includes(
+      :ssns, :dossier_numbers,
+      :municipality,
+      :refugee_extra_costs, :extra_contributions,
+      placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
+                   home: [:costs]]
+    )
+  end
+
+  # Returns refugees from our municipality
+  # with placements that matches the given id(s) for legal code(s)
   def refugees_with_legal_code(*ids)
-    refugees =
-      Refugee
-      .includes(
-        :ssns, :dossier_numbers,
-        :municipality,
-        :refugee_extra_costs, :extra_contributions,
-        placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
-                     home: [:costs]]
-      )
-      .where(municipalities: { our_municipality: true })
-      .where('placements.moved_in_at <= ?', @params[:to])
-      .where('placements.moved_out_at is ? or placements.moved_out_at >= ?', nil, @params[:from])
-
-    return refugees.where(placements: { legal_code: ids }) unless ids.blank?
-
-    refugees
+    @refugees.where(municipalities: { our_municipality: true })
+             .where(placements: { legal_code: ids })
   end
 
   # Returns a hash with the date interval a refugee is qualified.
