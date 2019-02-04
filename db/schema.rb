@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_17_132252) do
+ActiveRecord::Schema.define(version: 2019_02_04_104747) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -262,11 +262,12 @@ ActiveRecord::Schema.define(version: 2018_12_17_132252) do
 
   create_table "po_rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.decimal "rate_under_65", precision: 5, scale: 2
-    t.decimal "rate_from_65", precision: 5, scale: 2
+    t.decimal "rate_between_65_and_81", precision: 5, scale: 2
     t.date "start_date"
     t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "rate_from_82", precision: 5, scale: 2
   end
 
   create_table "rate_categories", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|

@@ -7,7 +7,8 @@ RSpec.feature 'PoRates', type: :feature do
     scenario 'adds a po_rate' do
       visit '/po_rates/new'
       fill_in 'po_rate_rate_under_65', with: 30.74
-      fill_in 'po_rate_rate_from_65', with: 31.74
+      fill_in 'po_rate_rate_between_65_and_81', with: 31.74
+      fill_in 'po_rate_rate_from_82', with: 2.12
       fill_in 'po_rate_start_date', with: '2019-01-01'
       fill_in 'po_rate_end_date', with: '2019-12-31'
       click_button 'Spara'

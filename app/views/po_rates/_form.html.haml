@@ -5,6 +5,7 @@
     = f.input :start_date, as: :string, wrapper: :datepicker
     = f.input :end_date, as: :string, wrapper: :datepicker
     = f.input :rate_under_65
-    = f.input :rate_from_65
+    = f.input :rate_between_65_and_81
+    = f.input :rate_from_82
 
     = render 'application/submit', form: f, cancel_path: po_rates_path

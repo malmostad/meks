@@ -44,6 +44,8 @@ class PoRatesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def po_rate_params
-    params.require(:po_rate).permit(:rate_under_65, :rate_from_65, :start_date, :end_date)
+    params.require(:po_rate).permit(
+      :rate_under_65, :rate_between_65_and_81, :rate_from_82, :start_date, :end_date
+    )
   end
 end

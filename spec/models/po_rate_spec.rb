@@ -9,7 +9,7 @@ RSpec.describe PoRate, type: :model do
     end
 
     it 'should require a name' do
-      expect(build(:po_rate, rate_from_65: nil)).not_to be_valid
+      expect(build(:po_rate, rate_between_65_and_81: nil)).not_to be_valid
     end
   end
 

@@ -6,7 +6,6 @@ module Economy
       @cost = cost
       @interval = { from: (options[:from] || cost.period_start), to: (options[:to] || Date.today) }
       @po_rates = options[:po_rates] || PoRate.all
-      @cutoff_age = contractor_cutoff_age(@cost.contractor_birthday)
     end
 
     def sum
@@ -77,17 +76,17 @@ module Economy
 
       return 0 unless po_rate
 
-      if date < @cutoff_age
-        po_rate.rate_under_65
-      else
-        po_rate.rate_from_65
-      end
+      po_rate.send(contractor_age_group(date))
     end
 
-    # Rule: Contractors should have reached 65 years at the start of the year for a rate of >65 years to apply
-    # Returns the date of the first day of the year that the rule qualifies
-    def contractor_cutoff_age(birthday)
-      birthday.beginning_of_year + 65.years
+    # The contractors age group at the beginning of the year of `date`
+    def contractor_age_group(date)
+      date = date.beginning_of_year
+
+      return :rate_under_65 if @cost.contractor_birthday > date - 65.years
+      return :rate_between_65_and_81 if @cost.contractor_birthday <= date - 65.years &&
+                                        @cost.contractor_birthday > date - 82.years
+      return :rate_from_82 if @cost.contractor_birthday <= date - 82.years
     end
   end
 end
