@@ -8,7 +8,7 @@ status[:records].each_with_index do |record, row|
       refugee.ssns.map(&:full_ssn).join(', '),
       refugee.municipality&.name,
       expected_income(record),
-      "=#{record[:rates]&.sum { |x| x[:days] }}"
+      "=(#{record[:rates]&.sum { |x| x[:days] }})"
     ],
     style: @style.normal
   )

@@ -77,13 +77,17 @@ class EconomyUppbokningReport < ApplicationReport::Base
   end
 
   def refugees
-    Refugee.includes(
-      :ssns, :dossier_numbers,
-      :municipality,
-      :refugee_extra_costs, :extra_contributions,
-      placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
-                   home: [:costs]]
-    )
+    Refugee
+      .references(:placements)
+      .includes(
+        :ssns, :dossier_numbers,
+        :municipality,
+        :refugee_extra_costs, :extra_contributions,
+        placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
+                     home: [:costs]]
+      )
+      .where('placements.moved_in_at <= ?', @params[:to])
+      .where('placements.moved_out_at is ? or placements.moved_out_at >= ?', nil, @params[:from])
   end
 
   # Returns refugees from our municipality
