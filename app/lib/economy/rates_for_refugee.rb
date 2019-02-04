@@ -276,7 +276,11 @@ module Economy
     def date_at_max_age(date_of_birth, age)
       return Date.today unless date_of_birth && age
 
-      date_of_birth.to_date + age.years + 1.years - 1.day
+      # Special case: the date when the age is 20 is the last of June
+      # the year the refugee becomes 20
+      return Date.new(date_of_birth.year + 20, 6, 30) if age == 20
+
+      date_of_birth + age.years + 1.years - 1.day
     end
   end
 end
