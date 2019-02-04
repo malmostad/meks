@@ -40,7 +40,8 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
     create(
       :po_rate,
       rate_under_65: 30.32,
-      rate_from_65: 30.64,
+      rate_between_65_and_81: 30.64,
+      rate_from_82: 30.64,
       start_date: '2018-01-01',
       end_date: '2018-12-31'
     )

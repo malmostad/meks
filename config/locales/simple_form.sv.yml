@@ -195,7 +195,8 @@ sv:
 
       po_rate:
         rate_under_65: Procentsats, under 65 år
-        rate_from_65: Procentsats, från 65 år
+        rate_between_65_and_81: Procentsats, mellan 65 och 81 år
+        rate_from_82: Procentsats, från 82 år
         start_date: Startdatum
         end_date: Slutdatum
 

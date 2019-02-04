@@ -2,7 +2,8 @@ RSpec.describe PoRatesController, type: :controller do
   let(:valid_attributes) do
     {
       rate_under_65: 30.32,
-      rate_from_65: 30.64,
+      rate_between_65_and_81: 30.64,
+      rate_from_82: 2.12,
       start_date: '2019-01-01',
       end_date: '2019-12-31'
     }
@@ -76,9 +77,9 @@ RSpec.describe PoRatesController, type: :controller do
       it 'updates the requested po_rate' do
         po_rate = PoRate.create! valid_attributes
         new_rate = 30.12
-        put :update, params: { id: po_rate.to_param, po_rate: { rate_from_65: new_rate } }, session: valid_session
+        put :update, params: { id: po_rate.to_param, po_rate: { rate_between_65_and_81: new_rate } }, session: valid_session
         po_rate.reload
-        expect(po_rate.rate_from_65).to eq(new_rate)
+        expect(po_rate.rate_between_65_and_81).to eq(new_rate)
       end
 
       it 'assigns the requested po_rate as @po_rate' do

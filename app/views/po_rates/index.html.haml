@@ -7,7 +7,8 @@
       %tr
         %th Period
         %th Under 65 år
-        %th Från 65 år
+        %th Mellan 65 och 81 år
+        %th Från 82 år
         %th
 
     %tbody
@@ -15,8 +16,9 @@
         %tr
           %td= link_to "#{po_rate.start_date}–#{po_rate.end_date}", edit_po_rate_path(po_rate)
           %td= number_to_percentage(po_rate.rate_under_65)
-          %td= number_to_percentage(po_rate.rate_from_65)
+          %td= number_to_percentage(po_rate.rate_between_65_and_81)
+          %td= number_to_percentage(po_rate.rate_from_82)
           %td.delete= button_to t('actions.delete'), po_rate, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
       %tr
-        %td{ colspan: 2 }
+        %td{ colspan: 5 }
           .actions= link_to t('actions.new'), new_po_rate_path, class: "btn btn-primary"

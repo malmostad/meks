@@ -44,7 +44,7 @@ RSpec.describe 'Rates for residence_permit_18_20' do
     rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_18_20])
 
-    expect(rate[:days]).to eq 5
+    expect(rate).to eq nil
   end
 
   it 'should respond to changed date_of_birth' do
