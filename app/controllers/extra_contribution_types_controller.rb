@@ -43,6 +43,6 @@ class ExtraContributionTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def extra_contribution_type_params
-      params.require(:extra_contribution_type).permit(:name)
+      params.require(:extra_contribution_type).permit(:name, :special_case)
     end
 end

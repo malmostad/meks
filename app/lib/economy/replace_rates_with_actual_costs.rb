@@ -81,21 +81,5 @@ module Economy
 
       remove_overlaps_in_date_intervals(placement_intervals)
     end
-
-    def days_hash?(hash)
-      test_hash [hash[:days], hash[:amount]]
-    end
-
-    def months_hash?(hash)
-      test_hash [hash[:months], hash[:costs]]
-    end
-
-    def po_cost_hash?(hash)
-      test_hash [hash[:months], hash[:fee], hash[:po_cost], hash[:expense]]
-    end
-
-    def test_hash(hash)
-      !hash.include?(nil) && hash.sum.positive?
-    end
   end
 end

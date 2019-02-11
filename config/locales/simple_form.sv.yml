@@ -21,8 +21,8 @@ sv:
     info:
       refugee:
         extra_contributions:
-          title: Extra insatser
-          content: Om förändringar sker enligt avtal skall ny extra insats registreras. Redigera endast extra insatser om felaktiga uppgifter har registrerats.
+          title: Övriga insatser
+          content: Om förändringar sker enligt avtal skall ny extra insats registreras. Redigera endast övriga insatser om felaktiga uppgifter har registrerats.
       placement:
         placement_extra_costs:
           title: Extra omkostnader
@@ -175,6 +175,7 @@ sv:
         contractor_name: Uppdragstagare
         contractor_birthday: Uppdragstagares födelsedag
         contactor_employee_number: Uppdragstagares anställningsnummer
+        monthly_cost: Månadskostnad
 
       family_and_emergency_home_costs:
         period_start: Startdatum
