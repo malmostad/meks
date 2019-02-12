@@ -165,8 +165,11 @@ sv:
         period_start: Startdatum
         period_end: Slutdatum
 
+      extra_contribution_type:
+        outpatient: Öppenvårdsinsats
+
       extra_contribution:
-        extra_contribution_type: Insatsform/kostnad
+        extra_contribution_type: Insatsform
         period_start: Startdatum
         period_end: Slutdatum
         fee: Arvode per månad

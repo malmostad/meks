@@ -26,7 +26,7 @@ module Economy
       @as_array ||= @refugee.extra_contributions.map do |extra_contribution|
         interval = date_interval(extra_contribution.period_start, extra_contribution.period_end, @interval)
 
-        if extra_contribution.extra_contribution_type.special_case?
+        if extra_contribution.extra_contribution_type.outpatient?
           { months: number_of_months(interval), costs: extra_contribution.monthly_cost }
         else
           ::Economy::CostWithPoRate.new(

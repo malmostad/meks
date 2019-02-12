@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2019_02_11_140142) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "special_case", default: false
+    t.boolean "outpatient", default: false
     t.index ["name"], name: "index_extra_contribution_types_on_name", unique: true
   end
 

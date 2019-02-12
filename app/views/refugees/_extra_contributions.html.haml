@@ -8,7 +8,7 @@
         = show_attribute('extra_contribution.extra_contribution_type', extra_contribution.extra_contribution_type.name)
         = show_attribute('extra_contribution.period_start', extra_contribution.period_start)
         = show_attribute('extra_contribution.period_end', extra_contribution.period_end)
-        - if extra_contribution.extra_contribution_type.special_case?
+        - if extra_contribution.extra_contribution_type.outpatient?
           = show_attribute('extra_contribution.monthly_cost', number_to_currency(extra_contribution.monthly_cost.to_s, delimiter: ' '))
           = show_attribute('extra_contribution.comment', extra_contribution.comment)
         - else
