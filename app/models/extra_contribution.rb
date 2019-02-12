@@ -8,7 +8,9 @@ class ExtraContribution < ApplicationRecord
   validates_presence_of :period_start, :period_end,
                         :extra_contribution_type_id, :refugee
 
-  validate :numericality
+  validates :monthly_cost, numericality: true, if: :outpatient?
+  validates :fee, numericality: true, unless: :outpatient?
+  validates :expense, numericality: true, allow_blank: true, unless: :outpatient?
 
   # Remove data not allowed for the extra_contribution_type used
   before_validation do
@@ -23,12 +25,7 @@ class ExtraContribution < ApplicationRecord
     end
   end
 
-  def numericality
-    if extra_contribution_type&.outpatient?
-      errors.add(:monthly_cost, 'är inte ett nummer') unless NUMERICALS.include? monthly_cost.class
-    else
-      errors.add(:fee, 'är inte ett nummer') unless NUMERICALS.include? fee.class
-      errors.add(:expense, 'är inte ett nummer') unless expense.blank? || NUMERICALS.include?(expense.class)
-    end
+  def outpatient?
+    extra_contribution_type&.outpatient?
   end
 end
