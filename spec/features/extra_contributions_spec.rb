@@ -51,6 +51,27 @@ RSpec.feature 'ExtraContributions', type: :feature do
         expect(page).to have_selector('.notice', text: 'Insatsen registrerades')
         expect(page).to have_selector('.extra_contribution .controls', text: extra_contribution_types[1].name)
       end
+
+      scenario 'Outpatient type' do
+        create_list(:extra_contribution_type, 2)
+        extra_contribution_type_outpatient = create(:extra_contribution_type, outpatient: true)
+        refugee = create(:refugee)
+
+        visit "/refugees/#{refugee.id}"
+        click_on 'Ny insats'
+        expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
+
+        select(extra_contribution_type_outpatient.name, from: 'extra_contribution_extra_contribution_type_id')
+        fill_in 'extra_contribution_period_start', with: Date.today.to_s
+        fill_in 'extra_contribution_period_end', with: (Date.today + 1.year).to_s
+        fill_in 'extra_contribution_monthly_cost', with: 1234
+        fill_in 'extra_contribution_comment', with: 'Foo bar'
+        click_button 'Spara'
+
+        expect(current_path).to eq refugee_path(refugee)
+        expect(page).to have_selector('.notice', text: 'Insatsen registrerades')
+        expect(page).to have_selector('.extra_contribution .controls', text: extra_contribution_type_outpatient.name)
+      end
     end
 
     feature 'Edit extra_contribution' do
