@@ -12,7 +12,7 @@ class ExtraContribution < ApplicationRecord
 
   # Remove data not allowed for the extra_contribution_type used
   before_validation do
-    if extra_contribution_type.outpatient?
+    if extra_contribution_type&.outpatient?
       %i[fee expense contactor_employee_number contractor_name contractor_birthday].each do |field|
         send("#{field}=", nil)
       end
@@ -24,12 +24,11 @@ class ExtraContribution < ApplicationRecord
   end
 
   def numericality
-    if extra_contribution_type.outpatient?
+    if extra_contribution_type&.outpatient?
       errors.add(:monthly_cost, 'är inte ett nummer') unless NUMERICALS.include? monthly_cost.class
     else
-      %i[fee expense].each do |field|
-        errors.add(field, 'är inte ett nummer') unless NUMERICALS.include? send(field).class
-      end
+      errors.add(:fee, 'är inte ett nummer') unless NUMERICALS.include? fee.class
+      errors.add(:expense, 'är inte ett nummer') unless expense.blank? || NUMERICALS.include?(expense.class)
     end
   end
 end

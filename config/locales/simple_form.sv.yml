@@ -169,6 +169,7 @@ sv:
         outpatient: Öppenvårdsinsats
 
       extra_contribution:
+        <<: *defaults
         extra_contribution_type: Insatsform
         period_start: Startdatum
         period_end: Slutdatum
