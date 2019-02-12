@@ -1,4 +1,4 @@
-# 'Extra insatsformer'
+# 'Övriga insatsformer'
 class ExtraContributionType < ApplicationRecord
   has_many :extra_contributions, dependent: :nullify
 

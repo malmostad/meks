@@ -1,7 +1,7 @@
 .extra_contributions
-  %h2.group-title{ popover('refugee.extra_contributions') } Extra insatser
+  %h2.group-title{ popover('refugee.extra_contributions') } Övriga insatser
   - if @refugee.extra_contributions.blank?
-    %p Inga extra insatser är registrerade
+    %p Inga övriga insatser är registrerade
   - else
     - @refugee.extra_contributions.sort_by(&:period_start).each do |extra_contribution|
       .extra_contribution
@@ -23,7 +23,7 @@
           .form-group.action
             %span.no-control-label
             .controls
-              = link_to "Redigera extra insatsen", edit_refugee_extra_contribution_path(@refugee, extra_contribution), class: "btn btn-default btn-sm"
+              = link_to "Redigera övriga insatsen", edit_refugee_extra_contribution_path(@refugee, extra_contribution), class: "btn btn-default btn-sm"
 
   - if can? :edit, @refugee
-    = link_to "Ny extra insats", new_refugee_extra_contribution_path(@refugee), class: "btn btn-default btn-sm"
+    = link_to "Ny övriga insats", new_refugee_extra_contribution_path(@refugee), class: "btn btn-default btn-sm"
