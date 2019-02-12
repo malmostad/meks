@@ -69,6 +69,43 @@ RSpec.describe 'ExtraContributionCost' do
     expect(ecc.as_formula).to eq '0.3225806451612903*(12345.0+3743.004+23456.0)'
   end
 
+  describe 'extra contributions of outpatient type' do
+    let(:outpatient_type) do
+      create(:extra_contribution_type, outpatient: true)
+    end
+
+    let(:extra_contribution) do
+      create(
+        :extra_contribution,
+        period_start: '2019-01-01',
+        period_end: '2019-06-30',
+        monthly_cost: 54_321,
+        refugee: refugee,
+        extra_contribution_type: outpatient_type
+      )
+    end
+
+    let(:ecc) do
+      Economy::ExtraContributionCost.new(
+        refugee,
+        from: '2018-07-01',
+        to: '2019-06-30'
+      )
+    end
+
+    before do
+      extra_contribution.reload
+    end
+
+    it 'should have correct monthly cost for a limiting partial month over several years report period' do
+      expect(ecc.sum).to eq 325_926
+    end
+
+    it 'should have correct cost formula' do
+      expect(ecc.as_formula).to eq '6.0*54321.0'
+    end
+  end
+
   describe 'multiple extra contributions' do
     let(:extra_contribution2) do
       create(
