@@ -25,7 +25,11 @@ RSpec.describe ExtraContribution, type: :model do
     end
 
     it 'should require fee to be numericality' do
-      expect(build(:extra_contribution, fee: nil)).not_to be_valid
+      expect(build(:extra_contribution, fee: 'foo')).not_to be_valid
+    end
+
+    it 'should require expense to be numericality' do
+      expect(build(:extra_contribution, expense: 'foo')).not_to be_valid
     end
   end
 
@@ -48,7 +52,7 @@ RSpec.describe ExtraContribution, type: :model do
     end
 
     it 'should require monthly cost to be numericality' do
-      ecop.monthly_cost = nil
+      ecop.monthly_cost = 'foo'
       expect(ecop).not_to be_valid
     end
   end
