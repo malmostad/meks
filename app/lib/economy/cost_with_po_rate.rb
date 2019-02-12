@@ -54,8 +54,8 @@ module Economy
       (interval[:from]..interval[:to]).each do |date|
         rate = po_rate_for_date(date)
 
-        po_rates_and_months[rate.to_s] ||= 0.0
-        po_rates_and_months[rate.to_s] += 1.to_f / (date.end_of_month - date.beginning_of_month + 1)
+        po_rates_and_months[rate.to_s] ||= []
+        po_rates_and_months[rate.to_s] << 1.to_f / (date.end_of_month - date.beginning_of_month + 1)
       end
 
       # Restructure the hashes in the array to with named keys for po_rate and months, e.g.:
@@ -65,7 +65,7 @@ module Economy
       # ]
       #
       po_rates_and_months.keys.map do |key|
-        { po_rate: key.to_f, months: po_rates_and_months[key] }
+        { po_rate: key.to_f, months: po_rates_and_months[key].sum }
       end
     end
 
