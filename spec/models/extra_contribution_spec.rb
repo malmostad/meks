@@ -25,11 +25,31 @@ RSpec.describe ExtraContribution, type: :model do
     end
 
     it 'should require fee to be numericality' do
-      expect(build(:extra_contribution, fee: 'foo')).not_to be_valid
+      expect(build(:extra_contribution, fee: nil)).not_to be_valid
+    end
+  end
+
+  describe 'validation of outpatient type' do
+    let(:outpatient_type) { create(:extra_contribution_type, outpatient: true) }
+    let(:ecop) { create(:extra_contribution, extra_contribution_type: outpatient_type) }
+
+    it 'should be valid' do
+      expect(ecop).to be_valid
     end
 
-    it 'should require amount to be numericality' do
-      expect(build(:extra_contribution, expense: 'foo')).not_to be_valid
+    it 'should require a period_start' do
+      ecop.period_start = nil
+      expect(ecop).not_to be_valid
+    end
+
+    it 'should require a period_end' do
+      ecop.period_end = nil
+      expect(ecop).not_to be_valid
+    end
+
+    it 'should require monthly cost to be numericality' do
+      ecop.monthly_cost = nil
+      expect(ecop).not_to be_valid
     end
   end
 

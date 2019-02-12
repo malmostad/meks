@@ -66,7 +66,7 @@ RSpec.describe 'ExtraContributionCost' do
       from: '2018-01-01',
       to: '2018-01-10'
     )
-    expect(ecc.as_formula).to eq '0.3225806452*(12345.0+3743.004+23456.0)'
+    expect(ecc.as_formula).to eq '0.3225806451612903*(12345.0+3743.004+23456.0)'
   end
 
   describe 'multiple extra contributions' do
