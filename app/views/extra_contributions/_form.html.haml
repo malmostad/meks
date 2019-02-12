@@ -1,5 +1,5 @@
 = show_attribute('Namn', @refugee.name)
-= f.association :extra_contribution_type, include_blank: false,
+= f.association :extra_contribution_type, include_blank: true,
                 collection: ExtraContributionType.all.map { |type| [type.name, type.id, { 'data-special-case' => type.outpatient? }] }
 
 = f.input :period_start, as: :string, wrapper: :datepicker

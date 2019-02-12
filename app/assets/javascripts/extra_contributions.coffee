@@ -6,8 +6,11 @@ $ ->
     if $select.find(':selected').attr('data-special-case') is 'true'
       $form.find('.normal_case').hide()
       $form.find('.outpatient').show()
-    else
+    else if $select.find(':selected').attr('data-special-case') is 'false'
       $form.find('.normal_case').show()
+      $form.find('.outpatient').hide()
+    else
+      $form.find('.normal_case').hide()
       $form.find('.outpatient').hide()
 
   $select.change ->
