@@ -1,4 +1,4 @@
-# "Övriga insatser"
+# "Insatser"
 class ExtraContribution < ApplicationRecord
   NUMERICALS = [Integer, Float, BigDecimal].freeze
 

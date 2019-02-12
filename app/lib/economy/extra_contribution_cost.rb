@@ -1,5 +1,5 @@
 module Economy
-  # Övriga insatser för barn
+  # Insatser för barn
   # Calculation of ExtraContributionCost for a refugee
   class ExtraContributionCost < Base
     def initialize(refugee, options = {})

@@ -21,8 +21,8 @@ sv:
     info:
       refugee:
         extra_contributions:
-          title: Övriga insatser
-          content: Om förändringar sker enligt avtal skall ny övrig insats registreras. Redigera endast övriga insatser om felaktiga uppgifter har registrerats.
+          title: Insatser
+          content: Om förändringar sker enligt avtal skall ny insats registreras. Redigera endast insatser om felaktiga uppgifter har registrerats.
       placement:
         placement_extra_costs:
           title: Extra omkostnader

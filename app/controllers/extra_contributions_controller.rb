@@ -16,7 +16,7 @@ class ExtraContributionsController < ApplicationController
     authorize! :create, @extra_contribution
 
     if @extra_contribution.save
-      redirect_to @refugee, notice: 'Övriga insatsen registrerades'
+      redirect_to @refugee, notice: 'Insatsen registrerades'
     else
       render :new
     end
@@ -26,7 +26,7 @@ class ExtraContributionsController < ApplicationController
     authorize! :update, @extra_contribution
 
     if @extra_contribution.update(extra_contribution_params)
-      redirect_to @refugee, notice: 'Övriga insatsen uppdaterades'
+      redirect_to @refugee, notice: 'Insatsen uppdaterades'
     else
       render :edit
     end
@@ -34,7 +34,7 @@ class ExtraContributionsController < ApplicationController
 
   def destroy
     ExtraContribution.find(params[:id]).destroy
-    redirect_to @refugee, notice: 'Övriga insatsen raderades'
+    redirect_to @refugee, notice: 'Insatsen raderades'
   end
 
   private
