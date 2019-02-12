@@ -26,7 +26,7 @@ gem 'axlsx_rails'
 gem 'delayed_job_active_record', '4.1.3'
 
 gem 'whenever', '0.10.0', require: false
-gem 'highline', '2.0.0'
+gem 'highline', '2.0.1'
 gem 'execjs', '2.7.0'
 gem 'faker'
 
@@ -49,7 +49,7 @@ group :local_test do
   gem 'puma'
   gem 'rspec-rails'
   gem 'rails-controller-testing'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '4.11.1'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
