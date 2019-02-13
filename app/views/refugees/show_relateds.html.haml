@@ -1,0 +1,16 @@
+- title 'Ensamkommande barn'
+%section.box.show.refugee
+  %h1.box-title
+    = "#{@refugee.name}, #{@refugee.dossier_number}"
+    = @refugee.draft? ? '(Utkast)' : ''
+
+  .box-content.basic.form-data
+    .tabs
+      %ul
+        %li= link_to 'Allmänt', @refugee
+        %li= link_to 'Placeringar', refugee_show_placements_path(@refugee)
+        %li= link_to 'Ekonomi', refugee_show_economy_path(@refugee)
+        %li.active Anhöriga
+
+    = form_for @refugee, html: { class: 'basic' } do
+      = render 'relateds'
