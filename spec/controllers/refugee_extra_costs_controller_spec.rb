@@ -47,9 +47,9 @@ RSpec.describe RefugeeExtraCostsController, type: :controller do
         expect(assigns(:refugee_extra_cost)).to be_persisted
       end
 
-      it 'redirects to the show refugee' do
+      it 'redirects to the show refugee economy' do
         post :create, params: { refugee_id: valid_refugee.id, refugee_extra_cost: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(refugee_path(valid_refugee))
+        expect(response).to redirect_to(refugee_show_economy_path(valid_refugee))
       end
     end
 
@@ -85,10 +85,10 @@ RSpec.describe RefugeeExtraCostsController, type: :controller do
         expect(assigns(:refugee_extra_cost)).to eq(refugee_extra_cost)
       end
 
-      it 'redirects to show refugee' do
+      it 'redirects to show refugee economy' do
         refugee_extra_cost = RefugeeExtraCost.create! valid_attributes
         put :update, params: { refugee_id: valid_refugee.id, id: refugee_extra_cost.to_param, refugee_extra_cost: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(refugee_path(valid_refugee))
+        expect(response).to redirect_to(refugee_show_economy_path(valid_refugee))
       end
     end
 
@@ -115,10 +115,10 @@ RSpec.describe RefugeeExtraCostsController, type: :controller do
       }.to change(RefugeeExtraCost, :count).by(-1)
     end
 
-    it 'redirects to the show refugee' do
+    it 'redirects to the show refugee economy' do
       refugee_extra_cost = RefugeeExtraCost.create! valid_attributes
       delete :destroy, params: { refugee_id: valid_refugee.id, id: refugee_extra_cost.to_param }, session: valid_session
-      expect(response).to redirect_to(refugee_url(valid_refugee))
+      expect(response).to redirect_to(refugee_show_economy_path(valid_refugee))
     end
   end
 end

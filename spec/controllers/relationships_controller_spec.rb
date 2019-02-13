@@ -56,9 +56,9 @@ RSpec.describe RelationshipsController, type: :controller do
         expect(assigns(:relationship)).to be_persisted
       end
 
-      it "redirects to the show refugee" do
+      it "redirects to the show refugee relateds" do
         post :create, params: { refugee_id: refugee.id, relationship: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(refugee_path(refugee))
+        expect(response).to redirect_to(refugee_show_relateds_path(refugee))
       end
     end
 
@@ -121,10 +121,10 @@ RSpec.describe RelationshipsController, type: :controller do
         expect(assigns(:relationship)).to eq(relationship)
       end
 
-      it "redirects to show refugee" do
+      it "redirects to show refugee relateds" do
         relationship = Relationship.create! valid_attributes
         put :update, params: { refugee_id: refugee.id, id: relationship.to_param, relationship: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(refugee_path(refugee))
+        expect(response).to redirect_to(refugee_show_relateds_path(refugee))
       end
     end
 
@@ -151,10 +151,10 @@ RSpec.describe RelationshipsController, type: :controller do
       }.to change(Relationship, :count).by(-1)
     end
 
-    it "redirects to the show refugee" do
+    it "redirects to the show refugee relateds" do
       relationship = Relationship.create! valid_attributes
       delete :destroy, params: { refugee_id: refugee.id, id: relationship.to_param }, session: valid_session
-      expect(response).to redirect_to(refugee_relationships_url(refugee))
+      expect(response).to redirect_to(refugee_show_relateds_path(refugee))
     end
   end
 end

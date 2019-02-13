@@ -60,9 +60,9 @@ RSpec.describe PlacementsController, type: :controller do
           expect(assigns(:placement)).to be_persisted
         end
 
-        it 'redirects to the show refugee' do
+        it 'redirects to the show refugee placements' do
           post :create, params: { refugee_id: valid_refugee.id, placement: valid_attributes}, session: valid_session
-          expect(response).to redirect_to(refugee_path(valid_refugee))
+          expect(response).to redirect_to(refugee_show_placements_path(valid_refugee))
         end
       end
 
@@ -120,10 +120,10 @@ RSpec.describe PlacementsController, type: :controller do
           expect(assigns(:placement)).to eq(placement)
         end
 
-        it 'redirects to show refugee' do
+        it 'redirects to show refugee placements' do
           placement = Placement.create! valid_attributes
           put :update, params: { refugee_id: valid_refugee.id, id: placement.to_param, placement: valid_attributes}, session: valid_session
-          expect(response).to redirect_to(refugee_path(valid_refugee))
+          expect(response).to redirect_to(refugee_show_placements_path(valid_refugee))
         end
 
         it 'change the status to moved out' do
@@ -157,10 +157,10 @@ RSpec.describe PlacementsController, type: :controller do
         }.to change(Placement, :count).by(-1)
       end
 
-      it 'redirects to the show refugee' do
+      it 'redirects to the show refugee placements' do
         placement = Placement.create! valid_attributes
         delete :destroy, params: { refugee_id: valid_refugee.id, id: placement.to_param }, session: valid_session
-        expect(response).to redirect_to(refugee_path(valid_refugee))
+        expect(response).to redirect_to(refugee_show_placements_path(valid_refugee))
       end
     end
   end
