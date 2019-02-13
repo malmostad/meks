@@ -1,9 +1,16 @@
 - title 'Ensamkommande barn'
 %section.box.show.refugee
   %h1.box-title
-    = h1
+    = "#{@refugee.name}, #{@refugee.dossier_number}"
     = @refugee.draft? ? '(Utkast)' : ''
+
   .box-content.basic.form-data
+    .tabs
+      %ul
+        %li.active Allmänt
+        %li= link_to 'Placeringar', refugee_show_placements_path(@refugee)
+        %li= link_to 'Ekonomi', refugee_show_economy_path(@refugee)
+        %li= link_to 'Anhöriga', refugee_show_relateds_path(@refugee)
     .form-group
       - if can? :edit, @refugee
         = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'
@@ -53,45 +60,3 @@
       = kv 'refugee.deregistered_reason',
         @refugee.deregistered_reason.present? ? @refugee.deregistered_reason.name : ''
       = kv @refugee, :deregistered_comment
-
-      = render 'placements'
-      = render 'relateds'
-
-      %h2.group-title Ekonomi
-      = kv 'Totala kostnader',
-           number_to_currency(@refugee.total_costs, delimiter: ' ')
-      = kv 'Totala placeringskostnader',
-           number_to_currency(@refugee.total_placement_and_home_costs, delimiter: ' ')
-      = kv 'Förväntad intäkt',
-           number_to_currency(@refugee.total_rate.to_s, delimiter: ' ')
-      = kv 'Total utbetald schablon',
-           number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' ')
-
-      = render 'extra_contributions'
-      = render 'extra_costs'
-
-      %h2.group-title Utbetalda schabloner
-      - if @refugee.payments.blank?
-        %p Inga schabloner har betalts ut
-      - else
-        %table.full.wrap
-          %thead
-            %tr
-              %th Import
-              %th Startdatum
-              %th Slutdatum
-              %th Dagar
-              %th Belopp
-              %th Belopp per dag
-              %th Kommentar
-
-          %tbody
-            - @refugee.payments.each do |payment|
-              %tr
-                %td= link_to 'Visa', payment.payment_import
-                %td= payment.period_start
-                %td= payment.period_end
-                %td= payment.days
-                %td= number_to_currency(payment.amount, delimiter: ' ')
-                %td= number_to_currency(payment.per_day, delimiter: ' ')
-                %td= payment.comment

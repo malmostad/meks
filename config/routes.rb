@@ -17,8 +17,12 @@ Rails.application.routes.draw do
   get '/refugees/search' => 'refugees#search'
   get '/refugees/drafts' => 'refugees#drafts'
   get '/refugees' => 'refugees#search'
+  get '/refugees/tabs' => 'refugees#tabs'
 
   resources :refugees do
+    get :show_placements
+    get :show_economy
+    get :show_relateds
     resources :placements do
       get :move_out
       patch :move_out_update

@@ -1,4 +1,7 @@
 class RefugeesController < ApplicationController
+  def tabs
+  end
+
   def show
     @refugee = Refugee.includes(
       :placements,
@@ -7,6 +10,36 @@ class RefugeesController < ApplicationController
       extra_contributions: :extra_contribution_type,
       payments: :payment_import
     ).find(params[:id])
+  end
+
+  def show_placements
+    @refugee = Refugee.includes(
+      :placements,
+      relationships: [:type_of_relationship, :related],
+      placements: [:family_and_emergency_home_costs, :moved_out_reason, :legal_code, :placement_extra_costs, { home: :costs }],
+      extra_contributions: :extra_contribution_type,
+      payments: :payment_import
+    ).find(params[:refugee_id])
+  end
+
+  def show_economy
+    @refugee = Refugee.includes(
+      :placements,
+      relationships: [:type_of_relationship, :related],
+      placements: [:family_and_emergency_home_costs, :moved_out_reason, :legal_code, :placement_extra_costs, { home: :costs }],
+      extra_contributions: :extra_contribution_type,
+      payments: :payment_import
+    ).find(params[:refugee_id])
+  end
+
+  def show_relateds
+    @refugee = Refugee.includes(
+      :placements,
+      relationships: [:type_of_relationship, :related],
+      placements: [:family_and_emergency_home_costs, :moved_out_reason, :legal_code, :placement_extra_costs, { home: :costs }],
+      extra_contributions: :extra_contribution_type,
+      payments: :payment_import
+    ).find(params[:refugee_id])
   end
 
   def new
