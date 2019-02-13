@@ -22,7 +22,7 @@ class Ability
       can %i[read create edit update], FamilyAndEmergencyHomeCost
       can %i[read create edit update move_out move_out_update], Placement
       can %i[read create edit update], PlacementExtraCost
-      can %i[read search suggest create edit update], Refugee
+      can %i[read show_placements show_economy show_relateds search suggest create edit update], Refugee
       can :manage, RefugeeExtraCost
       can :manage, Relationship
       can :manage, Ssn
@@ -51,7 +51,7 @@ class Ability
       can :read, Home
       can :read, Placement
       can :read, PlacementExtraCost
-      can %i[read search suggest], Refugee
+      can %i[read show_placements show_economy show_relateds search suggest], Refugee
       can :read, RefugeeExtraCost
       can :read, Relationship
       can :read, Ssn
