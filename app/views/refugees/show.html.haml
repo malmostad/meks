@@ -12,9 +12,6 @@
         %li= link_to 'Ekonomi', refugee_show_economy_path(@refugee)
         %li= link_to 'Anhöriga', refugee_show_relateds_path(@refugee)
     .form-group
-      - if can? :edit, @refugee
-        = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'
-
       - if @refugee.secrecy?
         .secrecy= 'Sekretess'
 
@@ -60,3 +57,7 @@
       = kv 'refugee.deregistered_reason',
         @refugee.deregistered_reason.present? ? @refugee.deregistered_reason.name : ''
       = kv @refugee, :deregistered_comment
+
+      .form-group
+        - if can? :edit, @refugee
+          = link_to 'Redigera', edit_refugee_path(@refugee), class: 'btn btn-default'

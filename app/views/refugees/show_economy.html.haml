@@ -13,7 +13,6 @@
         %li= link_to 'Anhöriga', refugee_show_relateds_path(@refugee)
 
     = form_for @refugee, html: { class: 'basic' } do
-      %h2.group-title Ekonomi
       = kv 'Totala kostnader',
            number_to_currency(@refugee.total_costs, delimiter: ' ')
       = kv 'Totala placeringskostnader',

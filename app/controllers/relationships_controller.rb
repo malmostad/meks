@@ -22,7 +22,7 @@ class RelationshipsController < ApplicationController
     authorize! :create, @relationship
 
     if @relationship.save
-      redirect_to @refugee, notice: 'Anhörigskapet registrerades'
+      redirect_to refugee_show_relateds_path(@refugee), notice: 'Anhörigskapet registrerades'
     else
       render :new
     end
@@ -32,7 +32,7 @@ class RelationshipsController < ApplicationController
     authorize! :update, @relationship
 
     if @relationship.update(relationship_params)
-      redirect_to @refugee, notice: 'Anhörigskapet uppdaterades'
+      redirect_to refugee_show_relateds_path(@refugee), notice: 'Anhörigskapet uppdaterades'
     else
       render :edit
     end
@@ -42,7 +42,7 @@ class RelationshipsController < ApplicationController
     authorize! :destroy, @relationship
 
     @relationship.destroy
-    redirect_to refugee_relationships_path(@refugee), notice: 'Anhörigskapet raderades'
+    redirect_to refugee_show_relateds_path(@refugee), notice: 'Anhörigskapet raderades'
   end
 
   private

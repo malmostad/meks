@@ -11,5 +11,53 @@
         %li.active Placeringar
         %li= link_to 'Ekonomi', refugee_show_economy_path(@refugee)
         %li= link_to 'Anhöriga', refugee_show_relateds_path(@refugee)
+
     = form_for @refugee, html: { class: 'basic' } do
-      = render 'placements'
+      .placements
+        .placement
+          = kv 'Total boendetid',
+               "#{number_with_delimiter(@refugee.total_placement_time, delimiter: ' ')} dagar"
+
+        %h2.group-title Boendeplaceringar
+        - @refugee.placements.sort_by(&:moved_in_at).each do |placement|
+          .placement
+            = kv 'refugee.home', link_to(placement.home.name, home_path(placement.home))
+            - if placement.home.cost_per_day?
+              = kv "Aktuell dygnskostnad för #{placement.home.name}",
+                   number_to_currency(placement.home.current_cost, delimiter: ' ')
+
+            - if placement.home.use_placement_specification?
+              = kv placement, :specification
+
+            = kv 'placement.legal_code', placement.legal_code&.name
+            = kv 'Boendetid', "#{placement.placement_time} dagar"
+            = kv placement, :moved_in_at
+
+            - if placement.moved_out_at.present?
+              = kv placement, :moved_out_at
+              - if placement.moved_out_reason.present?
+                = kv 'placement.moved_out_reason', placement.moved_out_reason.name
+
+            - if placement.home.cost_per_placement?
+              = kv 'placement.cost', number_to_currency(placement.cost, delimiter: ' ')
+
+            - if placement.home.cost_for_family_and_emergency_home?
+              - placement.family_and_emergency_home_costs.sort_by(&:period_start).each do |cost|
+                = kv 'placement.family_and_emergency_home_cost', family_and_emergency_home_cost(cost)
+
+            - placement.placement_extra_costs.sort_by(&:date).each do |cost|
+              = kv 'placement.extra_cost', extra_cost(cost)
+
+            - if can? :edit, @refugee
+              .form-group.action
+                %span.no-control-label
+                .controls
+                  = link_to 'Redigera placeringen', edit_refugee_placement_path(@refugee, placement),
+                    class: 'btn btn-default btn-sm'
+                  - if placement.moved_out_at.blank?
+                    = link_to 'Utskrivning', refugee_placement_move_out_path(@refugee, placement),
+                      class: 'btn btn-default btn-sm'
+
+        - if can? :edit, @refugee
+          .placement= link_to "Ny placering", new_refugee_placement_path(@refugee),
+            class: "btn btn-default btn-sm"

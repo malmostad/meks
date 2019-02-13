@@ -25,7 +25,7 @@ class PlacementsController < ApplicationController
     authorize! :create, @placement
 
     if @placement.save
-      redirect_to @refugee, notice: 'Placeringen registrerades'
+      redirect_to refugee_show_placements_path(@refugee), notice: 'Placeringen registrerades'
     else
       render :new
     end
@@ -35,7 +35,7 @@ class PlacementsController < ApplicationController
     authorize! :update, @placement
 
     if @placement.update(placement_params)
-      redirect_to @refugee, notice: 'Placeringen uppdaterades'
+      redirect_to refugee_show_placements_path(@refugee), notice: 'Placeringen uppdaterades'
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class PlacementsController < ApplicationController
   def move_out_update
     authorize! :edit, @placement
     if @placement.update(placement_params)
-      redirect_to @refugee, notice: 'Placeringen uppdaterades'
+      redirect_to refugee_show_placements_path(@refugee), notice: 'Placeringen uppdaterades'
     else
       render :move_out
     end
@@ -52,7 +52,7 @@ class PlacementsController < ApplicationController
 
   def destroy
     Placement.find(params[:id]).destroy
-    redirect_to @refugee, notice: 'Placeringen raderades'
+    redirect_to refugee_show_placements_path(@refugee), notice: 'Placeringen raderades'
   end
 
   private

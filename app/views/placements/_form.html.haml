@@ -34,4 +34,4 @@
   = f.input :moved_out_at, as: :string, wrapper: :datepicker
   = f.association :moved_out_reason
 
-= render 'application/submit', form: f, cancel_path: refugee_path(@refugee)
+= render 'application/submit', form: f, cancel_path: refugee_show_placements_path(@refugee)

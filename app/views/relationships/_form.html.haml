@@ -15,4 +15,4 @@
       = f.input :related_id, as: :hidden
       = f.association :type_of_relationship, input_html: { class: 'chosen' }
 
-      = render 'application/submit', form: f, cancel_path: @refugee.new_record? ? @refugee : refugee_relationships_path(@refugee)
+      = render 'application/submit', form: f, cancel_path: refugee_show_relateds_path(@refugee)
