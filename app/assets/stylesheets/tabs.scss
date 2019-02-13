@@ -14,32 +14,43 @@
   li {
     font-family: $sans-serif;
     font-size: emize(14, 16) !important;
-    display: inline-block;
-    margin: 0 0 -1px;
-    padding: 0;
-
-    a {
-      border: $border;
-      border-color: transparent;
-      border-bottom-color: $border-color;
-      color: $body-color;
-      display: inline-block;
-      padding: .5em .7em;
-
-      &:hover {
-        @include radius(3px 3px 0 0);
-        border: $border;
-        text-decoration: none;
-      }
-    }
+    padding: 0 0 .5em;
 
     &.active {
-      @include radius(3px 3px 0 0);
-      background-color: $body-background;
-      border: $border;
-      border-bottom-color: $body-background;
+      font-weight: bold;
+    }
+  }
+
+  @media (min-width: 32em) {
+    li {
       display: inline-block;
-      padding: .5em .7em;
+      margin: 0 0 -1px;
+      padding: 0;
+
+      a {
+        border: $border;
+        border-color: transparent;
+        border-bottom-color: $border-color;
+        color: $body-color;
+        display: inline-block;
+        padding: .5em .7em;
+
+        &:hover {
+          @include radius(3px 3px 0 0);
+          border: $border;
+          text-decoration: none;
+        }
+      }
+
+      &.active {
+        @include radius(3px 3px 0 0);
+        background-color: $body-background;
+        border: $border;
+        border-bottom-color: $body-background;
+        display: inline-block;
+        font-weight: normal;
+        padding: .5em .7em;
+      }
     }
   }
 }
