@@ -7,6 +7,10 @@ FactoryBot.define do
     contractor_name { 'Firstname familyname' }
     contractor_birthday { '1980-01-15' }
     contactor_employee_number { 123_456 }
+
+    monthly_cost { rand 1000..2000 }
+    comment { 'Foo bar kommentar' }
+
     refugee { create(:refugee) }
     extra_contribution_type { create(:extra_contribution_type) }
   end

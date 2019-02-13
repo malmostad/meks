@@ -1,4 +1,4 @@
-- title "Redigera extra insatsen"
+- title "Redigera insatsen"
 %section.box.index
   %h1.box-title= h1
   .box-content
@@ -11,5 +11,5 @@
     %h1.box-title Riskområde
     .box-content.basic.form-data
       %section.misc
-        %p= "Extra insatsen kommer att raderas permanent. Detta går inte att ångra."
-        .delete= button_to 'Radera extra insatsen permanent', refugee_extra_contribution_path(@refugee, @extra_contribution), method: :delete, data: { confirm: 'Är du säker på att du vill radera placeringen permanent?' }, class: "btn btn-danger btn-default"
+        %p= "Insatsen kommer att raderas permanent. Detta går inte att ångra."
+        .delete= button_to 'Radera insatsen permanent', refugee_extra_contribution_path(@refugee, @extra_contribution), method: :delete, data: { confirm: 'Är du säker på att du vill radera placeringen permanent?' }, class: "btn btn-danger btn-default"

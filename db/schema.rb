@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_104747) do
+ActiveRecord::Schema.define(version: 2019_02_11_140142) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2019_02_04_104747) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "outpatient", default: false
     t.index ["name"], name: "index_extra_contribution_types_on_name", unique: true
   end
 
@@ -93,6 +94,8 @@ ActiveRecord::Schema.define(version: 2019_02_04_104747) do
     t.string "contractor_name"
     t.date "contractor_birthday"
     t.integer "contactor_employee_number"
+    t.decimal "monthly_cost", precision: 10, scale: 2
+    t.string "comment"
     t.index ["extra_contribution_type_id"], name: "index_extra_contributions_on_extra_contribution_type_id"
     t.index ["refugee_id"], name: "index_extra_contributions_on_refugee_id"
   end

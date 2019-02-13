@@ -60,7 +60,9 @@ class ExtraContributionsController < ApplicationController
       :expense,
       :contractor_name,
       :contractor_birthday,
-      :contactor_employee_number
+      :contactor_employee_number,
+      :monthly_cost,
+      :comment
     )
   end
 end

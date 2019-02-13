@@ -1,25 +1,29 @@
 .extra_contributions
-  %h2.group-title{ popover('refugee.extra_contributions') } Extra insatser
+  %h2.group-title{ popover('refugee.extra_contributions') } Insatser
   - if @refugee.extra_contributions.blank?
-    %p Inga extra insatser är registrerade
+    %p Inga insatser är registrerade
   - else
     - @refugee.extra_contributions.sort_by(&:period_start).each do |extra_contribution|
       .extra_contribution
         = show_attribute('extra_contribution.extra_contribution_type', extra_contribution.extra_contribution_type.name)
         = show_attribute('extra_contribution.period_start', extra_contribution.period_start)
         = show_attribute('extra_contribution.period_end', extra_contribution.period_end)
-        = show_attribute('extra_contribution.fee', number_to_currency(extra_contribution.fee.to_s, delimiter: ' '))
-        = show_attribute('extra_contribution.po_extra', po_extra(extra_contribution))
-        = show_attribute('extra_contribution.expense', number_to_currency(extra_contribution.expense.to_s, delimiter: ' '))
-        = show_attribute('extra_contribution.contractor_name', extra_contribution.contractor_name)
-        = show_attribute('extra_contribution.contractor_birthday', extra_contribution.contractor_birthday)
-        = show_attribute('extra_contribution.contactor_employee_number', extra_contribution.contactor_employee_number)
+        - if extra_contribution.extra_contribution_type.outpatient?
+          = show_attribute('extra_contribution.monthly_cost', number_to_currency(extra_contribution.monthly_cost.to_s, delimiter: ' '))
+          = show_attribute('extra_contribution.comment', extra_contribution.comment)
+        - else
+          = show_attribute('extra_contribution.fee', number_to_currency(extra_contribution.fee.to_s, delimiter: ' '))
+          = show_attribute('extra_contribution.po_extra', po_extra(extra_contribution))
+          = show_attribute('extra_contribution.expense', number_to_currency(extra_contribution.expense.to_s, delimiter: ' '))
+          = show_attribute('extra_contribution.contractor_name', extra_contribution.contractor_name)
+          = show_attribute('extra_contribution.contractor_birthday', extra_contribution.contractor_birthday)
+          = show_attribute('extra_contribution.contactor_employee_number', extra_contribution.contactor_employee_number)
 
         - if can? :edit, @refugee
           .form-group.action
             %span.no-control-label
             .controls
-              = link_to "Redigera extra insatsen", edit_refugee_extra_contribution_path(@refugee, extra_contribution), class: "btn btn-default btn-sm"
+              = link_to "Redigera insatsen", edit_refugee_extra_contribution_path(@refugee, extra_contribution), class: "btn btn-default btn-sm"
 
   - if can? :edit, @refugee
-    = link_to "Ny extra insats", new_refugee_extra_contribution_path(@refugee), class: "btn btn-default btn-sm"
+    = link_to "Ny insats", new_refugee_extra_contribution_path(@refugee), class: "btn btn-default btn-sm"

@@ -3,5 +3,6 @@
     = f.error_notification class: "warning"
 
     = f.input :name
+    = f.input :outpatient, wrapper: :vertical_radio_and_checkboxes
 
     = render 'application/submit', form: f, cancel_path: extra_contribution_types_path

@@ -72,5 +72,21 @@ module Economy
         interval
       end.compact
     end
+
+    def days_hash?(hash)
+      test_hash([hash[:days], hash[:amount]], hash[:days])
+    end
+
+    def months_hash?(hash)
+      test_hash([hash[:months], hash[:costs]], hash[:months])
+    end
+
+    def po_cost_hash?(hash)
+      test_hash([hash[:months], hash[:fee], hash[:po_cost]], hash[:months])
+    end
+
+    def test_hash(hash, time)
+      !hash.include?(nil) && time.positive?
+    end
   end
 end
