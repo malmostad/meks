@@ -23,6 +23,8 @@ sv:
         extra_contributions:
           title: Extra insatser
           content: Om förändringar sker enligt avtal skall ny extra insats registreras. Redigera endast extra insatser om felaktiga uppgifter har registrerats.
+        procapita:
+          content: Kundnummer för barnets ärende i Procapita.
       placement:
         placement_extra_costs:
           title: Extra omkostnader
@@ -74,6 +76,7 @@ sv:
           extension: Fyra sista
         dossier_number: Dossiernummer
         dossier_numbers: Extra dossiernummer
+        procapita: Kundnummer
         secrecy: Sekretess
         sof_placement: SoF-placering
         arrival: Ankomst

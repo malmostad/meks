@@ -134,6 +134,7 @@ class RefugeesController < ApplicationController
       :special_needs, :other_relateds, :comment_id,
       :gender_id,
       :citizenship_at,
+      :procapita,
       home_ids: [],
       country_ids: [],
       language_ids: [],
