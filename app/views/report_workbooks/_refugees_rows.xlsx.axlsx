@@ -34,6 +34,7 @@
       asylum_status(refugee),
       refugee.ssns.map(&:full_ssn).join(', '),
       refugee.dossier_numbers.map(&:name).join(', '),
+      refugee.procapita,
       refugee.updated_at.to_s[0..18]
     ],
     style: @style.normal
