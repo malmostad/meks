@@ -33,6 +33,9 @@
 
       = kv @refugee, :dossier_number
       = kv 'refugee.dossier_numbers', @refugee.dossier_numbers.map(&:name).join('<br>')
+      .form-group
+        .control-label{ popover('refugee.procapita') }= I18n.t('simple_form.labels.refugee.procapita')
+        .controls= @refugee.procapita
       = kv @refugee, :age
 
       = kv 'refugee.gender', @refugee.gender.present? ? @refugee.gender.name : 'Ej angivet'

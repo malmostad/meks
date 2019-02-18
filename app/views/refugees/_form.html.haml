@@ -36,6 +36,7 @@
         .controls
           = add_dossier_numbers_button 'Fler dossiernummer', f
 
+    = f.input :procapita, label_html: popover('refugee.procapita')
     = f.association :gender
     = f.association :languages, input_html: { class: 'chosen' }
     = f.association :countries, input_html: { class: 'chosen' }
