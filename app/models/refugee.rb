@@ -30,18 +30,6 @@ class Refugee < ApplicationRecord
       .order('placements.moved_in_at desc')
   }
 
-  scope :with_placements_within, -> (from, to) {
-    includes(:countries, :languages, :ssns, :dossier_numbers,
-             :gender, :municipality,
-             :refugee_extra_costs, :extra_contributions,
-             :deregistered_reason, :payments,
-             placements: [:moved_out_reason, :legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
-             home: [:owner_type, :target_groups, :languages, :type_of_housings, :costs]])
-      .references(:placements)
-      .where('placements.moved_in_at <= ?', to)
-      .where('placements.moved_out_at is ? or placements.moved_out_at >= ?', nil, from)
-  }
-
   scope :in_our_municipality, -> {
     includes(:municipality)
       .where(municipalities: { our_municipality: true })
