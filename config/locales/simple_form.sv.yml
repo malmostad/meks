@@ -25,6 +25,8 @@ sv:
           content: Om förändringar sker enligt avtal skall ny insats registreras. Redigera endast insatser om felaktiga uppgifter har registrerats.
         procapita:
           content: Kundnummer för barnets ärende i Procapita.
+        other_relateds:
+          content: Registreras under fliken Allmänt
       placement:
         placement_extra_costs:
           title: Extra omkostnader

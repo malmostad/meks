@@ -11,6 +11,18 @@ class RefugeesController < ApplicationController
     ).find(params[:refugee_id])
   end
 
+  def show_costs
+    @refugee = Refugee.includes(
+      extra_contributions: :extra_contribution_type
+    ).find(params[:refugee_id])
+  end
+
+  def show_relateds
+    @refugee = Refugee.includes(
+      relationships: [:type_of_relationship, :related]
+    ).find(params[:refugee_id])
+  end
+
   def show_economy
     @refugee = Refugee.includes(
       :placements,
@@ -18,12 +30,6 @@ class RefugeesController < ApplicationController
                    :placement_extra_costs, { home: :costs }],
       extra_contributions: :extra_contribution_type,
       payments: :payment_import
-    ).find(params[:refugee_id])
-  end
-
-  def show_relateds
-    @refugee = Refugee.includes(
-      relationships: [:type_of_relationship, :related]
     ).find(params[:refugee_id])
   end
 

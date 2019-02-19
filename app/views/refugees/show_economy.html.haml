@@ -8,9 +8,10 @@
     .tabs
       %ul
         %li= link_to 'Allmänt', @refugee
-        %li= link_to 'Boendeplaceringar', refugee_show_placements_path(@refugee)
-        %li.active Ekonomi
+        %li= link_to 'Placeringar', refugee_show_placements_path(@refugee)
+        %li= link_to 'Extra kostnader/insatser', refugee_show_costs_path(@refugee)
         %li= link_to 'Anhöriga', refugee_show_relateds_path(@refugee)
+        %li.active Ekonomi
 
     = form_for @refugee, html: { class: 'basic' } do
       = kv 'Totala kostnader',
@@ -22,6 +23,4 @@
       = kv 'Total utbetald schablon',
            number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' ')
 
-      = render 'extra_contributions'
-      = render 'extra_costs'
       = render 'payments'

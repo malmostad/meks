@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     get :show_placements
     get :show_economy
     get :show_relateds
+    get :show_costs
     resources :placements do
       get :move_out
       patch :move_out_update

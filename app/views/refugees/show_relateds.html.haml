@@ -8,9 +8,10 @@
     .tabs
       %ul
         %li= link_to 'Allmänt', @refugee
-        %li= link_to 'Boendeplaceringar', refugee_show_placements_path(@refugee)
-        %li= link_to 'Ekonomi', refugee_show_economy_path(@refugee)
+        %li= link_to 'Placeringar', refugee_show_placements_path(@refugee)
+        %li= link_to 'Extra kostnader/insatser', refugee_show_costs_path(@refugee)
         %li.active Anhöriga
+        %li= link_to 'Ekonomi', refugee_show_economy_path(@refugee)
 
     = form_for @refugee, html: { class: 'basic' } do
       - no_relatives = @refugee.relationships.empty? && @refugee.inverse_relationships.empty?
@@ -40,4 +41,6 @@
               = "(#{r.type_of_relationship.name})"
 
 
-      = show_attribute('refugee.other_relateds', @refugee.other_relateds.present? ? @refugee.other_relateds : 'Ingen registrerad')
+      .form-group
+        .control-label{ popover('refugee.other_relateds') }= I18n.t('simple_form.labels.refugee.other_relateds')
+        .controls= @refugee.other_relateds.present? ? @refugee.other_relateds : 'Ingen registrerad'
