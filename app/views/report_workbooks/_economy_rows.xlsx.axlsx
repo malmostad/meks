@@ -3,6 +3,7 @@
     [
       refugee.dossier_number,
       refugee.dossier_numbers.map(&:name).join(', '),
+      refugee.procapita,
       refugee.name,
       refugee.ssn,
       refugee.ssns.map(&:full_ssn).join(', '),
@@ -33,11 +34,11 @@
     style: @style.normal
   )
 
-  [7, 8, 9, 10, 15, 16, 17, 18, 19, 20].each do |col|
+  [8, 9, 10, 11, 16, 17, 18, 19, 20, 21].each do |col|
     sheet.rows[row + 1].cells[col].style = @style.date
   end
 
-  [21, 22, 23].each do |col|
+  [22, 23, 24].each do |col|
     sheet.rows[row + 1].cells[col].style = @style.currency
   end
 end

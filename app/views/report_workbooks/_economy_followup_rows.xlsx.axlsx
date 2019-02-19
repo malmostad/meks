@@ -8,24 +8,25 @@ refugees.each do |refugee|
       type_of_housings(refugee),
       refugee.name,
       refugee.dossier_number,
+      refugee.procapita,
       refugee.ssn,
       refugee.registered,
       refugee.municipality_placement_migrationsverket_at,
       refugee.deregistered,
       economy_per_month(refugee, age_group, @po_rates),
-      "=(#{step_sum(row_ref, 9..42, 3)})",
       "=(#{step_sum(row_ref, 10..43, 3)})",
       "=(#{step_sum(row_ref, 11..44, 3)})",
-      "=(#{Axlsx.col_ref(47)}#{row_ref}-#{Axlsx.col_ref(46)}#{row_ref})"
+      "=(#{step_sum(row_ref, 12..45, 3)})",
+      "=(#{Axlsx.col_ref(48)}#{row_ref}-#{Axlsx.col_ref(47)}#{row_ref})"
     ].flatten,
     style: @style.normal
   )
 
-  [6, 7, 8].each do |col|
+  [7, 8, 9].each do |col|
     sheet.rows.last.cells[col].style = @style.date
   end
 
-  [(10..46).step(3).to_a, (11..47).step(3).to_a, 48].flatten.each do |col|
+  [(11..47).step(3).to_a, (12..48).step(3).to_a, 49].flatten.each do |col|
     sheet.rows.last.cells[col].style = @style.currency
   end
 end

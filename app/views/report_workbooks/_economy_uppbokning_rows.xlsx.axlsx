@@ -4,6 +4,7 @@ status[:records].each_with_index do |record, row|
   sheet.add_row(
     [
       refugee.dossier_number,
+      refugee.procapita,
       refugee.ssn,
       refugee.ssns.map(&:full_ssn).join(', '),
       refugee.municipality&.name,
@@ -13,7 +14,7 @@ status[:records].each_with_index do |record, row|
     style: @style.normal
   )
 
-  sheet.rows[row + 1].cells[4].style = @style.currency
+  sheet.rows[row + 1].cells[5].style = @style.currency
 end
 
 if status[:records].present?
@@ -23,8 +24,9 @@ if status[:records].present?
       '',
       '',
       '',
-      "=SUM(E2:E#{status[:records].size + 1})",
-      "=SUM(F2:F#{status[:records].size + 1})"
+      '',
+      "=SUM(F2:F#{status[:records].size + 1})",
+      "=SUM(G2:G#{status[:records].size + 1})"
     ],
     style: @style.sum
   )

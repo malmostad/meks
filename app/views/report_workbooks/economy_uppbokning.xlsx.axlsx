@@ -27,7 +27,7 @@ first_sheet.add_row(
   first_sheet.add_row(
     [
       status[:name],
-      "=SUM('#{status[:name]}'!E#{status[:records].size + 2})"
+      "=SUM('#{status[:name]}'!F#{status[:records].size + 2})"
     ],
     style: [@style.normal, @style.currency]
   )

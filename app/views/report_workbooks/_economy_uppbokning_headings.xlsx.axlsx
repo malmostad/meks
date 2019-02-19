@@ -1,6 +1,7 @@
 sheet.add_row(
   [
     'Dossiernummer',
+    'Kundnummer',
     'Personnummer',
     'Extra personnummer',
     'Kommun',
@@ -9,3 +10,5 @@ sheet.add_row(
   ],
   style: @style.heading
 )
+
+heading_comment(sheet, 'B', 'Kundnummer för barnets ärende i Procapita')

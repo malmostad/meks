@@ -2,11 +2,11 @@ months = %i[Januari Februari Mars April Maj Juni Juli Augusti September Oktober 
 
 sheet.add_row(
   [
-    (0..8).map { nil },
+    (0..9).map { nil },
     months.map { |month| [month, nil, nil] },
     nil
   ].flatten,
-  style: [(0..8).map { nil }, (9..48).map { @style.heading }].flatten
+  style: [(0..9).map { nil }, (10..49).map { @style.heading }].flatten
 )
 
 month_cols = ['Dygn', 'Kostnad', 'Förväntad intäkt']
@@ -18,6 +18,7 @@ sheet.add_row(
     'Boendeformer under året',
     'Namn',
     'Dossiernummer',
+    'Kundnummer',
     'Personnummer',
     'Inskriven',
     'Anvisningsdatum',
@@ -28,6 +29,8 @@ sheet.add_row(
   style: @style.heading
 )
 
-sheet.merge_cells sheet.rows.first.cells[(0..8)]
-(9..42).step(3).each { |i| sheet.merge_cells(sheet.rows.first.cells[i..(i + 2)]) }
-sheet.merge_cells sheet.rows.first.cells[(45..48)]
+sheet.merge_cells sheet.rows.first.cells[(0..9)]
+(10..43).step(3).each { |i| sheet.merge_cells(sheet.rows.first.cells[i..(i + 2)]) }
+sheet.merge_cells sheet.rows.first.cells[(46..49)]
+
+heading_comment(sheet, 'F', 'Kundnummer för barnets ärende i Procapita', 2)
