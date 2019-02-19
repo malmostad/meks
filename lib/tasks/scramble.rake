@@ -14,6 +14,7 @@ namespace :scramble do
       refugee.ssns = []
       refugee.dossier_number = Faker::Number.number(10)
       refugee.dossier_numbers = []
+      refugee.procapita = nil
       refugee.social_worker = ''
       refugee.countries = [countries[rand(3)]]
       refugee.languages = []
