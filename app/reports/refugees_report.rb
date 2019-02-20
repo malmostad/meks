@@ -3,8 +3,8 @@ class RefugeesReport < ApplicationReport::Base
     @params = params
 
     options = {}
-    options[:from] = options[:registered_from]
-    options[:to] = options[:registered_to]
+    options[:from] = params[:registered_from]
+    options[:to] = params[:registered_to]
     options[:locals] = { refugees: refugees }
     super(options.merge(params))
   end

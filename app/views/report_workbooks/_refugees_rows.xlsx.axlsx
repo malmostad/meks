@@ -5,6 +5,7 @@
       refugee.ssn,
       refugee.age,
       refugee.dossier_number,
+      refugee.procapita,
       refugee.gender&.name,
       refugee.countries.map(&:name).join(', '),
       refugee.languages.map(&:name).join(', '),
@@ -34,13 +35,12 @@
       asylum_status(refugee),
       refugee.ssns.map(&:full_ssn).join(', '),
       refugee.dossier_numbers.map(&:name).join(', '),
-      refugee.procapita,
       refugee.updated_at.to_s[0..18]
     ],
     style: @style.normal
   )
 
-  [7, 11, 15, 16, 17, 18, 19, 22].each do |col|
+  [8, 12, 16, 17, 18, 19, 20, 23].each do |col|
     sheet.rows[row + 1].cells[col].style = @style.date
   end
 end
