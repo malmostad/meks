@@ -8,7 +8,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
       scenario 'reload the form with validation message' do
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_economy"
+        visit "/refugees/#{refugee.id}/show_costs"
         click_on 'Ny extra kostnad'
         expect(current_path).to eq new_refugee_refugee_extra_cost_path(refugee)
 
@@ -25,7 +25,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
       scenario 'saves the form' do
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_economy"
+        visit "/refugees/#{refugee.id}/show_costs"
         click_on 'Ny extra kostnad'
         expect(current_path).to eq new_refugee_refugee_extra_cost_path(refugee)
 
@@ -34,7 +34,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
         fill_in 'refugee_extra_cost_comment', with: 'Foo bar'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_show_economy_path(refugee)
+        expect(current_path).to eq refugee_show_costs_path(refugee)
         expect(page).to have_selector('.notice', text: 'Extra kostnaden registrerades')
       end
     end
@@ -44,7 +44,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
         refugee = create(:refugee)
         create(:refugee_extra_cost, refugee: refugee)
 
-        visit "/refugees/#{refugee.id}/show_economy"
+        visit "/refugees/#{refugee.id}/show_costs"
         click_link('Redigera extra kostnaden')
         expect(current_path).to eq edit_refugee_refugee_extra_cost_path(refugee, refugee.refugee_extra_costs.first)
 
@@ -53,7 +53,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
         fill_in 'refugee_extra_cost_comment', with: 'Fox barx'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_show_economy_path(refugee)
+        expect(current_path).to eq refugee_show_costs_path(refugee)
         expect(page).to have_selector('.notice', text: 'Extra kostnaden uppdaterades')
       end
     end

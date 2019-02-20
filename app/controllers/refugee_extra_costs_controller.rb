@@ -17,7 +17,7 @@ class RefugeeExtraCostsController < ApplicationController
     authorize! :create, @refugee_extra_cost
 
     if @refugee_extra_cost.save
-      redirect_to refugee_show_economy_path(@refugee), notice: 'Extra kostnaden registrerades'
+      redirect_to refugee_show_costs_path(@refugee), notice: 'Extra kostnaden registrerades'
     else
       render :new
     end
@@ -27,7 +27,7 @@ class RefugeeExtraCostsController < ApplicationController
     authorize! :update, @refugee_extra_cost
 
     if @refugee_extra_cost.update(refugee_extra_cost_params)
-      redirect_to refugee_show_economy_path(@refugee), notice: 'Extra kostnaden uppdaterades'
+      redirect_to refugee_show_costs_path(@refugee), notice: 'Extra kostnaden uppdaterades'
     else
       render :edit
     end
@@ -35,7 +35,7 @@ class RefugeeExtraCostsController < ApplicationController
 
   def destroy
     RefugeeExtraCost.find(params[:id]).destroy
-    redirect_to refugee_show_economy_path(@refugee), notice: 'Extra kostnaden raderades'
+    redirect_to refugee_show_costs_path(@refugee), notice: 'Extra kostnaden raderades'
   end
 
   private

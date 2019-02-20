@@ -9,7 +9,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_economy"
+        visit "/refugees/#{refugee.id}/show_costs"
         click_on 'Ny insats'
         expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
 
@@ -33,7 +33,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_economy"
+        visit "/refugees/#{refugee.id}/show_costs"
         click_on 'Ny insats'
         expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
 
@@ -47,7 +47,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_contactor_employee_number', with: '987_543'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_show_economy_path(refugee)
+        expect(current_path).to eq refugee_show_costs_path(refugee)
         expect(page).to have_selector('.notice', text: 'Insatsen registrerades')
         expect(page).to have_selector('.extra_contribution .controls', text: extra_contribution_types[1].name)
       end
@@ -57,7 +57,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         extra_contribution_type_outpatient = create(:extra_contribution_type, outpatient: true)
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_economy"
+        visit "/refugees/#{refugee.id}/show_costs"
         click_on 'Ny insats'
         expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
 
@@ -68,7 +68,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_comment', with: 'Foo bar'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_show_economy_path(refugee)
+        expect(current_path).to eq refugee_show_costs_path(refugee)
         expect(page).to have_selector('.notice', text: 'Insatsen registrerades')
         expect(page).to have_selector('.extra_contribution .controls', text: extra_contribution_type_outpatient.name)
       end
@@ -80,7 +80,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
         create(:extra_contribution, refugee: refugee, extra_contribution_type: extra_contribution_types.first)
 
-        visit "/refugees/#{refugee.id}/show_economy"
+        visit "/refugees/#{refugee.id}/show_costs"
         click_link('Redigera insatsen')
         expect(current_path).to eq edit_refugee_extra_contribution_path(refugee, refugee.extra_contributions.first)
 
@@ -94,7 +94,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_contactor_employee_number', with: '987_543'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_show_economy_path(refugee)
+        expect(current_path).to eq refugee_show_costs_path(refugee)
         expect(page).to have_selector('.notice', text: 'Insatsen uppdaterades')
         expect(page).to have_selector('.extra_contribution .controls', text: extra_contribution_types[2].name)
       end
