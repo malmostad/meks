@@ -14,4 +14,4 @@
   = f.input :monthly_cost, input_html: { placeholder: 'kr', value: number_with_precision(f.object.monthly_cost, precision: 2, separator: '.') }
   = f.input :comment
 
-= render 'application/submit', form: f, cancel_path: refugee_show_economy_path(@refugee)
+= render 'application/submit', form: f, cancel_path: refugee_show_costs_path(@refugee)
