@@ -41,6 +41,6 @@ sheet.add_row(
 )
 
 heading_comment(sheet, 'E', 'Kundnummer för barnets ärende i Procapita')
-heading_comment(sheet, 'I', 'Det datum då barnet registreras i MEKS för första gången')
+heading_comment(sheet, 'I', 'Anger det datum då barnet registreras i MEKS för första gången')
 heading_comment(sheet, 'Q', 'Det datum då barnet skrivs ut från Migrationsverket')
 heading_comment(sheet, 'X', 'Anger datum för när socialtjänstansvaret för barnet är avslutat')
