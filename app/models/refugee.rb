@@ -88,6 +88,18 @@ class Refugee < ApplicationRecord
     years_old
   end
 
+  def will_turn_21_in_year(year)
+    return if date_of_birth.nil?
+
+    date_at_21st_birthday >= Date.new(year) && date_at_21st_birthday <= Date.new(year).end_of_year
+  end
+
+  def date_at_21st_birthday
+    return if date_of_birth.nil?
+
+    date_of_birth + 21.years
+  end
+
   def total_placement_time
     placements.map(&:placement_time).inject(&:+) || 0
   end

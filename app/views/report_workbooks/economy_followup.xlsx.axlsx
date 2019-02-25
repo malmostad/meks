@@ -11,9 +11,8 @@
   sheet.column_widths(*(0..sheet.cols.size).map { 18 })
 
   sheet.sheet_view.pane do |pane|
-    pane.active_pane = :bottom_right
+    pane.active_pane = :bottom_left
     pane.state = :frozen
     pane.y_split = 2
-    pane.x_split = 10
   end
 end

@@ -13,20 +13,21 @@ refugees.each do |refugee|
       refugee.registered,
       refugee.municipality_placement_migrationsverket_at,
       refugee.deregistered,
+      refugee.will_turn_21_in_year(@year) ? refugee.date_at_21st_birthday : nil,
       economy_per_month(refugee, age_group, @po_rates),
-      "=(#{step_sum(row_ref, 10..43, 3)})",
       "=(#{step_sum(row_ref, 11..44, 3)})",
       "=(#{step_sum(row_ref, 12..45, 3)})",
-      "=(#{Axlsx.col_ref(48)}#{row_ref}-#{Axlsx.col_ref(47)}#{row_ref})"
+      "=(#{step_sum(row_ref, 13..46, 3)})",
+      "=(#{Axlsx.col_ref(49)}#{row_ref}-#{Axlsx.col_ref(48)}#{row_ref})"
     ].flatten,
     style: @style.normal
   )
 
-  [7, 8, 9].each do |col|
+  [7, 8, 9, 10].each do |col|
     sheet.rows.last.cells[col].style = @style.date
   end
 
-  [(11..47).step(3).to_a, (12..48).step(3).to_a, 49].flatten.each do |col|
+  [(12..48).step(3).to_a, (13..49).step(3).to_a, 50].flatten.each do |col|
     sheet.rows.last.cells[col].style = @style.currency
   end
 end
