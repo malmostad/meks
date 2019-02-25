@@ -58,7 +58,7 @@ RSpec.describe ExtraContributionsController, type: :controller do
 
       it 'redirects to the show refugee economy' do
         post :create, params: { refugee_id: valid_refugee.id, extra_contribution: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(refugee_show_economy_path(valid_refugee))
+        expect(response).to redirect_to(refugee_show_costs_path(valid_refugee))
       end
     end
 
@@ -101,7 +101,7 @@ RSpec.describe ExtraContributionsController, type: :controller do
       it 'redirects to show refugee economy' do
         extra_contribution = ExtraContribution.create! valid_attributes
         put :update, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param, extra_contribution: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(refugee_show_economy_path(valid_refugee))
+        expect(response).to redirect_to(refugee_show_costs_path(valid_refugee))
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe ExtraContributionsController, type: :controller do
     it 'redirects to the show refugee economy' do
       extra_contribution = ExtraContribution.create! valid_attributes
       delete :destroy, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param }, session: valid_session
-      expect(response).to redirect_to(refugee_show_economy_path(valid_refugee))
+      expect(response).to redirect_to(refugee_show_costs_path(valid_refugee))
     end
   end
 end
