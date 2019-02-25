@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2019_02_11_140142) do
-=======
-ActiveRecord::Schema.define(version: 2019_02_18_132841) do
->>>>>>> master
+ActiveRecord::Schema.define(version: 2019_02_25_100952) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -334,6 +330,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_132841) do
     t.boolean "sof_placement", default: false
     t.boolean "arrival"
     t.string "procapita"
+    t.datetime "imported_at"
     t.index ["deregistered_reason_id"], name: "index_refugees_on_deregistered_reason_id"
     t.index ["gender_id"], name: "index_refugees_on_gender_id"
     t.index ["municipality_id"], name: "index_refugees_on_municipality_id"
