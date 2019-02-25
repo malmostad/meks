@@ -44,9 +44,12 @@ module EconomyFollowupReportHelper
       to = earliest_date(to, refugee.date_of_birth + 18.years - 1.day)
     elsif age_group == :adults
       from = latest_date(from, refugee.date_of_birth + 18.years)
-      # FIXME: use the new CSN age calculation
-      # For adults, costs are calculated even if they are older than the upper limits
       to = earliest_date(to, refugee.date_of_birth + 21.years - 1.day) unless cost
+    end
+
+    # Do only calculate cost up to 21st birthday unless deregistered is set
+    if cost && refugee.will_turn_21_in_year(@year) && !refugee.deregistered
+      to = earliest_date(to, refugee.date_at_21st_birthday)
     end
 
     { from: from, to: to }

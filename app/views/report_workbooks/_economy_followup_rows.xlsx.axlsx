@@ -13,7 +13,7 @@ refugees.each do |refugee|
       refugee.registered,
       refugee.municipality_placement_migrationsverket_at,
       refugee.deregistered,
-      refugee.will_turn_21_in_year(@year) ? refugee.date_at_21st_birthday : nil,
+      (refugee.date_at_21st_birthday if refugee.will_turn_21_in_year(@year)),
       economy_per_month(refugee, age_group, @po_rates),
       "=(#{step_sum(row_ref, 11..44, 3)})",
       "=(#{step_sum(row_ref, 12..45, 3)})",
