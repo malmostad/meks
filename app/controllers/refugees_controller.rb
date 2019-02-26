@@ -83,7 +83,8 @@ class RefugeesController < ApplicationController
     @offset = params[:page].to_i * @limit
     @more_request = refugees_search_path(load_more_query)
 
-    @drafts = Refugee.where(draft: true)
+    @drafts_count = Refugee.where(draft: true).count
+    @imported_count = Refugee.where.not(imported_at: nil).count
 
     response = Refugee.fuzzy_search(params[:q], from: @offset, size: @limit)
     if response
@@ -125,10 +126,18 @@ class RefugeesController < ApplicationController
   end
 
   def drafts
+    @drafts_count = Refugee.where(draft: true).count
+    @imported_count = Refugee.where.not(imported_at: nil).count
     @refugees = Refugee.where(draft: true)
     render :search
   end
 
+  def imported
+    @drafts_count = Refugee.where(draft: true).count
+    @imported_count = Refugee.where.not(imported_at: nil).count
+    @refugees = Refugee.where.not(imported_at: nil)
+    render :search
+  end
 
   private
 

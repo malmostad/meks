@@ -1,5 +1,6 @@
 DIRECTORY = Rails.env.development? ? '/home/vagrant/importer/' : '/home/app_runner/importer/'
 
+# Import data from exported CSV files from Excel
 namespace :import do
   desc 'Import refugees'
   task refugees: :environment do

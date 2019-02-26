@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get '/refugees/suggest'
   get '/refugees/search' => 'refugees#search'
   get '/refugees/drafts' => 'refugees#drafts'
+  get '/refugees/imported' => 'refugees#imported'
   get '/refugees' => 'refugees#search'
   get '/refugees/tabs' => 'refugees#tabs'
 
