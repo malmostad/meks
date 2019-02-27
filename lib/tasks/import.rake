@@ -2,7 +2,7 @@ DIRECTORY = (Rails.env.development? ? '/home/vagrant/importer/' : '/home/app_run
 
 # Import data from exported CSV files from Excel.
 namespace :import do
-  # The sheet "Individdata" exported to "refugees.csv",
+  # The sheet "Individdata" exported to "refugees.csv"
   #   has two heading rows and the following columns:
   # 0  Namn: name
   # 1  Personnummer: split into date_of_birth and ssn_extension
@@ -62,7 +62,7 @@ namespace :import do
     puts "#{refugees} barn importerades"
   end
 
-  # The sheet "Placeringar" exported to "placements.csv",
+  # The sheet "Placeringar" exported to "placements.csv"
   #   has two heading rows and the following columns:
   # 0  Dossiernummer: dossier_number of a Refugee
   # 1  Boende: name of a Home
@@ -123,8 +123,7 @@ namespace :import do
     puts "#{placements} placeringar importerades"
   end
 
-  # The sheet "Öppenvårdsinsatser" exported to "outpatient_contributions.csv",
-  #   creates ExtraContribution objects with the outpatient fields and
+  # The sheet "Öppenvårdsinsatser" exported to "outpatient_contributions.csv"
   #   has two heading rows and the following columns:
   #
   # 0 Dossiernummer: dossier_number of a Refugee
@@ -132,6 +131,8 @@ namespace :import do
   # 2 Slutdatum: period_end
   # 3 Månadskostnad: monthly_cost
   # 4 Kommentar: comment
+  #
+  #  The task creates ExtraContribution objects of the outpatient type.
   desc 'Import outpatient contributions'
   task outpatient_contributions: :environment do
     records = parse_file('outpatient_contributions.csv')
