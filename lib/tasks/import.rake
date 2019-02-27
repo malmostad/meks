@@ -4,23 +4,24 @@ DIRECTORY = (Rails.env.development? ? '/home/vagrant/importer/' : '/home/app_run
 namespace :import do
   # The sheet "Individdata" exported to "refugees.csv"
   #   has two heading rows and the following columns:
-  # 0  Namn: name
-  # 1  Personnummer: split into date_of_birth and ssn_extension
-  # 2  Extra personnummer: create one Ssn
-  # 3  Kommentar till extra personnummer: ignored
-  # 4  Dossiernummer: dossier_number
-  # 5  Kön: name of a Gender
-  # 6  Nationalitet: name of a Country
-  # 7  Ankomst Malmö: arrival
-  # 8  Inledningsdatum: registered
-  # 9  Socialtjänstområde: name of a Municipality
-  # 10 Socialsekreterare: social_worker
-  # 11 Anvisningsdatum: checked_out_to_our_city
-  # 12 PUT: residence_permit_at
-  # 13 Kommunplaceringsdatum: municipality_placement_migrationsverket_at
-  # 14 TUT startar: temporary_permit_starts_at
-  # 15 TUT slutar: temporary_permit_ends_at
-  # 16 Medborgarskap erhölls citizenship_at
+  # 0  Dossiernummer: dossier_number
+  # 1  Kundnummer: procapita
+  # 2  Namn: name
+  # 3  Personnummer: split into date_of_birth and ssn_extension
+  # 4  Extra personnummer: create one Ssn
+  # 5  Kommentar till extra personnummer: name of a DeregisteredReason
+  # 6  Kön: name of a Gender
+  # 7  Nationalitet: name of a Country
+  # 8  Ankomst Malmö: arrival
+  # 9  Inledningsdatum: registered
+  # 10 Socialtjänstområde: name of a Municipality
+  # 11 Socialsekreterare: social_worker
+  # 12 Anvisningsdatum: municipality_placement_migrationsverket_at
+  # 13 PUT: residence_permit_at
+  # 14 Kommunplaceringsdatum: checked_out_to_our_city
+  # 15 TUT startar: temporary_permit_starts_at
+  # 16 TUT slutar: temporary_permit_ends_at
+  # 17 Medborgarskap erhölls citizenship_at
   desc 'Import refugees'
   task refugees: :environment do
     filename = 'refugees.csv'
@@ -32,23 +33,25 @@ namespace :import do
         next if row_number < 2
 
         Refugee.create!(
-          name: record[0],
-          date_of_birth: record[1][0..9],
-          ssn_extension: record[1][11..14],
-          ssns: [(Ssn.new(date_of_birth: record[2][0..9], extension: record[2][11..14]) if record[2].present?)].compact,
-          dossier_number: record[4],
-          gender: Gender.where(name: record[5]).first,
-          countries: Country.where(name: record[6]),
-          arrival: (true if record[7] == 'Ja'),
-          registered: record[8],
-          municipality: Municipality.where(name: record[9]).first,
-          social_worker: record[10],
-          checked_out_to_our_city: record[11],
-          residence_permit_at: record[12],
-          municipality_placement_migrationsverket_at: record[13],
-          temporary_permit_starts_at: record[14],
-          temporary_permit_ends_at: record[15],
-          citizenship_at: record[16],
+          dossier_number: record[0],
+          procapita: record[1],
+          name: record[2],
+          date_of_birth: record[3][0..9],
+          ssn_extension: record[3][11..14],
+          ssns: [(Ssn.new(date_of_birth: record[4][0..9], extension: record[4][11..14]) if record[4].present?)].compact,
+          deregistered_reason: DeregisteredReason.where(name: record[5]).first,
+          gender: Gender.where(name: record[6]).first,
+          countries: Country.where(name: record[7]),
+          arrival: (true if record[8] == 'Ja'),
+          registered: record[9],
+          municipality: Municipality.where(name: record[10]).first,
+          social_worker: record[11],
+          municipality_placement_migrationsverket_at: record[12],
+          residence_permit_at: record[13],
+          checked_out_to_our_city: record[14],
+          temporary_permit_starts_at: record[15],
+          temporary_permit_ends_at: record[16],
+          citizenship_at: record[17],
           imported_at: Time.now
         )
 
@@ -231,37 +234,4 @@ def extract_fields(rows)
 
     fields
   end.compact
-end
-
-def refugee_by_dossier_number(str, row_number)
-  dossier_number = str.gsub(/\D/, '')
-  Refugee.where(dossier_number: dossier_number).first
-end
-
-# Assumes the format YYYYMMDD and other characters like spaces and hyphens that will be removed
-def parse_date(str, row_number)
-  date = str.gsub(/\D/, '')
-  begin
-    date.to_date
-  rescue
-    parsing_error "Datumet #{str} har inte korrekt format (ÅÅÅÅ-MM-DD) [rad #{row_number}]"
-    return
-  end
-end
-
-def parse_amount(str, row_number)
-  # Cleanup
-  amount = str.gsub(/[^\d\-+,\.]/, '')
-  # Change from Swedish to US float
-  amount.gsub!(/,/, '.')
-  unless amount.match(/\A[+-]?[\d\.]+\z/)
-    parsing_error "Beloppet #{str} kunde inte tolkas [rad #{row_number}]"
-    return
-  end
-  amount.to_f
-end
-
-def parsing_error(msg)
-  @parsing_errors ||= []
-  @parsing_errors << msg
 end
