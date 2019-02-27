@@ -23,7 +23,8 @@ namespace :import do
   # 16 Medborgarskap erhölls citizenship_at
   desc 'Import refugees'
   task refugees: :environment do
-    records = parse_file('refugees.csv')
+    filename = 'refugees.csv'
+    records = parse_file(filename)
     refugees = 0
 
     ActiveRecord::Base.transaction do
@@ -54,7 +55,7 @@ namespace :import do
         refugees += 1
 
       rescue ActiveRecord::RecordInvalid => e
-        puts "Rad #{row_number + 1} i csv-filen: #{e}"
+        puts "Rad #{row_number + 1} i #{filename}: #{e}"
         raise 'Importen avbröts. Ingen data sparades.'
       end
     end
@@ -81,7 +82,8 @@ namespace :import do
   # 14 Anställningsnummer: FamilyAndEmergencyHomeCost.contactor_employee_number
   desc 'Import placements'
   task placements: :environment do |task|
-    records = parse_file('placements.csv')
+    filename = 'placements.csv'
+    records = parse_file(filename)
     placements = 0
 
     ActiveRecord::Base.transaction do
@@ -115,7 +117,7 @@ namespace :import do
         placements += 1
 
       rescue ActiveRecord::RecordInvalid => e
-        puts "Rad #{row_number + 1} i csv-filen: #{e}"
+        puts "Rad #{row_number + 1} i #{filename}: #{e}"
         raise 'Importen avbröts. Ingen data sparades.'
       end
     end
@@ -135,7 +137,8 @@ namespace :import do
   #  The task creates ExtraContribution objects of the outpatient type.
   desc 'Import outpatient contributions'
   task outpatient_contributions: :environment do
-    records = parse_file('outpatient_contributions.csv')
+    filename = 'outpatient_contributions.csv'
+    records = parse_file(filename)
     extra_contributions = 0
 
     ActiveRecord::Base.transaction do
@@ -154,7 +157,7 @@ namespace :import do
         extra_contributions += 1
 
       rescue ActiveRecord::RecordInvalid => e
-        puts "Rad #{row_number + 1} i csv-filen: #{e}"
+        puts "Rad #{row_number + 1} i #{filename}: #{e}"
         raise 'Importen avbröts. Ingen data sparades.'
       end
     end
@@ -162,8 +165,49 @@ namespace :import do
     puts "#{extra_contributions} öppenvårdsinsatser importerades"
   end
 
+  # The sheet "Övriga insatser" exported to "extra_contributions.csv"
+  #   has two heading rows and the following columns:
+  #
+  # 0 Dossiernummer: dossier_number of a Refugee
+  # 1 Insatsform: name of an ExtraContributionType
+  # 2 Startdatum: period_start
+  # 3 Slutdatum: period_end
+  # 4 Arvode: fee
+  # 5 Omkostnad: expense
+  # 6 Uppdragstagare: contractor_name
+  # 7 Födelsedata: contractor_birthday
+  # 8 Anställningsnummer: contactor_employee_number
   desc 'Import extra contributions'
-  task extra_contributions: :environment do |task|
+  task extra_contributions: :environment do
+    filename = 'extra_contributions.csv'
+    records = parse_file(filename)
+    extra_contributions = 0
+
+    ActiveRecord::Base.transaction do
+      records.each_with_index do |record, row_number|
+        next if row_number < 2
+
+        ExtraContribution.create!(
+          refugee: Refugee.where(dossier_number: record[0]).first,
+          extra_contribution_type: ExtraContributionType.where(name: record[1]).first,
+          period_start: record[2],
+          period_end: record[3],
+          fee: record[4],
+          expense: record[5],
+          contractor_name: record[6],
+          contractor_birthday: record[7],
+          contactor_employee_number: record[8]
+        )
+
+        extra_contributions += 1
+
+      rescue ActiveRecord::RecordInvalid => e
+        puts "Rad #{row_number + 1} i #{filename}: #{e}"
+        raise 'Importen avbröts. Ingen data sparades.'
+      end
+    end
+
+    puts "#{extra_contributions} övriga insatser importerades"
   end
 end
 
