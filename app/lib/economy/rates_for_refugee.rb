@@ -76,7 +76,7 @@ module Economy
     # Måste:
     #   ha anvisningsdatum till Malmö, dvs. ha:
     #     Utskriven till Malmö
-    #       :municipality_placement_migrationsverket_at
+    #       :checked_out_to_our_city
     #     Malmö kommun (alla delar)
     #       :in_our_municipality?
     #
@@ -97,7 +97,7 @@ module Economy
     def assigned_0_17(category)
       return [] if
           @refugee.date_of_birth.nil? ||
-          @refugee.municipality_placement_migrationsverket_at.nil? ||
+          @refugee.checked_out_to_our_city.nil? ||
           !@refugee.in_our_municipality?
 
       category.rates.map do |rate|
