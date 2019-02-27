@@ -1,8 +1,9 @@
-DIRECTORY = Rails.env.development? ? '/home/vagrant/importer/' : '/home/app_runner/importer/'
+DIRECTORY = (Rails.env.development? ? '/home/vagrant/importer/' : '/home/app_runner/importer/').freeze
 
 # Import data from exported CSV files from Excel.
 namespace :import do
-  # The sheet "Individdata" exported to "refugees.csv", has two heading rows and the following columns:
+  # The sheet "Individdata" exported to "refugees.csv",
+  #   has two heading rows and the following columns:
   # 0  Namn: name
   # 1  Personnummer: split into date_of_birth and ssn_extension
   # 2  Extra personnummer: create one Ssn
@@ -61,7 +62,8 @@ namespace :import do
     puts "#{refugees} barn importerades"
   end
 
-  # The sheet "Placeringar" exported to "placements.csv", has two heading rows and the following columns:
+  # The sheet "Placeringar" exported to "placements.csv",
+  #   has two heading rows and the following columns:
   # 0  Dossiernummer: dossier_number of a Refugee
   # 1  Boende: name of a Home
   # 2  Placeringsdatum: moved_in_at
@@ -121,8 +123,42 @@ namespace :import do
     puts "#{placements} placeringar importerades"
   end
 
+  # The sheet "Öppenvårdsinsatser" exported to "outpatient_contributions.csv",
+  #   creates ExtraContribution objects with the outpatient fields and
+  #   has two heading rows and the following columns:
+  #
+  # 0 Dossiernummer: dossier_number of a Refugee
+  # 1 Startdatum: period_start
+  # 2 Slutdatum: period_end
+  # 3 Månadskostnad: monthly_cost
+  # 4 Kommentar: comment
   desc 'Import outpatient contributions'
-  task outpatient_contributions: :environment do |task|
+  task outpatient_contributions: :environment do
+    records = parse_file('outpatient_contributions.csv')
+    extra_contributions = 0
+
+    ActiveRecord::Base.transaction do
+      records.each_with_index do |record, row_number|
+        next if row_number < 2
+
+        ExtraContribution.create!(
+          refugee: Refugee.where(dossier_number: record[0]).first,
+          extra_contribution_type: ExtraContributionType.where(outpatient: true).first,
+          period_start: record[1],
+          period_end: record[2],
+          monthly_cost: record[3],
+          comment: record[4]
+        )
+
+        extra_contributions += 1
+
+      rescue ActiveRecord::RecordInvalid => e
+        puts "Rad #{row_number + 1} i csv-filen: #{e}"
+        raise 'Importen avbröts. Ingen data sparades.'
+      end
+    end
+
+    puts "#{extra_contributions} öppenvårdsinsatser importerades"
   end
 
   desc 'Import extra contributions'
