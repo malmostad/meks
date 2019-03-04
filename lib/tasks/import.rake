@@ -1,7 +1,19 @@
-DIRECTORY = (Rails.env.development? ? '/home/vagrant/importer/' : '/home/app_runner/importer/').freeze
-
 # Import data from exported CSV files from Excel.
 namespace :import do
+  BASE_DIR = (Rails.env.development? ? '/home/vagrant/importer/' : '/home/app_runner/importer/').freeze
+
+  # Place the following exported spreadsheet files for *new* refugees here:
+  # refugees.csv placements.csv outpatient_contributions.csv extra_contributions.csv
+  # Run the create tasks in chain with:
+  # $ rake import:create_refugees_tasks
+  CREATE_REFUGEES_DIR = File.join(BASE_DIR, 'create').freeze
+
+  # Place the following exported spreadsheet files for *existing* refugees here:
+  # refugees.csv placements.csv outpatient_contributions.csv extra_contributions.csv
+  # Run the update tasks in chain with:
+  # $ rake import:update_refugees_tasks
+  UPDATE_REFUGEES_DIR = File.join(BASE_DIR, 'update').freeze
+
   # The sheet "Individdata" exported to "refugees.csv"
   #   has two heading rows and the following columns:
   # 0  Dossiernummer: dossier_number
@@ -212,11 +224,66 @@ namespace :import do
 
     puts "#{extra_contributions} övriga insatser importerades"
   end
+
+  # The sheet "Individdata" in the file with refugees that exitst in MEKS exported to "refugees.csv"
+  #   has two heading rows and the following columns:
+  #
+  # 0 Dossiernummer: dossier_number of a Refugee
+  # 1 Kundnummer: procapita
+  desc 'Update refugees'
+  task update_refugees: :environment do
+    filename = 'refugees.csv'
+    records = parse_file(filename)
+    refugees = 0
+
+    ActiveRecord::Base.transaction do
+      records.each_with_index do |record, row_number|
+        next if row_number < 2
+
+        refugee = Refugee.where(dossier_number: record[0]).first
+        raise ActiveRecord::RecordInvalid if refugee.nil?
+
+        refugee.procapita = record[1]
+        refugee.save!(validate: false)
+
+        refugees += 1
+
+      rescue ActiveRecord::RecordInvalid => e
+        puts "Rad #{row_number + 1} i #{filename}: #{e}"
+        raise 'Importen avbröts. Ingen data sparades.'
+      end
+    end
+
+    puts "#{refugees} ensamkommande barn uppdaterades"
+  end
+
+  desc 'Create refugees and import data associated with them'
+  task create_refugees_tasks: :environment do
+    @directory = CREATE_REFUGEES_DIR
+    ActiveRecord::Base.transaction do
+      Rake::Task['import:refugees'].invoke
+      Rake::Task['import:placements'].invoke
+      Rake::Task['import:outpatient_contributions'].invoke
+      Rake::Task['import:extra_contributions'].invoke
+    end
+  end
+
+  desc 'Update exitsing refugees and import data associated with them'
+  task update_refugees_tasks:  :environment do
+    @directory = UPDATE_REFUGEES_DIR
+    ActiveRecord::Base.transaction do
+      Rake::Task[:environment].invoke
+      Rake::Task['import:update_refugees'].invoke
+      Rake::Task['import:placements'].invoke
+      Rake::Task['import:outpatient_contributions'].invoke
+      Rake::Task['import:outpatient_contributions'].invoke
+    end
+  end
 end
 
 # Basic parsing of the uploaded file
 def parse_file(filename)
-  contents = File.open(File.join(DIRECTORY, filename), 'r:bom|utf-8') { |f| f.read.gsub(/\r\n*/, "\n") }
+  contents = File.open(File.join(@directory, filename), 'r:bom|utf-8') { |f| f.read.gsub(/\r\n*/, "\n") }
   rows = contents.split(/\n/)
   extract_fields(rows)
 end
