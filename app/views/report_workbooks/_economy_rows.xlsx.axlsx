@@ -7,6 +7,7 @@
       refugee.name,
       refugee.ssn,
       refugee.ssns.map(&:full_ssn).join(', '),
+      refugee.arrival ? 'Ja' : 'Nej',
       refugee.placements.sort_by(&:moved_in_at).map(&:legal_code).try(:map, &:name).join(', '),
       refugee.placements.sort_by(&:moved_in_at).map { |pl| "#{pl.home.name} (#{pl.moved_in_at}–#{pl.moved_out_at})" }.join(', '),
       refugee.registered,
@@ -34,11 +35,11 @@
     style: @style.normal
   )
 
-  [8, 9, 10, 11, 16, 17, 18, 19, 20, 21].each do |col|
+  [9, 10, 11, 12, 17, 18, 19, 20, 21, 22].each do |col|
     sheet.rows[row + 1].cells[col].style = @style.date
   end
 
-  [22, 23, 24].each do |col|
+  [23, 24, 25].each do |col|
     sheet.rows[row + 1].cells[col].style = @style.currency
   end
 end
