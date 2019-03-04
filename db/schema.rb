@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_25_100952) do
+ActiveRecord::Schema.define(version: 2019_03_04_132533) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 2019_02_25_100952) do
     t.integer "contactor_employee_number"
     t.decimal "monthly_cost", precision: 10, scale: 2
     t.string "comment"
+    t.datetime "imported_at"
     t.index ["extra_contribution_type_id"], name: "index_extra_contributions_on_extra_contribution_type_id"
     t.index ["refugee_id"], name: "index_extra_contributions_on_refugee_id"
   end
@@ -257,6 +258,7 @@ ActiveRecord::Schema.define(version: 2019_02_25_100952) do
     t.text "specification"
     t.integer "legal_code_id"
     t.integer "cost"
+    t.datetime "imported_at"
     t.index ["home_id"], name: "index_placements_on_home_id"
     t.index ["legal_code_id"], name: "index_placements_on_legal_code_id"
     t.index ["moved_out_reason_id"], name: "index_placements_on_moved_out_reason_id"

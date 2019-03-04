@@ -113,7 +113,8 @@ namespace :import do
           moved_out_reason: MovedOutReason.where(name: record[4]).first,
           specification: record[5],
           legal_code: LegalCode.where(name: record[6]).first,
-          cost: record[7]
+          cost: record[7],
+          imported_at: Time.now
         )
 
         if record[8].present?
@@ -166,7 +167,8 @@ namespace :import do
           period_start: record[1],
           period_end: record[2],
           monthly_cost: record[3],
-          comment: record[4]
+          comment: record[4],
+          imported_at: Time.now
         )
 
         extra_contributions += 1
@@ -211,7 +213,8 @@ namespace :import do
           expense: record[5],
           contractor_name: record[6],
           contractor_birthday: record[7],
-          contactor_employee_number: record[8]
+          contactor_employee_number: record[8],
+          imported_at: Time.now
         )
 
         extra_contributions += 1
@@ -276,7 +279,7 @@ namespace :import do
       Rake::Task['import:update_refugees'].invoke
       Rake::Task['import:placements'].invoke
       Rake::Task['import:outpatient_contributions'].invoke
-      Rake::Task['import:outpatient_contributions'].invoke
+      Rake::Task['import:extra_contributions'].invoke
     end
   end
 end
