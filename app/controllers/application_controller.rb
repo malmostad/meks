@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     else
       logger.info "[USER_ID]       #{session[:user_id]}"
       logger.info "[RENEWED_AT]    #{session[:renewed_at]}"
-      logger.info "[CURRENT_USER]  #{current_user}"
+      logger.info "[CURRENT_USER]  #{current_user&.username}"
       logger.info "[SESSION_FRESH] #{session_fresh?}"
 
       reset_session_keys
