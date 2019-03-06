@@ -121,8 +121,8 @@ namespace :import do
           placement.family_and_emergency_home_costs << FamilyAndEmergencyHomeCost.create!(
             period_start: record[8],
             period_end: record[9],
-            fee: record[10],
-            expense: record[11],
+            fee: record[10].sub(',', '.'),
+            expense: record[11].sub(',', '.'),
             contractor_name: record[12],
             contractor_birthday: record[13],
             contactor_employee_number: record[14]
@@ -166,7 +166,7 @@ namespace :import do
           extra_contribution_type: ExtraContributionType.where(outpatient: true).first,
           period_start: record[1],
           period_end: record[2],
-          monthly_cost: record[3],
+          monthly_cost: record[3].sub(',', '.'),
           comment: record[4],
           imported_at: Time.now
         )
@@ -209,8 +209,8 @@ namespace :import do
           extra_contribution_type: ExtraContributionType.where(name: record[1]).first,
           period_start: record[2],
           period_end: record[3],
-          fee: record[4],
-          expense: record[5],
+          fee: record[4].sub(',', '.'),
+          expense: record[5].sub(',', '.'),
           contractor_name: record[6],
           contractor_birthday: record[7],
           contactor_employee_number: record[8],
