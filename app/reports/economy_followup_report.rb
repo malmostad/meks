@@ -33,6 +33,6 @@ class EconomyFollowupReport < ApplicationReport::Base
                      home: [:owner_type, :type_of_housings, :costs]]
       )
       .where('registered <= ?', Date.new(@year).end_of_year)
-      .where('not deregistered < ?or deregistered is ?', Date.new(@year).beginning_of_year, nil)
+      .where('not deregistered < ? or deregistered is ?', Date.new(@year).beginning_of_year, nil)
   end
 end
