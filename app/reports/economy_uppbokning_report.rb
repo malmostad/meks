@@ -102,7 +102,13 @@ class EconomyUppbokningReport < ApplicationReport::Base
   def qualified_interval(refugee)
     # The max range the refugee qualifies for the legal code(s)
     qualified_from = earliest_date(refugee.placements.map(&:moved_in_at))
-    qualified_to   = latest_date(refugee.placements.map(&:moved_out_at))
+
+    # Use @params[:to] if the refugee has an open ended placement
+    if refugee.placements.map(&:moved_out_at).include? nil
+      qualified_to = @params[:to]
+    else
+      qualified_to = latest_date(refugee.placements.map(&:moved_out_at))
+    end
 
     # Cut of the qualified range with the report range to get the actual range
     {
