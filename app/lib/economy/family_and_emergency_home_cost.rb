@@ -14,7 +14,7 @@ module Economy
 
         placement.family_and_emergency_home_costs.map do |cost|
           ::Economy::CostWithPoRate.new(
-            cost, from: interval[:form], to: interval[:to], po_rates: @po_rates
+            cost, from: interval[:from], to: interval[:to], po_rates: @po_rates
           ).as_array
         end
       end.flatten.compact
