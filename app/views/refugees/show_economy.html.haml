@@ -23,4 +23,5 @@
       = kv 'Total utbetald schablon',
            number_to_currency(@refugee.payments.map(&:amount).sum.to_s, delimiter: ' ')
 
-      = render 'payments'
+      - if can? :read, Payment
+        = render 'payments'
