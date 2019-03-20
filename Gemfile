@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '5.2.2.1'
-gem 'haml-rails', '1.0.0'
+gem 'haml-rails', '2.0.0'
 gem 'sassc-rails', '2.1.0'
 gem 'uglifier', '4.1.20'
 gem 'coffee-rails', '4.2.2'
@@ -11,7 +11,7 @@ gem 'bootstrap-datepicker-rails', '1.8.0.1'
 
 gem 'simple_form', '4.1.0'
 gem 'mysql2', '0.5.2'
-gem 'dalli', '2.7.9'
+gem 'dalli', '2.7.10'
 gem 'elasticsearch-model', '6.0.0'
 gem 'elasticsearch-rails', '6.0.0'
 gem 'daemons', '1.3.1'
@@ -61,5 +61,5 @@ group :development do
 end
 
 group :test, :production do
-  gem 'unicorn', '5.4.1'
+  gem 'unicorn', '5.5.0'
 end
