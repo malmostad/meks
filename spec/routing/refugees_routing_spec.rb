@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe RefugeesController, type: :routing do
   describe "routing" do
 

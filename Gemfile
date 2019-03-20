@@ -49,7 +49,7 @@ group :local_test do
   gem 'puma'
   gem 'rspec-rails'
   gem 'rails-controller-testing'
-  gem 'factory_bot_rails', '4.11.1'
+  gem 'factory_bot_rails', '5.0.1'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'selenium-webdriver'

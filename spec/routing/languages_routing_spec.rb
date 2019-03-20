@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe LanguagesController, type: :routing do
   describe "routing" do
 

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe LoginController, type: :routing do
   describe "routing" do
     it "routes to #new" do

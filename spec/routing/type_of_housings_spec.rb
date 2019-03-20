@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe TypeOfHousingsController, type: :routing do
   describe "routing" do
 

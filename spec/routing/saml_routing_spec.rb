@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe SamlController, type: :routing do
   describe "routing" do
     it "routes to #sso" do
