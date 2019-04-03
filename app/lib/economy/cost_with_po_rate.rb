@@ -75,6 +75,7 @@ module Economy
       end
 
       return 0 unless po_rate
+      return 0 unless @cost.contractor_birthday
 
       po_rate.send(contractor_age_group(date))
     end
