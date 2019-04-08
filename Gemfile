@@ -43,6 +43,7 @@ group :development do
   gem 'capistrano-bundler', '1.5.0', require: false
   gem 'bullet'
   gem 'listen'
+  gem 'rails-erd'
 end
 
 group :local_test do
