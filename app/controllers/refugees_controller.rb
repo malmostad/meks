@@ -86,13 +86,12 @@ class RefugeesController < ApplicationController
     @drafts_count = Refugee.where(draft: true).count
     @imported_count = Refugee.where.not(imported_at: nil).count
 
-    response = Refugee.fuzzy_search(params[:q], from: @offset, size: @limit)
-    if response
-      @refugees = response[:refugees]
-      @total = response[:total]
-      logger.info { "Elasticsearch took #{response[:took]}ms" }
-    end
-    @has_more = @total.present? ? (@offset + @limit < @total) : false
+    @refugees = search_query(@q, @offset)
+
+    @total = @refugees.count
+    @refugees = @refugees.limit(100)
+    @has_more = @total.present? ? (@limit < @total) : false
+
     if request.xhr?
       @xhr = true
       render :_search_results, layout: false
@@ -103,19 +102,16 @@ class RefugeesController < ApplicationController
 
   # Suggest refugees based on a search query
   def suggest
-    @refugees = Refugee.fuzzy_suggest(params[:term])
-    if @refugees
-      @refugees = @refugees.map do |r|
-        { id: r.id,
-          name: r.name,
-          path: "#{root_url}refugees/#{r.id}",
-          dossier_number: r.dossier_number,
-          ssn: r.ssn,
-          value: [r.name, r.dossier_number, r.ssn].reject(&:blank?).join(', ')
-        }
-      end
-    else
-      @refugees = { error: 'Couldn’t get suggestions' }
+    refugees = search_query(params[:term], 0, 10)
+
+    @refugees = refugees.map do |r|
+      { id: r.id,
+        name: r.name,
+        path: "#{root_url}refugees/#{r.id}",
+        dossier_number: r.dossier_number,
+        ssn: r.ssn,
+        value: [r.name, r.dossier_number, r.ssn].reject(&:blank?).join(', ')
+      }
     end
 
     if params['callback']
@@ -140,6 +136,26 @@ class RefugeesController < ApplicationController
   end
 
   private
+
+  def search_query(query, offset = 0, limit = nil)
+    refugees = Refugee
+      .left_outer_joins(:dossier_numbers, :ssns)
+      .includes(:gender, :countries, current_placements: :home)
+      .where(
+        'refugees.name LIKE ? OR
+        refugees.date_of_birth LIKE ? OR
+        refugees.dossier_number LIKE ? OR
+        ssns.date_of_birth LIKE ? OR
+        dossier_numbers.name LIKE ?',
+        "%#{query}%", "#{query}%", "#{query}%",
+        "#{query}%", "#{query}%"
+      )
+      .offset(offset)
+
+    return refugees unless limit
+
+    refugees.limit(limit)
+  end
 
   def load_more_query
     {

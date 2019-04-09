@@ -65,6 +65,7 @@ $ ->
                 $.extend(item, { value: item.value })
                 item
             else
+              # response [{ value: 'Inga träffar', path: document.location.href }]
               $queryRefugeeField.autocomplete("close")
       minLength: 2
       select: (event, ui) ->
@@ -75,7 +76,7 @@ $ ->
       open: ->
         $("ul.ui-menu").width $(@).innerWidth()
     .data("ui-autocomplete")._renderItem = (ul, item) ->
-      # Create item for full search we reached the last item
+      # Create item for full search when reached the last item
       $more = ""
       if items is ul.find("li").length + 1
         $more = $("<li class='more-search-results ui-menu-item' role='presentation'><a>Visa alla träffar</a></li>")
