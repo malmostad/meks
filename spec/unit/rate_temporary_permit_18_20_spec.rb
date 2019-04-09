@@ -5,7 +5,7 @@
 # The majority of test for this rate category is performed
 # in rate_temporary_permit_0_17_spec.rb. Only conditionals for date of birth differs
 RSpec.describe 'Rates for temporary_permit_18_20' do
-  let(:refugee) { create(:refugee) }
+  let(:refugee) { create(:refugee, citizenship_at: nil) }
 
   before(:each) do
     refugee.reload
@@ -76,6 +76,15 @@ RSpec.describe 'Rates for temporary_permit_18_20' do
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
 
       expect(rate[:days]).to eq 1
+    end
+
+    it 'should not have rate_exempt because of citizenship' do
+      refugee2 = create(:refugee)
+      create(:placement_with_rate_exempt, refugee: refugee2, moved_in_at: UnitMacros::REPORT_INTERVAL[:from].to_date + 1)
+      rates = Economy::RatesForRefugee.new(refugee2, UnitMacros::REPORT_INTERVAL).as_array
+      rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_18_20])
+
+      expect(rate).to eq nil
     end
 
     it 'should have a reduced number of days rate' do
