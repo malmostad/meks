@@ -74,16 +74,13 @@ module Economy
     # Schablonkategori Anvisad
     #
     # Måste:
-    #   ha anvisningsdatum till Malmö, dvs. ha:
-    #     Utskriven till Malmö
-    #       :checked_out_to_our_city
-    #     Malmö kommun (alla delar)
-    #       :in_our_municipality?
+    #   Anvisningskommun Malmö kommun (alla delar)
+    #     :in_our_municipality?
     #
     # Från-datum beräknas på senaste datum av följande:
     #   minimiålder
     #     :date_of_birth
-    #   anvisad
+    #   anvisningdatum
     #     :municipality_placement_migrationsverket_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
@@ -97,7 +94,6 @@ module Economy
     def assigned_0_17(category)
       return [] if
           @refugee.date_of_birth.nil? ||
-          @refugee.checked_out_to_our_city.nil? ||
           !@refugee.in_our_municipality?
 
       category.rates.map do |rate|
