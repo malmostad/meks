@@ -75,7 +75,7 @@ module Economy
 
         {
           from: latest_date(placement.moved_in_at, @interval[:from]),
-          to: earliest_date(placement.moved_out_at, @interval[:to])
+          to: earliest_date(@refugee.citizenship_at, placement.moved_out_at, @interval[:to])
         }
       end.compact
 
