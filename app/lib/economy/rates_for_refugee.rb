@@ -92,7 +92,7 @@ module Economy
     #     :citizenship_at
     # Returns the number of days and rate amouts in the PUT category's rates
     def assigned_0_17(category)
-      return [] if @refugee.in_our_municipality.nil?
+      return [] if !@refugee.in_our_municipality?
 
       category.rates.map do |rate|
         from = latest_date(
