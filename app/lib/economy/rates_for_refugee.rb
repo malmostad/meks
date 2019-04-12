@@ -24,33 +24,31 @@ module Economy
     # Måste:
     #   inte ha datum medborgarskap
     #     :citizenship_at
-    #   ha inskrivningsdatum idag eller tidigare
+    #   ha inskrivningsdatum
     #     :registered
     #
     # Från-datum beräknas på senaste datum av följande:
-    #    minimiålder
+    #    datumet när barnet uppnått minimiålder
     #      :date_of_birth
     #    inskrivningsdatum
     #      :registered
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #    maxålder + 1 år - 1 dag
+    #   datumet när barnet uppnått maxålder + 1 år – 1 dag
     #      :date_of_birth
-    #  avslutsdatum - 1 dag
-    #      :before_deregistered
-    #  anvisningsdatum - 1 dag
+    #   avslutsdatum - 1 dag
+    #      :deregistered
+    #   anvisningsdatum - 1 dag
     #      :municipality_placement_migrationsverket_at
     #  TUT startar
     #      :temporary_permit_starts_at
     #  PUT startar
     #      :residence_permit_at
-    #  medborgarskap
+    #  medborgarskap erhölls - 1 dag
     #     :citizenship_at
-    # Returns the number of days for the rate and the rate amount, or nil
+    # Returns the number of days for the rate and the rate amount
     def arrival_0_17(category)
-      return [] if
-          @refugee.date_of_birth.nil? ||
-          @refugee.registered.nil?
+      return [] if @refugee.citizenship_at? || @refugee.registered.nil?
 
       category.rates.map do |rate|
         from = latest_date(
@@ -60,11 +58,11 @@ module Economy
 
         to = earliest_date(
           *shared_to_attr(category, rate),
-          @refugee.before_deregistered,
-          @refugee.before_municipality_placement_migrationsverket_at,
+          day_before(@refugee.deregistered),
+          day_before(@refugee.municipality_placement_migrationsverket_at),
           @refugee.temporary_permit_starts_at,
           @refugee.residence_permit_at,
-          @refugee.citizenship_at
+          day_before(@refugee.citizenship_at)
         )
 
         amount_and_days(from, to, rate)
@@ -78,23 +76,23 @@ module Economy
     #     :in_our_municipality?
     #
     # Från-datum beräknas på senaste datum av följande:
-    #   minimiålder
+    #   datumet när barnet uppnått minimiålder
     #     :date_of_birth
     #   anvisningdatum
     #     :municipality_placement_migrationsverket_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #   maxålder + 1 år - 1 dag
+    #   datumet när barnet uppnått maxålder + 1 år – 1 dag
     #     :date_of_birth
     #   utskriven till Malmö
     #     :checked_out_to_our_city
     #   avslutad - 1 dag
     #     :deregistered
+    #  medborgarskap erhölls - 1 dag
+    #     :citizenship_at
     # Returns the number of days and rate amouts in the PUT category's rates
     def assigned_0_17(category)
-      return [] if
-          @refugee.date_of_birth.nil? ||
-          !@refugee.in_our_municipality?
+      return [] if @refugee.in_our_municipality.nil?
 
       category.rates.map do |rate|
         from = latest_date(
@@ -105,7 +103,8 @@ module Economy
         to = earliest_date(
           *shared_to_attr(category, rate),
           @refugee.checked_out_to_our_city,
-          @refugee.before_deregistered
+          day_before(@refugee.deregistered),
+          day_before(@refugee.citizenship_at)
         )
 
         amount_and_days(from, to, rate)
@@ -125,35 +124,36 @@ module Economy
     #     :checked_out_to_our_city
     #
     # Från-datum beräknas på senaste datum av följande:
-    #   minimiålder
+    #   datumet när barnet uppnått minimiålder
     #     :date_of_birth
     #   utskriven till Malmö - 1 dag
-    #     :before_checked_out_to_our_city
+    #     :checked_out_to_our_city
     #   startdatum för TUT
     #     :temporary_permit_starts_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #   maxålder + 1 år - 1 dag
+    #   datumet när barnet uppnått maxålder + 1 år – 1 dag
     #     :date_of_birth
     #   avslutsdatum för TUT
     #     :temporary_permit_ends_at
     #   datum för PUT
     #     :residence_permit_at
-    #   avslutsdatum - 1
+    #   avslutsdatum - 1 dag
     #     :deregistered
-    # Returns the number of days for the rate and the rate amount, or nil
+    #   medborgarskap erhölls - 1 dag
+    #     :citizenship_at
+    # Returns the number of days for the rate and the rate amount
     def temporary_permit(category)
       return [] if
-          @refugee.date_of_birth.nil? ||
           @refugee.temporary_permit_starts_at.nil? ||
           @refugee.temporary_permit_ends_at.nil? ||
-          @refugee.checked_out_to_our_city.nil? ||
-          @refugee.temporary_permit_ends_at - @refugee.temporary_permit_starts_at < 365
+          @refugee.temporary_permit_ends_at - @refugee.temporary_permit_starts_at < 365 ||
+          @refugee.checked_out_to_our_city.nil?
 
       category.rates.map do |rate|
         from = latest_date(
           *shared_from_attr(category, rate),
-          @refugee.before_checked_out_to_our_city,
+          day_before(@refugee.checked_out_to_our_city),
           @refugee.temporary_permit_starts_at
         )
 
@@ -161,7 +161,8 @@ module Economy
           *shared_to_attr(category, rate),
           @refugee.temporary_permit_ends_at,
           @refugee.residence_permit_at,
-          @refugee.before_deregistered
+          day_before(@refugee.deregistered),
+          day_before(@refugee.citizenship_at)
         )
 
         amount_and_days(from, to, rate)
@@ -173,44 +174,43 @@ module Economy
     # Måste:
     # Ha PUT
     #   :residence_permit_at
-    # Ha Utskriven till Malmö - 1 dag
-    #   :before_checked_out_to_our_city
+    # Ha Utskriven till Malmö
+    #   :checked_out_to_our_city
     # inte ha medborgarskap
     #   :citizenship_at
     #
     # Från-datum beräknas på senaste datum av följande:
-    #   minimiålder
+    #   datumet när barnet uppnått minimiålder
     #     :date_of_birth
     #   startdatum för PUT
     #     :residence_permit_at
-    #   utskriven till Malmö
+    #   utskriven till Malmö - 1 dag
     #     :checked_out_to_our_city
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #   maxålder + 1 år - 1 dag
-    #   medborgarskap
-    #     :citizenship_at
+    #   datumet när barnet uppnått maxålder + 1 år – 1 dag
     #   avslutsdatum - 1
     #     :deregistered
-    # Returns the number of days for the rate and the rate amount, or nil
+    #   medborgarskap erhölls - 1 dag
+    #     :citizenship_at
+    # Returns the number of days for the rate and the rate amount
     def residence_permit(category)
       return [] if
-        @refugee.date_of_birth.nil? ||
         @refugee.residence_permit_at.nil? ||
         @refugee.checked_out_to_our_city.nil? ||
-        @refugee.citizenship_at.present?
+        @refugee.citizenship_at?
 
       category.rates.map do |rate|
         from = latest_date(
           *shared_from_attr(category, rate),
           @refugee.residence_permit_at,
-          @refugee.before_checked_out_to_our_city
+          day_before(@refugee.checked_out_to_our_city)
         )
 
         to = earliest_date(
           *shared_to_attr(category, rate),
-          @refugee.citizenship_at,
-          @refugee.before_deregistered
+          day_before(@refugee.deregistered),
+          @refugee.citizenship_at
         )
 
         amount_and_days(from, to, rate)
@@ -222,7 +222,7 @@ module Economy
     # Takes the arguments from and to for the qualified rate period and the rate object
     # Returns a hash with :amount and :days for the rate
     def amount_and_days(from, to, rate)
-      days = number_of_days_with_exempt_from_rate_deducted(from, to)
+      days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to)
       return nil if days.zero?
 
       { amount: rate.amount, days: days }
@@ -232,7 +232,7 @@ module Economy
     #   and deducts days within the period that must not be calulate for rate
     #   See doc in Economy::ReplaceRatesWithActualCosts
     # Returns the number of qualified days for the rate
-    def number_of_days_with_exempt_from_rate_deducted(from, to)
+    def number_of_remaining_days_with_exempt_from_rate_deducted(from, to)
       # Create a range of dates in the rate period and convert it to an array
       days_with_rate = (from.to_date..to.to_date).to_a
 

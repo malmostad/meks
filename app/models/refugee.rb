@@ -139,21 +139,6 @@ class Refugee < ApplicationRecord
     end.compact
   end
 
-  # municipality_placement_migrationsverket_at - 1 day or nil
-  def before_municipality_placement_migrationsverket_at
-    municipality_placement_migrationsverket_at - 1.day if municipality_placement_migrationsverket_at
-  end
-
-  # deregistered - 1 day or nil
-  def before_deregistered
-    deregistered - 1.day if deregistered
-  end
-
-  # checked_out_to_our_city - 1 day or nil
-  def before_checked_out_to_our_city
-    checked_out_to_our_city - 1.day if checked_out_to_our_city
-  end
-
   def in_our_municipality?
     municipality&.our_municipality?
   end

@@ -39,6 +39,10 @@ module Economy
       dates.compact.map(&:to_date).max
     end
 
+    def day_before(date)
+      date.to_date - 1.day if date
+    end
+
     # Returns the number of months as a float
     #   calculated from the total days in each month
     def number_of_months(interval)

@@ -13,12 +13,6 @@ RSpec.describe 'Rates for residence_permit_18_20' do
   before(:each) do
     refugee.reload
     create_rate_categories_with_rates
-    # Mandatories
-    # refugee.residence_permit_at (defined below)
-    # refugee.before_checked_out_to_our_city (checked_out_to_our_city defined below)
-
-    # Must not have
-    # refugee.citizenship_at (defined below)
 
     # Count days from the last of the following
     refugee.date_of_birth           = '1999-07-01'

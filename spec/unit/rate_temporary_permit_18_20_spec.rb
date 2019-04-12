@@ -10,10 +10,6 @@ RSpec.describe 'Rates for temporary_permit_18_20' do
   before(:each) do
     refugee.reload
     create_rate_categories_with_rates
-    # Mandatories
-    # refugee.temporary_permit_starts_at (defined below)
-    # refugee.temporary_permit_ends_at (defined below)
-    # refugee.checked_out_to_our_city (defined below)
 
     # Count days from the last of the following
     refugee.date_of_birth              = '1999-07-01'

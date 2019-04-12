@@ -7,12 +7,6 @@ RSpec.describe 'Rates for arrival_0_17' do
     refugee.reload
     create_rate_categories_with_rates
 
-    # Mandatories
-    # refugee.registered (defined below)
-
-    # Must not have
-    # refugee.citizenship_at (defined below)
-
     # Count days from the last of the following
     refugee.date_of_birth                              = '2010-01-01'
     refugee.registered                                 = '2018-01-01'

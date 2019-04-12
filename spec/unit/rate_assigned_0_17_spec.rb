@@ -8,10 +8,6 @@ RSpec.describe 'Rates for assigned_0_17' do
     refugee.reload
     create_rate_categories_with_rates
 
-    # Mandatories
-    # refugee.municipality_placement_migrationsverket_at (defined below)
-    # refugee.in_our_municipality (defined in let() above)
-
     # Count days from the last of the following
     refugee.date_of_birth                              = '2000-07-01'
     refugee.municipality_placement_migrationsverket_at = '2018-01-01'
