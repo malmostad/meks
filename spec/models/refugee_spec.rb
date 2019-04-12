@@ -66,8 +66,8 @@ RSpec.describe Refugee, type: :model do
       expect(refugee.countries).to be_present
     end
 
-    it 'should have a citizenship_at' do
-      expect(refugee.citizenship_at).to be_present
+    it 'should not have a citizenship_at' do
+      expect(refugee.citizenship_at).to be_nil
     end
 
     it 'should be assigned to a municipality' do

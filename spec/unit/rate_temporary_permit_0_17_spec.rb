@@ -13,8 +13,8 @@ RSpec.describe 'Rates for temporary_permit_0_17' do
 
     # Count days from the last of the following
     refugee.date_of_birth              = '2010-01-01'
-    refugee.checked_out_to_our_city    = '2018-04-01' # + 1 day
-    refugee.temporary_permit_starts_at = '2018-01-01'
+    refugee.checked_out_to_our_city    = '2018-04-01' # + 1 day
+    refugee.temporary_permit_starts_at = '2018-01-01'
 
     # Count days to the first of the following
     # refugee.date_of_birth + 1 year - 1 day (defined above)
@@ -75,7 +75,8 @@ RSpec.describe 'Rates for temporary_permit_0_17' do
     expect(rate[:days]).to eq 30
   end
 
-  it 'should respond to changed deregistered' do
+  it 'should respond to changed temporary_permit_ends_at' do
+    refugee.temporary_permit_starts_at = '2017-04-01'
     refugee.temporary_permit_ends_at = '2018-05-01'
 
     rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
@@ -120,7 +121,7 @@ RSpec.describe 'Rates for temporary_permit_0_17' do
   end
 
   describe 'deduction of days for placements with legal_code#exempt_from_rate' do
-    let(:refugee) { create(:refugee, citizenship_at: nil) }
+    let(:refugee) { create(:refugee) }
 
     it 'should have no rate for placement covering report range' do
       create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_INTERVAL[:from])
@@ -139,7 +140,7 @@ RSpec.describe 'Rates for temporary_permit_0_17' do
     end
 
     it 'should not have rate_exempt because of citizenship' do
-      refugee2 = create(:refugee)
+      refugee2 = create(:refugee, citizenship_at: '2016-01-01')
       create(:placement_with_rate_exempt, refugee: refugee2, moved_in_at: UnitMacros::REPORT_INTERVAL[:from].to_date + 1)
       rates = Economy::RatesForRefugee.new(refugee2, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:temporary_permit_0_17])

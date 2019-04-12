@@ -17,7 +17,6 @@ RSpec.describe 'Rates for arrival_0_17' do
     refugee.municipality_placement_migrationsverket_at = '2019-01-01'
     refugee.temporary_permit_starts_at                 = '2019-01-01'
     refugee.residence_permit_at                        = nil
-    refugee.citizenship_at                             = nil
   end
 
   it 'should have correct rate amount and days' do

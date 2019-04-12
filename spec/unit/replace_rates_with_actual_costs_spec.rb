@@ -1,5 +1,5 @@
 RSpec.describe Economy::ReplaceRatesWithActualCosts do
-  let(:refugee) { create(:refugee, citizenship_at: nil) }
+  let(:refugee) { create(:refugee) }
   let(:home) { create(:home, type_of_cost: :cost_per_placement) }
   let(:placement) do
     create(
@@ -37,7 +37,7 @@ RSpec.describe Economy::ReplaceRatesWithActualCosts do
   end
 
   it 'should not have rate_exempt because of citizenship' do
-    refugee2 = create(:refugee)
+    refugee2 = create(:refugee, citizenship_at: Date.today - 5.years)
     expect(Economy::ReplaceRatesWithActualCosts.new(refugee2).sum).to eq 0
   end
 end

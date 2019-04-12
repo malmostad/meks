@@ -2,7 +2,7 @@
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for assigned_0_17' do
   let(:municipality) { create(:municipality, our_municipality: true) }
-  let(:refugee) { create(:refugee, municipality: municipality, citizenship_at: nil) }
+  let(:refugee) { create(:refugee, municipality: municipality) }
 
   before(:each) do
     refugee.reload
@@ -89,7 +89,7 @@ RSpec.describe 'Rates for assigned_0_17' do
     end
 
     it 'should not have rate exempt because fo citizenship' do
-      refugee2 = create(:refugee)
+      refugee2 = create(:refugee, citizenship_at: Date.today - 5.years)
       create(:placement_with_rate_exempt, refugee: refugee2, moved_in_at: UnitMacros::REPORT_INTERVAL[:from].to_date + 1)
       rates = Economy::RatesForRefugee.new(refugee2, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:assigned_0_17])

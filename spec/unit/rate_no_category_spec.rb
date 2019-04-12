@@ -7,8 +7,9 @@ RSpec.describe 'Rates' do
     create_rate_categories_with_rates
   end
 
-  describe 'refugee without properties' do
+  describe 'refugee with citizenship' do
     it 'should not belong to any rate category' do
+      refugee.citizenship_at = '2017-01-01'
       rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
       expect(rates.size).to eq 0
     end
