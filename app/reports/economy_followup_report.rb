@@ -34,5 +34,6 @@ class EconomyFollowupReport < ApplicationReport::Base
       )
       .where('registered <= ?', Date.new(@year).end_of_year)
       .where('not deregistered < ? or deregistered is ?', Date.new(@year).beginning_of_year, nil)
+      .where('not citizenship_at < ? or citizenship_at is ?', Date.new(@year).beginning_of_year, nil)
   end
 end
