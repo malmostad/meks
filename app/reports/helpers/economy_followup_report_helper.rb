@@ -2,6 +2,12 @@ module EconomyFollowupReportHelper
   def economy_per_month(refugee, age_group, po_rates)
     (1..12).map do |month|
       interval_for_costs = age_cutoff(month, refugee, age_group, cost: true)
+
+      # For this report only: don't calculate cost after citizenship_at - 1 day
+      if refugee.citizenship_at?
+        interval_for_costs[:to] = earliest_date(interval_for_costs[:to], refugee.citizenship_at - 1.day)
+      end
+
       interval_for_income = age_cutoff(month, refugee, age_group)
       [
         days_with_placements(refugee, interval_for_costs),
