@@ -39,6 +39,7 @@ gem 'bcrypt', '~> 3.1.12'
 gem 'pry-rails'
 
 group :development do
+  gem 'puma'
   gem 'capistrano', '3.11.0', require: false
   gem 'capistrano-rails', '1.4.0', require: false
   gem 'capistrano-rbenv', '2.1.4', require: false
@@ -46,6 +47,8 @@ group :development do
   gem 'bullet'
   gem 'listen'
   gem 'rails-erd'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug'
 end
 
 group :local_test do
@@ -56,11 +59,6 @@ group :local_test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
-end
-
-group :development do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
 end
 
 group :test, :production do
