@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.2.1'
+gem 'rails', '5.2.3'
 gem 'haml-rails', '2.0.0'
 gem 'sassc-rails', '2.1.0'
 gem 'uglifier', '4.1.20'
 gem 'coffee-rails', '4.2.2'
+
+# gem 'nokogiri', '1.10.2'
 
 # Version 1.5 that is included in Malmo Global Assets have bugs in the date range selector
 gem 'bootstrap-datepicker-rails', '1.8.0.1'
@@ -17,7 +19,7 @@ gem 'elasticsearch-rails', '6.0.0'
 gem 'daemons', '1.3.1'
 
 gem 'net-ldap', '0.16.1'
-gem 'cancancan', '2.3.0'
+gem 'cancancan', '3.0.1'
 gem 'ruby-saml', '1.9.0'
 
 gem 'rubyzip', '~> 1.2.2'
@@ -50,7 +52,7 @@ group :local_test do
   gem 'puma'
   gem 'rspec-rails'
   gem 'rails-controller-testing'
-  gem 'factory_bot_rails', '5.0.1'
+  gem 'factory_bot_rails', '5.0.2'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
