@@ -107,24 +107,24 @@ RSpec.describe 'Rates for arrival_0_17' do
     expect(rate).to be_nil
   end
 
-  describe 'deduction of days for placements with legal_code#exempt_from_rate' do
-    it 'should have no rate for placement covering report range' do
+  describe 'deduction of days for placements with legal_code#exempt_from_rate should not be made for arrival_0_17' do
+    it 'should not have rate for placement covering report range' do
       create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_INTERVAL[:from])
       rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
-      expect(rate).to eq nil
+      expect(rate[:days]).to eq 91
     end
 
-    it 'should have a reduced number of days rate' do
+    it 'should not have a reduced number of days rate' do
       create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_INTERVAL[:from].to_date + 1)
       rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
-      expect(rate[:days]).to eq 1
+      expect(rate[:days]).to eq 91
     end
 
-    it 'should have a reduced number of days rate' do
+    it 'should not have a reduced number of days rate' do
       create(
         :placement_with_rate_exempt,
         refugee: refugee,
@@ -134,10 +134,10 @@ RSpec.describe 'Rates for arrival_0_17' do
       rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
-      expect(rate[:days]).to eq 20
+      expect(rate[:days]).to eq 91
     end
 
-    it 'should have a reduced number of days rate' do
+    it 'should not have a reduced number of days rate' do
       create(
         :placement_with_rate_exempt,
         refugee: refugee,
@@ -147,7 +147,7 @@ RSpec.describe 'Rates for arrival_0_17' do
       rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
       rate = detect_rate_by_amount(rates, UnitMacros::RATES[:arrival_0_17])
 
-      expect(rate[:days]).to eq 10
+      expect(rate[:days]).to eq 91
     end
 
     it 'should not have a reduced number of days rate' do
