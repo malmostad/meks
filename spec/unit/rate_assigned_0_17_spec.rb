@@ -2,7 +2,7 @@
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for assigned_0_17' do
   let(:municipality) { create(:municipality, our_municipality: true) }
-  let(:refugee) { create(:refugee, municipality: municipality) }
+  let(:refugee) { create(:refugee, municipality: municipality, citizenship_at: nil) }
 
   before(:each) do
     refugee.reload

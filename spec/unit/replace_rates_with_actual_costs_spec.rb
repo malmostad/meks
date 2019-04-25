@@ -1,5 +1,5 @@
 RSpec.describe Economy::ReplaceRatesWithActualCosts do
-  let(:refugee) { create(:refugee) }
+  let(:refugee) { create(:refugee, citizenship_at: nil) }
   let(:home) { create(:home, type_of_cost: :cost_per_placement) }
   let(:placement) do
     create(

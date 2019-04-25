@@ -5,7 +5,7 @@
 # The majority of test for this rate category is performed
 # in rate_temporary_permit_0_17_spec.rb. Only conditionals for date of birth differs
 RSpec.describe 'Rates for temporary_permit_18_20' do
-  let(:refugee) { create(:refugee) }
+  let(:refugee) { create(:refugee, citizenship_at: nil) }
 
   before(:each) do
     refugee.reload
