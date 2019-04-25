@@ -2,11 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.2.3'
 gem 'haml-rails', '2.0.0'
-gem 'sassc-rails', '2.1.0'
+gem 'sassc-rails', '2.1.1'
 gem 'uglifier', '4.1.20'
-gem 'coffee-rails', '4.2.2'
-
-# gem 'nokogiri', '1.10.2'
+gem 'coffee-rails', '5.0.0'
 
 # Version 1.5 that is included in Malmo Global Assets have bugs in the date range selector
 gem 'bootstrap-datepicker-rails', '1.8.0.1'
@@ -27,7 +25,7 @@ gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c593a08'
 gem 'axlsx_rails'
 gem 'delayed_job_active_record', '4.1.3'
 
-gem 'whenever', '0.10.0', require: false
+gem 'whenever', '0.11.0', require: false
 gem 'highline', '2.0.1'
 gem 'execjs', '2.7.0'
 gem 'faker'
@@ -39,7 +37,6 @@ gem 'bcrypt', '~> 3.1.12'
 gem 'pry-rails'
 
 group :development do
-  gem 'puma'
   gem 'capistrano', '3.11.0', require: false
   gem 'capistrano-rails', '1.4.0', require: false
   gem 'capistrano-rbenv', '2.1.4', require: false
@@ -52,13 +49,16 @@ group :development do
 end
 
 group :local_test do
-  gem 'puma'
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails', '5.0.2'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
+end
+
+group :development, :local_test do
+  gem 'puma'
 end
 
 group :test, :production do
