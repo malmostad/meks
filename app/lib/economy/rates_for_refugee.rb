@@ -19,6 +19,14 @@ module Economy
       end
     end
 
+    # Utility method for debugging.
+    # Returns an hash with each rate category and the amount and days qualified
+    def qualifies_as
+      RATE_CATEGORIES_AND_RATES.map do |category|
+        [category.qualifier.values.join('_'), send(category.qualifier[:meth], category)]
+      end.to_h
+    end
+
     # Schablonkategori Ankomstbarn
     #
     # Måste:
@@ -65,7 +73,8 @@ module Economy
           day_before(@refugee.citizenship_at)
         )
 
-        amount_and_days(from, to, rate)
+        # The arrival rate category must not have actual cost replaced
+        amount_and_days(from, to, rate, skip_replace: true)
       end
     end
 
@@ -221,8 +230,8 @@ module Economy
 
     # Takes the arguments from and to for the qualified rate period and the rate object
     # Returns a hash with :amount and :days for the rate
-    def amount_and_days(from, to, rate)
-      days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to)
+    def amount_and_days(from, to, rate, options = {})
+      days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to, skip_replace: options[:skip_replace])
       return nil if days.zero?
 
       { amount: rate.amount, days: days }
@@ -232,9 +241,11 @@ module Economy
     #   and deducts days within the period that must not be calulate for rate
     #   See doc in Economy::ReplaceRatesWithActualCosts
     # Returns the number of qualified days for the rate
-    def number_of_remaining_days_with_exempt_from_rate_deducted(from, to)
+    def number_of_remaining_days_with_exempt_from_rate_deducted(from, to, options = {})
       # Create a range of dates in the rate period and convert it to an array
       days_with_rate = (from.to_date..to.to_date).to_a
+
+      return days_with_rate.size if options[:skip_replace]
 
       # Deduct the exempt_from_rate days array from the rate days array
       #   to get rate qualified days.
