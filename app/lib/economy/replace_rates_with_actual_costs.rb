@@ -4,7 +4,7 @@ module Economy
   #
   # If the refugee has placements with a legal_code that has the attribute
   #   #exempt_from_rate set to true, then
-  # 1. The periods for those placement must not be calulate for rates.
+  # 1. The periods for those placements must not be calulated for rates.
   # 2. All the actual costs for the refugee within those periods must be included instead
   class ReplaceRatesWithActualCosts < Base
     def initialize(refugee, options = {})
@@ -37,7 +37,7 @@ module Economy
       end.compact.join('+')
     end
 
-    # Returns an array. Note that each hash can be of one of those three forms
+    # Returns an array. Each element can be of one of those three forms
     # { days: Integer, amount: Float }
     # { months: Float, costs: Float }
     # Float
