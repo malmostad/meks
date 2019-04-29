@@ -1,4 +1,4 @@
-# Extra omkostnader för placering
+# Extra utgifter för placering
 module Economy
   class PlacementExtraCost < Base
     def initialize(placements, interval = DEFAULT_INTERVAL)

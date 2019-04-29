@@ -1,4 +1,4 @@
-# 'Extra omkostnad (knuten till placering)'
+# 'Extra utgift (knuten till placering)'
 class PlacementExtraCost < ApplicationRecord
   belongs_to :placement, touch: true
 

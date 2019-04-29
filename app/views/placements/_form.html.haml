@@ -21,13 +21,13 @@
       .controls
         = add_family_and_emergency_home_costs_button "Ny familje/jourhemskostnad", f
 
-%h2.group-title{ popover('placement.placement_extra_costs') } Extra omkostnader
+%h2.group-title{ popover('placement.placement_extra_costs') } Extra utgifter
 .terms
   = f.simple_fields_for :placement_extra_costs, @placement.placement_extra_costs do |pec|
     = render "fields_for_placement_extra_cost", pec: pec
   .form-group
     .controls
-      = add_placement_extra_costs_button "Ny extra omkostnad", f
+      = add_placement_extra_costs_button "Ny extra utgift", f
 
 - if @placement.moved_out_at.present?
   %h2.group-title Utskrivning
