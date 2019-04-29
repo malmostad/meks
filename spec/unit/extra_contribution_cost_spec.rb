@@ -128,26 +128,5 @@ RSpec.describe 'ExtraContributionCost' do
         end_date: '2019-12-31'
       )
     end
-
-    let(:ecc) do
-      Economy::ExtraContributionCost.new(
-        refugee,
-        from: '2018-07-01',
-        to: '2019-06-30'
-      )
-    end
-
-    before do
-      extra_contribution2.reload
-      po_rate2.reload
-    end
-
-    it 'should have correct cost for a limiting partial month over several years report period' do
-      expect(ecc.sum.round(2)).to eq 1_057_856.05
-    end
-
-    it 'should have correct cost formula' do
-      expect(ecc.as_formula).to eq '6.0*(12345.0+3743.004+23456.0)+6.0*(54321.0+17013.3372+65431.0)'
-    end
   end
 end
