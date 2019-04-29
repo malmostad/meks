@@ -23,7 +23,7 @@ module Economy
     # Returns an hash with each rate category and the amount and days qualified
     def qualifies_as
       RATE_CATEGORIES_AND_RATES.map do |category|
-        [category.qualifier.values.join('_'), send(category.qualifier[:meth], category)]
+        [category.qualifier.values.join('_'), send(category.qualifier[:meth], category).compact]
       end.to_h
     end
 
@@ -99,7 +99,7 @@ module Economy
     #     :deregistered
     #  medborgarskap erhölls - 1 dag
     #     :citizenship_at
-    # Returns the number of days and rate amouts in the PUT category's rates
+    # Returns the number of days and rate amounts in the PUT category's rates
     def assigned_0_17(category)
       return [] if !@refugee.in_our_municipality?
 
