@@ -2,10 +2,9 @@ class EconomyReport < ApplicationReport::Base
   def initialize(params = {})
     @params = params
     @interval = { from: params[:from], to: params[:to] }
-    @po_rates = PoRate.all
 
     options = {}
-    options[:locals] = { refugees: refugees, po_rates: @po_rates }
+    options[:locals] = { refugees: refugees }
     super(options.merge(params))
   end
 
@@ -31,12 +30,11 @@ class EconomyReport < ApplicationReport::Base
     refugees.map do |refugee|
       costs_and_rates = [
         ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).sum,
-        ::Economy::ExtraContributionCost.new(refugee, @interval.merge(po_rates: @po_rates)).sum,
+        ::Economy::ExtraContributionCost.new(refugee, @interval).sum,
         ::Economy::RefugeeExtraCost.new(refugee, @interval).sum,
-        ::Economy::PlacementExtraCost.new(refugee.placements, @interval.merge(po_rates: @po_rates)).sum,
-        ::Economy::FamilyAndEmergencyHomeCost.new(refugee.placements, @interval.merge(po_rates: @po_rates)).sum,
+        ::Economy::PlacementExtraCost.new(refugee.placements, @interval).sum,
+        ::Economy::FamilyAndEmergencyHomeCost.new(refugee.placements, @interval).sum,
         ::Economy::RatesForRefugee.new(refugee, @interval).sum,
-        ::Economy::ReplaceRatesWithActualCosts.new(refugee, @interval.merge(po_rates: @po_rates)).sum,
         ::Economy::Payment.new(refugee.payments, @interval).sum
       ].sum
 

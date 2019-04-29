@@ -1,5 +1,5 @@
 module EconomyFollowupReportHelper
-  def economy_per_month(refugee, age_group, po_rates)
+  def economy_per_month(refugee, age_group)
     (1..12).map do |month|
       interval_for_costs = age_cutoff(month, refugee, age_group, cost: true)
 
@@ -11,8 +11,8 @@ module EconomyFollowupReportHelper
       interval_for_income = age_cutoff(month, refugee, age_group)
       [
         days_with_placements(refugee, interval_for_costs),
-        refugee_cost(refugee, interval_for_costs, po_rates),
-        refugee_expected_income(refugee, interval_for_income, po_rates)
+        refugee_cost(refugee, interval_for_costs),
+        refugee_expected_income(refugee, interval_for_income)
       ]
     end.flatten
   end

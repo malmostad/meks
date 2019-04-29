@@ -10,6 +10,24 @@ module Economy
       @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, @interval)
     end
 
+    def sum
+      as_array.map { |x| x[:days] * x[:amount] }.compact.sum + @replace_rates.sum
+    end
+
+    def as_formula
+      arr = as_array.map do |x|
+        next if x.value? 0
+
+        "#{x[:days]}*#{x[:amount]}"
+      end
+
+      arr << @replace_rates.as_formula
+      arr&.reject!(&:blank?)
+      return '0' if arr.blank?
+
+      arr.join('+')
+    end
+
     # Returns the number of days for the rate and the rate amount
     def as_array
       @as_array ||= begin

@@ -118,9 +118,7 @@ class Refugee < ApplicationRecord
   end
 
   def total_rate
-    Economy::RatesForRefugee.new(self).sum +
-      # Special case, see class doc
-      Economy::ReplaceRatesWithActualCosts.new(self).sum
+    Economy::RatesForRefugee.new(self).sum
   end
 
   # Return a refugees placements within a give range

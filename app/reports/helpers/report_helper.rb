@@ -18,27 +18,19 @@ module ReportHelper
     I18n.t('simple_form.labels.refugee.' + asylum.first) + ' ' + asylum.second.to_s
   end
 
-  def refugee_cost(refugee, interval, po_rates)
+  def refugee_cost(refugee, interval)
     sum_formula(
       ::Economy::PlacementAndHomeCost.new(refugee.placements, interval).as_formula,
-      ::Economy::ExtraContributionCost.new(refugee, interval.merge(po_rates: po_rates)).as_formula,
+      ::Economy::ExtraContributionCost.new(refugee, interval).as_formula,
       ::Economy::RefugeeExtraCost.new(refugee, interval).as_formula,
-      ::Economy::PlacementExtraCost.new(
-        refugee.placements, interval.merge(po_rates: po_rates)
-      ).as_formula,
-      ::Economy::FamilyAndEmergencyHomeCost.new(
-        refugee.placements, interval.merge(po_rates: po_rates)
-      ).as_formula
+      ::Economy::PlacementExtraCost.new(refugee.placements, interval).as_formula,
+      ::Economy::FamilyAndEmergencyHomeCost.new(refugee.placements, interval).as_formula
     )
   end
 
-  def refugee_expected_income(refugee, interval, po_rates)
+  def refugee_expected_income(refugee, interval)
     sum_formula(
-      ::Economy::RatesForRefugee.new(refugee, interval).as_formula,
-      # Special case, see class doc
-      ::Economy::ReplaceRatesWithActualCosts.new(
-        refugee, interval.merge(po_rates: po_rates)
-      ).as_formula
+      ::Economy::RatesForRefugee.new(refugee, interval).as_formula
     )
   end
 
