@@ -8,7 +8,6 @@ module Economy
     def initialize(refugee, options = {})
       @refugee = refugee
       @interval = { from: options[:from], to: (options[:to] || Date.today) }
-      @po_rates = options[:po_rates] || PoRate.all
     end
 
     def sum
@@ -40,9 +39,7 @@ module Economy
     private
 
     def normal_type(interval, extra_contribution)
-      ::Economy::CostWithPoRate.new(
-        extra_contribution, interval.merge(po_rates: @po_rates)
-      ).as_array
+      ::Economy::CostWithPoRate.new(extra_contribution, interval).as_array
     end
 
     def outpatient_type(interval, extra_contribution)

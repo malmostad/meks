@@ -2,10 +2,12 @@ module Economy
   # Calulates costs of type FamilyAndEmergencyHomeCost and ExtraContribution
   #   that requires PoRate for a contractor
   class CostWithPoRate < Base
+
+    PO_RATES = PoRate.all.to_a.freeze
+
     def initialize(cost, options = {})
       @cost = cost
       @interval = { from: (options[:from] || cost.period_start), to: (options[:to] || Date.today) }
-      @po_rates = options[:po_rates] || PoRate.all
     end
 
     def sum
@@ -70,7 +72,7 @@ module Economy
     end
 
     def po_rate_for_date(date)
-      po_rate = @po_rates.find do |rate|
+      po_rate = PO_RATES.find do |rate|
         rate.start_date <= date && rate.end_date >= date
       end
 

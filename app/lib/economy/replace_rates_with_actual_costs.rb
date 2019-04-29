@@ -10,7 +10,6 @@ module Economy
     def initialize(refugee, options = {})
       @refugee = refugee
       @interval = { from: options[:from], to: (options[:to] || Date.today) }
-      @po_rates = options[:po_rates] || PoRate.all
       @intervals_with_exempt = intervals_with_exempt
     end
 
@@ -46,14 +45,10 @@ module Economy
 
       @intervals_with_exempt.map do |interval_with_exempt|
         ::Economy::PlacementAndHomeCost.new(@refugee.placements, interval_with_exempt).as_array +
-          ::Economy::ExtraContributionCost.new(
-            @refugee, interval_with_exempt.merge(po_rates: @po_rates)
-          ).as_array +
+          ::Economy::ExtraContributionCost.new(@refugee, interval_with_exempt).as_array +
           ::Economy::RefugeeExtraCost.new(@refugee, interval_with_exempt).as_array +
           ::Economy::PlacementExtraCost.new(@refugee.placements, interval_with_exempt).as_array +
-          ::Economy::FamilyAndEmergencyHomeCost.new(
-            @refugee.placements, interval_with_exempt.merge(po_rates: @po_rates)
-          ).as_array
+          ::Economy::FamilyAndEmergencyHomeCost.new(@refugee.placements, interval_with_exempt).as_array
       end.flatten.compact
     end
 
