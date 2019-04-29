@@ -53,7 +53,7 @@ RSpec.feature 'Placements', type: :feature do
         select(legal_codes[1].name, from: 'placement_legal_code_id')
         fill_in 'placement_moved_in_at', with: Date.today.to_s
 
-        click_on 'Ny extra omkostnad'
+        click_on 'Ny extra utgift'
         page.all('.placement_placement_extra_costs_date input').first.fill_in with: '2018-12-01'
         page.all('.placement_placement_extra_costs_amount input').first.fill_in with: 123
         page.all('.placement_placement_extra_costs_comment input').first.fill_in with: 'Foo bar kommentar'
@@ -141,10 +141,10 @@ RSpec.feature 'Placements', type: :feature do
         visit "/refugees/#{refugee.id}/show_placements"
         click_on 'Ny placering'
 
-        click_on 'Ny extra omkostnad'
+        click_on 'Ny extra utgift'
         expect(page.all('.placement_placement_extra_costs_date', visible: true)).not_to be_empty
 
-        click_on 'Radera extra omkostnaden'
+        click_on 'Radera extra utgiften'
         expect(page.all('.placement_placement_extra_costs_date', visible: true)).to be_empty
       end
     end
