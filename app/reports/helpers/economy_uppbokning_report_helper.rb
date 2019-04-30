@@ -1,13 +1,12 @@
 module EconomyUppbokningReportHelper
   def expected_income(record)
+    replace_rates = Economy::RatesForRefugee.new(
+      record[:refugee], from: record[:from], to: record[:to]
+    ).replace_rates
+
     sum_formula(
       record[:rates]&.map { |x| "#{x[:days]}*#{x[:amount]}" }&.compact&.join('+'),
-      # Special case, see class doc
-      ::Economy::ReplaceRatesWithActualCosts.new(
-        record[:refugee],
-        from: record[:from],
-        to: record[:to]
-      ).as_formula
+      replace_rates.as_formula
     )
   end
 end

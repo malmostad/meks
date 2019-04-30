@@ -4,6 +4,8 @@ module Economy
   class RatesForRefugee < Base
     RATE_CATEGORIES_AND_RATES = RateCategory.includes(:rates).all
 
+    attr_reader :replace_rates
+
     def initialize(refugee, interval = DEFAULT_INTERVAL)
       @refugee = refugee
       @interval = interval
