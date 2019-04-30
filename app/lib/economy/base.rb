@@ -71,7 +71,7 @@ module Economy
             interval[:from] = other_interval[:to] + 1.day
           end
         end
-        next nil if interval[:from] > interval[:to]
+        next if interval[:from] > interval[:to]
 
         interval
       end.compact
