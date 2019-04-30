@@ -22,4 +22,53 @@ FactoryBot.define do
     countries { create_list(:country, 2) }
     citizenship_at { nil }
   end
+
+  factory :refugee_assigned_0_17, parent: :refugee do
+    date_of_birth { '2000-07-01' }
+    municipality_placement_migrationsverket_at { '2018-01-01' }
+    checked_out_to_our_city { '2018-07-01' }
+    deregistered { '2018-07-02' }
+    municipality { create(:municipality, our_municipality: true) }
+  end
+
+  factory :refugee_arrival_0_17, parent: :refugee do
+    date_of_birth { '2010-01-01' }
+    registered { '2018-01-01' }
+    deregistered { nil }
+    municipality_placement_migrationsverket_at { '2019-01-01' }
+    temporary_permit_starts_at { '2019-01-01' }
+    residence_permit_at { nil }
+  end
+
+  factory :refugee_residence_permit_0_17, parent: :refugee do
+    date_of_birth { '2010-01-01' }
+    residence_permit_at { '2018-04-01' }
+    checked_out_to_our_city { '2018-01-01' }
+    deregistered { nil }
+  end
+
+  factory :refugee_residence_permit_18_20, parent: :refugee do
+    date_of_birth { '1999-07-01' }
+    residence_permit_at {  '2018-04-01' }
+    checked_out_to_our_city { '2018-01-01' }
+    deregistered { nil }
+  end
+
+  factory :refugee_temporary_permit_0_17, parent: :refugee do
+    date_of_birth { '2010-01-01' }
+    checked_out_to_our_city { '2018-04-01' }
+    temporary_permit_starts_at { '2018-01-01' }
+    temporary_permit_ends_at { '2020-01-01' }
+    residence_permit_at { nil }
+    deregistered { nil }
+  end
+
+  factory :refugee_temporary_permit_18_20, parent: :refugee do
+    date_of_birth { '1999-07-01' }
+    checked_out_to_our_city { '2018-04-01' }
+    temporary_permit_starts_at { '2018-01-01' }
+    temporary_permit_ends_at { '2020-01-01' }
+    residence_permit_at { nil }
+    deregistered { nil }
+  end
 end

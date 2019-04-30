@@ -1,22 +1,10 @@
 # Schablonkategori Ankomstbarn 0-17
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for arrival_0_17' do
-  let(:refugee) { create(:refugee) }
+  let(:refugee) { create(:refugee_arrival_0_17) }
 
   before(:each) do
-    refugee.reload
     create_rate_categories_with_rates
-
-    # Count days from the last of the following
-    refugee.date_of_birth                              = '2010-01-01'
-    refugee.registered                                 = '2018-01-01'
-
-    # Count days to the first of the following occurs
-    # refugee.date_of_birth # + 1 year - 1 day (defined above)
-    refugee.deregistered                               = nil
-    refugee.municipality_placement_migrationsverket_at = '2019-01-01'
-    refugee.temporary_permit_starts_at                 = '2019-01-01'
-    refugee.residence_permit_at                        = nil
   end
 
   it 'should have correct rate amount and days' do

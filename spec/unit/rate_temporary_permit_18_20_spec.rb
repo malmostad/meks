@@ -5,22 +5,10 @@
 # The majority of test for this rate category is performed
 # in rate_temporary_permit_0_17_spec.rb. Only conditionals for date of birth differs
 RSpec.describe 'Rates for temporary_permit_18_20' do
-  let(:refugee) { create(:refugee, citizenship_at: nil) }
+  let(:refugee) { create(:refugee_temporary_permit_18_20) }
 
   before(:each) do
-    refugee.reload
     create_rate_categories_with_rates
-
-    # Count days from the last of the following
-    refugee.date_of_birth              = '1999-07-01'
-    refugee.checked_out_to_our_city    = '2018-04-01' # + 1 day
-    refugee.temporary_permit_starts_at = '2018-01-01'
-
-    # Count days to the first of the following
-    # refugee.date_of_birth + 1 year - 1 day (defined above)
-    refugee.temporary_permit_ends_at   = '2020-01-01'
-    refugee.residence_permit_at        = nil
-    refugee.deregistered               = nil # - 1 day
   end
 
   it 'should have correct rate amount and days' do

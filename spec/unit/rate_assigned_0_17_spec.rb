@@ -1,21 +1,10 @@
 # Schablonkategori Anvisad
 # See specifications of conditions in app/lib/economy/rates.rb
 RSpec.describe 'Rates for assigned_0_17' do
-  let(:municipality) { create(:municipality, our_municipality: true) }
-  let(:refugee) { create(:refugee, municipality: municipality, citizenship_at: nil) }
+  let(:refugee) { create(:refugee_assigned_0_17) }
 
   before(:each) do
-    refugee.reload
     create_rate_categories_with_rates
-
-    # Count days from the last of the following
-    refugee.date_of_birth                              = '2000-07-01'
-    refugee.municipality_placement_migrationsverket_at = '2018-01-01'
-
-    # Count days to the first of the following occurs
-    # refugee.date_of_birth # + 1 year - 1 day (defined above)
-    refugee.checked_out_to_our_city                    = '2018-07-01'
-    refugee.deregistered                               = '2018-07-02' # - 1 day
   end
 
   it 'should have correct rate amount and days' do
@@ -62,7 +51,7 @@ RSpec.describe 'Rates for assigned_0_17' do
   end
 
   it 'should require our_municipality' do
-    municipality.update_attribute(:our_municipality, false)
+    refugee.municipality.update_attribute(:our_municipality, false)
     refugee.reload
 
     rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array

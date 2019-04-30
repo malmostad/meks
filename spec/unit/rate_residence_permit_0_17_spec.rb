@@ -5,20 +5,10 @@ RSpec.describe 'Rates for residence_permit_0_17' do
     Municipality.where(our_municipality: true).first_or_create { |m| m.name = 'Foo City' }
   end
 
-  let(:refugee) { create(:refugee) }
+  let(:refugee) { create(:refugee_residence_permit_0_17) }
 
   before(:each) do
-    refugee.reload
     create_rate_categories_with_rates
-
-    # Count days from the last of the following
-    refugee.date_of_birth           = '2010-01-01'
-    refugee.residence_permit_at     = '2018-04-01' # + 1 day
-    refugee.checked_out_to_our_city = '2018-01-01'
-
-    # Count days to the first of the following
-    # refugee.date_of_birth + 1 year - 1 day (defined above)
-    refugee.deregistered            = nil # - 1 day
   end
 
   it 'should have correct number of days' do
