@@ -35,7 +35,7 @@ namespace :scramble do
     home_names << 1.upto(40).map { Faker::Superhero.name }
     home_names << 1.upto(40).map { Faker::Superhero.descriptor }
     home_names << 1.upto(40).map { Faker::Superhero.power }
-    home_names << 1.upto(40).map { Faker::TwinPeaks.location }
+    home_names << 1.upto(40).map { Faker::TvShows::TwinPeaks.location }
     home_names << 1.upto(40).map { Faker::Space.nebula }
     home_names << 1.upto(40).map { Faker::Space.star }
     home_names << 1.upto(40).map { Faker::Space.meteorite }
