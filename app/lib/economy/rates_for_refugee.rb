@@ -50,7 +50,9 @@ module Economy
 
     # Utility method for debugging.
     # Returns an hash with each rate category and the amount and days qualified
-    def qualifies_as
+    def qualifies_as(skip_all_replace = true)
+      @skip_all_replace = skip_all_replace
+
       RATE_CATEGORIES_AND_RATES.map do |category|
         [category.qualifier.values.join('_'), send(category.qualifier[:meth], category).compact]
       end.to_h
@@ -273,6 +275,8 @@ module Economy
     # Returns a hash with :amount and :days for the rate
     def amount_and_days(from, to, rate, options = {})
       return unless from && to
+
+      options[:skip_replace] = true if @skip_all_replace
 
       days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to, skip_replace: options[:skip_replace])
       return if days.zero?
