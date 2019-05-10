@@ -26,7 +26,6 @@ module Economy
     def as_formula
       as_array.map do |x|
         next x.to_s if x.is_a? BigDecimal
-        next if x[:days]&.zero? || x[:months]&.zero?
 
         next "#{x[:days]}*#{x[:amount]}" if days_hash?(x)
         next "#{x[:months]}*#{x[:costs]}" if months_hash?(x)
