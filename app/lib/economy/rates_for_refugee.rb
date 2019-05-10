@@ -14,25 +14,24 @@ module Economy
     # Sum for self and ReplaceRatesWithActualCosts
     def sum
       as_array.map do |x|
-        next unless x && x[:days] && x[:amount]
+        next x if x.is_a? BigDecimal
 
-        x[:days] * x[:amount]
+        next x[:days] * x[:amount] if days_hash?(x)
+        next x[:months] * x[:costs] if months_hash?(x)
+        next x[:months] * (x[:fee] + x[:po_cost] + x[:expense]) if po_cost_hash?(x)
       end.compact.sum
     end
 
     # Formula for self and ReplaceRatesWithActualCosts
     def as_formula
-      arr = as_array.map do |x|
-        next unless x && x[:days] && x[:amount]
-        next if x.value? 0
+      as_array.map do |x|
+        next x.to_s if x.is_a? BigDecimal
+        next if x[:days]&.zero? || x[:months]&.zero?
 
-        "#{x[:days]}*#{x[:amount]}"
-      end
-
-      arr&.reject!(&:blank?)
-      return '0' if arr.blank?
-
-      arr.join('+')
+        next "#{x[:days]}*#{x[:amount]}" if days_hash?(x)
+        next "#{x[:months]}*#{x[:costs]}" if months_hash?(x)
+        next "#{x[:months]}*(#{x[:fee]}+#{x[:po_cost]}+#{x[:expense]})" if po_cost_hash?(x)
+      end.compact.join('+')
     end
 
     # Returns the number of days for the rate and the rate amount
@@ -279,9 +278,8 @@ module Economy
       options[:skip_replace] = true if @skip_all_replace
 
       days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to, skip_replace: options[:skip_replace])
-      return @replace_rates.as_array if days.zero?
-
       @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, from: from, to: to)
+      return @replace_rates.as_array if days.zero?
 
       [{ amount: rate.amount, days: days }] + @replace_rates.as_array
     end
