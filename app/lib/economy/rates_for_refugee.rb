@@ -9,30 +9,26 @@ module Economy
     def initialize(refugee, interval = DEFAULT_INTERVAL)
       @refugee = refugee
       @interval = interval
-
-      # Exception from the ReplaceRatesWithActualCosts exceptions
-      exception_interval = interval_for_arrival_0_17(
-        RATE_CATEGORIES_AND_RATES.where(qualifier: { meth: :arrival_0_17, min_age: 0, max_age: 17 }).first
-      )
-
-      # Rates must be replaced with actual costs, see doc in ReplaceRatesWithActualCosts
-      @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, interval.merge(exception_interval: exception_interval))
     end
 
     # Sum for self and ReplaceRatesWithActualCosts
     def sum
-      as_array.map { |x| x[:days] * x[:amount] }.compact.sum + @replace_rates.sum
+      as_array.map do |x|
+        next unless x && x[:days] && x[:amount]
+
+        x[:days] * x[:amount]
+      end.compact.sum
     end
 
     # Formula for self and ReplaceRatesWithActualCosts
     def as_formula
       arr = as_array.map do |x|
+        next unless x && x[:days] && x[:amount]
         next if x.value? 0
 
         "#{x[:days]}*#{x[:amount]}"
       end
 
-      arr << @replace_rates.as_formula
       arr&.reject!(&:blank?)
       return '0' if arr.blank?
 
@@ -91,9 +87,10 @@ module Economy
 
       category.rates.map do |rate|
         interval = interval_for_arrival_0_17(category, rate)
+        next unless interval[:from] && interval[:to]
 
         # The arrival rate category must not have actual cost replaced
-        amount_and_days(interval[:from], interval[:to], rate, skip_replace: true)
+        { amount: rate.amount, days: (interval[:from].to_date..interval[:to].to_date).to_a.size }
       end
     end
 
@@ -279,9 +276,10 @@ module Economy
       options[:skip_replace] = true if @skip_all_replace
 
       days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to, skip_replace: options[:skip_replace])
-      return if days.zero?
 
-      { amount: rate.amount, days: days }
+      @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, from: from, to: to)
+
+      [{ amount: rate.amount, days: days }] + @replace_rates.as_array
     end
 
     # Takes the arguments from and to for a rate period
@@ -298,6 +296,8 @@ module Economy
       #   to get rate qualified days.
       # Return the number qualified days by reducing the
       #   days_with_rate with the exempt_days_array
+      @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, from: from, to: to)
+
       (days_with_rate - @replace_rates.exempt_days_array).size
     end
 
