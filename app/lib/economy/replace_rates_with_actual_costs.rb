@@ -10,10 +10,6 @@ module Economy
     def initialize(refugee, options = {})
       @refugee = refugee
       @interval = { from: options[:from], to: (options[:to] || Date.today) }
-
-      # Date interval for the exception from exempt rule
-      @exception_from_exempt = options[:exception_interval]
-
       @intervals_with_exempt = intervals_with_exempt
     end
 
@@ -74,37 +70,12 @@ module Economy
 
         from = latest_date(placement.moved_in_at, @interval[:from])
         to = earliest_date(@refugee.citizenship_at, placement.moved_out_at, @interval[:to])
-
         next unless from && to
-        next { from: from, to: to } unless @exception_from_exempt
 
-        reduce_interval(from, to)
+        { from: from, to: to }
       end.flatten.compact
 
       remove_overlaps_in_date_intervals(placement_intervals)
-    end
-
-    def reduce_interval(from, to)
-      return { from: from, to: to } unless @exception_from_exempt[:from] && @exception_from_exempt[:to]
-
-      if within_exception_interval?(from) && within_exception_interval?(to)
-        return [
-          { from: from, to: @exception_from_exempt[:from] - 1.day },
-          { from: @exception_from_exempt[:to] + 1.day, to: to }
-        ]
-      end
-
-      if within_exception_interval?(from)
-        from = @exception_from_exempt[:to] + 1.day
-      elsif within_exception_interval?(to)
-        to = @exception_from_exempt[:from] - 1.day
-      end
-
-      { from: from, to: to }
-    end
-
-    def within_exception_interval?(date)
-      date >= @exception_from_exempt[:from] && date <= @exception_from_exempt[:to]
     end
   end
 end
