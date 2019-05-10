@@ -44,11 +44,11 @@ class EconomyUppbokningReport < ApplicationReport::Base
       },
       {
         name: 'LVU+SoL med LVU, PUT 0–17',
-        records: per_rate_category(lvu_and_sol_lvu, tut_0_17, put_0_17)
+        records: per_rate_category(lvu_and_sol_lvu, put_0_17)
       },
       {
         name: 'LVU+SoL med LVU, PUT 18–20',
-        records: per_rate_category(lvu_and_sol_lvu, tut_18_20, put_18_20)
+        records: per_rate_category(lvu_and_sol_lvu, put_18_20)
       },
       {
         name: 'Alla lagrum, Ankomstbarn, 0–17',
