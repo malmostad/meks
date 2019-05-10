@@ -1,25 +1,18 @@
 status[:records].each_with_index do |record, row|
   refugee = record[:refugee]
-  begin
-    sheet.add_row(
-      [
-        refugee.dossier_number,
-        refugee.procapita,
-        refugee.ssn,
-        refugee.ssns.map(&:full_ssn).join(', '),
-        refugee.municipality&.name,
-        expected_income(record),
-        "=(#{record[:rates]&.sum { |x| x[:days] || 0 }})"
-      ],
-      style: @style.normal
-    )
-    sheet.rows[row + 1].cells[5].style = @style.currency
-  rescue => e
-    puts e
-    puts record.class
-    p record[:rates].inspect
-    raise
-  end
+  sheet.add_row(
+    [
+      refugee.dossier_number,
+      refugee.procapita,
+      refugee.ssn,
+      refugee.ssns.map(&:full_ssn).join(', '),
+      refugee.municipality&.name,
+      expected_income(record),
+      "=(#{record[:rates]&.sum { |x| x[:days] || 0 }})"
+    ],
+    style: @style.normal
+  )
+  sheet.rows[row + 1].cells[5].style = @style.currency
 end
 
 if status[:records].present?
