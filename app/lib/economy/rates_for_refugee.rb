@@ -50,7 +50,7 @@ module Economy
       @skip_all_replace = skip_all_replace
 
       RATE_CATEGORIES_AND_RATES.map do |category|
-        [category.qualifier.values.join('_'), send(category.qualifier[:meth], category).compact]
+        [category.qualifier.values.join('_'), send(category.qualifier[:meth], category).flatten.compact]
       end.to_h
     end
 
@@ -89,8 +89,11 @@ module Economy
         interval = interval_for_arrival_0_17(category, rate)
         next unless interval[:from] && interval[:to]
 
+        days = (@interval[:to].to_date - @interval[:from].to_date + 1).to_i
+        next if days.zero?
+
         # The arrival rate category must not have actual cost replaced
-        { amount: rate.amount, days: (interval[:from].to_date..interval[:to].to_date).to_a.size }
+        { amount: rate.amount, days: days }
       end
     end
 
@@ -276,6 +279,7 @@ module Economy
       options[:skip_replace] = true if @skip_all_replace
 
       days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to, skip_replace: options[:skip_replace])
+      return @replace_rates.as_array if days.zero?
 
       @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, from: from, to: to)
 
