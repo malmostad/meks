@@ -89,7 +89,7 @@ module Economy
         interval = interval_for_arrival_0_17(category, rate)
         next unless interval[:from] && interval[:to]
 
-        days = (@interval[:to].to_date - @interval[:from].to_date + 1).to_i
+        days = (interval[:to].to_date - interval[:from].to_date + 1).to_i
         next if days.zero?
 
         # The arrival rate category must not have actual cost replaced
