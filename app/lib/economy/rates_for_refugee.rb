@@ -271,16 +271,19 @@ module Economy
 
     # Takes the arguments from and to for the qualified rate period and the rate object
     # Returns a hash with :amount and :days for the rate
-    def amount_and_days(from, to, rate, options = {})
+    def amount_and_days(from, to, rate)
       return unless from && to
 
-      options[:skip_replace] = true if @skip_all_replace
+      days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to, skip_replace: @skip_all_replace)
 
-      days = number_of_remaining_days_with_exempt_from_rate_deducted(from, to, skip_replace: options[:skip_replace])
-      @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, from: from, to: to)
-      return @replace_rates.as_array if days.zero?
+      if @skip_all_replace
+        [{ amount: rate.amount, days: days }]
+      else
+        @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, from: from, to: to)
+        return @replace_rates.as_array if days.zero?
 
-      [{ amount: rate.amount, days: days }] + @replace_rates.as_array
+        [{ amount: rate.amount, days: days }] + @replace_rates.as_array
+      end
     end
 
     # Takes the arguments from and to for a rate period
