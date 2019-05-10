@@ -66,13 +66,13 @@ class EconomyUppbokningReport < ApplicationReport::Base
       interval = qualified_interval(refugee)
       rates_for_refugee = ::Economy::RatesForRefugee.new(refugee, interval)
 
-      days_and_amounts = categories.map do |category|
+      rates = categories.map do |category|
         rates_for_refugee.send(category.qualifier[:meth], category)
       end.flatten.compact
 
-      next if days_and_amounts.empty?
+      next if rates.empty?
 
-      { refugee: refugee, rates: days_and_amounts }.merge(interval)
+      { refugee: refugee, rates: as_formula(rates) }
     end.reject(&:blank?)
   end
 
@@ -115,5 +115,31 @@ class EconomyUppbokningReport < ApplicationReport::Base
       from: latest_date(qualified_from, @params[:from]),
       to: earliest_date(qualified_to, @params[:to])
     }
+  end
+
+  def as_formula(rates)
+    rates.map do |rate|
+      next rate.to_s if rate.is_a? BigDecimal
+
+      next "#{rate[:days]}*#{rate[:amount]}" if days_hash?(rate)
+      next "#{rate[:months]}*#{rate[:costs]}" if months_hash?(rate)
+      next "#{rate[:months]}*(#{rate[:fee]}+#{rate[:po_cost]}+#{rate[:expense]})" if po_cost_hash?(rate)
+    end.compact.join('+')
+  end
+
+  def days_hash?(hash)
+    test_hash([hash[:days], hash[:amount]], hash[:days])
+  end
+
+  def months_hash?(hash)
+    test_hash([hash[:months], hash[:costs]], hash[:months])
+  end
+
+  def po_cost_hash?(hash)
+    test_hash([hash[:months], hash[:fee], hash[:po_cost]], hash[:months])
+  end
+
+  def test_hash(hash, time)
+    !hash.include?(nil) && time.positive?
   end
 end
