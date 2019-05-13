@@ -43,12 +43,12 @@ class EconomyUppbokningReport < ApplicationReport::Base
         records: per_rate_category(lvu_and_sol_lvu, assigned_0_17)
       },
       {
-        name: 'LVU+SoL med LVU, PUT 0–17',
-        records: per_rate_category(lvu_and_sol_lvu, put_0_17)
+        name: 'LVU+SoL med LVU, PUT+TUT 0–17',
+        records: per_rate_category(lvu_and_sol_lvu, put_0_17, tut_0_17)
       },
       {
-        name: 'LVU+SoL med LVU, PUT 18–20',
-        records: per_rate_category(lvu_and_sol_lvu, put_18_20)
+        name: 'LVU+SoL med LVU, PUT+TUT 18–20',
+        records: per_rate_category(lvu_and_sol_lvu, put_18_20, put_18_20)
       },
       {
         name: 'Alla lagrum, Ankomstbarn, 0–17',
