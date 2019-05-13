@@ -28,7 +28,8 @@ class EconomyFollowupReport < ApplicationReport::Base
     Refugee
       .includes(
         :municipality,
-        :refugee_extra_costs, :extra_contributions,
+        :refugee_extra_costs,
+        extra_contributions: :extra_contribution_type,
         placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
                      home: [:owner_type, :type_of_housings, :costs]]
       )
