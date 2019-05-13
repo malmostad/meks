@@ -33,4 +33,12 @@ first_sheet.add_row(
   )
 end
 
+first_sheet.add_row(
+  [
+    'SUMMA:',
+    "=SUM(B2:B#{@statuses.size + 1})"
+  ],
+  style: @style.sum
+)
+
 first_sheet.column_widths(nil, *(1..first_sheet.cols.size).map { 18 })
