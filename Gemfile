@@ -18,7 +18,7 @@ gem 'daemons', '1.3.1'
 
 gem 'net-ldap', '0.16.1'
 gem 'cancancan', '3.0.1'
-gem 'ruby-saml', '1.9.0'
+gem 'ruby-saml', '1.10.2'
 
 gem 'rubyzip', '~> 1.2.2'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c593a08'
@@ -26,7 +26,7 @@ gem 'axlsx_rails'
 gem 'delayed_job_active_record', '4.1.3'
 
 gem 'whenever', '0.11.0', require: false
-gem 'highline', '2.0.1'
+gem 'highline', '2.0.2'
 gem 'execjs', '2.7.0'
 gem 'faker'
 
@@ -62,5 +62,5 @@ group :development, :local_test do
 end
 
 group :test, :production do
-  gem 'unicorn', '5.5.0'
+  gem 'unicorn', '5.5.1'
 end
