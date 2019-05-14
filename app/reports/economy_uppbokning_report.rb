@@ -48,7 +48,7 @@ class EconomyUppbokningReport < ApplicationReport::Base
       },
       {
         name: 'LVU+SoL med LVU, PUT+TUT 18–20',
-        records: per_rate_category(lvu_and_sol_lvu, put_18_20, put_18_20)
+        records: per_rate_category(lvu_and_sol_lvu, put_18_20, tut_18_20)
       },
       {
         name: 'Alla lagrum, Ankomstbarn, 0–17',
