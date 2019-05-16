@@ -72,7 +72,7 @@ class EconomyUppbokningReport < ApplicationReport::Base
 
       next if rates.empty?
 
-      { refugee: refugee, rates: as_formula(rates) }
+      { refugee: refugee, rates: as_formula(rates), days: sum_days(rates) }
     end.reject(&:blank?)
   end
 
@@ -127,6 +127,12 @@ class EconomyUppbokningReport < ApplicationReport::Base
     end.compact.join('+')
   end
 
+  def sum_days(rates)
+    rates.map do |rate|
+      rate[:days] if days_hash?(rate)
+    end.compact.sum
+  end
+
   def days_hash?(hash)
     test_hash([hash[:days], hash[:amount]], hash[:days])
   end
@@ -139,7 +145,7 @@ class EconomyUppbokningReport < ApplicationReport::Base
     test_hash([hash[:months], hash[:fee], hash[:po_cost]], hash[:months])
   end
 
-  def test_hash(hash, time)
-    !hash.include?(nil) && time.positive?
+  def test_hash(arr, int)
+    arr.is_a?(Array) && !arr.include?(nil) && int.positive?
   end
 end
