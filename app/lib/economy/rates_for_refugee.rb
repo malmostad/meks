@@ -279,6 +279,10 @@ module Economy
       if @skip_all_replace
         [{ amount: rate.amount, days: days }]
       else
+        # Special case. date_at_max_age has max age set to 30 june for those of age 20
+        # but that must not apply to replacement with actual cost.
+        to = end_date_for_replacement_at_20(rate) if rate.rate_category.qualifier[:max_age] == 20
+
         @replace_rates = ReplaceRatesWithActualCosts.new(@refugee, from: from, to: to)
         return @replace_rates.as_array if days.zero?
 
@@ -319,6 +323,14 @@ module Economy
         @interval[:to],
         rate[:end_date]
       ]
+    end
+
+    def end_date_for_replacement_at_20(rate)
+      earliest_date(
+        @refugee.date_of_birth + 21.years - 1.day,
+        @interval[:to],
+        rate[:end_date]
+      )
     end
 
     def age(from, to)
