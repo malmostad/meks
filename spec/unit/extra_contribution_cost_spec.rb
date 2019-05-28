@@ -10,7 +10,6 @@ RSpec.describe 'ExtraContributionCost' do
       refugee: refugee
     )
   end
-
   let(:po_rate) do
     create(
       :po_rate,
@@ -22,7 +21,7 @@ RSpec.describe 'ExtraContributionCost' do
     )
   end
 
-  before do
+  before(:each) do
     refugee.reload
     extra_contribution.reload
     po_rate.reload
@@ -93,7 +92,7 @@ RSpec.describe 'ExtraContributionCost' do
       )
     end
 
-    before do
+    before(:each) do
       extra_contribution.reload
     end
 

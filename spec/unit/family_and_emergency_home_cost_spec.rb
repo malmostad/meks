@@ -47,7 +47,7 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
     )
   end
 
-  before do
+  before(:each) do
     [refugee, home, placement, family_and_emergency_home_cost1,
      family_and_emergency_home_cost2, po_rate].each(&:reload)
   end

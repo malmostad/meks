@@ -8,7 +8,7 @@ RSpec.describe 'ExtraContributionCost' do
            amount_as_string: '1234,56')
   end
 
-  before do
+  before(:each) do
     payment.reload
   end
 
@@ -73,7 +73,7 @@ RSpec.describe 'ExtraContributionCost' do
              comment: 'fox barx')
     end
 
-    before do
+    before(:each) do
       payment2.reload
     end
 
