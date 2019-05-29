@@ -4,7 +4,7 @@ MEKS is a management system for unaccompanied children, their asylum status, log
 ## Dependencies
 
 * nginx (for production)
-* Ruby 2.5.x
+* Ruby 2.6.x
 * MySQL >= 5.7
 * ElasticSearch 6.x
 * Memcached
@@ -105,16 +105,12 @@ Note: Installation of Chrome, ChromeDriver and Selenium are currently not provid
 Run the test cases in the projects root directory in your Vagrant box:
 
 ```shell
-$ bundle exec rspec
+$ bundle exec rspec --exclude-pattern "./spec/unit/{family_and_emergency_home_cost,extra_contribution_cost}_spec.rb"
+$ bundle exec rspec --pattern "./spec/unit/{family_and_emergency_home_cost,extra_contribution_cost}_spec.rb"
 ```
+Currently, rspec must be executed in two separate runs as you see above. This is because an rspec order issue that hasn't been tracked down yet.
 
 Note that the environment used for RSpec is `local_test`.
-
-For some reason, some the tests in `spec/unit` fails sometimes. If you run them separatly they should succeed:
-
-```shell
-$ bundle exec rspec spec/unit
-```
 
 ## License
 Released under AGPL version 3.

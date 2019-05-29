@@ -22,7 +22,7 @@ Capybara.register_driver :chrome do |app|
 end
 Capybara.javascript_driver = :chrome
 Capybara.server = :puma, { Silent: true }
-Capybara.default_max_wait_time = 5
+Capybara.default_max_wait_time = 1
 
 # config.include for :view dosn't work in the config block
 include IntegrationMacros
