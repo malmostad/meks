@@ -84,9 +84,7 @@ RSpec.feature 'Placements', type: :feature do
         page.all('.placement_family_and_emergency_home_costs_contactor_employee_number input').first.fill_in with: '987_543'
         click_button 'Spara'
 
-        expect(page).to have_selector(
-          'div', text: 'Avtalsperiod: 2018-12-01–2018-12-31, arvode: 4 567,00 kr, arbetsgivaravgift: 1 399,33 kr, omkostnad: 1 234,00 kr, uppdragstagare: Firstname Familyname, uppdragstagares födelsedag: 1950-04-15, uppdragstagares anställningsnummer: 987543'
-        )
+        expect(page).to have_content('Avtalsperiod: 2018-12-01–2018-12-31, arvode: 4 567,00 kr, arbetsgivaravgift: 1 399,33 kr, omkostnad: 1 234,00 kr, uppdragstagare: Firstname Familyname, uppdragstagares födelsedag: 1950-04-15, uppdragstagares anställningsnummer: 987543')
       end
 
       scenario 'shows and hides the specification field', js: true do
