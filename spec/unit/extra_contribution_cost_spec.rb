@@ -104,28 +104,4 @@ RSpec.describe 'ExtraContributionCost' do
       expect(ecc.as_formula).to eq '6.0*54321.0'
     end
   end
-
-  describe 'multiple extra contributions' do
-    let(:extra_contribution2) do
-      create(
-        :extra_contribution,
-        period_start: '2019-01-01',
-        period_end: '2019-06-30',
-        fee: 54_321,
-        expense: 65_431,
-        refugee: refugee
-      )
-    end
-
-    let(:po_rate2) do
-      create(
-        :po_rate,
-        rate_under_65: 31.32,
-        rate_between_65_and_81: 31.64,
-        rate_from_82: 2.12,
-        start_date: '2019-01-01',
-        end_date: '2019-12-31'
-      )
-    end
-  end
 end
