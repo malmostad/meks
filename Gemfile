@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '5.2.3'
-gem 'haml-rails', '2.0.0'
+gem 'haml-rails', '2.0.1'
 gem 'sassc-rails', '2.1.1'
 gem 'uglifier', '4.1.20'
 gem 'coffee-rails', '5.0.0'
