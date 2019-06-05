@@ -111,7 +111,8 @@ class RefugeesController < ApplicationController
           path: "#{root_url}refugees/#{r.id}",
           dossier_number: r.dossier_number,
           ssn: r.ssn,
-          value: [r.name, r.dossier_number, r.ssn].reject(&:blank?).join(', ')
+          procapita: r.procapita,
+          value: [r.name, r.dossier_number, r.ssn, r.procapita].reject(&:blank?).join(', ')
         }
       end
     else

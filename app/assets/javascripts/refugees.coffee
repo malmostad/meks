@@ -16,7 +16,6 @@ $ ->
     event.preventDefault()
     $trigger = $(@)
     $trigger.text("Hämtar fler...").addClass('disabled')
-    console.log $trigger.attr('href')
 
     $.get $trigger.attr('href'), (data) ->
       $('.load-more').replaceWith($(data).find('.load-more'))

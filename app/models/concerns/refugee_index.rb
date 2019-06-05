@@ -22,6 +22,7 @@ module RefugeeIndex
       indexes :ssns, analyzer: 'nmbr_letters', search_analyzer: 'standard'
       indexes :dossier_number, analyzer: 'nmbr', search_analyzer: 'standard'
       indexes :dossier_numbers, analyzer: 'nmbr_letters', search_analyzer: 'standard'
+      indexes :procapita, analyzer: 'nmbr', search_analyzer: 'standard'
     end
   end
 
@@ -34,7 +35,8 @@ module RefugeeIndex
       ssn: ssn,
       ssns: ssns.map(&:full_ssn).join(' '),
       dossier_number: dossier_number,
-      dossier_numbers: dossier_numbers.map(&:name).join(' ')
+      dossier_numbers: dossier_numbers.map(&:name).join(' '),
+      procapita: procapita
     }.as_json
   end
 end

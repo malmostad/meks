@@ -106,7 +106,15 @@ module RefugeeSearch
                     query: query
                   }
                 }
-              }
+              },
+              {
+                match: {
+                  procapita: {
+                    boost: 10,
+                    query: query
+                  }
+                }
+              },
             ]
           }
         }

@@ -5,6 +5,7 @@
         %th Namn
         %th Dossiernummer
         %th Personnummer
+        %th Kundnummer
         %th Kön
         %th Land
         %th Aktuellt boende
@@ -15,6 +16,7 @@
           %td= link_to refugee.name, refugee
           %td= refugee.dossier_number
           %td= refugee.ssn
+          %td= refugee.procapita
           %td= refugee.gender.name if refugee.gender.present?
           %td= refugee.countries.map(&:name).join(', ')
           %td
