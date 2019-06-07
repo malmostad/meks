@@ -10,7 +10,7 @@
             = text_field_tag "query-refugee", @q, name: "q", "data-autocomplete-url" => refugees_suggest_path, class: "form-control", placeholder: "Ange söktext"
             %span.input-group-btn
               = submit_tag "Sök", { class: "btn btn-default", name: nil }
-          .help-inline Sök på namn, person- eller dossiernummer
+          .help-inline Sök på namn, person-, dossier- eller kundnummer
 
     - if @total.present?
       %div.summary= "#{number_to_words(@total).titlecase} barn matchade din sökning"
