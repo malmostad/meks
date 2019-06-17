@@ -25,7 +25,7 @@ gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c593a08'
 gem 'axlsx_rails'
 gem 'delayed_job_active_record', '4.1.3'
 
-gem 'whenever', '0.11.0', require: false
+gem 'whenever', '1.0.0', require: false
 gem 'highline', '2.0.2'
 gem 'execjs', '2.7.0'
 gem 'faker'
