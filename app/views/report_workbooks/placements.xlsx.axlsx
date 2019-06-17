@@ -2,7 +2,7 @@
   render partial: 'report_workbooks/placements_headings', locals: { sheet: sheet }
   render partial: 'report_workbooks/placements_rows', locals: { sheet: sheet }
 
-  sheet.column_widths(*(0..sheet.cols.size).map { 18 })
+  sheet.column_widths(*(0..sheet.cols.size).map { 19 })
 
   sheet.sheet_view.pane do |pane|
     pane.active_pane = :bottom_left
