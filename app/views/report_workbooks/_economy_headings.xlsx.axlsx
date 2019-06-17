@@ -8,7 +8,7 @@ sheet.add_row(
     'Personnummer',
     'Extra personnummer',
     'Ankomst',
-    'Lagrum',
+    'Alla lagrum inom angivet datumintervall',
     'Alla boenden inom angivet datumintervall',
     'Inskriven',
     'Senaste placeringsdatum',
