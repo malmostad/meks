@@ -68,6 +68,7 @@
     = f.input :temporary_permit_ends_at, label: raw(t('simple_form.labels.refugee.temporary_permit_ends_at')), as: :string, wrapper: :datepicker
     = f.input :citizenship_at, as: :string, wrapper: :datepicker
     = f.association :municipality, input_html: { class: 'chosen' }
+    = f.input :transferred, wrapper: :vertical_radio_and_checkboxes
     = f.input :municipality_placement_migrationsverket_at, as: :string, wrapper: :datepicker
     = f.input :municipality_placement_comment
     = f.input :deregistered, as: :string, wrapper: :datepicker

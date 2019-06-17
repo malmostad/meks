@@ -55,6 +55,7 @@
       = kv @refugee, :citizenship_at
       = kv 'refugee.municipality',
         @refugee.municipality.present? ? @refugee.municipality.name : 'Ingen'
+      = kv 'refugee.transferred', @refugee.transferred? ? 'Ja' : 'Nej'
       = kv @refugee, :municipality_placement_migrationsverket_at
       = kv @refugee, :municipality_placement_comment
       = kv @refugee, :deregistered
