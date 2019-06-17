@@ -5,6 +5,7 @@
       refugee.ssn,
       refugee.age,
       refugee.dossier_number,
+      refugee.current_placements.map(&:legal_code).map(&:name).join(', '),
       legal_codes_within_range(refugee, @interval),
       refugee.procapita,
       refugee.gender&.name,
@@ -41,7 +42,7 @@
     style: @style.normal
   )
 
-  [9, 13, 17, 18, 19, 20, 21, 24].each do |col|
+  [10, 14, 18, 19, 20, 21, 22, 25].each do |col|
     sheet.rows[row + 1].cells[col].style = @style.date
   end
 end
