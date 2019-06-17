@@ -62,4 +62,4 @@ heading_comment(sheet, 'J', 'Alla boenden som barnet varit placerat på under ra
 heading_comment(sheet, 'K', 'Anger det datum då barnet registreras i MEKS för första gången')
 heading_comment(sheet, 'L', 'Anger det datum då barnet placeras på ett specifikt boende')
 heading_comment(sheet, 'O', 'Anger datum för när socialtjänstansvaret för barnet är avslutat')
-heading_comment(sheet, 'X', 'Det datum då barnet skrivs ut från Migrationsverket')
+heading_comment(sheet, 'W', 'Det datum då barnet skrivs ut från Migrationsverket')
