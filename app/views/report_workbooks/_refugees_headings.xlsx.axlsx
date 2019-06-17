@@ -5,6 +5,7 @@ sheet.add_row(
     'Personnummer',
     'Ålder',
     'Dossiernummer',
+    'Lagrum',
     'Kundnummer',
     'Kön',
     'Länder',
@@ -40,7 +41,7 @@ sheet.add_row(
   style: @style.heading
 )
 
-heading_comment(sheet, 'E', 'Kundnummer för barnets ärende i Procapita')
-heading_comment(sheet, 'I', 'Anger det datum då barnet registreras i MEKS för första gången')
-heading_comment(sheet, 'Q', 'Det datum då barnet skrivs ut från Migrationsverket')
-heading_comment(sheet, 'X', 'Anger datum för när socialtjänstansvaret för barnet är avslutat')
+heading_comment(sheet, 'F', 'Kundnummer för barnets ärende i Procapita')
+heading_comment(sheet, 'J', 'Anger det datum då barnet registreras i MEKS för första gången')
+heading_comment(sheet, 'R', 'Det datum då barnet skrivs ut från Migrationsverket')
+heading_comment(sheet, 'Y', 'Anger datum för när socialtjänstansvaret för barnet är avslutat')
