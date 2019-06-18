@@ -30,7 +30,8 @@ module ReportHelper
 
   def refugee_expected_income(refugee, interval)
     sum_formula(
-      ::Economy::RatesForRefugee.new(refugee, interval).as_formula
+      ::Economy::RatesForRefugee.new(refugee, interval).as_formula,
+      ::Economy::OneTimePayment.new(refugee, interval).as_formula
     )
   end
 

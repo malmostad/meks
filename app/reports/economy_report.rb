@@ -35,8 +35,9 @@ class EconomyReport < ApplicationReport::Base
         ::Economy::PlacementExtraCost.new(refugee.placements, @interval).sum,
         ::Economy::FamilyAndEmergencyHomeCost.new(refugee.placements, @interval).sum,
         ::Economy::RatesForRefugee.new(refugee, @interval).sum,
-        ::Economy::Payment.new(refugee.payments, @interval).sum
-      ].sum
+        ::Economy::Payment.new(refugee.payments, @interval).sum,
+        ::Economy::OneTimePayment.new(refugee, @interval).sum
+      ].reject(&:blank?).sum
 
       next if costs_and_rates.zero?
 
