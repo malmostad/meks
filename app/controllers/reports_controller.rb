@@ -122,7 +122,7 @@ class ReportsController < ApplicationController
     when 'economy_uppbokning'
       'Ekonomi uppbokning'
     when 'economy_followup'
-      'Ekonomi uppföljning'
+      'Ekonomi prognos'
     when 'homes'
       'Boenden'
     when 'placements'

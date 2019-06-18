@@ -26,7 +26,9 @@ sv:
         procapita:
           content: Kundnummer för barnets ärende i Procapita.
         other_relateds:
-          content: Registreras under fliken Allmänt
+          content: Registreras under fliken Allmänt.
+        transferred:
+          content: Kryssa i denna ruta om barnet EJ formellt anvisats Malmö men där socialtjänstansvaret övertas.
       placement:
         placement_extra_costs:
           title: Extra utgifter
@@ -96,7 +98,7 @@ sv:
         citizenship_at: Medborgarskap erhölls
         municipality: Anvisningskommun
         municipality_placement_migrationsverket_at: Anvisningsdatum
-        transferred: Övertag från annan kommun
+        transferred: Tillhört annan kommun
         municipality_placement_comment: Anvisad, kommentar
         related: Anhörig
         relateds: Anhöriga
