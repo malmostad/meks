@@ -1,0 +1,9 @@
+.box-content
+  = simple_form_for @one_time_payment, html: { class: 'basic' } do |f|
+    = f.error_notification class: 'warning'
+
+    = f.input :start_date, as: :string, wrapper: :datepicker
+    = f.input :end_date, as: :string, wrapper: :datepicker
+    = f.input :amount
+
+    = render 'application/submit', form: f, cancel_path: one_time_payments_path

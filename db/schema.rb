@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_17_133729) do
+ActiveRecord::Schema.define(version: 2019_06_17_135905) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -203,6 +203,12 @@ ActiveRecord::Schema.define(version: 2019_06_17_133729) do
     t.datetime "updated_at", null: false
     t.boolean "our_municipality"
     t.index ["name"], name: "index_municipalities_on_name", unique: true
+  end
+
+  create_table "one_time_payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci", force: :cascade do |t|
+    t.integer "amount"
+    t.date "start_date"
+    t.date "end_date"
   end
 
   create_table "owner_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|

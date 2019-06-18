@@ -211,6 +211,11 @@ sv:
         start_date: Startdatum
         end_date: Slutdatum
 
+      one_time_payment:
+        amount: Belopp
+        start_date: Startdatum
+        end_date: Slutdatum
+
       settings: &settings
         <<: *defaults
         human_name: Namn

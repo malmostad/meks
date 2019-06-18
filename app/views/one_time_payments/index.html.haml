@@ -1,0 +1,20 @@
+- title 'Belopp för engångsintäkter'
+%section.box.index
+  %h1.box-title= h1
+
+  %table.full.wrap
+    %thead
+      %tr
+        %th Period
+        %th Belopp
+        %th
+
+    %tbody
+      - @one_time_payments.each do |one_time_payment|
+        %tr
+          %td= link_to "#{one_time_payment.start_date}–#{one_time_payment.end_date}", edit_one_time_payment_path(one_time_payment)
+          %td= one_time_payment.amount
+          %td.delete= button_to t('actions.delete'), one_time_payment, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+      %tr
+        %td{ colspan: 3 }
+          .actions= link_to t('actions.new'), new_one_time_payment_path, class: "btn btn-primary"

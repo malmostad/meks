@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   resources :municipalities, except: :show
   resources :countries, except: :show
   resources :po_rates, except: :show
+  resources :one_time_payments, except: :show
   resources :languages, except: :show
   resources :genders, except: :show
   resources :rate_categories, only: [:index, :edit, :update]
