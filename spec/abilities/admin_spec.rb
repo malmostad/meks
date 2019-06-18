@@ -24,6 +24,7 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:manage, Placement.new) }
     it { should be_able_to(:manage, PlacementExtraCost.new) }
     it { should be_able_to(:manage, PoRate.new) }
+    it { should be_able_to(:manage, OneTimePayment.new) }
     it { should be_able_to(:manage, Rate.new) }
     it { should_not be_able_to(:create, RateCategory.new) }
     it { should_not be_able_to(:destroy, RateCategory.new) }

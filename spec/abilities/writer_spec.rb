@@ -30,6 +30,7 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:manage, Payment.new) }
     it { should_not be_able_to(:manage, PaymentImport.new) }
     it { should_not be_able_to(:manage, PoRate.new) }
+    it { should_not be_able_to(:manage, OneTimePayment.new) }
     it { should_not be_able_to(:manage, Rate.new) }
     it { should_not be_able_to(:manage, RateCategory.new) }
     it { should_not be_able_to(:manage, Setting.new) }
@@ -52,6 +53,7 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:read, Payment.new) }
     it { should_not be_able_to(:read, PaymentImport.new) }
     it { should_not be_able_to(:read, PoRate.new) }
+    it { should_not be_able_to(:read, OneTimePayment.new) }
     it { should_not be_able_to(:read, TargetGroup.new) }
     it { should_not be_able_to(:read, TypeOfHousing.new) }
     it { should_not be_able_to(:read, TypeOfRelationship.new) }
