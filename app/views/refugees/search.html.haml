@@ -21,6 +21,6 @@
       .actions
         - if can? :create, Refugee
           = link_to 'Registrera ny', new_refugee_path, class: 'btn btn-primary'
-        = link_to "Lista utkast (#{@drafts_count})", refugees_drafts_path, class: 'btn btn-default'
+        = link_to "Visa utkast (#{@drafts_count})", refugees_drafts_path, class: 'btn btn-default'
         - if current_user.has_role? :admin
-          = link_to "Lista importerade (#{@imported_count})", refugees_imported_path, class: 'btn btn-default'
+          = link_to "Visa importerade (#{@imported_count})", refugees_imported_path, class: 'btn btn-default'
