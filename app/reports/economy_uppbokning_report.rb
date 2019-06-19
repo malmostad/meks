@@ -53,6 +53,11 @@ class EconomyUppbokningReport < ApplicationReport::Base
       {
         name: 'Alla lagrum, Ankomstbarn, 0–17',
         records: per_rate_category(@refugees, arrival_0_17)
+      },
+      {
+        name: 'Anvisningsschablon',
+        records: Economy::OneTimePayment.all(from: @params[:from], to: @params[:to]),
+        one_type_payments: true
       }
     ]
   end

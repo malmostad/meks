@@ -1,0 +1,28 @@
+status[:records].each_with_index do |refugee, row|
+  sheet.add_row(
+    [
+      refugee.dossier_number,
+      refugee.procapita,
+      refugee.ssn,
+      refugee.ssns.map(&:full_ssn).join(', '),
+      refugee.municipality&.name,
+      ::Economy::OneTimePayment.new(refugee).as_formula
+    ],
+    style: @style.normal
+  )
+  sheet.rows[row + 1].cells[5].style = @style.currency
+end
+
+if status[:records].present?
+  sheet.add_row(
+    [
+      'SUMMA:',
+      '',
+      '',
+      '',
+      '',
+      "=SUM(F2:F#{status[:records].size + 1})",
+    ],
+    style: @style.sum
+  )
+end

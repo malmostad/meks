@@ -1,6 +1,14 @@
 module Economy
   # "Engångsintäkt för anvisning för ensamkommande"
   class OneTimePayment < Base
+    def self.all(interval)
+      Refugee
+        .joins(:municipality)
+        .where(municipalities: { our_municipality: true })
+        .where(transferred: nil)
+        .where('municipality_placement_migrationsverket_at between ? and ? ', interval[:from], interval[:to])
+    end
+
     def initialize(refugee, interval = DEFAULT_INTERVAL)
       @refugee = refugee
       @from = interval[:from].to_date

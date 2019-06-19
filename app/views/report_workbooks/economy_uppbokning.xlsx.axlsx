@@ -2,8 +2,13 @@ first_sheet = @workbook.add_worksheet(name: @first_sheetname)
 
 @statuses.each do |status|
   @workbook.add_worksheet(name: status[:name]) do |sheet|
-    render partial: 'report_workbooks/economy_uppbokning_headings', locals: { sheet: sheet, status: status }
-    render partial: 'report_workbooks/economy_uppbokning_rows', locals: { sheet: sheet, status: status }
+    if status[:one_type_payments]
+      render partial: 'report_workbooks/economy_uppbokning_otp_headings', locals: { sheet: sheet, status: status }
+      render partial: 'report_workbooks/economy_uppbokning_otp_rows', locals: { sheet: sheet, status: status }
+    else
+      render partial: 'report_workbooks/economy_uppbokning_headings', locals: { sheet: sheet, status: status }
+      render partial: 'report_workbooks/economy_uppbokning_rows', locals: { sheet: sheet, status: status }
+    end
 
     sheet.column_widths(*(0..sheet.cols.size).map { 18 })
 
