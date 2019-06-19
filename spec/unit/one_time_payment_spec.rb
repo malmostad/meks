@@ -1,6 +1,7 @@
 RSpec.describe 'OneTimePayment calculation' do
   let(:municipality) { create(:municipality, our_municipality: true) }
   let(:one_time_payment) { create(:one_time_payment) }
+  let(:interval) { { from: one_time_payment.start_date, to: one_time_payment.end_date } }
   let(:refugee) do
     create(:refugee,
       municipality: municipality,
@@ -18,8 +19,7 @@ RSpec.describe 'OneTimePayment calculation' do
 
   describe 'for our municipality' do
     it 'should have a one time payment' do
-
-      otp = ::Economy::OneTimePayment.new(refugee, from: one_time_payment.start_date, to: one_time_payment.end_date)
+      otp = ::Economy::OneTimePayment.new(refugee, interval)
       expect(otp.sum).to eq(one_time_payment.amount)
       expect(otp.as_formula).to eq(one_time_payment.amount.to_s)
     end
@@ -27,7 +27,7 @@ RSpec.describe 'OneTimePayment calculation' do
     it 'should not have a one time payment is before interval' do
       refugee.municipality_placement_migrationsverket_at = one_time_payment.start_date - 1.day
 
-      otp = ::Economy::OneTimePayment.new(refugee, from: one_time_payment.start_date, to: one_time_payment.end_date)
+      otp = ::Economy::OneTimePayment.new(refugee, interval)
       expect(otp.sum).to eq(nil)
       expect(otp.as_formula).to eq('')
     end
@@ -35,7 +35,7 @@ RSpec.describe 'OneTimePayment calculation' do
     it 'should not have a one time payment is after interval' do
       refugee.municipality_placement_migrationsverket_at = one_time_payment.end_date + 1.day
 
-      otp = ::Economy::OneTimePayment.new(refugee, from: one_time_payment.start_date, to: one_time_payment.end_date)
+      otp = ::Economy::OneTimePayment.new(refugee, interval)
       expect(otp.sum).to eq(nil)
       expect(otp.as_formula).to eq('')
     end
@@ -43,9 +43,16 @@ RSpec.describe 'OneTimePayment calculation' do
     it 'should not have a one time payment if transferred' do
       refugee.transferred = true
 
-      otp = ::Economy::OneTimePayment.new(refugee, from: one_time_payment.start_date, to: one_time_payment.end_date)
+      otp = ::Economy::OneTimePayment.new(refugee, interval)
       expect(otp.sum).to eq(nil)
       expect(otp.as_formula).to eq('')
+    end
+  end
+
+  describe 'class method all' do
+    it 'should return one refugee' do
+      refugee.save
+      expect(Economy::OneTimePayment.all(interval).count).to eq(1)
     end
   end
 end
