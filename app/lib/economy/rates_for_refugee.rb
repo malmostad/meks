@@ -226,8 +226,6 @@ module Economy
     #   :residence_permit_at
     # Ha Utskriven till Malmö
     #   :checked_out_to_our_city
-    # inte ha medborgarskap
-    #   :citizenship_at
     #
     # Från-datum beräknas på senaste datum av följande:
     #   datumet när barnet uppnått minimiålder
@@ -247,8 +245,7 @@ module Economy
     def residence_permit(category)
       return [] if
         @refugee.residence_permit_at.nil? ||
-        @refugee.checked_out_to_our_city.nil? ||
-        @refugee.citizenship_at?
+        @refugee.checked_out_to_our_city.nil?
 
       category.rates.map do |rate|
         from = latest_date(
