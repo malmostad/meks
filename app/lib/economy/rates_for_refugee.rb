@@ -140,7 +140,7 @@ module Economy
     #     :deregistered
     #  medborgarskap erhölls - 1 dag
     #     :citizenship_at
-    # Returns the number of days and rate amounts in the PUT category's rates
+    # Returns the number of days for the rate and the rate amount
     def assigned_0_17(category)
       return [] if !@refugee.in_our_municipality?
 
