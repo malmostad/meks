@@ -55,8 +55,6 @@ module Economy
     # Schablonkategori Ankomstbarn
     #
     # Måste:
-    #   inte ha datum medborgarskap
-    #     :citizenship_at
     #   ha inskrivningsdatum
     #     :registered
     #
@@ -81,7 +79,7 @@ module Economy
     #     :citizenship_at
     # Returns the number of days for the rate and the rate amount
     def arrival_0_17(category)
-      return [] if @refugee.citizenship_at? || @refugee.registered.nil?
+      return [] if @refugee.registered.nil?
 
       category.rates.map do |rate|
         interval = interval_for_arrival_0_17(category, rate)
