@@ -13,14 +13,13 @@ Rails.application.routes.draw do
     get :logout
   end
 
-  get '/refugees/suggest'
-  get '/refugees/search' => 'refugees#search'
-  get '/refugees/drafts' => 'refugees#drafts'
-  get '/refugees/imported' => 'refugees#imported'
-  get '/refugees' => 'refugees#search'
-  get '/refugees/tabs' => 'refugees#tabs'
+  get '/people/suggest', to: 'refugees#suggest', as: '/refugees/suggest'
+  get '/people/search', to: 'refugees#search', as: '/refugees/search'
+  get '/people', to: 'refugees#search'
+  get '/people/drafts', to: 'refugees#drafts', as: '/refugees/drafts'
+  get '/people/imported', to: 'refugees#imported', as: '/refugees/imported'
 
-  resources :refugees do
+  resources :refugees, path: :people do
     get :show_placements
     get :show_economy
     get :show_relateds

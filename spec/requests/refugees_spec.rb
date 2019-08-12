@@ -1,5 +1,5 @@
 RSpec.describe "Refugees", type: :request do
-  describe "GET /refugees" do
+  describe "GET /people" do
     it "should redirect to login page" do
       get refugees_path
       expect(response).to have_http_status(302)

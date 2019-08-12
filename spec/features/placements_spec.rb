@@ -29,7 +29,7 @@ RSpec.feature 'Placements', type: :feature do
 
     feature 'Adds placement' do
       scenario 'for a refugee' do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_on 'Ny placering'
         expect(current_path).to eq new_refugee_placement_path(refugee)
 
@@ -45,7 +45,7 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'with extra cost', js: true do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_on 'Ny placering'
         expect(current_path).to eq new_refugee_placement_path(refugee)
 
@@ -66,7 +66,7 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'with cost for family and emergency_home', js: true do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_on 'Ny placering'
         expect(current_path).to eq new_refugee_placement_path(refugee)
 
@@ -90,7 +90,7 @@ RSpec.feature 'Placements', type: :feature do
       scenario 'shows and hides the specification field', js: true do
         homes << create(:home, use_placement_specification: true)
 
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_on 'Ny placering'
 
         expect(page).to have_selector('.placement_specification', visible: false)
@@ -103,7 +103,7 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'shows and hides family_and_emergency_home_cost field', js: true do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_on 'Ny placering'
 
         expect(page.all('.family_and_emergency_home_costs', visible: true)).to be_empty
@@ -122,7 +122,7 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'shows and hides family_and_emergency_home_cost form fields', js: true do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_on 'Ny placering'
         page.execute_script("$('#placement_home_id').val(#{cost_for_family_and_emergency_home_home.id}).change()")
         expect(page.all('.family_and_emergency_home_costs', visible: true)).not_to be_empty
@@ -136,7 +136,7 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'shows and hides extra_costs form fields', js: true do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_on 'Ny placering'
 
         click_on 'Ny extra utgift'
@@ -149,7 +149,7 @@ RSpec.feature 'Placements', type: :feature do
 
     feature 'Edit placement' do
       scenario 'for a refugee' do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_link('Redigera placeringen')
         expect(current_path).to eq edit_refugee_placement_path(refugee, refugee.placements.first)
 
@@ -168,7 +168,7 @@ RSpec.feature 'Placements', type: :feature do
         homes << create(:home, use_placement_specification: true)
         placement.update_attribute(:home, homes.last)
 
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_link('Redigera placeringen')
 
         expect(page).to have_selector('.placement_specification', visible: false)
@@ -180,7 +180,7 @@ RSpec.feature 'Placements', type: :feature do
 
     feature 'Ends placement' do
       scenario 'for a refugee' do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_link('Utskrivning')
 
         select(moved_out_reasons[3].name, from: 'placement_moved_out_reason_id')
@@ -193,7 +193,7 @@ RSpec.feature 'Placements', type: :feature do
       end
 
       scenario 'can’t end before it was started' do
-        visit "/refugees/#{refugee.id}/show_placements"
+        visit "/people/#{refugee.id}/show_placements"
         click_link('Utskrivning')
 
         select(moved_out_reasons[3].name, from: 'placement_moved_out_reason_id')

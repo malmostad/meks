@@ -8,7 +8,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
       scenario 'reload the form with validation message' do
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_costs"
+        visit "/people/#{refugee.id}/show_costs"
         click_on 'Ny extra kostnad'
         expect(current_path).to eq new_refugee_refugee_extra_cost_path(refugee)
 
@@ -25,7 +25,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
       scenario 'saves the form' do
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_costs"
+        visit "/people/#{refugee.id}/show_costs"
         click_on 'Ny extra kostnad'
         expect(current_path).to eq new_refugee_refugee_extra_cost_path(refugee)
 
@@ -44,7 +44,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
         refugee = create(:refugee)
         create(:refugee_extra_cost, refugee: refugee)
 
-        visit "/refugees/#{refugee.id}/show_costs"
+        visit "/people/#{refugee.id}/show_costs"
         click_link('Redigera extra kostnaden')
         expect(current_path).to eq edit_refugee_refugee_extra_cost_path(refugee, refugee.refugee_extra_costs.first)
 
@@ -67,7 +67,7 @@ RSpec.feature 'RefugeeExtraCost', type: :feature do
     scenario "can't add an extra cost" do
       refugee = create(:refugee)
 
-      visit "/refugees/#{refugee.id}/refugee_extra_costs/new"
+      visit "/people/#{refugee.id}/refugee_extra_costs/new"
 
       expect(current_path).to eq root_path
       expect(page).to have_selector('.alert', text: 'Din roll saknar behörighet')

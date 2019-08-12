@@ -9,7 +9,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_costs"
+        visit "/people/#{refugee.id}/show_costs"
         click_on 'Ny insats'
         expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
 
@@ -33,7 +33,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_costs"
+        visit "/people/#{refugee.id}/show_costs"
         click_on 'Ny insats'
         expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
 
@@ -57,7 +57,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         extra_contribution_type_outpatient = create(:extra_contribution_type, outpatient: true)
         refugee = create(:refugee)
 
-        visit "/refugees/#{refugee.id}/show_costs"
+        visit "/people/#{refugee.id}/show_costs"
         click_on 'Ny insats'
         expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
 
@@ -80,7 +80,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
         create(:extra_contribution, refugee: refugee, extra_contribution_type: extra_contribution_types.first)
 
-        visit "/refugees/#{refugee.id}/show_costs"
+        visit "/people/#{refugee.id}/show_costs"
         click_link('Redigera insatsen')
         expect(current_path).to eq edit_refugee_extra_contribution_path(refugee, refugee.extra_contributions.first)
 
@@ -110,7 +110,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
       create_list(:extra_contribution_type, 3)
       refugee = create(:refugee)
 
-      visit "/refugees/#{refugee.id}/extra_contributions/new"
+      visit "/people/#{refugee.id}/extra_contributions/new"
 
       expect(current_path).to eq root_path
       expect(page).to have_selector('.alert', text: 'Din roll saknar behörighet')

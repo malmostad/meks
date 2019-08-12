@@ -5,7 +5,7 @@ RSpec.feature "Refugees", type: :feature do
     end
 
     scenario "adds a refugee" do
-      visit "/refugees"
+      visit "/people"
       first(".btn-primary", text: "Registrera ny").click
       fill_in "refugee_name", with: "Foo"
       click_button "Spara"
@@ -37,7 +37,7 @@ RSpec.feature "Refugees", type: :feature do
 
     scenario "validates the uniqueness of the dossier number" do
       create(:refugee, dossier_number: "1234")
-      visit "/refugees/new"
+      visit "/people/new"
 
       fill_in "refugee_name", with: "Bar"
       fill_in "refugee_dossier_number", with: "1234"
@@ -54,7 +54,7 @@ RSpec.feature "Refugees", type: :feature do
     end
 
     scenario "adding a refugee gets a draft status" do
-      visit "/refugees"
+      visit "/people"
       first(".btn-primary", text: "Registrera ny").click
       fill_in "refugee_name", with: "Foo"
       click_button "Spara"

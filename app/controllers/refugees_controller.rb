@@ -108,7 +108,7 @@ class RefugeesController < ApplicationController
       @refugees = @refugees.map do |r|
         { id: r.id,
           name: r.name,
-          path: "#{root_url}refugees/#{r.id}",
+          path: refugee_path(r.id),
           dossier_number: r.dossier_number,
           ssn: r.ssn,
           procapita: r.procapita,
