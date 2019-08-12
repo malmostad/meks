@@ -1,4 +1,4 @@
-# Extra kostnader för barn
+# Extra kostnader för personer
 module Economy
   class RefugeeExtraCost < Base
     def initialize(refugee, interval = DEFAULT_INTERVAL)

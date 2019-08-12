@@ -11,4 +11,4 @@ sheet.add_row(
   style: @style.heading
 )
 
-heading_comment(sheet, 'B', 'Kundnummer för barnets ärende i Procapita')
+heading_comment(sheet, 'B', 'Kundnummer för personens ärende i Procapita')

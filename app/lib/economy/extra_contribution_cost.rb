@@ -1,5 +1,5 @@
 module Economy
-  # Insatser för barn
+  # Insatser för personer
   # Calculation of ExtraContributionCost for a refugee
   # There are two types of extra contributions with different calculations and data fields
   # 1. "Normal" type that is calculated using po_rates

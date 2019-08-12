@@ -1,6 +1,6 @@
 # Comments in Swedish are from project specifications
 module StatisticsHelper
-  # Samtliga barn som har angivet anvisningskommun med our_municipality: true
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # men som saknar datum för avslut
   def our_municipality_refugees
     Refugee.joins(:municipality).where(deregistered: nil, municipalities: { our_municipality: true })
@@ -17,7 +17,7 @@ module StatisticsHelper
       end.reject(&:nil?)
   end
 
-  # Samtliga barn som har our_municipality som anvisningskommun
+  # Samtliga personer som har our_municipality som anvisningskommun
   # men som saknar datum för avslut
   def top_countries
     our_municipality_refugees
@@ -27,7 +27,7 @@ module StatisticsHelper
       .sort_by{ |key, value| value }.reject { |k, v| v <= 10  }.reverse[0...3].map(&:first).join(', ')
   end
 
-  # Samtliga barn som har our_municipality som anvisningskommun
+  # Samtliga personer som har our_municipality som anvisningskommun
   # men som saknar datum för PUT, TUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_waiting_for_verdict
@@ -38,7 +38,7 @@ module StatisticsHelper
       .count
   end
 
-  # Samtliga barn som har our_municipality som anvisningskommun
+  # Samtliga personer som har our_municipality som anvisningskommun
   # men som saknar datum för TUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_residence_permit
@@ -49,7 +49,7 @@ module StatisticsHelper
       .count
   end
 
-  # Samtliga barn som har angivet anvisningskommun med our_municipality: true
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   #   men som saknar datum för PUT eller medborgarskap.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_temporary_permit
@@ -60,14 +60,14 @@ module StatisticsHelper
       .count
   end
 
-  # Samtliga barn som our_municipality angivet som anvisningskommun
+  # Samtliga personer som our_municipality angivet som anvisningskommun
   # och som har datum för medborgarskap ifyllt.
   # Datum för avslut får inte vara ifyllt.
   def refugees_with_citizenship
     our_municipality_refugees.where.not(citizenship_at: nil).count
   end
 
-  # Samtliga barn som har angivet anvisningskommun med our_municipality: true
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # och som har aktuell placering på boendeform somm heter Institution.
   def refugees_on_hvb
     Placement
@@ -79,25 +79,25 @@ module StatisticsHelper
       .select(:refugee_id).distinct.count
   end
 
-  # Samtliga barn som har angivet anvisningskommun med our_municipality: true
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # och som har aktuell placering på boende med boendeform "Extern placering".
   def externaly_placed_refugees
     refugees_on_type_of_housing(6) # FIXME: hard coded
   end
 
-  # Samtliga barn som har angivet anvisningskommun med our_municipality: true
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # och som har aktuell placering på boendeform "jourhem".
   def refugees_on_emergency_home
     refugees_on_type_of_housing(3) # FIXME: hard coded
   end
 
-  # Samtliga barn som har angivet anvisningskommun med our_municipality: true
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # och som har aktuell placering på boendeform "Familjehem".
   def refugees_on_family_home
     refugees_on_type_of_housing(1) # FIXME: hard coded
   end
 
-  # Samtliga barn som har angivet anvisningskommun med our_municipality: true
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # och som har aktuell placering på boendeform "Utsluss". Ändrat till Stödboende.
   def refugees_on_outward_home
     refugees_on_type_of_housing(5) # FIXME: hard coded

@@ -1,4 +1,4 @@
-# 'Ensambkommande barn'
+# 'Personer'
 class Refugee < ApplicationRecord
   include RefugeeIndex
   include RefugeeSearch

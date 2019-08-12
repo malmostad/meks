@@ -1,5 +1,5 @@
 | Domain Model Name          | Human Name in Swedish                                     |
-|:---------------------------|:----------------------------------------------------------|
+| :------------------------- | :-------------------------------------------------------- |
 | Cost                       | Dygnskostnad                                              |
 | Country                    | Länder                                                    |
 | DeregisteredReason         | Avslutsorsak                                              |
@@ -21,8 +21,8 @@
 | PoRate                     | Procentsatser för arbetsgivaravgift, tidigare "PO-pålägg" |
 | RateCategory               | Schablongrupp                                             |
 | Rate                       | Schablonbelopp                                            |
-| RefugeeExtraCost           | Extra kostnad (knuten till barn)                          |
-| Refugee                    | Ensambkommande barn                                       |
+| RefugeeExtraCost           | Extra kostnad (knuten till person)                        |
+| Refugee                    | Person                                                    |
 | Relationship               | Anhörig                                                   |
 | Setting                    | Inställningar                                             |
 | Ssn                        | Extra personnummer                                        |

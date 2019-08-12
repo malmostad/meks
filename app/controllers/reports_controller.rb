@@ -128,7 +128,7 @@ class ReportsController < ApplicationController
     when 'placements'
       'Placeringar'
     when 'refugees'
-      'Ensamkommande'
+      'Personer'
     end
   end
 

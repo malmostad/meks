@@ -24,11 +24,11 @@ sv:
           title: Insatser
           content: Om förändringar sker enligt avtal skall ny insats registreras. Redigera endast insatser om felaktiga uppgifter har registrerats.
         procapita:
-          content: Kundnummer för barnets ärende i Procapita.
+          content: Kundnummer för personens ärende i Procapita.
         other_relateds:
           content: Registreras under fliken Allmänt.
         transferred:
-          content: Kryssa i denna ruta om barnet EJ formellt anvisats Malmö men där socialtjänstansvaret övertas.
+          content: Kryssa i denna ruta om personen EJ formellt anvisats Malmö men där socialtjänstansvaret övertas.
       placement:
         placement_extra_costs:
           title: Extra utgifter
@@ -39,7 +39,7 @@ sv:
         name: Namn
         description: Beskrivning
         home: Boende
-        refugee: Ensamkommande barn
+        refugee: Person
         comment: Kommentar
         date: Datum
         amount: Belopp
@@ -114,7 +114,7 @@ sv:
       relationship:
         <<: *defaults
         <<: *refugee
-        search_related: Sök anhörigt barn
+        search_related: Sök anhörig person
         related: Anhörig
         relateds: Anhöriga
         related_id: Anhörig-id
@@ -159,8 +159,8 @@ sv:
         user: Importerad av
         imported_at: Importerad
         file: Fil
-        refugee: Barn
-        refugee_id: Barn
+        refugee: Person
+        refugee_id: Person
         payments: Utbetalda schabloner
         parse_errors: Tolkningsfel
         original_filename: Ursprungligt filnamn
@@ -168,7 +168,7 @@ sv:
 
       payment: &payment
         <<: *payment_import
-        refugee_id: Barn
+        refugee_id: Person
         amount: Belopp
         period_start: Startdatum
         period_end: Slutdatum
@@ -204,7 +204,7 @@ sv:
 
       payments:
         <<: *payment
-        refugee_id: Barn
+        refugee_id: Person
 
       po_rate:
         rate_under_65: Procentsats, under 65 år

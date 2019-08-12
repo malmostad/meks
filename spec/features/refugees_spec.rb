@@ -11,7 +11,7 @@ RSpec.feature "Refugees", type: :feature do
       click_button "Spara"
 
       expect(current_path).to eq refugee_path(Refugee.last)
-      expect(page).to have_selector(".notice", text: "Ensamkommande barnet registrerat")
+      expect(page).to have_selector(".notice", text: 'Personen registrerades')
     end
 
     scenario "updates a refugee" do
@@ -60,7 +60,7 @@ RSpec.feature "Refugees", type: :feature do
       click_button "Spara"
 
       expect(Refugee.last.draft).to eq true
-      expect(page).to have_selector(".notice", text: "Ensamkommande barnet registrerat")
+      expect(page).to have_selector(".notice", text: "Personen registrerades")
     end
   end
 end

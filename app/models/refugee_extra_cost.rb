@@ -1,4 +1,4 @@
-# 'Extra kostnad (knuten till barn)'
+# 'Extra kostnad (knuten till personen)'
 class RefugeeExtraCost < ApplicationRecord
   belongs_to :refugee, touch: true
 

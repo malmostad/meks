@@ -59,13 +59,13 @@ module Economy
     #     :registered
     #
     # Från-datum beräknas på senaste datum av följande:
-    #    datumet när barnet uppnått minimiålder
+    #    datumet när personen uppnått minimiålder
     #      :date_of_birth
     #    inskrivningsdatum
     #      :registered
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #   datumet när barnet uppnått maxålder + 1 år – 1 dag
+    #   datumet när personen uppnått maxålder + 1 år – 1 dag
     #      :date_of_birth
     #   avslutsdatum - 1 dag
     #      :deregistered
@@ -124,13 +124,13 @@ module Economy
     #     :in_our_municipality?
     #
     # Från-datum beräknas på senaste datum av följande:
-    #   datumet när barnet uppnått minimiålder
+    #   datumet när personen uppnått minimiålder
     #     :date_of_birth
     #   anvisningdatum
     #     :municipality_placement_migrationsverket_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #   datumet när barnet uppnått maxålder + 1 år – 1 dag
+    #   datumet när personen uppnått maxålder + 1 år – 1 dag
     #     :date_of_birth
     #   utskriven till Malmö
     #     :checked_out_to_our_city
@@ -172,7 +172,7 @@ module Economy
     #     :checked_out_to_our_city
     #
     # Från-datum beräknas på senaste datum av följande:
-    #   datumet när barnet uppnått minimiålder
+    #   datumet när personen uppnått minimiålder
     #     :date_of_birth
     #   utskriven till Malmö - 1 dag
     #     :checked_out_to_our_city
@@ -180,7 +180,7 @@ module Economy
     #     :temporary_permit_starts_at
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #   datumet när barnet uppnått maxålder + 1 år – 1 dag
+    #   datumet när personen uppnått maxålder + 1 år – 1 dag
     #     :date_of_birth
     #   avslutsdatum för TUT
     #     :temporary_permit_ends_at
@@ -226,7 +226,7 @@ module Economy
     #   :checked_out_to_our_city
     #
     # Från-datum beräknas på senaste datum av följande:
-    #   datumet när barnet uppnått minimiålder
+    #   datumet när personen uppnått minimiålder
     #     :date_of_birth
     #   startdatum för PUT
     #     :residence_permit_at
@@ -234,7 +234,7 @@ module Economy
     #     :checked_out_to_our_city
     #
     # Till-datum beräknas på tidigaste datum av följande:
-    #   datumet när barnet uppnått maxålder + 1 år – 1 dag
+    #   datumet när personen uppnått maxålder + 1 år – 1 dag
     #   avslutsdatum - 1
     #     :deregistered
     #   medborgarskap erhölls - 1 dag

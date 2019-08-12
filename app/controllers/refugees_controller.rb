@@ -52,7 +52,7 @@ class RefugeesController < ApplicationController
     @refugee.draft = true if current_user.has_role? :reader
 
     if @refugee.save
-      redirect_to @refugee, notice: 'Ensamkommande barnet registrerat'
+      redirect_to @refugee, notice: 'Personen registrerades'
     else
       @homes = Home.where(active: true)
       render :new
@@ -64,7 +64,7 @@ class RefugeesController < ApplicationController
     authorize! :update, @refugee
 
     if @refugee.update(refugee_params)
-      redirect_to @refugee, notice: 'Ensamkommande barnet uppdaterades'
+      redirect_to @refugee, notice: 'Personen uppdaterades'
     else
       render :edit
     end

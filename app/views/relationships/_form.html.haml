@@ -4,7 +4,7 @@
     = simple_form_for [@refugee, @relationship], html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
 
-      = show_attribute('Barn', @refugee.name)
+      = show_attribute('Person', @refugee.name)
       - related = @relationship.related.present? ? @relationship.related.name : ''
       = f.input :related, label: 'Sök anhörig' do
         = text_field_tag :relationship_related, nil, value: '', 'data-autocomplete-url' => refugees_suggest_path,

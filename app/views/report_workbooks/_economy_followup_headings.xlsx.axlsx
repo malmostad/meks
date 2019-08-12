@@ -35,4 +35,4 @@ sheet.merge_cells sheet.rows.first.cells[(0..11)]
 (12..45).step(3).each { |i| sheet.merge_cells(sheet.rows.first.cells[i..(i + 2)]) }
 sheet.merge_cells sheet.rows.first.cells[(48..51)]
 
-heading_comment(sheet, 'F', 'Kundnummer för barnets ärende i Procapita', 2)
+heading_comment(sheet, 'F', 'Kundnummer för personens ärende i Procapita', 2)

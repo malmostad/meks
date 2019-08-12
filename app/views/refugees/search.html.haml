@@ -1,10 +1,10 @@
-- title 'Ensamkommande barn'
+- title 'Personer'
 %section.box.search.refugees
   %h1.box-title= h1
   .box-content.body-copy
     = form_tag(refugees_search_path, method: "get", class: "basic") do
       .form-group
-        = label_tag "query-refugee", "Sök barn: ", class: "control-label"
+        = label_tag "query-refugee", "Sök personer: ", class: "control-label"
         .controls
           .input-group
             = text_field_tag "query-refugee", @q, name: "q", "data-autocomplete-url" => refugees_suggest_path, class: "form-control", placeholder: "Ange söktext"
@@ -13,7 +13,7 @@
           .help-inline Sök på namn, person-, dossier- eller kundnummer
 
     - if @total.present?
-      %div.summary= "#{number_to_words(@total).titlecase} barn matchade din sökning"
+      %div.summary= "#{number_to_words(@total).titlecase} personer matchade din sökning"
 
     - if @refugees.present?
       = render "search_results"

@@ -75,7 +75,7 @@ namespace :import do
       end
     end
 
-    puts "#{refugees} barn importerades"
+    puts "#{refugees} personer importerades"
   end
 
   # The sheet "Placeringar" exported to "placements.csv"
@@ -257,7 +257,7 @@ namespace :import do
       end
     end
 
-    puts "#{refugees} ensamkommande barn uppdaterades"
+    puts "#{refugees} personer uppdaterades"
   end
 
   desc 'Create refugees and import data associated with them'

@@ -1,4 +1,4 @@
-# 'Extra kostnad för barn'
+# 'Extra kostnad för personer'
 class RefugeeExtraCostsController < ApplicationController
   before_action :set_refugee, only: %i[new create edit update destroy]
   before_action :set_refugee_extra_cost, only: %i[edit update destroy]

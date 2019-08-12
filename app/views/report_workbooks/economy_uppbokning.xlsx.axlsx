@@ -22,7 +22,7 @@ end
 
 first_sheet.add_row(
   [
-    'Barnens status',
+    'Personens status',
     'Förväntad intäkt'
   ],
   style: @style.heading

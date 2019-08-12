@@ -1,5 +1,5 @@
 module Economy
-  # "Engångsintäkt för anvisning för ensamkommande"
+  # "Engångsintäkt för anvisning för personer"
   class OneTimePayment < Base
     def self.all(interval)
       Refugee
