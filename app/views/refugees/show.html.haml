@@ -47,7 +47,7 @@
       .ekb-only= kv 'refugee.special_needs', @refugee.special_needs ? 'Ja' : 'Nej'
       = kv @refugee, :social_worker
 
-      %h2.group-title Asylstatus
+      %h2.group-title Status
       = kv @refugee, :registered
       .ekb-only= kv @refugee, :residence_permit_at
       .ekb-only= kv @refugee, :checked_out_to_our_city

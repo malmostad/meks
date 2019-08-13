@@ -108,7 +108,7 @@ sv:
         social_worker: Socialsekreterare
         in_arrival: I ankomst
         current_placement: Aktuellt boende
-        current_asylum: Asylstatus
+        current_asylum: Status
         placements:
           <<: *placement
 

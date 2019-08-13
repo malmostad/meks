@@ -62,7 +62,7 @@
         = placement.input :specification
         = placement.input :cost
 
-    %h2.group-title Asylstatus
+    %h2.group-title Status
     = f.input :registered, as: :string, wrapper: :datepicker
     = f.input :residence_permit_at, wrapper_html: { class: 'ekb-only' }, label: raw(t('simple_form.labels.refugee.residence_permit_at')), as: :string, wrapper: :datepicker
     = f.input :checked_out_to_our_city, wrapper_html: { class: 'ekb-only' }, as: :string, wrapper: :datepicker

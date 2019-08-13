@@ -39,7 +39,7 @@ sheet.add_row(
     'Ägarform',
     'Målgrupp',
     'Anledning till utskrivning',
-    'Asylstatus',
+    'Status',
     'Telefonnummer',
     'Faxnummer',
     'Adress',

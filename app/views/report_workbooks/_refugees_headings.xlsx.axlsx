@@ -34,7 +34,7 @@ sheet.add_row(
     'Anhöriga',
     'Angiven som anhöriga till',
     'Övriga anhöriga',
-    'Asylstatus',
+    'Status',
     'Extra personnummer',
     'Extra dossiernummer',
     'Senast redigerad'
