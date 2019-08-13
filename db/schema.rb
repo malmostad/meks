@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_17_135905) do
+ActiveRecord::Schema.define(version: 2019_08_13_085704) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -340,6 +340,7 @@ ActiveRecord::Schema.define(version: 2019_06_17_135905) do
     t.string "procapita"
     t.datetime "imported_at"
     t.boolean "transferred"
+    t.boolean "ekb", default: true
     t.index ["deregistered_reason_id"], name: "index_refugees_on_deregistered_reason_id"
     t.index ["gender_id"], name: "index_refugees_on_gender_id"
     t.index ["municipality_id"], name: "index_refugees_on_municipality_id"
