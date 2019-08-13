@@ -272,6 +272,56 @@ RSpec.describe Refugee, type: :model do
     end
   end
 
+  describe 'EKB attributes' do
+    let(:refugee) do
+      create(
+        :refugee,
+        ekb: true,
+        special_needs: true,
+        residence_permit_at: '2019-01-01',
+        checked_out_to_our_city: '2019-01-01',
+        temporary_permit_starts_at: '2019-01-01',
+        temporary_permit_ends_at: '2019-01-01',
+        citizenship_at: '2019-01-01',
+        transferred: true,
+        municipality_placement_migrationsverket_at: '2019-01-01',
+        municipality_placement_comment: 'foo',
+        deregistered_reason: create(:deregistered_reason)
+      )
+    end
+
+    it 'should be saved' do
+      expect(refugee.special_needs).to be_truthy
+      expect(refugee.residence_permit_at).to be_present
+      expect(refugee.checked_out_to_our_city).to be_present
+      expect(refugee.temporary_permit_starts_at).to be_present
+      expect(refugee.temporary_permit_ends_at).to be_present
+      expect(refugee.citizenship_at).to be_present
+      expect(refugee.transferred).to be_truthy
+      expect(refugee.municipality_placement_migrationsverket_at).to be_present
+      expect(refugee.municipality_placement_comment).to be_present
+      expect(refugee.deregistered_reason).to be_present
+    end
+
+    it 'should be cleared when not EKB' do
+      refugee.update_attribute(:ekb, false)
+      refugee.reload
+
+      expect(refugee.ssns).to be_empty
+      expect(refugee.dossier_numbers).to be_empty
+      expect(refugee.special_needs).to be false
+      expect(refugee.residence_permit_at).to be_nil
+      expect(refugee.checked_out_to_our_city).to be_nil
+      expect(refugee.temporary_permit_starts_at).to be_nil
+      expect(refugee.temporary_permit_ends_at).to be_nil
+      expect(refugee.citizenship_at).to be_nil
+      expect(refugee.transferred).to be false
+      expect(refugee.municipality_placement_migrationsverket_at).to be_nil
+      expect(refugee.municipality_placement_comment).to be_nil
+      expect(refugee.deregistered_reason).to be_nil
+    end
+  end
+
   describe 'destroy' do
     it 'should destroy a record' do
       expect { create(:refugee, name: 'Refugee name') }.to change(Refugee, :count).by(+1)
