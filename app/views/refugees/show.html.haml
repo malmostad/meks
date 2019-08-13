@@ -21,6 +21,7 @@
       - if current_user.has_role? :admin
         = kv 'refugee.sof_placement', @refugee.sof_placement ? 'Ja' : 'Nej'
       = kv 'refugee.arrival', @refugee.arrival ? 'Ja' : 'Nej'
+      = kv 'refugee.ekb', @refugee.ekb ? 'Ja' : 'Nej'
       = kv @refugee, :name
       = kv @refugee, :ssn
       = kv @refugee, :dossier_number

@@ -65,6 +65,7 @@ sv:
       refugee: &refugee
         <<: *defaults
         draft: Utkast
+        ekb: EKB
         registered: Inskriven
         special_needs: Insatsbild
         gender: Kön
