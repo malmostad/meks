@@ -28,3 +28,24 @@ $ ->
       $('#relationship_related_name').val(ui.item.value)
       $('#relationship_related').val('')
     minLength: 2
+
+  # Hide some form controls when EKB is not selected
+  $show = $('.show.refugee')
+
+  if $form.length || $show.length
+    adaptFormToEKB = ->
+      # Show view
+      if !$show.hasClass('ekb')
+        $show.find('.ekb-only').hide()
+
+      # Form view
+      if $('#refugee_ekb:checked').length
+        $form.find('.ekb-only').show()
+      else
+        $form.find('.ekb-only').hide()
+
+    $('#refugee_ekb').change ->
+      adaptFormToEKB()
+
+    $(window).load ->
+      adaptFormToEKB()

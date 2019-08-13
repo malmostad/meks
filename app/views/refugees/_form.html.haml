@@ -8,8 +8,8 @@
     - if current_user.has_role? :admin
       = f.input :sof_placement,
                 wrapper: :vertical_radio_and_checkboxes
-    = f.input :arrival, wrapper: :vertical_radio_and_checkboxes
     = f.input :ekb, wrapper: :vertical_radio_and_checkboxes
+    = f.input :arrival, wrapper: :vertical_radio_and_checkboxes
     = f.input :name
 
     %h2.group-title Personuppgifter
@@ -20,27 +20,29 @@
           .input-group-addon= '-'
           = f.input_field :ssn_extension, class: 'form-control ssn-extension', placeholder: 'fyra sista'
 
-      = f.simple_fields_for :ssns do |s|
-        = render 'fields_for_ssn', s: s
-      .form-group
-        %span.control-label
-        .controls
-          = add_ssns_button 'Fler personnummer', f
+      .ekb-only
+        = f.simple_fields_for :ssns do |s|
+          = render 'fields_for_ssn', s: s
+        .form-group
+          %span.control-label
+          .controls
+            = add_ssns_button 'Fler personnummer', f
 
-    = f.input :dossier_number
-    .terms
-      = f.simple_fields_for :dossier_numbers do |s|
-        = render 'fields_for_dossier_number', s: s
-      .form-group
-        %span.control-label
-        .controls
-          = add_dossier_numbers_button 'Fler dossiernummer', f
+    .ekb-only
+      = f.input :dossier_number
+      .terms
+        = f.simple_fields_for :dossier_numbers do |s|
+          = render 'fields_for_dossier_number', s: s
+        .form-group
+          %span.control-label
+          .controls
+            = add_dossier_numbers_button 'Fler dossiernummer', f
 
     = f.input :procapita, label_html: popover('refugee.procapita')
     = f.association :gender
     = f.association :languages, input_html: { class: 'chosen' }
     = f.association :countries, input_html: { class: 'chosen' }
-    = f.input :special_needs, as: :select
+    = f.input :special_needs, as: :select, wrapper_html: { class: 'ekb-only' }
     = f.input :social_worker
     = f.input :other_relateds
 
@@ -62,17 +64,17 @@
 
     %h2.group-title Asylstatus
     = f.input :registered, as: :string, wrapper: :datepicker
-    = f.input :residence_permit_at, label: raw(t('simple_form.labels.refugee.residence_permit_at')), as: :string, wrapper: :datepicker
-    = f.input :checked_out_to_our_city, as: :string, wrapper: :datepicker
-    = f.input :temporary_permit_starts_at, label: raw(t('simple_form.labels.refugee.temporary_permit_starts_at')), as: :string, wrapper: :datepicker
-    = f.input :temporary_permit_ends_at, label: raw(t('simple_form.labels.refugee.temporary_permit_ends_at')), as: :string, wrapper: :datepicker
-    = f.input :citizenship_at, as: :string, wrapper: :datepicker
+    = f.input :residence_permit_at, wrapper_html: { class: 'ekb-only' }, label: raw(t('simple_form.labels.refugee.residence_permit_at')), as: :string, wrapper: :datepicker
+    = f.input :checked_out_to_our_city, wrapper_html: { class: 'ekb-only' }, as: :string, wrapper: :datepicker
+    = f.input :temporary_permit_starts_at, wrapper_html: { class: 'ekb-only' }, label: raw(t('simple_form.labels.refugee.temporary_permit_starts_at')), as: :string, wrapper: :datepicker
+    = f.input :temporary_permit_ends_at, wrapper_html: { class: 'ekb-only' }, label: raw(t('simple_form.labels.refugee.temporary_permit_ends_at')), as: :string, wrapper: :datepicker
+    = f.input :citizenship_at, wrapper_html: { class: 'ekb-only' }, as: :string, wrapper: :datepicker
     = f.association :municipality, input_html: { class: 'chosen' }
-    = f.input :transferred, wrapper: :vertical_radio_and_checkboxes, label_html: popover('refugee.transferred')
-    = f.input :municipality_placement_migrationsverket_at, as: :string, wrapper: :datepicker
-    = f.input :municipality_placement_comment
+    = f.input :transferred, wrapper_html: { class: 'ekb-only' }, wrapper: :vertical_radio_and_checkboxes, label_html: popover('refugee.transferred')
+    = f.input :municipality_placement_migrationsverket_at, wrapper_html: { class: 'ekb-only' }, as: :string, wrapper: :datepicker
+    = f.input :municipality_placement_comment, wrapper_html: { class: 'ekb-only' }
     = f.input :deregistered, as: :string, wrapper: :datepicker
-    = f.association :deregistered_reason
+    = f.association :deregistered_reason, wrapper_html: { class: 'ekb-only' }
     = f.input :deregistered_comment
 
     = render 'application/submit', form: f,
