@@ -150,7 +150,7 @@ class RefugeesController < ApplicationController
 
   def refugee_params
     permitted_params = [
-      :name, :registered, :deregistered, :deregistered_reason_id, :deregistered_comment,
+      :ekb, :name, :registered, :deregistered, :deregistered_reason_id, :deregistered_comment,
       :date_of_birth,
       :ssn_extension,
       :dossier_number,
