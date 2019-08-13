@@ -68,6 +68,27 @@ class Refugee < ApplicationRecord
 
   validate :validate_date_of_birth
 
+  before_save :clear_ekb_fields
+
+  # Clear fields not releated to non-EKBs unless ekb is true
+  def clear_ekb_fields
+    return if ekb?
+
+    ssns.destroy_all
+    self.dossier_number = nil
+    dossier_numbers.destroy_all
+    self.special_needs = nil
+    self.residence_permit_at = nil
+    self.checked_out_to_our_city = nil
+    self.temporary_permit_starts_at = nil
+    self.temporary_permit_ends_at = nil
+    self.citizenship_at = nil
+    self.transferred = nil
+    self.municipality_placement_migrationsverket_at = nil
+    self.municipality_placement_comment = nil
+    self.deregistered_reason = nil
+  end
+
   def validate_date_of_birth
     return true if date_of_birth_before_type_cast.blank?
 
