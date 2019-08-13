@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.2.3'
 gem 'haml-rails', '2.0.1'
-gem 'sassc-rails', '2.1.1'
+gem 'sassc-rails', '2.1.2'
 gem 'uglifier', '4.1.20'
 gem 'coffee-rails', '5.0.0'
 
@@ -12,13 +12,13 @@ gem 'bootstrap-datepicker-rails', '1.8.0.1'
 gem 'simple_form', '4.1.0'
 gem 'mysql2', '0.5.2'
 gem 'dalli', '2.7.10'
-gem 'elasticsearch-model', '6.0.0'
-gem 'elasticsearch-rails', '6.0.0'
+gem 'elasticsearch-model', '6.1.0'
+gem 'elasticsearch-rails', '6.1.0'
 gem 'daemons', '1.3.1'
 
 gem 'net-ldap', '0.16.1'
 gem 'cancancan', '3.0.1'
-gem 'ruby-saml', '1.10.2'
+gem 'ruby-saml', '1.11.0'
 
 gem 'rubyzip', '~> 1.2.2'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c593a08'
@@ -40,7 +40,7 @@ group :development do
   gem 'capistrano', '3.11.0', require: false
   gem 'capistrano-rails', '1.4.0', require: false
   gem 'capistrano-rbenv', '2.1.4', require: false
-  gem 'capistrano-bundler', '1.5.0', require: false
+  gem 'capistrano-bundler', '1.6.0', require: false
   gem 'bullet'
   gem 'listen'
   gem 'rails-erd'
