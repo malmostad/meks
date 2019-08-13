@@ -67,6 +67,12 @@ module StatisticsHelper
     our_municipality_refugees.where.not(citizenship_at: nil).count
   end
 
+  # Samtliga personer som our_municipality angivet som anvisningskommun
+  # och som inte har EKB
+  def refugees_without_ekb
+    our_municipality_refugees.where(ekb: false).count
+  end
+
   # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # och som har aktuell placering på boendeform somm heter Institution.
   def refugees_on_hvb
