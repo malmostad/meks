@@ -3,12 +3,12 @@ last_row = sheet.rows.size
 sheet.add_row(
   [
     'SUMMA:',
-    (1..22).map { nil },
-    (23..25).map { |i| "=SUM(#{Axlsx.col_ref(i)}2:#{Axlsx.col_ref(i)}#{last_row})" },
-    (26..29).map { nil }
+    (1..23).map { nil },
+    (24..26).map { |i| "=SUM(#{Axlsx.col_ref(i)}2:#{Axlsx.col_ref(i)}#{last_row})" },
+    (27..30).map { nil }
   ].flatten
 )
 
-(0..29).each do |col|
+(0..30).each do |col|
   sheet.rows.last.cells[col].style = @style.sum
 end

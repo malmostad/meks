@@ -4,6 +4,7 @@ sheet.add_row(
     'Dossiernummer',
     'Extra dossiernummer',
     'Kundnummer',
+    'EKB',
     'Namn',
     'Personnummer',
     'Extra personnummer',
@@ -36,6 +37,6 @@ sheet.add_row(
 )
 
 heading_comment(sheet, 'C', 'Kundnummer för personens ärende i Procapita')
-heading_comment(sheet, 'J', 'Anger det datum då personen registreras i MEKS för första gången')
-heading_comment(sheet, 'M', 'Anger datum för när socialtjänstansvaret för personen är avslutat')
-heading_comment(sheet, 'T', 'Det datum då personen skrivs ut från Migrationsverket')
+heading_comment(sheet, 'K', 'Anger det datum då personen registreras i MEKS för första gången')
+heading_comment(sheet, 'N', 'Anger datum för när socialtjänstansvaret för personen är avslutat')
+heading_comment(sheet, 'U', 'Det datum då personen skrivs ut från Migrationsverket')
