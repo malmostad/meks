@@ -8,6 +8,7 @@
       refugee.current_placements.map(&:legal_code).map(&:name).join(', '),
       legal_codes_within_range(refugee, @interval),
       refugee.procapita,
+      refugee.ekb? ? 'Ja' : 'Nej',
       refugee.gender&.name,
       refugee.countries.map(&:name).join(', '),
       refugee.languages.map(&:name).join(', '),
@@ -42,7 +43,7 @@
     style: @style.normal
   )
 
-  [10, 14, 18, 19, 20, 21, 22, 25].each do |col|
+  [11, 15, 19, 20, 21, 22, 23, 26].each do |col|
     sheet.rows[row + 1].cells[col].style = @style.date
   end
 end
