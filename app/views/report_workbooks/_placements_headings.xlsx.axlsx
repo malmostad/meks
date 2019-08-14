@@ -7,6 +7,7 @@ sheet.add_row(
     'Personnummer',
     'Extra personnummer',
     'Kundnummer',
+    'EKB',
     'Boende',
     'Alla lagrum inom angivet datumintervall',
     'Placeringsspecifikation',
@@ -56,10 +57,10 @@ sheet.add_row(
   style: @style.heading
 )
 
-heading_comment(sheet, 'H', 'Lagrum för alla boenden som personen varit placerat på under rapportens valda tidsintervall')
-heading_comment(sheet, 'I', 'Specificerar extern placering')
-heading_comment(sheet, 'J', 'Alla boenden som personen varit placerat på under rapportens valda tidsintervall')
-heading_comment(sheet, 'K', 'Anger det datum då personen registrerades i MEKS för första gången')
-heading_comment(sheet, 'L', 'Anger det datum då personen placeras på ett specifikt boende')
-heading_comment(sheet, 'O', 'Anger datum för när socialtjänstansvaret för personen är avslutat')
-heading_comment(sheet, 'W', 'Det datum då personen skrivs ut från Migrationsverket')
+heading_comment(sheet, 'I', 'Lagrum för alla boenden som personen varit placerat på under rapportens valda tidsintervall')
+heading_comment(sheet, 'J', 'Specificerar extern placering')
+heading_comment(sheet, 'K', 'Alla boenden som personen varit placerat på under rapportens valda tidsintervall')
+heading_comment(sheet, 'L', 'Anger det datum då personen registrerades i MEKS för första gången')
+heading_comment(sheet, 'M', 'Anger det datum då personen placeras på ett specifikt boende')
+heading_comment(sheet, 'P', 'Anger datum för när socialtjänstansvaret för personen är avslutat')
+heading_comment(sheet, 'X', 'Det datum då personen skrivs ut från Migrationsverket')
