@@ -1,10 +1,15 @@
 require: rubocop-performance
 
 Style/AsciiComments:
+  Description: 'Allow a few use case specifications in Swedish in comments'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#english-comments'
   Enabled: false
 
+Style/StringLiterals:
+  EnforcedStyle: none
+
 Metrics/LineLength:
-  Max: 100
+  Max: 120
   # The IgnoredPatterns option is a list of !ruby/regexp and/or string
   # elements. Strings will be converted to Regexp objects. A line that matches
   # any regular expression listed in this option will be ignored by LineLength.
