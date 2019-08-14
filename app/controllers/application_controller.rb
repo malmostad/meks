@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    logger.info "[AUTHENTICATE]"
+    logger.info '[AUTHENTICATE]'
     if current_user && session_fresh?
       update_session
     else

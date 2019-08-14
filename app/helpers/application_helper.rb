@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def title_suffix
-    APP_CONFIG["title_suffix"]
+    APP_CONFIG['title_suffix']
   end
 
   def h1
@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def number_to_words(number, alt = false)
-    words = alt ? I18n.t("number_words_alt") : I18n.t("number_words")
+    words = alt ? I18n.t('number_words_alt') : I18n.t('number_words')
     words[number] ? words[number] : number.to_s
   end
 

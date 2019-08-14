@@ -85,7 +85,7 @@ class LoginController < ApplicationController
         logger.debug { "Stubbed authenticated user #{current_user.id}" }
         redirect_after_login
       else
-        @error_message = "Användarnamnet finns inte"
+        @error_message = 'Användarnamnet finns inte'
         render 'new'
       end
     end

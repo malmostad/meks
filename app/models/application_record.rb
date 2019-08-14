@@ -17,7 +17,7 @@ class ApplicationRecord < ActiveRecord::Base
   # Rollback transaction if any record date ranges overlaps
   def validate_associated_date_overlaps(records, field_name)
     records.each do |r|
-      if records.where.not(id: r.id).where("? <= end_date AND ? >= start_date", r.start_date, r.end_date).present?
+      if records.where.not(id: r.id).where('? <= end_date AND ? >= start_date', r.start_date, r.end_date).present?
         r.errors.add(field_name, 'Intervallet överlappar med ett annat')
         errors.add(:base)
         raise ActiveRecord::Rollback
