@@ -6,7 +6,7 @@ Style/AsciiComments:
   Enabled: false
 
 Style/StringLiterals:
-  EnforcedStyle: none
+  EnforcedStyle: single_quotes
 
 Metrics/LineLength:
   Max: 120
