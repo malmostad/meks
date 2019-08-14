@@ -35,6 +35,8 @@ module Economy
 
     # Returns the number of days for the rate and the rate amount
     def as_array
+      return [] unless @refugee.ekb?
+
       @as_array ||= begin
         RATE_CATEGORIES_AND_RATES.map do |category|
           send(category.qualifier[:meth], category)
@@ -45,6 +47,8 @@ module Economy
     # Utility method for debugging.
     # Returns an hash with each rate category and the amount and days qualified
     def qualifies_as(skip_all_replace = true)
+      return {} unless @refugee.ekb?
+
       @skip_all_replace = skip_all_replace
 
       RATE_CATEGORIES_AND_RATES.map do |category|

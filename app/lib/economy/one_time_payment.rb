@@ -17,6 +17,7 @@ module Economy
 
     # Return the one_time_payment amount if it qualifies
     def sum
+      return unless @refugee.ekb?
       return unless @refugee&.municipality&.our_municipality?
       return if @refugee.transferred?
       return unless @refugee.municipality_placement_migrationsverket_at&.between?(@from, @to)
