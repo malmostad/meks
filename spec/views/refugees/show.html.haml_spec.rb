@@ -1,9 +1,9 @@
-RSpec.describe "refugees/show", type: :view do
+RSpec.describe 'refugees/show', type: :view do
   before(:each) do
     @refugee = assign(:refugee, create(:refugee))
   end
 
-  it "renders attributes for refugee" do
+  it 'renders attributes for refugee' do
     render
     expect(rendered).to match(/#{@refugee.name}/)
     expect(rendered).to match(/#{@refugee.registered}/)

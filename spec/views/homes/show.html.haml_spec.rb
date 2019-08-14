@@ -1,9 +1,9 @@
-RSpec.describe "homes/show", type: :view do
+RSpec.describe 'homes/show', type: :view do
   before(:each) do
     @home = assign(:home, create(:home))
   end
 
-  it "renders attributes for home" do
+  it 'renders attributes for home' do
     render
     expect(rendered).to match(/#{@home.name}/)
     expect(rendered).to match(/#{@home.phone}/)
