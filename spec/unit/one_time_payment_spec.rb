@@ -47,6 +47,14 @@ RSpec.describe 'OneTimePayment calculation' do
       expect(otp.sum).to eq(nil)
       expect(otp.as_formula).to eq('')
     end
+
+    it 'should not have a one time payment if not EKB' do
+      refugee.ekb = false
+
+      otp = ::Economy::OneTimePayment.new(refugee, interval)
+      expect(otp.sum).to eq(nil)
+      expect(otp.as_formula).to eq('')
+    end
   end
 
   describe 'class method all' do

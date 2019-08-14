@@ -95,6 +95,13 @@ RSpec.describe 'Rates for arrival_0_17' do
     expect(rate).to be_nil
   end
 
+  it 'should not have rate if EKB' do
+    refugee.ekb = false
+
+    rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
+    expect(rates).to be_empty
+  end
+
   describe 'deduction of days for placements with legal_code#exempt_from_rate should not be made for arrival_0_17' do
     it 'should not have rate for placement covering report range' do
       create(:placement_with_rate_exempt, refugee: refugee, moved_in_at: UnitMacros::REPORT_INTERVAL[:from])

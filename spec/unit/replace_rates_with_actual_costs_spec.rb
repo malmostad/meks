@@ -43,6 +43,11 @@ RSpec.describe Economy::ReplaceRatesWithActualCosts do
     expect(Economy::ReplaceRatesWithActualCosts.new(refugee).sum).to eq 0
   end
 
+  it 'should not have rate_exempt because if EKB' do
+    refugee.ekb = false
+    expect(Economy::ReplaceRatesWithActualCosts.new(refugee).as_array).to be_empty
+  end
+
   describe 'replacement with actual costs for rate categories' do
     let(:moved_in_at) { UnitMacros::REPORT_INTERVAL[:from].to_date }
     let(:moved_out_at) { UnitMacros::REPORT_INTERVAL[:to].to_date }

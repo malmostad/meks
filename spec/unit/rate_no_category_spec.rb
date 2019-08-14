@@ -14,4 +14,12 @@ RSpec.describe 'Rates' do
       expect(rates.size).to eq 0
     end
   end
+
+  describe 'refugee with EKB' do
+    it 'should not belong to any rate category' do
+      refugee.ekb = false
+      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
+      expect(rates.size).to eq 0
+    end
+  end
 end

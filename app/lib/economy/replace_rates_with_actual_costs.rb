@@ -41,6 +41,7 @@ module Economy
     # { months: Float, costs: Float }
     # Float
     def as_array
+      return [] unless @refugee.ekb?
       return [] if @intervals_with_exempt.empty?
 
       @intervals_with_exempt.map do |interval_with_exempt|
