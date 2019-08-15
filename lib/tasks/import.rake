@@ -6,13 +6,13 @@ namespace :import do
   # people.csv placements.csv outpatient_contributions.csv extra_contributions.csv
   # Run the create tasks in chain with:
   # $ rake import:create_people_tasks
-  CREATE_REFUGEES_DIR = File.join(BASE_DIR, 'create').freeze
+  CREATE_PEOPLE_DIR = File.join(BASE_DIR, 'create').freeze
 
   # Place the following exported spreadsheet files for *existing* people here:
   # people.csv placements.csv outpatient_contributions.csv extra_contributions.csv
   # Run the update tasks in chain with:
   # $ rake import:update_people_tasks
-  UPDATE_REFUGEES_DIR = File.join(BASE_DIR, 'update').freeze
+  UPDATE_PEOPLE_DIR = File.join(BASE_DIR, 'update').freeze
 
   # The sheet "Individdata" exported to "people.csv"
   #   has two heading rows and the following columns:
@@ -262,7 +262,7 @@ namespace :import do
 
   desc 'Create people and import data associated with them'
   task create_people_tasks: :environment do
-    @directory = CREATE_REFUGEES_DIR
+    @directory = CREATE_PEOPLE_DIR
     ActiveRecord::Base.transaction do
       Rake::Task['import:people'].invoke
       Rake::Task['import:placements'].invoke
@@ -273,7 +273,7 @@ namespace :import do
 
   desc 'Update exitsing people and import data associated with them'
   task update_people_tasks:  :environment do
-    @directory = UPDATE_REFUGEES_DIR
+    @directory = UPDATE_PEOPLE_DIR
     ActiveRecord::Base.transaction do
       Rake::Task[:environment].invoke
       Rake::Task['import:update_people'].invoke
