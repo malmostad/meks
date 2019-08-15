@@ -178,7 +178,7 @@ module Economy
     # Från-datum beräknas på senaste datum av följande:
     #   datumet när personen uppnått minimiålder
     #     :date_of_birth
-    #   utskriven till Malmö - 1 dag
+    #   utskriven till Malmö
     #     :checked_out_to_our_city
     #   startdatum för TUT
     #     :temporary_permit_starts_at
@@ -205,7 +205,7 @@ module Economy
       category.rates.map do |rate|
         from = latest_date(
           *shared_from_attr(category, rate),
-          day_before(@refugee.checked_out_to_our_city),
+          @refugee.checked_out_to_our_city,
           @refugee.temporary_permit_starts_at
         )
 
@@ -234,7 +234,7 @@ module Economy
     #     :date_of_birth
     #   startdatum för PUT
     #     :residence_permit_at
-    #   utskriven till Malmö - 1 dag
+    #   utskriven till Malmö
     #     :checked_out_to_our_city
     #
     # Till-datum beräknas på tidigaste datum av följande:
@@ -253,7 +253,7 @@ module Economy
         from = latest_date(
           *shared_from_attr(category, rate),
           @refugee.residence_permit_at,
-          day_before(@refugee.checked_out_to_our_city)
+          @refugee.checked_out_to_our_city
         )
 
         to = earliest_date(

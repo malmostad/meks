@@ -42,7 +42,7 @@ RSpec.describe 'Rates for residence_permit_0_17' do
     rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
     rate = detect_rate_by_amount(rates, UnitMacros::RATES[:residence_permit_0_17])
 
-    expect(rate[:days]).to eq 87
+    expect(rate[:days]).to eq 86
   end
 
   it 'should respond to changed deregistered' do
