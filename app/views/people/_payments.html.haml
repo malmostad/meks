@@ -1,0 +1,26 @@
+.payments
+  %h2.group-title Utbetalda schabloner
+  - if @person.payments.blank?
+    %div Inga schabloner har betalts ut
+  - else
+    %table.full.wrap
+      %thead
+        %tr
+          %th Import
+          %th Startdatum
+          %th Slutdatum
+          %th Dagar
+          %th Belopp
+          %th Belopp per dag
+          %th Kommentar
+
+      %tbody
+        - @person.payments.each do |payment|
+          %tr
+            %td= link_to 'Visa', payment.payment_import
+            %td= payment.period_start
+            %td= payment.period_end
+            %td= payment.days
+            %td= number_to_currency(payment.amount, delimiter: ' ')
+            %td= number_to_currency(payment.per_day, delimiter: ' ')
+            %td= payment.comment

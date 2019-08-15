@@ -1,13 +1,13 @@
 status[:records].each_with_index do |record, row|
-  refugee = record[:refugee]
+  person = record[:person]
 
   sheet.add_row(
     [
-      refugee.dossier_number,
-      refugee.procapita,
-      refugee.ssn,
-      refugee.ssns.map(&:full_ssn).join(', '),
-      refugee.municipality&.name,
+      person.dossier_number,
+      person.procapita,
+      person.ssn,
+      person.ssns.map(&:full_ssn).join(', '),
+      person.municipality&.name,
       sum_formula(record[:rates]),
       "=(#{record[:days]})"
     ],

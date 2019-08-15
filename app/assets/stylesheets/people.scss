@@ -1,0 +1,67 @@
+section.people {
+  form .help-inline {
+    margin: .4em 0 .5em;
+  }
+  .summary {
+    font-family: $sans-serif;
+    font-size: emize(14, 16);
+    margin-bottom: 1em;
+  }
+  .placements {
+    .form-group {
+      margin-bottom: .2em;
+    }
+    .placement {
+      margin-bottom: 2em;
+      .form-group.action {
+        margin-top: .5em;
+      }
+    }
+  }
+}
+
+section.person {
+  ul.related {
+    list-style: none;
+    margin: 0 0 1em;
+    padding: 0;
+    li {
+      font-size: emize(14, 14);
+      margin: 0 0 .2em;
+      padding: 0;
+    }
+  }
+  .actions {
+    margin: 1em 0;
+  }
+
+  .extra_contribution,
+  .placement {
+    margin-bottom: 2em;
+  }
+
+  .secrecy {
+    float: right;
+    border: 2px dotted $warning-color;
+    padding: .1em .6em;
+    @include radius(5px);
+    color: $warning-color;
+    font-family: $sans-serif;
+    font-size: emize(22);
+    line-height: 1.4;
+    font-weight: bold;
+  }
+}
+
+.placement_specification,
+.person_placements_specification {
+  display: none;
+}
+
+.ui-autocomplete.ui-menu .ui-menu-item {
+  a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -1,0 +1,29 @@
+%div
+  %table.full.wrap.person.results
+    %thead
+      %tr
+        %th Namn
+        %th Dossiernummer
+        %th Personnummer
+        %th Kundnummer
+        %th Kön
+        %th Land
+        %th Aktuellt boende
+
+    %tbody
+      - @people.each do |person|
+        %tr
+          %td= link_to person.name, person
+          %td= person.dossier_number
+          %td= person.ssn
+          %td= person.procapita
+          %td= person.gender.name if person.gender.present?
+          %td= person.countries.map(&:name).join(', ')
+          %td
+            - if person.current_placements.empty?
+              = 'Ingen aktiv placering'
+            - else
+              = link_to person.current_placements.last.home.name, home_path(person.current_placements.last.home)
+
+  - if @has_more
+    .load-more= link_to 'Visa fler', @more_request, class: 'btn btn-default'

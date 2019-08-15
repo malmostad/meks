@@ -1,21 +1,21 @@
-refugees.each do |refugee|
+people.each do |person|
   row_ref = sheet.rows.size + 1
 
   sheet.add_row(
     [
       age_group == :children ? 'Barn & ungdom' : 'Vuxen',
-      refugee.municipality&.name,
-      type_of_housings(refugee),
-      refugee.name,
-      refugee.dossier_number,
-      refugee.procapita,
-      refugee.ssn,
-      refugee.registered,
-      refugee.municipality_placement_migrationsverket_at,
-      refugee.deregistered,
-      refugee.citizenship_at,
-      (refugee.date_at_21st_birthday if refugee.will_turn_21_in_year(@year)),
-      economy_per_month(refugee, age_group),
+      person.municipality&.name,
+      type_of_housings(person),
+      person.name,
+      person.dossier_number,
+      person.procapita,
+      person.ssn,
+      person.registered,
+      person.municipality_placement_migrationsverket_at,
+      person.deregistered,
+      person.citizenship_at,
+      (person.date_at_21st_birthday if person.will_turn_21_in_year(@year)),
+      economy_per_month(person, age_group),
       "=(#{step_sum(row_ref, 12..45, 3)})",
       "=(#{step_sum(row_ref, 13..46, 3)})",
       "=(#{step_sum(row_ref, 14..47, 3)})",

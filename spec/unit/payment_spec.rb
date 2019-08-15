@@ -1,8 +1,8 @@
 RSpec.describe 'ExtraContributionCost' do
-  let(:refugee) { create(:refugee) }
+  let(:person) { create(:person) }
   let(:payment) do
     create(:payment,
-           refugee: refugee,
+           person: person,
            period_start: '2018-01-01',
            period_end: '2018-03-31',
            amount_as_string: '1234,56')
@@ -14,7 +14,7 @@ RSpec.describe 'ExtraContributionCost' do
 
   it 'should have correct amount for a payment' do
     payments = Economy::Payment.new(
-      refugee.payments,
+      person.payments,
       from: '2018-01-01',
       to: '2018-03-31'
     )
@@ -25,13 +25,13 @@ RSpec.describe 'ExtraContributionCost' do
   end
 
   it 'should use default report range' do
-    payments = Economy::Payment.new(refugee.payments)
+    payments = Economy::Payment.new(person.payments)
     expect(payments.sum).to be_a(Numeric)
   end
 
   it 'should have correct payment for a limiting full month report period' do
     payments = Economy::Payment.new(
-      refugee.payments,
+      person.payments,
       from: '2018-01-01',
       to: '2018-01-31'
     )
@@ -42,7 +42,7 @@ RSpec.describe 'ExtraContributionCost' do
 
   it 'should have correct amount for an exteded interval' do
     payments = Economy::Payment.new(
-      refugee.payments,
+      person.payments,
       from: '2018-01-01',
       to: '2018-12-31'
     )
@@ -55,7 +55,7 @@ RSpec.describe 'ExtraContributionCost' do
     payment.update_attribute(:comment, 'Foo bar kommentar')
 
     payments = Economy::Payment.new(
-      refugee.payments,
+      person.payments,
       from: '2018-01-01',
       to: '2018-03-31'
     )
@@ -66,7 +66,7 @@ RSpec.describe 'ExtraContributionCost' do
   describe 'multiple payments' do
     let(:payment2) do
       create(:payment,
-             refugee: refugee,
+             person: person,
              period_start: '2018-04-01',
              period_end: '2018-06-30',
              amount_as_string: '6789,10',
@@ -79,7 +79,7 @@ RSpec.describe 'ExtraContributionCost' do
 
     it 'should have correct amount' do
       payments = Economy::Payment.new(
-        refugee.payments,
+        person.payments,
         from: '2018-01-01',
         to: '2018-06-30'
       )

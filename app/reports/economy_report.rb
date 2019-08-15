@@ -4,14 +4,14 @@ class EconomyReport < ApplicationReport::Base
     @interval = { from: params[:from], to: params[:to] }
 
     options = {}
-    options[:locals] = { refugees: refugees }
+    options[:locals] = { people: people }
     super(options.merge(params))
   end
 
-  def refugees
-    refugees = Refugee.includes(
+  def people
+    people = Person.includes(
       :countries, :languages, :ssns, :dossier_numbers, :gender, :municipality,
-      :refugee_extra_costs, :deregistered_reason, :payments,
+      :person_extra_costs, :deregistered_reason, :payments,
       extra_contributions: [:extra_contribution_type],
       placements: [
         :moved_out_reason, :legal_code, :placement_extra_costs,
@@ -20,28 +20,28 @@ class EconomyReport < ApplicationReport::Base
       ]
     ).references(:placements)
 
-    filter_refugees(refugees)
+    filter_people(people)
   end
 
   private
 
-  # Filter away refugees that have no costs, income or payments during the @interval
-  def filter_refugees(refugees)
-    refugees.map do |refugee|
+  # Filter away people that have no costs, income or payments during the @interval
+  def filter_people(people)
+    people.map do |person|
       costs_and_rates = [
-        ::Economy::PlacementAndHomeCost.new(refugee.placements, @interval).sum,
-        ::Economy::ExtraContributionCost.new(refugee, @interval).sum,
-        ::Economy::RefugeeExtraCost.new(refugee, @interval).sum,
-        ::Economy::PlacementExtraCost.new(refugee.placements, @interval).sum,
-        ::Economy::FamilyAndEmergencyHomeCost.new(refugee.placements, @interval).sum,
-        ::Economy::RatesForRefugee.new(refugee, @interval).sum,
-        ::Economy::Payment.new(refugee.payments, @interval).sum,
-        ::Economy::OneTimePayment.new(refugee, @interval).sum
+        ::Economy::PlacementAndHomeCost.new(person.placements, @interval).sum,
+        ::Economy::ExtraContributionCost.new(person, @interval).sum,
+        ::Economy::PersonExtraCost.new(person, @interval).sum,
+        ::Economy::PlacementExtraCost.new(person.placements, @interval).sum,
+        ::Economy::FamilyAndEmergencyHomeCost.new(person.placements, @interval).sum,
+        ::Economy::RatesForPerson.new(person, @interval).sum,
+        ::Economy::Payment.new(person.payments, @interval).sum,
+        ::Economy::OneTimePayment.new(person, @interval).sum
       ].reject(&:blank?).sum
 
       next if costs_and_rates.zero?
 
-      refugee
+      person
     end.compact
   end
 end

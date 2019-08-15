@@ -10,9 +10,9 @@ class StatisticsController < ApplicationController
   private
 
   def cache_key_for_status
-    count = Refugee.count + Home.count + Placement.count + Setting.count
+    count = Person.count + Home.count + Placement.count + Setting.count
     latest_update = [
-      Refugee.maximum(:updated_at),
+      Person.maximum(:updated_at),
       Home.maximum(:updated_at),
       Setting.maximum(:updated_at),
       Placement.maximum(:updated_at)

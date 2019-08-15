@@ -1,6 +1,6 @@
 # 'Kommun'
 class Municipality < ApplicationRecord
-  has_many :refugees, dependent: :nullify
+  has_many :people, dependent: :nullify
 
   validates_uniqueness_of :name, case_sensitive: false
   validates_presence_of :name

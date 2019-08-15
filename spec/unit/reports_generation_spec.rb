@@ -26,9 +26,9 @@ RSpec.feature 'Reports generation' do
     expect(read_report(filename)[0..1]).to eq 'PK'
   end
 
-  scenario 'generate a Refugees report' do
+  scenario 'generate a People report' do
     filename = "#{Time.now.to_f}_spec.xlsx"
-    RefugeesReport.new(filename: filename, from: Date.today - 2.years, to: Date.today).generate!
+    PeopleReport.new(filename: filename, from: Date.today - 2.years, to: Date.today).generate!
     expect(read_report(filename)[0..1]).to eq 'PK'
   end
 end

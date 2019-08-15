@@ -1,0 +1,37 @@
+= form_tag reports_generate_path, class: "basic" do
+  %h2.group-title Personer
+  .form-group
+    %span.control-label
+      %label{ for: 'people_registered_from' } Inskrivna mellan:
+    .controls
+      .input-group.input-daterange
+        = text_field_tag 'people_registered_from', DateTime.now.beginning_of_quarter.to_date, class: 'form-control'
+        %span.input-group-addon och
+        = text_field_tag 'people_registered_to', DateTime.now.to_date, class: 'form-control'
+
+  .form-group
+    %span.control-label
+      %label{ for: 'people_born_after' } Födda mellan:
+    .controls
+      .input-group.input-daterange
+        = text_field_tag 'people_born_after', (DateTime.now - 18.years).to_date, class: 'form-control'
+        %span.input-group-addon och
+        = text_field_tag 'people_born_before', DateTime.now.to_date, class: 'form-control'
+      %label.radio-inline{ for: 'people_include_without_date_of_birth' }
+        = check_box_tag 'people_include_without_date_of_birth'
+        = 'Inkludera personer utan angivet födelsedatum'
+
+  .form-group
+    %span.control-label
+      %label{ for: 'people_asylum' } Endast de med status:
+    .controls
+      = select_tag('people_asylum',
+        options_for_select('Har PUT' => 'put', 'Har TUT' => 'tut', 'Har kommunanvisning' => 'municipality'),
+        multiple: true,
+        class: 'form-control chosen')
+
+  .form-group
+    %span.no-control-label
+    .controls
+      = hidden_field_tag(:report_type, 'people')
+      = submit_tag 'Skapa rapport', name: nil, class: "btn btn-primary"

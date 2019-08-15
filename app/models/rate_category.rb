@@ -1,7 +1,7 @@
 # 'Schablongrupp'
 class RateCategory < ApplicationRecord
   # `enum` maps qualifier number in DB to the qualifiers below
-  # `meth` is used for sending qualifiers to a method to select refugees
+  # `meth` is used for sending qualifiers to a method to select people
   # `min_age` and `max_age` are used as arguments
   #
   # Run:

@@ -10,7 +10,7 @@ RSpec.describe ReportsController, type: :controller do
     context 'reports' do
       it 'POST #generate creates a new queued job' do
         expect {
-          post :generate, params: { report_type: 'refugees' }, session: valid_session
+          post :generate, params: { report_type: 'people' }, session: valid_session
         }.to change(Delayed::Job, :count).by(1)
       end
     end

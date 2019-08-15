@@ -2,7 +2,7 @@
 %section.box.index
   %h1.box-title= h1
   .box-content
-    = simple_form_for @placement, url: refugee_placements_path(@refugee), html: { class: "basic" } do |f|
+    = simple_form_for @placement, url: person_placements_path(@person), html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
 
       = render 'form', f: f

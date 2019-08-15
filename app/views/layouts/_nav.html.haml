@@ -1,7 +1,7 @@
 %nav.app.basic
   %h1 MEKS
   %ul
-    %li.refugees= link_to "Personer", refugees_path
+    %li.people= link_to "Personer", people_path
     - if can? :read, :homes
       %li.homes= link_to "Boenden", homes_path
     %li.statistics= link_to "Översikt", statistics_path

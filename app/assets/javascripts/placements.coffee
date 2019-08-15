@@ -1,13 +1,13 @@
 $ ->
-  # Used for both placement form and refugee_placement form
-  $form = $('body.placements form, body.refugees form')
-  $homeSelect = $('#placement_home_id, #refugee_placements_attributes_0_home_id')
-  $placementCost = $form.find('.placement_cost, .refugee_placements_cost')
-  $placementCostField = $form.find('#placement_cost, #refugee_placements_attributes_0_cost')
+  # Used for both placement form and person_placement form
+  $form = $('body.placements form, body.people form')
+  $homeSelect = $('#placement_home_id, #person_placements_attributes_0_home_id')
+  $placementCost = $form.find('.placement_cost, .person_placements_cost')
+  $placementCostField = $form.find('#placement_cost, #person_placements_attributes_0_cost')
   $familyAndEmergencyHomeCosts = $form.find('.family_and_emergency_home_costs')
 
   setSpecificationField = ->
-    $specification = $form.find('.placement_specification, .refugee_placements_specification')
+    $specification = $form.find('.placement_specification, .person_placements_specification')
     if $homeSelect.find(':selected').attr('data-use-specification') is 'true'
       $specification.show()
     else

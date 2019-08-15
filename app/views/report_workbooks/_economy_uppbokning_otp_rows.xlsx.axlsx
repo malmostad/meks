@@ -1,12 +1,12 @@
-status[:records].each_with_index do |refugee, row|
+status[:records].each_with_index do |person, row|
   sheet.add_row(
     [
-      refugee.dossier_number,
-      refugee.procapita,
-      refugee.ssn,
-      refugee.ssns.map(&:full_ssn).join(', '),
-      refugee.municipality&.name,
-      ::Economy::OneTimePayment.new(refugee).as_formula
+      person.dossier_number,
+      person.procapita,
+      person.ssn,
+      person.ssns.map(&:full_ssn).join(', '),
+      person.municipality&.name,
+      ::Economy::OneTimePayment.new(person).as_formula
     ],
     style: @style.normal
   )

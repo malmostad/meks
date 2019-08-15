@@ -1,0 +1,5 @@
+= show_attribute('Namn', @person.name)
+= f.input :date, as: :string, wrapper: :datepicker
+= f.input :amount, input_html: { placeholder: 'kr', value: number_with_precision(f.object.amount, precision: 2, separator: '.') }
+= f.input :comment
+= render 'application/submit', form: f, cancel_path: person_show_costs_path(@person)

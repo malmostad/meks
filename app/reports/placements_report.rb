@@ -15,9 +15,9 @@ class PlacementsReport < ApplicationReport::Base
       query = query.where(home_id: @params[:home_id])
     end
 
-    # Select overlapping placements per refugee
+    # Select overlapping placements per person
     if @params[:selection] == 'overlapping'
-      query = query.overlapping_by_refugee(@params[:from], @params[:to])
+      query = query.overlapping_by_person(@params[:from], @params[:to])
     end
 
     query.find_each.lazy

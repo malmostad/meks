@@ -2,13 +2,13 @@ module Economy
   # Handles a special case when rates should not be calulated but actual costs should instead.
   # Affects both rate and cost calulations
   #
-  # If the refugee has placements with a legal_code that has the attribute
+  # If the person has placements with a legal_code that has the attribute
   #   #exempt_from_rate set to true, then
   # 1. The periods for those placements must not be calulated for rates.
-  # 2. All the actual costs for the refugee within those periods must be included instead
+  # 2. All the actual costs for the person within those periods must be included instead
   class ReplaceRatesWithActualCosts < Base
-    def initialize(refugee, options = {})
-      @refugee = refugee
+    def initialize(person, options = {})
+      @person = person
       @interval = { from: options[:from], to: (options[:to] || Date.today) }
       @intervals_with_exempt = intervals_with_exempt
     end
@@ -41,15 +41,15 @@ module Economy
     # { months: Float, costs: Float }
     # Float
     def as_array
-      return [] unless @refugee.ekb?
+      return [] unless @person.ekb?
       return [] if @intervals_with_exempt.empty?
 
       @intervals_with_exempt.map do |interval_with_exempt|
-        ::Economy::PlacementAndHomeCost.new(@refugee.placements, interval_with_exempt).as_array +
-          ::Economy::ExtraContributionCost.new(@refugee, interval_with_exempt).as_array +
-          ::Economy::RefugeeExtraCost.new(@refugee, interval_with_exempt).as_array +
-          ::Economy::PlacementExtraCost.new(@refugee.placements, interval_with_exempt).as_array +
-          ::Economy::FamilyAndEmergencyHomeCost.new(@refugee.placements, interval_with_exempt).as_array
+        ::Economy::PlacementAndHomeCost.new(@person.placements, interval_with_exempt).as_array +
+          ::Economy::ExtraContributionCost.new(@person, interval_with_exempt).as_array +
+          ::Economy::PersonExtraCost.new(@person, interval_with_exempt).as_array +
+          ::Economy::PlacementExtraCost.new(@person.placements, interval_with_exempt).as_array +
+          ::Economy::FamilyAndEmergencyHomeCost.new(@person.placements, interval_with_exempt).as_array
       end.flatten.compact
     end
 
@@ -63,14 +63,14 @@ module Economy
 
     private
 
-    # Selects the refugees placements that has a legal_code with #exempt_from_rate set to true
+    # Selects the people placements that has a legal_code with #exempt_from_rate set to true
     # Returns and array of hashes with date intervals for those periods
     def intervals_with_exempt
-      placement_intervals = @refugee.placements.map do |placement|
+      placement_intervals = @person.placements.map do |placement|
         next unless placement.legal_code.exempt_from_rate?
 
         from = latest_date(placement.moved_in_at, @interval[:from])
-        to = earliest_date(@refugee.citizenship_at, placement.moved_out_at, @interval[:to])
+        to = earliest_date(@person.citizenship_at, placement.moved_out_at, @interval[:to])
         next unless from && to
 
         { from: from, to: to }

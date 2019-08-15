@@ -3,9 +3,9 @@ RSpec.describe User, type: :ability do
     subject(:ability) { Ability.new(user) }
 
     let(:user) { build(:user, role: 'reader') }
-    let(:refugee) { create(:refugee) }
-    let(:drafted_refugee) { create(:refugee, draft: true) }
-    let(:drafted_placement) { create(:placement, refugee: drafted_refugee) }
+    let(:person) { create(:person) }
+    let(:drafted_person) { create(:person, draft: true) }
+    let(:drafted_placement) { create(:placement, person: drafted_person) }
 
     it { should_not be_able_to(:manage, Country.new) }
     it { should_not be_able_to(:manage, DeregisteredReason.new) }
@@ -26,8 +26,8 @@ RSpec.describe User, type: :ability do
     it { should_not be_able_to(:manage, OneTimePayment.new) }
     it { should_not be_able_to(:manage, Rate.new) }
     it { should_not be_able_to(:manage, RateCategory.new) }
-    it { should_not be_able_to(:manage, Refugee.new) }
-    it { should_not be_able_to(:manage, RefugeeExtraCost.new) }
+    it { should_not be_able_to(:manage, Person.new) }
+    it { should_not be_able_to(:manage, PersonExtraCost.new) }
     it { should_not be_able_to(:manage, Relationship.new) }
     it { should_not be_able_to(:manage, Ssn.new) }
     it { should_not be_able_to(:manage, Setting.new) }
@@ -55,22 +55,22 @@ RSpec.describe User, type: :ability do
     it { should be_able_to(:read, FamilyAndEmergencyHomeCost.new) }
     it { should be_able_to(:read, Home.new) }
     it { should be_able_to(:read, Placement.new) }
-    it { should be_able_to(%i[read search suggest], Refugee.new) }
+    it { should be_able_to(%i[read search suggest], Person.new) }
     it { should be_able_to(:read, Relationship.new) }
     it { should be_able_to(:read, Ssn.new) }
     it { should be_able_to(:read, User.new) }
 
     it { should be_able_to(:view, :statistics) }
 
-    it { should be_able_to(%i[edit update drafts], drafted_refugee) }
-    it { should be_able_to(%i[read create edit update], build(:dossier_number, refugee: drafted_refugee)) }
+    it { should be_able_to(%i[edit update drafts], drafted_person) }
+    it { should be_able_to(%i[read create edit update], build(:dossier_number, person: drafted_person)) }
     it { should be_able_to(%i[read create edit update], drafted_placement) }
     it { should be_able_to(%i[read create edit update], build(:placement_extra_cost, placement: drafted_placement)) }
     it { should be_able_to(%i[read create edit update], build(:family_and_emergency_home_cost, placement: drafted_placement)) }
-    it { should be_able_to(%i[read create edit update], build(:extra_contribution, refugee: drafted_refugee)) }
-    it { should be_able_to(%i[read create edit update], build(:refugee_extra_cost, refugee: drafted_refugee)) }
-    it { should be_able_to(%i[read create edit update], build(:relationship, refugee_id: drafted_refugee.id)) }
-    it { should be_able_to(%i[read create edit update], build(:ssn, refugee_id: drafted_refugee.id)) }
+    it { should be_able_to(%i[read create edit update], build(:extra_contribution, person: drafted_person)) }
+    it { should be_able_to(%i[read create edit update], build(:person_extra_cost, person: drafted_person)) }
+    it { should be_able_to(%i[read create edit update], build(:relationship, person_id: drafted_person.id)) }
+    it { should be_able_to(%i[read create edit update], build(:ssn, person_id: drafted_person.id)) }
 
     it { should_not be_able_to(:generate, :reports) }
   end

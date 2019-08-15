@@ -1,4 +1,4 @@
-- title "Anhöriga till #{@refugee.name}"
+- title "Anhöriga till #{@person.name}"
 %section.box.index
   %h1.box-title= h1
   %table.full.wrap
@@ -8,7 +8,7 @@
         %th
 
     %tbody
-      - @refugee.relationships.each do |relationship|
+      - @person.relationships.each do |relationship|
         %tr
-          %td= link_to relationship.related.name, edit_refugee_relationship_path(@refugee, relationship)
-          %td.delete= button_to t('actions.delete'), refugee_relationship_path(@refugee, relationship), method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
+          %td= link_to relationship.related.name, edit_person_relationship_path(@person, relationship)
+          %td.delete= button_to t('actions.delete'), person_relationship_path(@person, relationship), method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"

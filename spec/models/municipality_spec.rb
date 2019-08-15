@@ -36,13 +36,13 @@ RSpec.describe Municipality, type: :model do
       expect { Municipality.where(name: 'Umeå').first.destroy }.to change(Municipality, :count).by(-1)
     end
 
-    it 'should delete a municipality reference for a refugee' do
+    it 'should delete a municipality reference for a person' do
       municipality = create(:municipality)
-      refugee = create(:refugee, municipality: municipality)
-      expect(refugee.municipality).to be_present
+      person = create(:person, municipality: municipality)
+      expect(person.municipality).to be_present
       municipality.destroy
-      refugee.reload
-      expect(refugee.municipality).not_to be_present
+      person.reload
+      expect(person.municipality).not_to be_present
     end
   end
 end

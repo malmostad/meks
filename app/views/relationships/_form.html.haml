@@ -1,13 +1,13 @@
 %section.box.index
   %h1.box-title= h1
   .box-content
-    = simple_form_for [@refugee, @relationship], html: { class: "basic" } do |f|
+    = simple_form_for [@person, @relationship], html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
 
-      = show_attribute('Person', @refugee.name)
+      = show_attribute('Person', @person.name)
       - related = @relationship.related.present? ? @relationship.related.name : ''
       = f.input :related, label: 'Sök anhörig' do
-        = text_field_tag :relationship_related, nil, value: '', 'data-autocomplete-url' => refugees_suggest_path,
+        = text_field_tag :relationship_related, nil, value: '', 'data-autocomplete-url' => people_suggest_path,
           class: 'form-control', placeholder: 'Sök på namn, person-, dossier- eller kundnummer'
       .form-group
         .control-label= label_tag 'Vald anhörig:*'
@@ -15,4 +15,4 @@
       = f.input :related_id, as: :hidden
       = f.association :type_of_relationship, input_html: { class: 'chosen' }
 
-      = render 'application/submit', form: f, cancel_path: refugee_show_relateds_path(@refugee)
+      = render 'application/submit', form: f, cancel_path: person_show_relateds_path(@person)

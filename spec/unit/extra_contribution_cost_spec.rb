@@ -1,5 +1,5 @@
 RSpec.describe 'ExtraContributionCost' do
-  let(:refugee) { create(:refugee) }
+  let(:person) { create(:person) }
   let(:extra_contribution) do
     create(
       :extra_contribution,
@@ -7,7 +7,7 @@ RSpec.describe 'ExtraContributionCost' do
       period_end: '2018-12-31',
       fee: 12_345,
       expense: 23_456,
-      refugee: refugee
+      person: person
     )
   end
   let(:po_rate) do
@@ -22,14 +22,14 @@ RSpec.describe 'ExtraContributionCost' do
   end
 
   before(:each) do
-    refugee.reload
+    person.reload
     extra_contribution.reload
     po_rate.reload
   end
 
   it 'should have correct cost for a complete extra_contribution period' do
     ecc = Economy::ExtraContributionCost.new(
-      refugee,
+      person,
       from: '2018-01-01',
       to: '2018-12-31'
     )
@@ -37,13 +37,13 @@ RSpec.describe 'ExtraContributionCost' do
   end
 
   it 'should use default report range' do
-    ecc = Economy::ExtraContributionCost.new(refugee)
+    ecc = Economy::ExtraContributionCost.new(person)
     expect(ecc.sum).to be_a(Numeric)
   end
 
   it 'should have correct cost for a limiting full month report period' do
     ecc = Economy::ExtraContributionCost.new(
-      refugee,
+      person,
       from: '2018-01-01',
       to: '2018-03-31'
     )
@@ -52,7 +52,7 @@ RSpec.describe 'ExtraContributionCost' do
 
   it 'should have correct cost for a limiting partial month report period' do
     ecc = Economy::ExtraContributionCost.new(
-      refugee,
+      person,
       from: '2018-01-01',
       to: '2018-01-10'
     )
@@ -61,7 +61,7 @@ RSpec.describe 'ExtraContributionCost' do
 
   it 'should have correct cost formula' do
     ecc = Economy::ExtraContributionCost.new(
-      refugee,
+      person,
       from: '2018-01-01',
       to: '2018-01-10'
     )
@@ -79,14 +79,14 @@ RSpec.describe 'ExtraContributionCost' do
         period_start: '2019-01-01',
         period_end: '2019-06-30',
         monthly_cost: 54_321,
-        refugee: refugee,
+        person: person,
         extra_contribution_type: outpatient_type
       )
     end
 
     let(:ecc) do
       Economy::ExtraContributionCost.new(
-        refugee,
+        person,
         from: '2018-07-01',
         to: '2019-06-30'
       )

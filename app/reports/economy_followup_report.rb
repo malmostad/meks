@@ -2,7 +2,7 @@ class EconomyFollowupReport < ApplicationReport::Base
   def initialize(params = {})
     @params = params
     @year = params[:year].to_i
-    @refugees = refugees
+    @people = people
 
     options = {}
     options[:sheet_name] = params[:year]
@@ -13,22 +13,22 @@ class EconomyFollowupReport < ApplicationReport::Base
 
   # Under 18 on the first day of given year
   def children
-    @refugees.where('refugees.date_of_birth > ?', Date.new(@year - 18))
+    @people.where('people.date_of_birth > ?', Date.new(@year - 18))
   end
 
   # Over 18 on the last day of given year
   def adults
-    @refugees.where('refugees.date_of_birth <= ?', Date.new(@year - 18).end_of_year)
+    @people.where('people.date_of_birth <= ?', Date.new(@year - 18).end_of_year)
   end
 
   private
 
-  # Returns all refugees with placements within the @year
-  def refugees
-    Refugee
+  # Returns all people with placements within the @year
+  def people
+    Person
       .includes(
         :municipality,
-        :refugee_extra_costs,
+        :person_extra_costs,
         extra_contributions: :extra_contribution_type,
         placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
                      home: [:owner_type, :type_of_housings, :costs]]

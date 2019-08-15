@@ -11,45 +11,45 @@ module ReportHelper
     "=(#{arr.join('+')})"
   end
 
-  def asylum_status(refugee)
-    asylum = refugee.asylum
+  def asylum_status(person)
+    asylum = person.asylum
     return 'Ingen status' if asylum.blank?
 
-    I18n.t('simple_form.labels.refugee.' + asylum.first) + ' ' + asylum.second.to_s
+    I18n.t('simple_form.labels.person.' + asylum.first) + ' ' + asylum.second.to_s
   end
 
-  def refugee_cost(refugee, interval)
+  def person_cost(person, interval)
     sum_formula(
-      ::Economy::PlacementAndHomeCost.new(refugee.placements, interval).as_formula,
-      ::Economy::ExtraContributionCost.new(refugee, interval).as_formula,
-      ::Economy::RefugeeExtraCost.new(refugee, interval).as_formula,
-      ::Economy::PlacementExtraCost.new(refugee.placements, interval).as_formula,
-      ::Economy::FamilyAndEmergencyHomeCost.new(refugee.placements, interval).as_formula
+      ::Economy::PlacementAndHomeCost.new(person.placements, interval).as_formula,
+      ::Economy::ExtraContributionCost.new(person, interval).as_formula,
+      ::Economy::PersonExtraCost.new(person, interval).as_formula,
+      ::Economy::PlacementExtraCost.new(person.placements, interval).as_formula,
+      ::Economy::FamilyAndEmergencyHomeCost.new(person.placements, interval).as_formula
     )
   end
 
-  def refugee_expected_income(refugee, interval)
+  def person_expected_income(person, interval)
     sum_formula(
-      ::Economy::RatesForRefugee.new(refugee, interval).as_formula,
-      ::Economy::OneTimePayment.new(refugee, interval).as_formula
+      ::Economy::RatesForPerson.new(person, interval).as_formula,
+      ::Economy::OneTimePayment.new(person, interval).as_formula
     )
   end
 
-  def placement_names_within_range(refugee, interval)
-    placements_within_range(refugee, interval).map do |pl|
+  def placement_names_within_range(person, interval)
+    placements_within_range(person, interval).map do |pl|
       "#{pl.home.name} (#{pl.moved_in_at}–#{pl.moved_out_at})"
     end.join(', ')
   end
 
-  def legal_codes_within_range(refugee, interval)
-    placements_within_range(refugee, interval)
+  def legal_codes_within_range(person, interval)
+    placements_within_range(person, interval)
       .map(&:legal_code)
       .try(:map, &:name).join(', ')
   end
 
   # Filter out placements within the report range without add additional queries
-  def placements_within_range(refugee, interval)
-    refugee.placements.map do |placement|
+  def placements_within_range(person, interval)
+    person.placements.map do |placement|
       if placement.moved_in_at <= interval[:to].to_date &&
          (placement.moved_out_at.nil? || placement.moved_out_at >= interval[:from].to_date)
         next placement

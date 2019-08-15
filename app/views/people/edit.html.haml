@@ -1,0 +1,12 @@
+- title "#{t('actions.edit')} personen"
+%section.box.form
+  %h1.box-title= h1
+  = render 'form'
+
+- if @person.id.present? && can?(:destroy, Person)
+  %section.box.show.user.danger-zone
+    %h1.box-title Riskområde
+    .box-content.basic.form-data
+      %section.misc
+        %p= "Ärendet kommer att raderas permanent. Detta går inte att ångra."
+        .delete= button_to "Radera #{@person.name} permanent", @person, method: :delete, data: { confirm: 'Är du säker på att du vill radera ärendet permanent?' }, class: "btn btn-danger btn-default"

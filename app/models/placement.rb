@@ -1,6 +1,6 @@
 # 'Boendeplacering'
 class Placement < ApplicationRecord
-  belongs_to :refugee, touch: true
+  belongs_to :person, touch: true
   belongs_to :home, touch: true
   belongs_to :moved_out_reason
   belongs_to :legal_code
@@ -14,7 +14,7 @@ class Placement < ApplicationRecord
   validates_associated :family_and_emergency_home_costs
 
   validates_presence_of :home
-  validates_presence_of :refugee
+  validates_presence_of :person
   validates_presence_of :moved_in_at
   validates_presence_of :legal_code
 
@@ -35,7 +35,7 @@ class Placement < ApplicationRecord
   def self.within_range(from, to)
     includes(
       :home, :moved_out_reason, :legal_code,
-      refugee: [:countries, :languages, :ssns, :dossier_numbers,
+      person: [:countries, :languages, :ssns, :dossier_numbers,
                 :gender, :homes, :municipality,
                 :deregistered_reason, placements: [:legal_code]],
       home: %i[languages type_of_housings placements
@@ -45,12 +45,12 @@ class Placement < ApplicationRecord
     .where('moved_out_at is ? or moved_out_at >= ?', nil, from.to_date)
   end
 
-  def self.overlapping_by_refugee(from, to)
+  def self.overlapping_by_person(from, to)
     # Within range
     range_from = begin; Date.parse(from).to_s; rescue; (Date.today - 10.years).to_s; end
     range_to   = begin; Date.parse(to).to_s; rescue; Date.today.to_s; end
 
-    # Get and array of overlapping placements per refugee, within range, for home
+    # Get and array of overlapping placements per person, within range, for home
     records = find_by_sql(["
       select A.id from placements A
       inner join placements B on
@@ -59,15 +59,15 @@ class Placement < ApplicationRecord
       and ((B.moved_in_at  between ? and ?) or (A.moved_in_at between ? and ?))
       and ((A.moved_out_at between ? and ?) or A.moved_out_at is null)
       and ((B.moved_out_at between ? and ?) or B.moved_out_at is null)
-      and A.refugee_id = B.refugee_id
+      and A.person_id = B.person_id
       and A.id <> B.id
-      order by A.refugee_id",
+      order by A.person_id",
       range_from, range_to, range_from, range_to,
       range_from, range_to, range_from, range_to])
 
     # Return an ActiveRecord Relation
     where(id: records.map(&:id).uniq)
-      .includes(:refugee, :home, :moved_out_reason, refugee: [:dossier_numbers, :ssns, :gender, :homes, :municipality, :countries, :languages, :relateds, :inverse_relateds],
+      .includes(:person, :home, :moved_out_reason, person: [:dossier_numbers, :ssns, :gender, :homes, :municipality, :countries, :languages, :relateds, :inverse_relateds],
       home: [:languages, :target_groups, :owner_type, :type_of_housings])
   end
 

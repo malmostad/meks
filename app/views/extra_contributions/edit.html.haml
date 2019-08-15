@@ -2,7 +2,7 @@
 %section.box.index
   %h1.box-title= h1
   .box-content
-    = simple_form_for @extra_contribution, url: refugee_extra_contribution_path(@refugee, @extra_contribution), html: { class: "basic" } do |f|
+    = simple_form_for @extra_contribution, url: person_extra_contribution_path(@person, @extra_contribution), html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
       = render 'form', f: f
 
@@ -12,4 +12,4 @@
     .box-content.basic.form-data
       %section.misc
         %p= "Insatsen kommer att raderas permanent. Detta går inte att ångra."
-        .delete= button_to 'Radera insatsen permanent', refugee_extra_contribution_path(@refugee, @extra_contribution), method: :delete, data: { confirm: 'Är du säker på att du vill radera placeringen permanent?' }, class: "btn btn-danger btn-default"
+        .delete= button_to 'Radera insatsen permanent', person_extra_contribution_path(@person, @extra_contribution), method: :delete, data: { confirm: 'Är du säker på att du vill radera placeringen permanent?' }, class: "btn btn-danger btn-default"

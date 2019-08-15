@@ -1,11 +1,11 @@
 RSpec.describe 'FamilyAndEmergencyHomeCost' do
-  let(:refugee) { create(:refugee) }
+  let(:person) { create(:person) }
   let(:home) { create(:home, type_of_cost: :cost_for_family_and_emergency_home) }
 
   let(:placement) do
     create(
       :placement,
-      refugee: refugee,
+      person: person,
       home: home,
       moved_in_at: '2018-01-01',
       moved_out_at: '2018-12-31'
@@ -48,13 +48,13 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
   end
 
   before(:each) do
-    [refugee, home, placement, family_and_emergency_home_cost1,
+    [person, home, placement, family_and_emergency_home_cost1,
      family_and_emergency_home_cost2, po_rate].each(&:reload)
   end
 
   it 'should have correct cost for a complete family_and_emergency_home_cost period' do
     costs = Economy::FamilyAndEmergencyHomeCost.new(
-      refugee.placements,
+      person.placements,
       from: '2018-01-01',
       to: '2018-12-31'
     )
@@ -62,13 +62,13 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
   end
 
   it 'should use default report range' do
-    costs = Economy::FamilyAndEmergencyHomeCost.new(refugee.placements)
+    costs = Economy::FamilyAndEmergencyHomeCost.new(person.placements)
     expect(costs.sum).to be_a(Numeric)
   end
 
   it 'should have correct cost for a limiting full month report period' do
     costs = Economy::FamilyAndEmergencyHomeCost.new(
-      refugee.placements,
+      person.placements,
       from: '2018-01-01',
       to: '2018-03-31'
     )
@@ -77,7 +77,7 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
 
   it 'should have correct cost for a limiting partial month report period' do
     costs = Economy::FamilyAndEmergencyHomeCost.new(
-      refugee.placements,
+      person.placements,
       from: '2018-01-01',
       to: '2018-01-10'
     )
@@ -86,7 +86,7 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
 
   it 'should have correct cost for a limiting partial month report period exeeding placement time' do
     costs = Economy::FamilyAndEmergencyHomeCost.new(
-      refugee.placements,
+      person.placements,
       from: '2017-01-01',
       to: '2019-01-10'
     )
@@ -95,7 +95,7 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
 
   it 'should have correct cost formula' do
     costs = Economy::FamilyAndEmergencyHomeCost.new(
-      refugee.placements,
+      person.placements,
       from: '2018-01-01',
       to: '2018-01-10'
     )

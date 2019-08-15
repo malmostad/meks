@@ -12,7 +12,7 @@ module Economy
     def as_array
       @payments.map do |payment|
         days = days(payment)
-        { amount: payment.per_day, days: days, refugee: payment.refugee }
+        { amount: payment.per_day, days: days, person: payment.person }
       end
     end
 

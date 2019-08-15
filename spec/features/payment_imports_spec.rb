@@ -5,7 +5,7 @@ RSpec.feature PaymentImport, type: :feature do
     end
 
     scenario 'uploads a valid payment file' do
-      create(:refugee,
+      create(:person,
              dossier_number: '8254980244',
              municipality: create(:municipality, our_municipality: true)
       )
