@@ -1,0 +1,69 @@
+- title 'Person'
+%section.box.show.person{ class: @person.ekb? ? 'ekb' : '' }
+  %h1.box-title
+    = "#{@person.name}, #{@person.dossier_number}"
+    = @person.draft? ? '(Utkast)' : ''
+
+  .box-content.basic.form-data
+    .tabs
+      %ul
+        %li.active Allmänt
+        %li= link_to 'Placeringar', person_show_placements_path(@person)
+        %li= link_to 'Extra kostnader/insatser', person_show_costs_path(@person)
+        %li= link_to 'Anhöriga', person_show_relateds_path(@person)
+        %li= link_to 'Ekonomi', person_show_economy_path(@person)
+    .form-group
+      - if @person.secrecy?
+        .secrecy= 'Sekretess'
+
+    = form_for @person, html: { class: 'basic' } do
+      = kv 'person.updated_at', @person.updated_at.to_s[0..18]
+      - if current_user.has_role? :admin
+        = kv 'person.sof_placement', @person.sof_placement ? 'Ja' : 'Nej'
+      = kv 'person.ekb', @person.ekb ? 'Ja' : 'Nej'
+      = kv 'person.arrival', @person.arrival ? 'Ja' : 'Nej'
+      = kv @person, :name
+      = kv @person, :ssn
+      .ekb-only= kv @person, :dossier_number
+      = kv 'person.current_placement',
+           @person.placements.where(moved_out_at: nil).map(&:home).map(&:name).join(', ')
+      = kv 'person.current_asylum', asylum_status(@person)
+
+      %h2.group-title Personuppgifter
+      = kv @person, :ssn
+      .ekb-only= kv 'person.extra_ssns', @person.ssns.map(&:full_ssn).join('<br>')
+
+      .ekb-only= kv @person, :dossier_number
+      .ekb-only= kv 'person.dossier_numbers', @person.dossier_numbers.map(&:name).join('<br>')
+      .form-group
+        .control-label{ popover('person.procapita') }= I18n.t('simple_form.labels.person.procapita')
+        .controls= @person.procapita
+      = kv @person, :age
+
+      = kv 'person.gender', @person.gender.present? ? @person.gender.name : 'Ej angivet'
+
+      = kv 'person.languages', @person.languages.map(&:name).join(', ')
+      = kv 'person.countries', @person.countries.map(&:name).join(', ')
+      .ekb-only= kv 'person.special_needs', @person.special_needs ? 'Ja' : 'Nej'
+      = kv @person, :social_worker
+
+      %h2.group-title Status
+      = kv @person, :registered
+      .ekb-only= kv @person, :residence_permit_at
+      .ekb-only= kv @person, :checked_out_to_our_city
+      .ekb-only= kv @person, :temporary_permit_starts_at
+      .ekb-only= kv @person, :temporary_permit_ends_at
+      .ekb-only= kv @person, :citizenship_at
+      = kv 'person.municipality',
+        @person.municipality.present? ? @person.municipality.name : 'Ingen'
+      .ekb-only= kv 'person.transferred', @person.transferred? ? 'Ja' : 'Nej'
+      .ekb-only= kv @person, :municipality_placement_migrationsverket_at
+      .ekb-only= kv @person, :municipality_placement_comment
+      = kv @person, :deregistered
+      .ekb-only= kv 'person.deregistered_reason',
+        @person.deregistered_reason.present? ? @person.deregistered_reason.name : ''
+      .ekb-only= kv @person, :deregistered_comment
+
+      .form-group
+        - if can? :edit, @person
+          = link_to 'Redigera', edit_person_path(@person), class: 'btn btn-default'

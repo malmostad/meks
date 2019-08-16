@@ -36,13 +36,13 @@ RSpec.describe Language, type: :model do
       expect { Language.where(name: 'Svenska').first.destroy }.to change(Language, :count).by(-1)
     end
 
-    it 'should delete a language reference for a refugee' do
+    it 'should delete a language reference for a person' do
       language = create(:language)
-      refugee = create(:refugee, languages: [language])
-      expect(refugee.languages).not_to be_empty
+      person = create(:person, languages: [language])
+      expect(person.languages).not_to be_empty
       language.destroy
-      refugee.reload
-      expect(refugee.languages).to be_empty
+      person.reload
+      expect(person.languages).to be_empty
     end
   end
 end

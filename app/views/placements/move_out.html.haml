@@ -2,10 +2,10 @@
 %section.box.index
   %h1.box-title= h1
   .box-content
-    = simple_form_for @placement, url: refugee_placement_path(@refugee, @placement), html: { class: "basic" } do |f|
+    = simple_form_for @placement, url: person_placement_path(@person, @placement), html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
 
-      = show_attribute('Namn', @refugee.name)
+      = show_attribute('Namn', @person.name)
       = show_attribute('Boende', @placement.home.name)
       = f.hidden_field :home_id, value: @placement.home.id
 
@@ -17,4 +17,4 @@
       = f.input :moved_out_at, as: :string, wrapper: :datepicker
       = f.association :moved_out_reason
 
-      = render 'application/submit', form: f, cancel_path: refugee_path(@refugee)
+      = render 'application/submit', form: f, cancel_path: person_path(@person)

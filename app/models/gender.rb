@@ -1,6 +1,6 @@
 # 'Kön'
 class Gender < ApplicationRecord
-  has_many :refugees, dependent: :nullify
+  has_many :people, dependent: :nullify
 
   default_scope { order(:name) }
 

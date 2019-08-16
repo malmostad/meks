@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_13_085704) do
+ActiveRecord::Schema.define(version: 2019_08_15_095711) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -36,13 +36,13 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
     t.index ["home_id"], name: "index_countries_homes_on_home_id"
   end
 
-  create_table "countries_refugees", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
+  create_table "countries_people", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "country_id"
-    t.integer "refugee_id"
+    t.integer "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["country_id"], name: "index_countries_refugees_on_country_id"
-    t.index ["refugee_id"], name: "index_countries_refugees_on_refugee_id"
+    t.index ["country_id"], name: "index_countries_people_on_country_id"
+    t.index ["person_id"], name: "index_countries_people_on_person_id"
   end
 
   create_table "delayed_jobs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
@@ -67,11 +67,11 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
 
   create_table "dossier_numbers", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.string "name"
-    t.integer "refugee_id"
+    t.integer "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_dossier_numbers_on_name", unique: true
-    t.index ["refugee_id"], name: "index_dossier_numbers_on_refugee_id"
+    t.index ["person_id"], name: "index_dossier_numbers_on_person_id"
   end
 
   create_table "extra_contribution_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
   end
 
   create_table "extra_contributions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
-    t.integer "refugee_id"
+    t.integer "person_id"
     t.bigint "extra_contribution_type_id"
     t.date "period_start"
     t.date "period_end"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
     t.string "comment"
     t.datetime "imported_at"
     t.index ["extra_contribution_type_id"], name: "index_extra_contributions_on_extra_contribution_type_id"
-    t.index ["refugee_id"], name: "index_extra_contributions_on_refugee_id"
+    t.index ["person_id"], name: "index_extra_contributions_on_person_id"
   end
 
   create_table "family_and_emergency_home_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
@@ -172,13 +172,13 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
     t.index ["name"], name: "index_languages_on_name", unique: true
   end
 
-  create_table "languages_refugees", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
+  create_table "languages_people", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "language_id"
-    t.integer "refugee_id"
+    t.integer "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["language_id"], name: "index_languages_refugees_on_language_id"
-    t.index ["refugee_id"], name: "index_languages_refugees_on_refugee_id"
+    t.index ["language_id"], name: "index_languages_people_on_language_id"
+    t.index ["person_id"], name: "index_languages_people_on_person_id"
   end
 
   create_table "legal_codes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
@@ -231,7 +231,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
   end
 
   create_table "payments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
-    t.integer "refugee_id"
+    t.integer "person_id"
     t.date "period_start"
     t.date "period_end"
     t.decimal "amount", precision: 12, scale: 2
@@ -240,7 +240,53 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
     t.datetime "updated_at", null: false
     t.text "comment"
     t.index ["payment_import_id"], name: "index_payments_on_payment_import_id"
-    t.index ["refugee_id"], name: "index_payments_on_refugee_id"
+    t.index ["person_id"], name: "index_payments_on_person_id"
+  end
+
+  create_table "people", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
+    t.boolean "draft", default: false
+    t.string "name"
+    t.date "date_of_birth"
+    t.string "ssn_extension"
+    t.string "dossier_number"
+    t.date "registered"
+    t.date "deregistered"
+    t.date "residence_permit_at"
+    t.date "checked_out_to_our_city"
+    t.date "temporary_permit_starts_at"
+    t.date "temporary_permit_ends_at"
+    t.integer "municipality_id"
+    t.date "municipality_placement_migrationsverket_at"
+    t.text "municipality_placement_comment"
+    t.boolean "special_needs"
+    t.text "other_relateds"
+    t.integer "gender_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "deregistered_reason_id"
+    t.boolean "secrecy", default: false
+    t.text "social_worker"
+    t.text "deregistered_comment"
+    t.date "citizenship_at"
+    t.boolean "sof_placement", default: false
+    t.boolean "arrival"
+    t.string "procapita"
+    t.datetime "imported_at"
+    t.boolean "transferred"
+    t.boolean "ekb", default: true
+    t.index ["deregistered_reason_id"], name: "index_people_on_deregistered_reason_id"
+    t.index ["gender_id"], name: "index_people_on_gender_id"
+    t.index ["municipality_id"], name: "index_people_on_municipality_id"
+  end
+
+  create_table "person_extra_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
+    t.integer "person_id"
+    t.date "date"
+    t.decimal "amount", precision: 10, scale: 2
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_person_extra_costs_on_person_id"
   end
 
   create_table "placement_extra_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
@@ -255,7 +301,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
 
   create_table "placements", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "home_id"
-    t.integer "refugee_id"
+    t.integer "person_id"
     t.date "moved_in_at"
     t.date "moved_out_at"
     t.integer "moved_out_reason_id"
@@ -268,7 +314,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
     t.index ["home_id"], name: "index_placements_on_home_id"
     t.index ["legal_code_id"], name: "index_placements_on_legal_code_id"
     t.index ["moved_out_reason_id"], name: "index_placements_on_moved_out_reason_id"
-    t.index ["refugee_id"], name: "index_placements_on_refugee_id"
+    t.index ["person_id"], name: "index_placements_on_person_id"
   end
 
   create_table "po_rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
@@ -300,60 +346,14 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
     t.index ["rate_category_id"], name: "index_rates_on_rate_category_id"
   end
 
-  create_table "refugee_extra_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
-    t.integer "refugee_id"
-    t.date "date"
-    t.decimal "amount", precision: 10, scale: 2
-    t.string "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["refugee_id"], name: "index_refugee_extra_costs_on_refugee_id"
-  end
-
-  create_table "refugees", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
-    t.boolean "draft", default: false
-    t.string "name"
-    t.date "date_of_birth"
-    t.string "ssn_extension"
-    t.string "dossier_number"
-    t.date "registered"
-    t.date "deregistered"
-    t.date "residence_permit_at"
-    t.date "checked_out_to_our_city"
-    t.date "temporary_permit_starts_at"
-    t.date "temporary_permit_ends_at"
-    t.integer "municipality_id"
-    t.date "municipality_placement_migrationsverket_at"
-    t.text "municipality_placement_comment"
-    t.boolean "special_needs"
-    t.text "other_relateds"
-    t.integer "gender_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "deregistered_reason_id"
-    t.boolean "secrecy", default: false
-    t.text "social_worker"
-    t.text "deregistered_comment"
-    t.date "citizenship_at"
-    t.boolean "sof_placement", default: false
-    t.boolean "arrival"
-    t.string "procapita"
-    t.datetime "imported_at"
-    t.boolean "transferred"
-    t.boolean "ekb", default: true
-    t.index ["deregistered_reason_id"], name: "index_refugees_on_deregistered_reason_id"
-    t.index ["gender_id"], name: "index_refugees_on_gender_id"
-    t.index ["municipality_id"], name: "index_refugees_on_municipality_id"
-  end
-
   create_table "relationships", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
-    t.integer "refugee_id"
+    t.integer "person_id"
     t.integer "related_id"
     t.integer "type_of_relationship_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["refugee_id", "related_id"], name: "index_relationships_on_refugee_id_and_related_id", unique: true
-    t.index ["refugee_id"], name: "index_relationships_on_refugee_id"
+    t.index ["person_id", "related_id"], name: "index_relationships_on_person_id_and_related_id", unique: true
+    t.index ["person_id"], name: "index_relationships_on_person_id"
     t.index ["related_id"], name: "index_relationships_on_related_id"
     t.index ["type_of_relationship_id"], name: "index_relationships_on_type_of_relationship_id"
   end
@@ -370,10 +370,10 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
   create_table "ssns", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.date "date_of_birth"
     t.string "extension"
-    t.integer "refugee_id"
+    t.integer "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["refugee_id"], name: "index_ssns_on_refugee_id"
+    t.index ["person_id"], name: "index_ssns_on_person_id"
   end
 
   create_table "target_groups", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
@@ -411,19 +411,19 @@ ActiveRecord::Schema.define(version: 2019_08_13_085704) do
 
   add_foreign_key "costs", "homes"
   add_foreign_key "extra_contributions", "extra_contribution_types"
-  add_foreign_key "extra_contributions", "refugees"
+  add_foreign_key "extra_contributions", "people"
   add_foreign_key "family_and_emergency_home_costs", "placements"
   add_foreign_key "homes", "owner_types"
   add_foreign_key "payment_imports", "users"
   add_foreign_key "payments", "payment_imports"
-  add_foreign_key "payments", "refugees"
+  add_foreign_key "payments", "people"
+  add_foreign_key "people", "deregistered_reasons"
+  add_foreign_key "people", "genders"
+  add_foreign_key "people", "municipalities"
+  add_foreign_key "person_extra_costs", "people"
   add_foreign_key "placement_extra_costs", "placements"
   add_foreign_key "placements", "legal_codes"
   add_foreign_key "placements", "moved_out_reasons"
   add_foreign_key "rates", "rate_categories"
-  add_foreign_key "refugee_extra_costs", "refugees"
-  add_foreign_key "refugees", "deregistered_reasons"
-  add_foreign_key "refugees", "genders"
-  add_foreign_key "refugees", "municipalities"
   add_foreign_key "relationships", "type_of_relationships"
 end

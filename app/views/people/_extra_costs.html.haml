@@ -1,0 +1,19 @@
+.person_extra_costs
+  %h2.group-title Extra kostnader
+  - if @person.person_extra_costs.blank?
+    %p Inga extra kostnader är registrerade
+  - else
+    - @person.person_extra_costs.sort_by(&:date).each do |extra_cost|
+      .extra_cost
+        = kv extra_cost, :date
+        = kv 'person_extra_cost.amount', number_to_currency(extra_cost.amount.to_s, delimiter: ' ')
+        = kv extra_cost, :comment
+
+        - if can? :edit, @person
+          .form-group.action
+            %span.no-control-label
+            .controls
+              = link_to "Redigera extra kostnaden", edit_person_person_extra_cost_path(@person, extra_cost), class: "btn btn-default btn-sm"
+
+  - if can? :edit, @person
+    = link_to "Ny extra kostnad", new_person_person_extra_cost_path(@person), class: "btn btn-default btn-sm"

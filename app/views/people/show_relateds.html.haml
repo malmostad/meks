@@ -1,0 +1,46 @@
+- title 'Person'
+%section.box.show.person
+  %h1.box-title
+    = "#{@person.name}, #{@person.dossier_number}"
+    = @person.draft? ? '(Utkast)' : ''
+
+  .box-content.basic.form-data
+    .tabs
+      %ul
+        %li= link_to 'Allmänt', @person
+        %li= link_to 'Placeringar', person_show_placements_path(@person)
+        %li= link_to 'Extra kostnader/insatser', person_show_costs_path(@person)
+        %li.active Anhöriga
+        %li= link_to 'Ekonomi', person_show_economy_path(@person)
+
+    = form_for @person, html: { class: 'basic' } do
+      - no_relatives = @person.relationships.empty? && @person.inverse_relationships.empty?
+      - if no_relatives
+        = "Har inte angivits som anhörig till någon annan i systemet"
+
+      - if @person.relationships.present?
+        %h3= "#{@person.name} är anhörig till:"
+        %ul.related
+          - @person.relationships.each  do |r|
+            %li
+              = link_to r.related.name, person_path(r.related)
+              = "(#{r.type_of_relationship.name})"
+
+      .actions
+        - if can? :edit, @person
+          = link_to "Ny anhörig", new_person_relationship_path(@person), class: "btn btn-default btn-sm"
+          - unless no_relatives
+            = link_to "Redigera anhöriga", person_relationships_path(@person), class: "btn btn-default btn-sm"
+
+      - if @person.inverse_relationships.present?
+        %h3= "#{@person.name} är uppgiven som anhörig av:"
+        %ul.related
+          - @person.inverse_relationships.each  do |r|
+            %li
+              = link_to r.person.name, person_path(r.person)
+              = "(#{r.type_of_relationship.name})"
+
+
+      .form-group
+        .control-label{ popover('person.other_relateds') }= I18n.t('simple_form.labels.person.other_relateds')
+        .controls= @person.other_relateds.present? ? @person.other_relateds : 'Ingen registrerad'

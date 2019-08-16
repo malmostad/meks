@@ -9,7 +9,7 @@ RSpec.describe 'reports/index', type: :view do
     render
     assert_select 'h2', text: 'Placeringar'.to_s, count: 1
     assert_select 'h2', text: 'Personer'.to_s, count: 1
-    assert_select 'select#refugees_asylum', name: 'refugees_asylum'.to_s, count: 1
+    assert_select 'select#people_asylum', name: 'people_asylum'.to_s, count: 1
     assert_select 'h2', text: 'Boenden'.to_s, count: 1
   end
 end

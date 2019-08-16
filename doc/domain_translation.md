@@ -22,7 +22,7 @@
 | RateCategory               | Schablongrupp                                             |
 | Rate                       | Schablonbelopp                                            |
 | RefugeeExtraCost           | Extra kostnad (knuten till person)                        |
-| Refugee                    | Person                                                    |
+| Person                     | Person                                                    |
 | Relationship               | Anhörig                                                   |
 | Setting                    | Inställningar                                             |
 | Ssn                        | Extra personnummer                                        |

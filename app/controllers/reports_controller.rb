@@ -77,15 +77,15 @@ class ReportsController < ApplicationController
       :economy_placements_to,
       :economy_placements_from,
       :placements_selection,
-      :refugees_born_after,
-      :refugees_born_before,
-      :refugees_include_without_date_of_birth,
-      :refugees_registered_from,
-      :refugees_registered_to,
+      :people_born_after,
+      :people_born_before,
+      :people_include_without_date_of_birth,
+      :people_registered_from,
+      :people_registered_to,
       :municipality,
       :report_type,
       placements_home_id: [],
-      refugees_asylum: []
+      people_asylum: []
     )
   end
 
@@ -110,8 +110,8 @@ class ReportsController < ApplicationController
       GenerateReportJob::Homes.perform_later(report_params.to_h, file_id)
     when 'placements'
       GenerateReportJob::Placements.perform_later(report_params.to_h, file_id)
-    when 'refugees'
-      GenerateReportJob::Refugees.perform_later(report_params.to_h, file_id)
+    when 'people'
+      GenerateReportJob::People.perform_later(report_params.to_h, file_id)
     end
   end
 
@@ -127,7 +127,7 @@ class ReportsController < ApplicationController
       'Boenden'
     when 'placements'
       'Placeringar'
-    when 'refugees'
+    when 'people'
       'Personer'
     end
   end

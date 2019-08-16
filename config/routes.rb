@@ -13,13 +13,13 @@ Rails.application.routes.draw do
     get :logout
   end
 
-  get '/people/suggest', to: 'refugees#suggest', as: '/refugees/suggest'
-  get '/people/search', to: 'refugees#search', as: '/refugees/search'
-  get '/people', to: 'refugees#search'
-  get '/people/drafts', to: 'refugees#drafts', as: '/refugees/drafts'
-  get '/people/imported', to: 'refugees#imported', as: '/refugees/imported'
+  get '/people/suggest', to: 'people#suggest', as: '/people/suggest'
+  get '/people/search', to: 'people#search', as: '/people/search'
+  get '/people', to: 'people#search'
+  get '/people/drafts', to: 'people#drafts', as: '/people/drafts'
+  get '/people/imported', to: 'people#imported', as: '/people/imported'
 
-  resources :refugees, path: :people do
+  resources :people, path: :people do
     get :show_placements
     get :show_economy
     get :show_relateds
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
     resources :relationships
     resources :extra_contributions, except: :index
-    resources :refugee_extra_costs, except: :index
+    resources :person_extra_costs, except: :index
   end
 
   resources :homes

@@ -1,9 +1,9 @@
 class ExtraContributionsController < ApplicationController
-  before_action :set_refugee, only: %i[new create edit update destroy]
+  before_action :set_person, only: %i[new create edit update destroy]
   before_action :set_extra_contribution, only: %i[edit update destroy]
 
   def new
-    @extra_contribution = @refugee.extra_contributions.new
+    @extra_contribution = @person.extra_contributions.new
     authorize! :create, @extra_contribution
   end
 
@@ -12,11 +12,11 @@ class ExtraContributionsController < ApplicationController
   end
 
   def create
-    @extra_contribution = @refugee.extra_contributions.new(extra_contribution_params)
+    @extra_contribution = @person.extra_contributions.new(extra_contribution_params)
     authorize! :create, @extra_contribution
 
     if @extra_contribution.save
-      redirect_to refugee_show_costs_path(@refugee), notice: 'Insatsen registrerades'
+      redirect_to person_show_costs_path(@person), notice: 'Insatsen registrerades'
     else
       render :new
     end
@@ -26,7 +26,7 @@ class ExtraContributionsController < ApplicationController
     authorize! :update, @extra_contribution
 
     if @extra_contribution.update(extra_contribution_params)
-      redirect_to refugee_show_costs_path(@refugee), notice: 'Insatsen uppdaterades'
+      redirect_to person_show_costs_path(@person), notice: 'Insatsen uppdaterades'
     else
       render :edit
     end
@@ -34,25 +34,25 @@ class ExtraContributionsController < ApplicationController
 
   def destroy
     ExtraContribution.find(params[:id]).destroy
-    redirect_to refugee_show_costs_path(@refugee), notice: 'Insatsen raderades'
+    redirect_to person_show_costs_path(@person), notice: 'Insatsen raderades'
   end
 
   private
 
-  def set_refugee
-    @refugee = Refugee.find(params[:refugee_id])
+  def set_person
+    @person = Person.find(params[:person_id])
   end
 
   def set_extra_contribution
-    @refugee = Refugee.find(params[:refugee_id])
+    @person = Person.find(params[:person_id])
     id = params[:id] || params[:extra_contribution_id]
-    @extra_contribution = @refugee.extra_contributions.find(id)
+    @extra_contribution = @person.extra_contributions.find(id)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def extra_contribution_params
     params.require(:extra_contribution).permit(
-      :refugee_id,
+      :person_id,
       :extra_contribution_type_id,
       :period_start,
       :period_end,

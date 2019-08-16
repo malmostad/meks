@@ -11,7 +11,7 @@ class Home < ApplicationRecord
   ]
 
   has_many :placements, dependent: :destroy
-  has_many :refugees, through: :placements
+  has_many :people, through: :placements
 
   has_many :costs, dependent: :destroy
   accepts_nested_attributes_for :costs, allow_destroy: true

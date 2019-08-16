@@ -1,6 +1,6 @@
 RSpec.describe ExtraContributionsController, type: :controller do
-  let(:valid_refugee) {
-    Refugee.create!(name: 'Valid refugee')
+  let(:valid_person) {
+    Person.create!(name: 'Valid person')
   }
 
   let(:extra_contribution_type) {
@@ -10,7 +10,7 @@ RSpec.describe ExtraContributionsController, type: :controller do
   let(:valid_attributes) {
     {
       extra_contribution_type_id: extra_contribution_type.id,
-      refugee_id: valid_refugee.id,
+      person_id: valid_person.id,
       period_start: '2018-01-01',
       period_end: '2018-12-31',
       fee: 1234,
@@ -29,7 +29,7 @@ RSpec.describe ExtraContributionsController, type: :controller do
 
   describe 'GET #new' do
     it 'assigns a new extra_contribution as @extra_contribution' do
-      get :new, params: { refugee_id: valid_refugee.id }, session: valid_session
+      get :new, params: { person_id: valid_person.id }, session: valid_session
       expect(assigns(:extra_contribution)).to be_a_new(ExtraContribution)
     end
   end
@@ -37,7 +37,7 @@ RSpec.describe ExtraContributionsController, type: :controller do
   describe 'GET #edit' do
     it 'assigns the requested extra_contribution as @extra_contribution' do
       extra_contribution = ExtraContribution.create! valid_attributes
-      get :edit, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param }, session: valid_session
+      get :edit, params: { person_id: valid_person.id, id: extra_contribution.to_param }, session: valid_session
       expect(assigns(:extra_contribution)).to eq(extra_contribution)
     end
   end
@@ -46,30 +46,30 @@ RSpec.describe ExtraContributionsController, type: :controller do
     context 'with valid params' do
       it 'creates a new ExtraContribution' do
         expect {
-          post :create, params: { refugee_id: valid_refugee.id, extra_contribution: valid_attributes}, session: valid_session
+          post :create, params: { person_id: valid_person.id, extra_contribution: valid_attributes}, session: valid_session
         }.to change(ExtraContribution, :count).by(1)
       end
 
       it 'assigns a newly created extra_contribution as @extra_contribution' do
-        post :create, params: { refugee_id: valid_refugee.id, extra_contribution: valid_attributes}, session: valid_session
+        post :create, params: { person_id: valid_person.id, extra_contribution: valid_attributes}, session: valid_session
         expect(assigns(:extra_contribution)).to be_a(ExtraContribution)
         expect(assigns(:extra_contribution)).to be_persisted
       end
 
-      it 'redirects to the show refugee economy' do
-        post :create, params: { refugee_id: valid_refugee.id, extra_contribution: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(refugee_show_costs_path(valid_refugee))
+      it 'redirects to the show person economy' do
+        post :create, params: { person_id: valid_person.id, extra_contribution: valid_attributes}, session: valid_session
+        expect(response).to redirect_to(person_show_costs_path(valid_person))
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved extra_contribution as @extra_contribution' do
-        post :create, params: { refugee_id: valid_refugee.id, extra_contribution: invalid_attributes}, session: valid_session
+        post :create, params: { person_id: valid_person.id, extra_contribution: invalid_attributes}, session: valid_session
         expect(assigns(:extra_contribution)).to be_a_new(ExtraContribution)
       end
 
       it 're-renders the new template' do
-        post :create, params: { refugee_id: valid_refugee.id, extra_contribution: invalid_attributes}, session: valid_session
+        post :create, params: { person_id: valid_person.id, extra_contribution: invalid_attributes}, session: valid_session
         expect(response).to render_template('new')
       end
     end
@@ -87,34 +87,34 @@ RSpec.describe ExtraContributionsController, type: :controller do
 
       it 'updates the requested extra_contribution' do
         extra_contribution = ExtraContribution.create! valid_attributes
-        put :update, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param, extra_contribution: new_attributes}, session: valid_session
+        put :update, params: { person_id: valid_person.id, id: extra_contribution.to_param, extra_contribution: new_attributes}, session: valid_session
         extra_contribution.reload
         expect(extra_contribution.period_start.to_s).to eq(new_attributes[:period_start])
       end
 
       it 'assigns the requested extra_contribution as @extra_contribution' do
         extra_contribution = ExtraContribution.create! valid_attributes
-        put :update, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param, extra_contribution: valid_attributes}, session: valid_session
+        put :update, params: { person_id: valid_person.id, id: extra_contribution.to_param, extra_contribution: valid_attributes}, session: valid_session
         expect(assigns(:extra_contribution)).to eq(extra_contribution)
       end
 
-      it 'redirects to show refugee economy' do
+      it 'redirects to show person economy' do
         extra_contribution = ExtraContribution.create! valid_attributes
-        put :update, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param, extra_contribution: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(refugee_show_costs_path(valid_refugee))
+        put :update, params: { person_id: valid_person.id, id: extra_contribution.to_param, extra_contribution: valid_attributes}, session: valid_session
+        expect(response).to redirect_to(person_show_costs_path(valid_person))
       end
     end
 
     context 'with invalid params' do
       it 'assigns the extra_contribution as @extra_contribution' do
         extra_contribution = ExtraContribution.create! valid_attributes
-        put :update, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param, extra_contribution: invalid_attributes}, session: valid_session
+        put :update, params: { person_id: valid_person.id, id: extra_contribution.to_param, extra_contribution: invalid_attributes}, session: valid_session
         expect(assigns(:extra_contribution)).to eq(extra_contribution)
       end
 
       it 're-renders the edit template' do
         extra_contribution = ExtraContribution.create! valid_attributes
-        put :update, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param, extra_contribution: invalid_attributes}, session: valid_session
+        put :update, params: { person_id: valid_person.id, id: extra_contribution.to_param, extra_contribution: invalid_attributes}, session: valid_session
         expect(response).to render_template('edit')
       end
     end
@@ -124,14 +124,14 @@ RSpec.describe ExtraContributionsController, type: :controller do
     it 'destroys the requested extra_contribution' do
       extra_contribution = ExtraContribution.create! valid_attributes
       expect {
-        delete :destroy, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param }, session: valid_session
+        delete :destroy, params: { person_id: valid_person.id, id: extra_contribution.to_param }, session: valid_session
       }.to change(ExtraContribution, :count).by(-1)
     end
 
-    it 'redirects to the show refugee economy' do
+    it 'redirects to the show person economy' do
       extra_contribution = ExtraContribution.create! valid_attributes
-      delete :destroy, params: { refugee_id: valid_refugee.id, id: extra_contribution.to_param }, session: valid_session
-      expect(response).to redirect_to(refugee_show_costs_path(valid_refugee))
+      delete :destroy, params: { person_id: valid_person.id, id: extra_contribution.to_param }, session: valid_session
+      expect(response).to redirect_to(person_show_costs_path(valid_person))
     end
   end
 end

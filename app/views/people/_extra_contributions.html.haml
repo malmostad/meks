@@ -1,0 +1,29 @@
+.extra_contributions
+  %h2.group-title{ popover('person.extra_contributions') } Insatser
+  - if @person.extra_contributions.blank?
+    %p Inga insatser är registrerade
+  - else
+    - @person.extra_contributions.sort_by(&:period_start).each do |extra_contribution|
+      .extra_contribution
+        = show_attribute('extra_contribution.extra_contribution_type', extra_contribution.extra_contribution_type.name)
+        = show_attribute('extra_contribution.period_start', extra_contribution.period_start)
+        = show_attribute('extra_contribution.period_end', extra_contribution.period_end)
+        - if extra_contribution.extra_contribution_type.outpatient?
+          = show_attribute('extra_contribution.monthly_cost', number_to_currency(extra_contribution.monthly_cost.to_s, delimiter: ' '))
+          = show_attribute('extra_contribution.comment', extra_contribution.comment)
+        - else
+          = show_attribute('extra_contribution.fee', number_to_currency(extra_contribution.fee.to_s, delimiter: ' '))
+          = show_attribute('extra_contribution.po_extra', po_extra(extra_contribution))
+          = show_attribute('extra_contribution.expense', number_to_currency(extra_contribution.expense.to_s, delimiter: ' '))
+          = show_attribute('extra_contribution.contractor_name', extra_contribution.contractor_name)
+          = show_attribute('extra_contribution.contractor_birthday', extra_contribution.contractor_birthday)
+          = show_attribute('extra_contribution.contactor_employee_number', extra_contribution.contactor_employee_number)
+
+        - if can? :edit, @person
+          .form-group.action
+            %span.no-control-label
+            .controls
+              = link_to "Redigera insatsen", edit_person_extra_contribution_path(@person, extra_contribution), class: "btn btn-default btn-sm"
+
+  - if can? :edit, @person
+    = link_to "Ny insats", new_person_extra_contribution_path(@person), class: "btn btn-default btn-sm"

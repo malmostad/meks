@@ -7,11 +7,11 @@ RSpec.feature 'ExtraContributions', type: :feature do
     feature 'Adds extra_contribution' do
       scenario 'returns the form with validation messsage' do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
-        refugee = create(:refugee)
+        person = create(:person)
 
-        visit "/people/#{refugee.id}/show_costs"
+        visit "/people/#{person.id}/show_costs"
         click_on 'Ny insats'
-        expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
+        expect(current_path).to eq new_person_extra_contribution_path(person)
 
         select(extra_contribution_types[1].name, from: 'extra_contribution_extra_contribution_type_id')
         fill_in 'extra_contribution_period_start', with: ''
@@ -24,18 +24,18 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_contactor_employee_number', with: '987_543'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_extra_contributions_path(refugee)
+        expect(current_path).to eq person_extra_contributions_path(person)
         expect(page).to have_selector('.warning', text: 'Vänligen korrigera nedanstående markerade uppgifter.')
         expect(page).to have_selector('.help-block', text: 'måste anges')
       end
 
       scenario 'save the form' do
         extra_contribution_types = create_list(:extra_contribution_type, 3)
-        refugee = create(:refugee)
+        person = create(:person)
 
-        visit "/people/#{refugee.id}/show_costs"
+        visit "/people/#{person.id}/show_costs"
         click_on 'Ny insats'
-        expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
+        expect(current_path).to eq new_person_extra_contribution_path(person)
 
         select(extra_contribution_types[1].name, from: 'extra_contribution_extra_contribution_type_id')
         fill_in 'extra_contribution_period_start', with: Date.today.to_s
@@ -47,7 +47,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_contactor_employee_number', with: '987_543'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_show_costs_path(refugee)
+        expect(current_path).to eq person_show_costs_path(person)
         expect(page).to have_selector('.notice', text: 'Insatsen registrerades')
         expect(page).to have_selector('.extra_contribution .controls', text: extra_contribution_types[1].name)
       end
@@ -55,11 +55,11 @@ RSpec.feature 'ExtraContributions', type: :feature do
       scenario 'Outpatient type' do
         create_list(:extra_contribution_type, 2)
         extra_contribution_type_outpatient = create(:extra_contribution_type, outpatient: true)
-        refugee = create(:refugee)
+        person = create(:person)
 
-        visit "/people/#{refugee.id}/show_costs"
+        visit "/people/#{person.id}/show_costs"
         click_on 'Ny insats'
-        expect(current_path).to eq new_refugee_extra_contribution_path(refugee)
+        expect(current_path).to eq new_person_extra_contribution_path(person)
 
         select(extra_contribution_type_outpatient.name, from: 'extra_contribution_extra_contribution_type_id')
         fill_in 'extra_contribution_period_start', with: Date.today.to_s
@@ -68,21 +68,21 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_comment', with: 'Foo bar'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_show_costs_path(refugee)
+        expect(current_path).to eq person_show_costs_path(person)
         expect(page).to have_selector('.notice', text: 'Insatsen registrerades')
         expect(page).to have_selector('.extra_contribution .controls', text: extra_contribution_type_outpatient.name)
       end
     end
 
     feature 'Edit extra_contribution' do
-      scenario 'for a refugee' do
-        refugee = create(:refugee)
+      scenario 'for a person' do
+        person = create(:person)
         extra_contribution_types = create_list(:extra_contribution_type, 3)
-        create(:extra_contribution, refugee: refugee, extra_contribution_type: extra_contribution_types.first)
+        create(:extra_contribution, person: person, extra_contribution_type: extra_contribution_types.first)
 
-        visit "/people/#{refugee.id}/show_costs"
+        visit "/people/#{person.id}/show_costs"
         click_link('Redigera insatsen')
-        expect(current_path).to eq edit_refugee_extra_contribution_path(refugee, refugee.extra_contributions.first)
+        expect(current_path).to eq edit_person_extra_contribution_path(person, person.extra_contributions.first)
 
         select(extra_contribution_types[2].name, from: 'extra_contribution_extra_contribution_type_id')
         fill_in 'extra_contribution_period_start', with: Date.today.to_s
@@ -94,7 +94,7 @@ RSpec.feature 'ExtraContributions', type: :feature do
         fill_in 'extra_contribution_contactor_employee_number', with: '987_543'
         click_button 'Spara'
 
-        expect(current_path).to eq refugee_show_costs_path(refugee)
+        expect(current_path).to eq person_show_costs_path(person)
         expect(page).to have_selector('.notice', text: 'Insatsen uppdaterades')
         expect(page).to have_selector('.extra_contribution .controls', text: extra_contribution_types[2].name)
       end
@@ -108,9 +108,9 @@ RSpec.feature 'ExtraContributions', type: :feature do
 
     scenario "can't add an extra contribution" do
       create_list(:extra_contribution_type, 3)
-      refugee = create(:refugee)
+      person = create(:person)
 
-      visit "/people/#{refugee.id}/extra_contributions/new"
+      visit "/people/#{person.id}/extra_contributions/new"
 
       expect(current_path).to eq root_path
       expect(page).to have_selector('.alert', text: 'Din roll saknar behörighet')

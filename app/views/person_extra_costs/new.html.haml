@@ -1,0 +1,8 @@
+- title "Ny extra kostnad"
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    = simple_form_for @person_extra_cost, url: person_person_extra_costs_path(@person), html: { class: "basic" } do |f|
+      = f.error_notification class: "warning"
+
+      = render 'form', f: f

@@ -1,0 +1,28 @@
+- title 'Person'
+%section.box.show.person
+  %h1.box-title
+    = "#{@person.name}, #{@person.dossier_number}"
+    = @person.draft? ? '(Utkast)' : ''
+
+  .box-content.basic.form-data
+    .tabs
+      %ul
+        %li= link_to 'Allmänt', @person
+        %li= link_to 'Placeringar', person_show_placements_path(@person)
+        %li= link_to 'Extra kostnader/insatser', person_show_costs_path(@person)
+        %li= link_to 'Anhöriga', person_show_relateds_path(@person)
+        %li.active Ekonomi
+
+    = form_for @person, html: { class: 'basic' } do
+      = kv 'Totala kostnader',
+           number_to_currency(@person.total_costs, delimiter: ' ')
+      = kv 'Totala placeringskostnader',
+           number_to_currency(@person.total_placement_and_home_costs, delimiter: ' ')
+      - if @person.ekb?
+        = kv 'Förväntad intäkt',
+            number_to_currency(@person.total_rate.to_s, delimiter: ' ')
+        = kv 'Total utbetald schablon',
+            number_to_currency(@person.payments.map(&:amount).sum.to_s, delimiter: ' ')
+
+        - if can? :read, Payment
+          = render 'payments'

@@ -19,7 +19,7 @@ sv:
     # Used for popovers.
     # :title is optional. Always end :content with a period.
     info:
-      refugee:
+      person:
         extra_contributions:
           title: Insatser
           content: Om förändringar sker enligt avtal skall ny insats registreras. Redigera endast insatser om felaktiga uppgifter har registrerats.
@@ -39,7 +39,7 @@ sv:
         name: Namn
         description: Beskrivning
         home: Boende
-        refugee: Person
+        person: Person
         comment: Kommentar
         date: Datum
         amount: Belopp
@@ -62,7 +62,7 @@ sv:
         <<: *defaults
         amount: Belopp
 
-      refugee: &refugee
+      person: &person
         <<: *defaults
         draft: Utkast
         ekb: EKB
@@ -114,7 +114,7 @@ sv:
 
       relationship:
         <<: *defaults
-        <<: *refugee
+        <<: *person
         search_related: Sök anhörig person
         related: Anhörig
         relateds: Anhöriga
@@ -160,8 +160,8 @@ sv:
         user: Importerad av
         imported_at: Importerad
         file: Fil
-        refugee: Person
-        refugee_id: Person
+        person: Person
+        person_id: Person
         payments: Utbetalda schabloner
         parse_errors: Tolkningsfel
         original_filename: Ursprungligt filnamn
@@ -169,7 +169,7 @@ sv:
 
       payment: &payment
         <<: *payment_import
-        refugee_id: Person
+        person_id: Person
         amount: Belopp
         period_start: Startdatum
         period_end: Slutdatum
@@ -199,13 +199,13 @@ sv:
         contractor_birthday: Uppdragstagares födelsedag
         contactor_employee_number: Uppdragstagares anställningsnummer
 
-      refugee_extra_cost:
+      person_extra_cost:
         <<: *defaults
         amount: Kostnad
 
       payments:
         <<: *payment
-        refugee_id: Person
+        person_id: Person
 
       po_rate:
         rate_under_65: Procentsats, under 65 år
@@ -242,12 +242,12 @@ sv:
         name: Ange landets namn
       placement:
         cost: kr
-      refugee:
+      person:
         placements:
           cost: kr
 
     hints:
-      refugee:
+      person:
         comment: &comment
           "Tänk på att inte skriva in något känsligt i fältet"
         other_relateds: *comment

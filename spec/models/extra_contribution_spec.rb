@@ -20,8 +20,8 @@ RSpec.describe ExtraContribution, type: :model do
       expect(build(:extra_contribution, extra_contribution_type: nil)).not_to be_valid
     end
 
-    it 'should require a refugee' do
-      expect(build(:extra_contribution, refugee: nil)).not_to be_valid
+    it 'should require a person' do
+      expect(build(:extra_contribution, person: nil)).not_to be_valid
     end
 
     it 'should require fee to be numericality' do
@@ -63,21 +63,21 @@ RSpec.describe ExtraContribution, type: :model do
       expect { ExtraContribution.first.destroy }.to change(ExtraContribution, :count).by(-1)
     end
 
-    it 'should delete a extra_contribution reference for a refugee' do
-      refugee = create(:refugee)
-      extra_contribution = create(:extra_contribution, refugee: refugee)
-      expect(extra_contribution.refugee).not_to be_blank
-      refugee.destroy
+    it 'should delete a extra_contribution reference for a person' do
+      person = create(:person)
+      extra_contribution = create(:extra_contribution, person: person)
+      expect(extra_contribution.person).not_to be_blank
+      person.destroy
       expect(ExtraContribution.where(id: extra_contribution.id)).to be_blank
     end
 
-    it 'should not delete a refugee when deleted' do
-      refugee = create(:refugee)
-      extra_contribution = create(:extra_contribution, refugee: refugee)
+    it 'should not delete a person when deleted' do
+      person = create(:person)
+      extra_contribution = create(:extra_contribution, person: person)
       expect(extra_contribution).not_to be_blank
       extra_contribution.destroy
-      refugee.reload
-      expect(refugee).not_to be_blank
+      person.reload
+      expect(person).not_to be_blank
     end
   end
 end

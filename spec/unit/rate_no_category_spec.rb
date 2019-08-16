@@ -1,24 +1,24 @@
 # Förväntad intäkt för TUT 0-17
 RSpec.describe 'Rates' do
-  let(:refugee) { create(:refugee) }
+  let(:person) { create(:person) }
 
   before(:each) do
-    refugee.reload
+    person.reload
     create_rate_categories_with_rates
   end
 
-  describe 'refugee with citizenship' do
+  describe 'person with citizenship' do
     it 'should not belong to any rate category' do
-      refugee.citizenship_at = '2017-01-01'
-      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
+      person.citizenship_at = '2017-01-01'
+      rates = Economy::RatesForPerson.new(person, UnitMacros::REPORT_INTERVAL).as_array
       expect(rates.size).to eq 0
     end
   end
 
-  describe 'refugee with EKB' do
+  describe 'person with EKB' do
     it 'should not belong to any rate category' do
-      refugee.ekb = false
-      rates = Economy::RatesForRefugee.new(refugee, UnitMacros::REPORT_INTERVAL).as_array
+      person.ekb = false
+      rates = Economy::RatesForPerson.new(person, UnitMacros::REPORT_INTERVAL).as_array
       expect(rates.size).to eq 0
     end
   end

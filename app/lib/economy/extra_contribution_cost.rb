@@ -1,12 +1,12 @@
 module Economy
   # Insatser för personer
-  # Calculation of ExtraContributionCost for a refugee
+  # Calculation of ExtraContributionCost for a person
   # There are two types of extra contributions with different calculations and data fields
   # 1. "Normal" type that is calculated using po_rates
   # 2. Outpatient type that has a monthly_cost field
   class ExtraContributionCost < Base
-    def initialize(refugee, options = {})
-      @refugee = refugee
+    def initialize(person, options = {})
+      @person = person
       @interval = { from: options[:from], to: (options[:to] || Date.today) }
     end
 
@@ -25,7 +25,7 @@ module Economy
     end
 
     def as_array
-      @as_array ||= @refugee.extra_contributions.map do |extra_contribution|
+      @as_array ||= @person.extra_contributions.map do |extra_contribution|
         interval = date_interval(extra_contribution.period_start, extra_contribution.period_end, @interval)
 
         if extra_contribution.extra_contribution_type.outpatient?

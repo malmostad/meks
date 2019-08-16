@@ -1,0 +1,18 @@
+- title 'Person'
+%section.box.show.person
+  %h1.box-title
+    = "#{@person.name}, #{@person.dossier_number}"
+    = @person.draft? ? '(Utkast)' : ''
+
+  .box-content.basic.form-data
+    .tabs
+      %ul
+        %li= link_to 'Allmänt', @person
+        %li= link_to 'Placeringar', person_show_placements_path(@person)
+        %li.active Extra kostnader/insatser
+        %li= link_to 'Anhöriga', person_show_relateds_path(@person)
+        %li= link_to 'Ekonomi', person_show_economy_path(@person)
+
+    = form_for @person, html: { class: 'basic' } do
+      = render 'extra_contributions'
+      = render 'extra_costs'

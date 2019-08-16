@@ -2,11 +2,11 @@
 class ExtraContribution < ApplicationRecord
   NUMERICALS = [Integer, Float, BigDecimal].freeze
 
-  belongs_to :refugee, touch: true
+  belongs_to :person, touch: true
   belongs_to :extra_contribution_type
 
   validates_presence_of :period_start, :period_end,
-                        :extra_contribution_type_id, :refugee
+                        :extra_contribution_type_id, :person
 
   validates :monthly_cost, numericality: true, if: :outpatient?
   validates :fee, numericality: true, unless: :outpatient?

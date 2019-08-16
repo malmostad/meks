@@ -2,19 +2,19 @@
 namespace :import do
   BASE_DIR = (Rails.env.development? ? '/home/vagrant/importer/' : '/home/app_runner/importer/').freeze
 
-  # Place the following exported spreadsheet files for *new* refugees here:
-  # refugees.csv placements.csv outpatient_contributions.csv extra_contributions.csv
+  # Place the following exported spreadsheet files for *new* people here:
+  # people.csv placements.csv outpatient_contributions.csv extra_contributions.csv
   # Run the create tasks in chain with:
-  # $ rake import:create_refugees_tasks
-  CREATE_REFUGEES_DIR = File.join(BASE_DIR, 'create').freeze
+  # $ rake import:create_people_tasks
+  CREATE_PEOPLE_DIR = File.join(BASE_DIR, 'create').freeze
 
-  # Place the following exported spreadsheet files for *existing* refugees here:
-  # refugees.csv placements.csv outpatient_contributions.csv extra_contributions.csv
+  # Place the following exported spreadsheet files for *existing* people here:
+  # people.csv placements.csv outpatient_contributions.csv extra_contributions.csv
   # Run the update tasks in chain with:
-  # $ rake import:update_refugees_tasks
-  UPDATE_REFUGEES_DIR = File.join(BASE_DIR, 'update').freeze
+  # $ rake import:update_people_tasks
+  UPDATE_PEOPLE_DIR = File.join(BASE_DIR, 'update').freeze
 
-  # The sheet "Individdata" exported to "refugees.csv"
+  # The sheet "Individdata" exported to "people.csv"
   #   has two heading rows and the following columns:
   # 0  Dossiernummer: dossier_number
   # 1  Kundnummer: procapita
@@ -34,17 +34,17 @@ namespace :import do
   # 15 TUT startar: temporary_permit_starts_at
   # 16 TUT slutar: temporary_permit_ends_at
   # 17 Medborgarskap erhölls citizenship_at
-  desc 'Import refugees'
-  task refugees: :environment do
-    filename = 'refugees.csv'
+  desc 'Import people'
+  task people: :environment do
+    filename = 'people.csv'
     records = parse_file(filename)
-    refugees = 0
+    people = 0
 
     ActiveRecord::Base.transaction do
       records.each_with_index do |record, row_number|
         next if row_number < 2
 
-        Refugee.create!(
+        Person.create!(
           dossier_number: record[0],
           procapita: record[1],
           name: record[2],
@@ -67,7 +67,7 @@ namespace :import do
           imported_at: Time.now
         )
 
-        refugees += 1
+        people += 1
 
       rescue ActiveRecord::RecordInvalid => e
         puts "Rad #{row_number + 1} i #{filename}: #{e}"
@@ -75,12 +75,12 @@ namespace :import do
       end
     end
 
-    puts "#{refugees} personer importerades"
+    puts "#{people} personer importerades"
   end
 
   # The sheet "Placeringar" exported to "placements.csv"
   #   has two heading rows and the following columns:
-  # 0  Dossiernummer: dossier_number of a Refugee
+  # 0  Dossiernummer: dossier_number of a Person
   # 1  Boende: name of a Home
   # 2  Placeringsdatum: moved_in_at
   # 3  Utskrivningsdatum: moved_out_at
@@ -106,7 +106,7 @@ namespace :import do
         next if row_number < 2
 
         placement = Placement.create!(
-          refugee: Refugee.where(dossier_number: record[0]).first,
+          person: Person.where(dossier_number: record[0]).first,
           home: Home.where(name: record[1]).first,
           moved_in_at: record[2],
           moved_out_at: record[3],
@@ -144,7 +144,7 @@ namespace :import do
   # The sheet "Öppenvårdsinsatser" exported to "outpatient_contributions.csv"
   #   has two heading rows and the following columns:
   #
-  # 0 Dossiernummer: dossier_number of a Refugee
+  # 0 Dossiernummer: dossier_number of a Person
   # 1 Startdatum: period_start
   # 2 Slutdatum: period_end
   # 3 Månadskostnad: monthly_cost
@@ -162,7 +162,7 @@ namespace :import do
         next if row_number < 2
 
         ExtraContribution.create!(
-          refugee: Refugee.where(dossier_number: record[0]).first,
+          person: Person.where(dossier_number: record[0]).first,
           extra_contribution_type: ExtraContributionType.where(outpatient: true).first,
           period_start: record[1],
           period_end: record[2],
@@ -185,7 +185,7 @@ namespace :import do
   # The sheet "Övriga insatser" exported to "extra_contributions.csv"
   #   has two heading rows and the following columns:
   #
-  # 0 Dossiernummer: dossier_number of a Refugee
+  # 0 Dossiernummer: dossier_number of a Person
   # 1 Insatsform: name of an ExtraContributionType
   # 2 Startdatum: period_start
   # 3 Slutdatum: period_end
@@ -205,7 +205,7 @@ namespace :import do
         next if row_number < 2
 
         ExtraContribution.create!(
-          refugee: Refugee.where(dossier_number: record[0]).first,
+          person: Person.where(dossier_number: record[0]).first,
           extra_contribution_type: ExtraContributionType.where(name: record[1]).first,
           period_start: record[2],
           period_end: record[3],
@@ -228,28 +228,28 @@ namespace :import do
     puts "#{extra_contributions} övriga insatser importerades"
   end
 
-  # The sheet "Individdata" in the file with refugees that exitst in MEKS exported to "refugees.csv"
+  # The sheet "Individdata" in the file with people that exitst in MEKS exported to "people.csv"
   #   has two heading rows and the following columns:
   #
-  # 0 Dossiernummer: dossier_number of a Refugee
+  # 0 Dossiernummer: dossier_number of a Person
   # 1 Kundnummer: procapita
-  desc 'Update refugees'
-  task update_refugees: :environment do
-    filename = 'refugees.csv'
+  desc 'Update people'
+  task update_people: :environment do
+    filename = 'people.csv'
     records = parse_file(filename)
-    refugees = 0
+    people = 0
 
     ActiveRecord::Base.transaction do
       records.each_with_index do |record, row_number|
         next if row_number < 2
 
-        refugee = Refugee.where(dossier_number: record[0]).first
-        raise ActiveRecord::RecordInvalid if refugee.nil?
+        person = Person.where(dossier_number: record[0]).first
+        raise ActiveRecord::RecordInvalid if person.nil?
 
-        refugee.procapita = record[1]
-        refugee.save!(validate: false)
+        person.procapita = record[1]
+        person.save!(validate: false)
 
-        refugees += 1
+        people += 1
 
       rescue ActiveRecord::RecordInvalid => e
         puts "Rad #{row_number + 1} i #{filename}: #{e}"
@@ -257,26 +257,26 @@ namespace :import do
       end
     end
 
-    puts "#{refugees} personer uppdaterades"
+    puts "#{people} personer uppdaterades"
   end
 
-  desc 'Create refugees and import data associated with them'
-  task create_refugees_tasks: :environment do
-    @directory = CREATE_REFUGEES_DIR
+  desc 'Create people and import data associated with them'
+  task create_people_tasks: :environment do
+    @directory = CREATE_PEOPLE_DIR
     ActiveRecord::Base.transaction do
-      Rake::Task['import:refugees'].invoke
+      Rake::Task['import:people'].invoke
       Rake::Task['import:placements'].invoke
       Rake::Task['import:outpatient_contributions'].invoke
       Rake::Task['import:extra_contributions'].invoke
     end
   end
 
-  desc 'Update exitsing refugees and import data associated with them'
-  task update_refugees_tasks:  :environment do
-    @directory = UPDATE_REFUGEES_DIR
+  desc 'Update exitsing people and import data associated with them'
+  task update_people_tasks:  :environment do
+    @directory = UPDATE_PEOPLE_DIR
     ActiveRecord::Base.transaction do
       Rake::Task[:environment].invoke
-      Rake::Task['import:update_refugees'].invoke
+      Rake::Task['import:update_people'].invoke
       Rake::Task['import:placements'].invoke
       Rake::Task['import:outpatient_contributions'].invoke
       Rake::Task['import:extra_contributions'].invoke

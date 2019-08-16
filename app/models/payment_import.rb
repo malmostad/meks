@@ -75,14 +75,14 @@ class PaymentImport < ApplicationRecord
   def parse_row(row, row_number)
     fields = extract_fields(row, row_number) || return
 
-    refugee        = refugee_by_dossier_number(fields[0]) || return
+    person        = person_by_dossier_number(fields[0]) || return
     period_start   = parse_date(fields[1], row_number)                || return
     period_end     = parse_date(fields[2], row_number)                || return
     amount         = parse_amount(fields[3], row_number)              || return
     comment        = fields[4]
 
-    { refugee_id: refugee.id,
-      dossier_number: refugee.dossier_number,
+    { person_id: person.id,
+      dossier_number: person.dossier_number,
       period_start: period_start,
       period_end: period_end,
       amount: amount,
@@ -108,14 +108,14 @@ class PaymentImport < ApplicationRecord
     fields
   end
 
-  def refugee_by_dossier_number(str)
+  def person_by_dossier_number(str)
     dossier_number = str.gsub(/\D/, '')
-    refugee = Refugee.where(dossier_number: dossier_number).first
+    person = Person.where(dossier_number: dossier_number).first
 
-    # Skip refugees not found or not #in_our_municipality?
-    return unless refugee.present? && refugee.in_our_municipality?
+    # Skip people not found or not #in_our_municipality?
+    return unless person.present? && person.in_our_municipality?
 
-    refugee
+    person
   end
 
   # Assumes the format YYYYMMDD and other characters like spaces and hyphens that will be removed

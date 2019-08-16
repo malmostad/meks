@@ -11,7 +11,7 @@ FactoryBot.define do
     monthly_cost { rand 1000..2000 }
     comment { 'Foo bar kommentar' }
 
-    refugee { create(:refugee) }
+    person { create(:person) }
     extra_contribution_type { create(:extra_contribution_type) }
   end
 end

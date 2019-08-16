@@ -1,15 +1,15 @@
 class RelationshipsController < ApplicationController
-  before_action :set_refugee, only: [
+  before_action :set_person, only: [
     :index, :new, :create, :edit, :update, :destroy]
   before_action :set_relationship, only: [
     :edit, :update, :destroy]
 
   def index
-    authorize! :read, @refugee => Relationship
+    authorize! :read, @person => Relationship
   end
 
   def new
-    @relationship = @refugee.relationships.new
+    @relationship = @person.relationships.new
     authorize! :create, @relationship
   end
 
@@ -18,11 +18,11 @@ class RelationshipsController < ApplicationController
   end
 
   def create
-    @relationship = @refugee.relationships.new(relationship_params)
+    @relationship = @person.relationships.new(relationship_params)
     authorize! :create, @relationship
 
     if @relationship.save
-      redirect_to refugee_show_relateds_path(@refugee), notice: 'Anhörigskapet registrerades'
+      redirect_to person_show_relateds_path(@person), notice: 'Anhörigskapet registrerades'
     else
       render :new
     end
@@ -32,7 +32,7 @@ class RelationshipsController < ApplicationController
     authorize! :update, @relationship
 
     if @relationship.update(relationship_params)
-      redirect_to refugee_show_relateds_path(@refugee), notice: 'Anhörigskapet uppdaterades'
+      redirect_to person_show_relateds_path(@person), notice: 'Anhörigskapet uppdaterades'
     else
       render :edit
     end
@@ -42,23 +42,23 @@ class RelationshipsController < ApplicationController
     authorize! :destroy, @relationship
 
     @relationship.destroy
-    redirect_to refugee_show_relateds_path(@refugee), notice: 'Anhörigskapet raderades'
+    redirect_to person_show_relateds_path(@person), notice: 'Anhörigskapet raderades'
   end
 
   private
 
-    def set_refugee
-      @refugee = Refugee.find(params[:refugee_id])
+    def set_person
+      @person = Person.find(params[:person_id])
     end
 
     def set_relationship
       id = params[:id] || params[:relationship_id]
-      @relationship = @refugee.relationships.find(id)
+      @relationship = @person.relationships.find(id)
     end
 
     def relationship_params
       params.require(:relationship).permit(
-        :refugee_id,
+        :person_id,
         :related_id,
         :type_of_relationship_id
       )

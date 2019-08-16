@@ -12,8 +12,8 @@ RSpec.describe Placement, type: :model do
       expect(build(:placement, home: nil)).not_to be_valid
     end
 
-    it 'should require refugee' do
-      expect(build(:placement, refugee: nil)).not_to be_valid
+    it 'should require person' do
+      expect(build(:placement, person: nil)).not_to be_valid
     end
 
     it 'should require a moved_in_at' do
@@ -35,21 +35,21 @@ RSpec.describe Placement, type: :model do
       expect { Placement.first.destroy }.to change(Placement, :count).by(-1)
     end
 
-    it 'should delete a placement reference for a refugee' do
-      refugee = create(:refugee)
-      placement = create(:placement, refugee: refugee)
-      expect(placement.refugee).not_to be_blank
-      refugee.destroy
+    it 'should delete a placement reference for a person' do
+      person = create(:person)
+      placement = create(:placement, person: person)
+      expect(placement.person).not_to be_blank
+      person.destroy
       expect(Placement.where(id: placement.id)).to be_blank
     end
 
-    it 'should not delete a refugee when deleted' do
-      refugee = create(:refugee)
-      placement = create(:placement, refugee: refugee)
+    it 'should not delete a person when deleted' do
+      person = create(:person)
+      placement = create(:placement, person: person)
       expect(placement).not_to be_blank
       placement.destroy
-      refugee.reload
-      expect(refugee).not_to be_blank
+      person.reload
+      expect(person).not_to be_blank
     end
 
     describe 'unit examples' do
@@ -71,11 +71,11 @@ RSpec.describe Placement, type: :model do
         expect(placements).not_to include(placement)
       end
 
-      it 'should detect overlapping placements for a refugee' do
-        refugee = create(:refugee)
-        placement1 = create(:placement, moved_in_at: Date.today, refugee: refugee)
-        placement2 = create(:placement, moved_in_at: Date.yesterday, refugee: refugee)
-        overlapping = Placement.overlapping_by_refugee(Date.yesterday, Date.today)
+      it 'should detect overlapping placements for a person' do
+        person = create(:person)
+        placement1 = create(:placement, moved_in_at: Date.today, person: person)
+        placement2 = create(:placement, moved_in_at: Date.yesterday, person: person)
+        overlapping = Placement.overlapping_by_person(Date.yesterday, Date.today)
         expect(overlapping).to include(placement1)
         expect(overlapping).to include(placement2)
       end

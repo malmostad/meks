@@ -1,4 +1,4 @@
-= show_attribute('Namn', @refugee.name)
+= show_attribute('Namn', @person.name)
 = f.association :home,
                 collection: @homes.map { |h| [home_and_type_of_cost(h), h.id, { 'data-use-specification' => h.use_placement_specification,
                 'data-type-of-cost' => h.type_of_cost }] },
@@ -34,4 +34,4 @@
   = f.input :moved_out_at, as: :string, wrapper: :datepicker
   = f.association :moved_out_reason
 
-= render 'application/submit', form: f, cancel_path: refugee_show_placements_path(@refugee)
+= render 'application/submit', form: f, cancel_path: person_show_placements_path(@person)

@@ -122,18 +122,18 @@ RSpec.describe Home, type: :model do
     end
 
     it 'should not have a placement after the home is deleted' do
-      refugee = home.placements.first.refugee
-      refugee.destroy
+      person = home.placements.first.person
+      person.destroy
       home.reload
       expect(home.placements).not_to be_present
     end
 
     it 'the placement should not persist if the home is deleted' do
-      refugee = home.placements.first.refugee
+      person = home.placements.first.person
       home.destroy
-      refugee.reload
-      expect(refugee.placements).not_to be_present
-      expect(refugee.current_placements).not_to be_present
+      person.reload
+      expect(person.placements).not_to be_present
+      expect(person.current_placements).not_to be_present
     end
 
     it 'the home should not have any placements if the placement is deleted' do
@@ -143,11 +143,11 @@ RSpec.describe Home, type: :model do
       expect(home.placements).not_to be_present
     end
 
-    it 'the home should not have any refugees if the placement is deleted' do
-      expect(home.refugees).to be_present
+    it 'the home should not have any people if the placement is deleted' do
+      expect(home.people).to be_present
       home.placements.each(&:destroy)
       home.reload
-      expect(home.refugees).not_to be_present
+      expect(home.people).not_to be_present
     end
   end
 

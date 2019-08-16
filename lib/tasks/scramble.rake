@@ -1,28 +1,28 @@
 require 'faker'
 
 namespace :scramble do
-  desc 'Scramble refugees'
-  task refugees: :environment do
+  desc 'Scramble people'
+  task people: :environment do
     countries = Country.where(id: [313, 251, 318])
 
-    Refugee.find_each do |refugee|
-      refugee.name = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
-      refugee.date_of_birth =
-        refugee.date_of_birth.to_s[0..3] +
+    Person.find_each do |person|
+      person.name = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
+      person.date_of_birth =
+        person.date_of_birth.to_s[0..3] +
         Faker::Time.between(DateTime.now.beginning_of_year, DateTime.now.end_of_year).to_s[4..9]
-      refugee.ssn_extension = Faker::Number.number(4)
-      refugee.ssns = []
-      refugee.dossier_number = Faker::Number.number(10)
-      refugee.dossier_numbers = []
-      refugee.procapita = nil
-      refugee.social_worker = ''
-      refugee.countries = [countries[rand(3)]]
-      refugee.languages = []
-      refugee.deregistered_comment = ''
-      refugee.municipality_placement_comment = ''
-      refugee.other_relateds = ''
-      refugee.secrecy = false
-      refugee.save!
+      person.ssn_extension = Faker::Number.number(4)
+      person.ssns = []
+      person.dossier_number = Faker::Number.number(10)
+      person.dossier_numbers = []
+      person.procapita = nil
+      person.social_worker = ''
+      person.countries = [countries[rand(3)]]
+      person.languages = []
+      person.deregistered_comment = ''
+      person.municipality_placement_comment = ''
+      person.other_relateds = ''
+      person.secrecy = false
+      person.save!
     end
   end
 
@@ -63,5 +63,5 @@ namespace :scramble do
   end
 
   desc 'Run all'
-  task all: [:environment, 'scramble:refugees', 'scramble:homes', 'scramble:placements']
+  task all: [:environment, 'scramble:people', 'scramble:homes', 'scramble:placements']
 end

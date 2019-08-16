@@ -1,4 +1,4 @@
-= show_attribute('Namn', @refugee.name)
+= show_attribute('Namn', @person.name)
 = f.association :extra_contribution_type, include_blank: true,
                 collection: ExtraContributionType.all.map { |type| [type.name, type.id, { 'data-special-case' => type.outpatient? }] }
 
@@ -14,4 +14,4 @@
   = f.input :monthly_cost, input_html: { placeholder: 'kr', value: number_with_precision(f.object.monthly_cost, precision: 2, separator: '.') }
   = f.input :comment
 
-= render 'application/submit', form: f, cancel_path: refugee_show_costs_path(@refugee)
+= render 'application/submit', form: f, cancel_path: person_show_costs_path(@person)

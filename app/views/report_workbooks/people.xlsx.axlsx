@@ -1,0 +1,12 @@
+@workbook.add_worksheet(name: @first_sheetname) do |sheet|
+  render partial: 'report_workbooks/people_headings', locals: { sheet: sheet }
+  render partial: 'report_workbooks/people_rows', locals: { sheet: sheet }
+
+  sheet.column_widths(*(0..sheet.cols.size).map { 18 })
+
+  sheet.sheet_view.pane do |pane|
+    pane.active_pane = :bottom_left
+    pane.state = :frozen
+    pane.y_split = 1
+  end
+end

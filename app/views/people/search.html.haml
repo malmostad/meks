@@ -1,0 +1,26 @@
+- title 'Personer'
+%section.box.search.people
+  %h1.box-title= h1
+  .box-content.body-copy
+    = form_tag(people_search_path, method: "get", class: "basic") do
+      .form-group
+        = label_tag "query-person", "Sök personer: ", class: "control-label"
+        .controls
+          .input-group
+            = text_field_tag "query-person", @q, name: "q", "data-autocomplete-url" => people_suggest_path, class: "form-control", placeholder: "Ange söktext"
+            %span.input-group-btn
+              = submit_tag "Sök", { class: "btn btn-default", name: nil }
+          .help-inline Sök på namn, person-, dossier- eller kundnummer
+
+    - if @total.present?
+      %div.summary= "#{number_to_words(@total).titlecase} personer matchade din sökning"
+
+    - if @people.present?
+      = render "search_results"
+    - else
+      .actions
+        - if can? :create, Person
+          = link_to 'Registrera ny', new_person_path, class: 'btn btn-primary'
+        = link_to "Visa utkast (#{@drafts_count})", people_drafts_path, class: 'btn btn-default'
+        - if current_user.has_role? :admin
+          = link_to "Visa importerade (#{@imported_count})", people_imported_path, class: 'btn btn-default'

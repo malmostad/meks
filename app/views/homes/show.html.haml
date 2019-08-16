@@ -56,13 +56,13 @@
           %tbody
             - @placements.each do |placement|
               %tr
-                %td= link_to placement.refugee.name, placement.refugee
-                %td= placement.refugee.dossier_number
-                %td= placement.refugee.ssn
+                %td= link_to placement.person.name, placement.person
+                %td= placement.person.dossier_number
+                %td= placement.person.ssn
                 %td
-                  - if placement.refugee.gender.present?
-                    = placement.refugee.gender.name
-                %td= placement.refugee.countries.map(&:name).join(', ')
+                  - if placement.person.gender.present?
+                    = placement.person.gender.name
+                %td= placement.person.countries.map(&:name).join(', ')
                 %td.date= placement.moved_in_at
-                %td= placement.refugee.municipality.name if placement.refugee.municipality.present?
-                %td= placement.refugee.municipality_placement_migrationsverket_at
+                %td= placement.person.municipality.name if placement.person.municipality.present?
+                %td= placement.person.municipality_placement_migrationsverket_at
