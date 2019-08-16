@@ -77,6 +77,8 @@ RSpec.configure do |config|
 
   config.order = :random
 
+  config.example_status_persistence_file_path = '.rspec-failures'
+
   # From old spec_helper
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`

@@ -105,10 +105,13 @@ Note: Installation of Chrome, ChromeDriver and Selenium are currently not provid
 Run the test cases in the projects root directory in your Vagrant box:
 
 ```shell
-$ bundle exec rspec --exclude-pattern ./spec/unit/extra_contribution_cost_spec.rb --exclude-pattern ./spec/unit/family_and_emergency_home_cost_spec.rb --exclude-pattern ./spec/features/placements_spec.rb
-$ bundle exec rspec ./spec/unit/extra_contribution_cost_spec.rb ./spec/unit/family_and_emergency_home_cost_spec.rb ./spec/features/placements_spec.rb
+$ bundle exec rspec
 ```
-Currently, rspec must be executed in two separate runs as you see above. This is because an rspec order issue that hasn't been tracked down yet.
+Currently, if some tests fail, you may want to execute a second run as you see above. This is because an rspec order issue that hasn't been tracked down yet.
+
+```shell
+$ bundle exec rspec --only-failures
+```
 
 Note that the environment used for RSpec is `local_test`.
 

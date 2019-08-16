@@ -3,6 +3,7 @@
 /config/deploy/staging.rb
 /config/deploy/production.rb
 .byebug_history
+.rspec-failures
 
 .DS_Store
 /.bundle
@@ -20,5 +21,6 @@
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
 config/secrets.yml.enc
+
 *.sql
 /lab
