@@ -8,4 +8,12 @@ class PoRate < ApplicationRecord
   validate do
     date_range(:start_date, start_date, end_date)
   end
+
+  after_commit do
+    Rails.cache.delete('PoRate/all')
+  end
+
+  def self.all_cached
+    Rails.cache.fetch('PoRate/all') { all.load }
+  end
 end
