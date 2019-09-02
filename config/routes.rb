@@ -58,5 +58,5 @@ Rails.application.routes.draw do
   get  'reports/status/:job_id/:file_id/:report_type' => 'reports#status', as: 'reports_status'
   get  'reports/download/:id/:report_type' => 'reports#download', as: 'reports_download'
 
-  match '*path', via: :all, to: 'errors#not_found'
+  get '*path' => redirect('/') unless Rails.env.development?
 end
