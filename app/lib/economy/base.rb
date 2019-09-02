@@ -1,7 +1,5 @@
 module Economy
   class Base
-    DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
-
     # Implement a #sum method in the subclass if the hashes in the as_array
     #   doesn't have :days and :amount
     def sum

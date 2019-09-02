@@ -24,11 +24,6 @@ RSpec.describe 'ExtraContributionCost' do
     expect(payments.comments).to be_empty
   end
 
-  it 'should use default report range' do
-    payments = Economy::Payment.new(person.payments)
-    expect(payments.sum).to be_a(Numeric)
-  end
-
   it 'should have correct payment for a limiting full month report period' do
     payments = Economy::Payment.new(
       person.payments,

@@ -1,4 +1,6 @@
 RSpec.describe 'PlacementExtraCost' do
+  let(:interval) { { from: Date.new(0), to: Date.today } }
+
   describe 'single cost' do
     let(:person) { create(:person) }
     let(:placement) { create(:placement, person: person) }
@@ -28,7 +30,7 @@ RSpec.describe 'PlacementExtraCost' do
     end
 
     it 'should use default report range' do
-      rec = Economy::PlacementExtraCost.new(person.placements)
+      rec = Economy::PlacementExtraCost.new(person.placements, interval)
       expect(rec.sum).to be_a(Numeric)
     end
 

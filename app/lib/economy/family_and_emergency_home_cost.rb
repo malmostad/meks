@@ -2,9 +2,9 @@ module Economy
   # 'Familje/jourhemskostnad'
   # Calculation of FamilyAndEmergencyHomeCost for an array of placements
   class FamilyAndEmergencyHomeCost < CostWithPoRate
-    def initialize(placements, options = {})
+    def initialize(placements, interval)
       @placements = placements
-      @interval = { from: options[:from], to: (options[:to] || Date.today) }
+      @interval = interval
     end
 
     def as_array

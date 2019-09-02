@@ -25,11 +25,6 @@ RSpec.describe 'PersonExtraCost' do
       expect(rec.sum).to eq 1234
     end
 
-    it 'should use default report range' do
-      rec = Economy::PersonExtraCost.new(person)
-      expect(rec.sum).to be_a(Numeric)
-    end
-
     it 'should have correct cost for a limiting full month report period' do
       rec = Economy::PersonExtraCost.new(
         person,

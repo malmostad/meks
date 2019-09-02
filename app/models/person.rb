@@ -127,19 +127,20 @@ class Person < ApplicationRecord
   end
 
   def total_placement_and_home_costs
-    Economy::PlacementAndHomeCost.new(placements).sum +
-      Economy::FamilyAndEmergencyHomeCost.new(placements).sum
+    Economy::PlacementAndHomeCost.new(placements, default_interval).sum +
+      Economy::FamilyAndEmergencyHomeCost.new(placements, default_interval).sum
   end
 
   def total_costs
     total_placement_and_home_costs +
-      Economy::PlacementExtraCost.new(placements).sum +
-      Economy::ExtraContributionCost.new(self).sum +
-      Economy::PersonExtraCost.new(self).sum
+      Economy::PlacementExtraCost.new(placements, default_interval).sum +
+      Economy::ExtraContributionCost.new(self, default_interval).sum +
+      Economy::PersonExtraCost.new(self, default_interval).sum
   end
 
   def total_rate
-    (Economy::RatesForPerson.new(self).sum || 0) + (Economy::OneTimePayment.new(self).sum || 0)
+    (Economy::RatesForPerson.new(self, default_interval).sum || 0) +
+      (Economy::OneTimePayment.new(self, default_interval).sum || 0)
   end
 
   # Return a people placements within a give range
@@ -185,9 +186,15 @@ class Person < ApplicationRecord
     dates.sort_by { |_k, v| v }.last
   end
 
-  def self.per_type_of_housing(type_of_housing, registered = DEFAULT_INTERVAL)
+  def self.per_type_of_housing(type_of_housing)
     includes(:payments, placements: { home: [:type_of_housings, :costs] })
       .where(placements: { home: { type_of_housings: { id: type_of_housing.id } } })
-      .where(registered: registered[:from]..registered[:to])
+      .where(registered: default_interval[:from]..default_interval[:to])
+  end
+
+  private
+
+  def default_interval
+    { from: Date.new(0), to: Date.today }
   end
 end

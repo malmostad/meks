@@ -1,7 +1,7 @@
 # Extra utgifter för placering
 module Economy
   class PlacementExtraCost < Base
-    def initialize(placements, interval = DEFAULT_INTERVAL)
+    def initialize(placements, interval)
       @placements = placements
       @interval = interval
     end

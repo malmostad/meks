@@ -107,7 +107,7 @@ Run the test cases in the projects root directory in your Vagrant box:
 ```shell
 $ bundle exec rspec
 ```
-Currently, if some tests fail, you may want to execute a second run as you see above. This is because an rspec order issue that hasn't been tracked down yet.
+Currently, if some tests fail, you may want to execute a second test run. This is because an rspec order issue that hasn't been tracked down yet.
 
 ```shell
 $ bundle exec rspec --only-failures

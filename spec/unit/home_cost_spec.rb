@@ -1,4 +1,5 @@
 RSpec.describe 'Home Cost calculations' do
+  let(:interval) { { from: Date.new(0), to: Date.today } }
   let(:person) { create(:person) }
   let(:cost) do
     create(
@@ -26,7 +27,7 @@ RSpec.describe 'Home Cost calculations' do
   end
 
   it 'should have correct total cost' do
-    expect(Economy::PlacementAndHomeCost.new(person.placements).sum).to eq (97 + 1) * 1234
+    expect(Economy::PlacementAndHomeCost.new(person.placements, interval).sum).to eq (97 + 1) * 1234
   end
 
   it 'should have a total cost limited by report interval' do
@@ -36,10 +37,10 @@ RSpec.describe 'Home Cost calculations' do
   end
 
   it 'should return an array of days and amount as a string' do
-    expect(Economy::PlacementAndHomeCost.new(person.placements).as_formula).to eq '98*1234'
+    expect(Economy::PlacementAndHomeCost.new(person.placements, interval).as_formula).to eq '98*1234'
   end
 
   it 'should return an array of days and amount' do
-    expect(Economy::PlacementAndHomeCost.new(person.placements).as_array).to eq([days: 98, amount: 1234])
+    expect(Economy::PlacementAndHomeCost.new(person.placements, interval).as_array).to eq([days: 98, amount: 1234])
   end
 end

@@ -1,7 +1,7 @@
 # Extra kostnader för personer
 module Economy
   class PersonExtraCost < Base
-    def initialize(person, interval = DEFAULT_INTERVAL)
+    def initialize(person, interval)
       @person = person
       @interval = interval
     end

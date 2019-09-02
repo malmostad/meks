@@ -1,4 +1,5 @@
 RSpec.describe 'FamilyAndEmergencyHomeCost' do
+  let(:interval) { { from: Date.new(0), to: Date.today } }
   let(:person) { create(:person) }
   let(:home) { create(:home, type_of_cost: :cost_for_family_and_emergency_home) }
 
@@ -62,7 +63,7 @@ RSpec.describe 'FamilyAndEmergencyHomeCost' do
   end
 
   it 'should use default report range' do
-    costs = Economy::FamilyAndEmergencyHomeCost.new(person.placements)
+    costs = Economy::FamilyAndEmergencyHomeCost.new(person.placements, interval)
     expect(costs.sum).to be_a(Numeric)
   end
 

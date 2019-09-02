@@ -12,8 +12,8 @@ RSpec.describe 'OneTimePayment calculation' do
   describe 'for other municipality' do
     it 'should not have a one time payment' do
       municipality.our_municipality = false
-      expect(Economy::OneTimePayment.new(person).sum).to eq(nil)
-      expect(Economy::OneTimePayment.new(person).as_formula).to eq('')
+      expect(Economy::OneTimePayment.new(person, interval).sum).to eq(nil)
+      expect(Economy::OneTimePayment.new(person, interval).as_formula).to eq('')
     end
   end
 

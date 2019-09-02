@@ -7,7 +7,7 @@ module Economy
   #    are calculated in Economy::FamilyAndEmergencyHomeCost since the structure different
   #    from #cost_per_day? and #cost_per_placement?
   class PlacementAndHomeCost < Base
-    def initialize(placements, interval = DEFAULT_INTERVAL)
+    def initialize(placements, interval)
       @placements = placements
       @interval = interval
     end

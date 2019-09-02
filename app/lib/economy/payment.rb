@@ -1,6 +1,6 @@
 module Economy
   class Payment < Base
-    def initialize(payments, interval = DEFAULT_INTERVAL)
+    def initialize(payments, interval)
       @payments = payments
       @interval = interval
     end

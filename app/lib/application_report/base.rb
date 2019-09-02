@@ -2,7 +2,6 @@
 # See app/reports for implementation examples
 module ApplicationReport
   class Base
-    DEFAULT_INTERVAL = { from: Date.new(0), to: Date.today }.freeze
     HELPERS_PATH = File.join(Rails.root, 'app', 'reports', 'helpers').freeze
     $LOAD_PATH.unshift(HELPERS_PATH)
 
@@ -10,8 +9,8 @@ module ApplicationReport
       @options = options
 
       @filename   = options[:filename] || 'Utan titel.xlsx'
-      @from       = options[:from]     || DEFAULT_INTERVAL[:from]
-      @to         = options[:to]       || DEFAULT_INTERVAL[:to]
+      @from       = options[:from]
+      @to         = options[:to]
       @interval   = { from: @from, to: @to }
       @sheet_name = options[:sheet_name] ||= format_sheet_name
 

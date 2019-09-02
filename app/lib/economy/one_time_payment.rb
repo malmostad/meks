@@ -9,7 +9,7 @@ module Economy
         .where('municipality_placement_migrationsverket_at between ? and ? ', interval[:from], interval[:to])
     end
 
-    def initialize(person, interval = DEFAULT_INTERVAL)
+    def initialize(person, interval = { from: Date.new(0), to: Date.today })
       @person = person
       @from = interval[:from].to_date
       @to = interval[:to].to_date
