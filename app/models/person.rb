@@ -181,8 +181,6 @@ class Person < ApplicationRecord
     dates = dates.delete_if { |_k, v| v.blank? }
 
     # Get the event with the latest date
-    # FIXME: sort and max yields different results when there are multiple latest dates that are the same
-    # dates.max_by { |_k, v| v }
     dates.sort_by { |_k, v| v }.last
   end
 
