@@ -62,7 +62,7 @@
       = kv @person, :deregistered
       .ekb-only= kv 'person.deregistered_reason',
         @person.deregistered_reason.present? ? @person.deregistered_reason.name : ''
-      .ekb-only= kv @person, :deregistered_comment
+      = kv @person, :deregistered_comment
 
       .form-group
         - if can? :edit, @person
