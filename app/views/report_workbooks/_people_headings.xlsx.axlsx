@@ -15,6 +15,7 @@ sheet.add_row(
     'Inskriven',
     'Aktuellt boende',
     'Aktuell boendeform',
+    'Aktuell ägarform',
     'Anvisningskommun',
     'Anvisningsdatum',
     'SoF-placering',
@@ -45,5 +46,5 @@ sheet.add_row(
 
 heading_comment(sheet, 'G', 'Kundnummer för personens ärende i Procapita')
 heading_comment(sheet, 'L', 'Anger det datum då personen registrerades i MEKS för första gången')
-heading_comment(sheet, 'T', 'Det datum då personen skrivs ut från Migrationsverket')
-heading_comment(sheet, 'AA', 'Anger datum för när socialtjänstansvaret för personen är avslutat')
+heading_comment(sheet, 'U', 'Det datum då personen skrivs ut från Migrationsverket')
+heading_comment(sheet, 'AB', 'Anger datum för när socialtjänstansvaret för personen är avslutat')
