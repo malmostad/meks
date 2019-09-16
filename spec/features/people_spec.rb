@@ -124,7 +124,6 @@ RSpec.feature 'People', type: :feature do
         expect(page).not_to have_selector('.control-label', text:  label('person.transferred'))
         expect(page).not_to have_selector('.control-label', text:  label('person.municipality_placement_migrationsverket_at'))
         expect(page).not_to have_selector('.control-label', text:  label('person.municipality_placement_comment'))
-        expect(page).not_to have_selector('.control-label', text:  label('person.deregistered_reason'))
       end
     end
   end
