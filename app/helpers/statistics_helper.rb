@@ -74,39 +74,45 @@ module StatisticsHelper
   end
 
   # Samtliga personer som har angivet anvisningskommun med our_municipality: true
-  # och som har aktuell placering på boendeform somm heter Institution.
+  # och som har aktuell placering på boendeform Institution och ägarform Kommunala (SRF)
   def people_on_hvb
-    Placement
-      .current_placements
-      .joins(person: :municipality)
-      .includes(:person, home: :type_of_housings)
-      .where(people: { municipalities: { our_municipality: true } })
-      .where(home: { type_of_housings: { id: 2 } }) # FIXME: hard coded
-      .select(:person_id).distinct.count
+    people_on_type_of_housing_and_owner_type(2, 1) # FIXME: hard coded
   end
 
   # Samtliga personer som har angivet anvisningskommun med our_municipality: true
-  # och som har aktuell placering på boende med boendeform "Extern placering".
+  # och som har aktuell placering på boende med ägarformen "Extern placering".
   def externaly_placed_people
-    people_on_type_of_housing(6) # FIXME: hard coded
+    people_on_type_of_housing_and_owner_type(nil, 3) # FIXME: hard coded
   end
 
   # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # och som har aktuell placering på boendeform "jourhem".
   def people_on_emergency_home
-    people_on_type_of_housing(3) # FIXME: hard coded
+    people_on_type_of_housing_and_owner_type(3) # FIXME: hard coded
   end
 
   # Samtliga personer som har angivet anvisningskommun med our_municipality: true
   # och som har aktuell placering på boendeform "Familjehem".
   def people_on_family_home
-    people_on_type_of_housing(1) # FIXME: hard coded
+    people_on_type_of_housing_and_owner_type(1) # FIXME: hard coded
   end
 
   # Samtliga personer som har angivet anvisningskommun med our_municipality: true
-  # och som har aktuell placering på boendeform "Utsluss". Ändrat till Stödboende.
+  # och som har aktuell placering på boendeform Stödboende och ägarform "Kommunala (SRF)"
   def people_on_outward_home
-    people_on_type_of_housing(5) # FIXME: hard coded
+    people_on_type_of_housing_and_owner_type(5, 1) # FIXME: hard coded
+  end
+
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
+  # och som har aktuell placering på boendeform "Nätverkshem, outrett".
+  def people_on_network_home_unprocessed
+    people_on_type_of_housing_and_owner_type(8) # FIXME: hard coded
+  end
+
+  # Samtliga personer som har angivet anvisningskommun med our_municipality: true
+  # och som har aktuell placering på boendeform "Nätverkshem, utrett".
+  def people_on_network_home_processed
+    people_on_type_of_housing_and_owner_type(9) # FIXME: hard coded
   end
 
   # Samtliga aktiva boenden med boendeform "Institution" samt "Utsluss".
@@ -158,13 +164,18 @@ module StatisticsHelper
 
   private
 
-  def people_on_type_of_housing(id)
-    Placement
-      .current_placements
-      .joins(person: :municipality)
-      .includes(:person, home: :type_of_housings)
-      .where(home: { type_of_housings: { id: id } })
-      .where(people: { municipalities: { our_municipality: true }, deregistered: nil })
-      .select(:person_id).distinct.count
+  def people_on_type_of_housing_and_owner_type(type_of_housing_id = nil, owner_type_id = nil)
+    return 0 unless type_of_housing_id || owner_type_id
+
+    query = Placement
+            .current_placements
+            .joins(person: :municipality)
+            .includes(:person, home: [:type_of_housings, :owner_type])
+            .where(people: { municipalities: { our_municipality: true }, deregistered: nil })
+
+    query = query.where(home: { type_of_housings: { id: type_of_housing_id } }) if type_of_housing_id
+    query = query.where(home: { owner_types: { id: owner_type_id } }) if owner_type_id
+
+    query.select(:person_id).distinct.count
   end
 end
