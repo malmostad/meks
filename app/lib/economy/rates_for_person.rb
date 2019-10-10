@@ -6,7 +6,7 @@ module Economy
 
     attr_reader :replace_rates
 
-    def initialize(person, interval = DEFAULT_INTERVAL)
+    def initialize(person, interval)
       @person = person
       @interval = interval
     end
