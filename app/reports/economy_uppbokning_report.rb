@@ -91,6 +91,7 @@ class EconomyUppbokningReport < ApplicationReport::Base
         placements: [:legal_code, :placement_extra_costs, :family_and_emergency_home_costs,
                      home: [:costs]]
       )
+      .where(ekb: true)
       .where('placements.moved_in_at <= ?', @params[:to])
       .where('placements.moved_out_at is ? or placements.moved_out_at >= ?', nil, @params[:from])
   end
