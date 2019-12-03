@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.3'
+gem 'rails', '5.2.4'
 gem 'haml-rails', '2.0.1'
 gem 'sassc-rails', '2.1.2'
 gem 'uglifier', '4.1.20'
@@ -9,7 +9,7 @@ gem 'coffee-rails', '5.0.0'
 # Version 1.5 that is included in Malmo Global Assets have bugs in the date range selector
 gem 'bootstrap-datepicker-rails', '1.8.0.1'
 
-gem 'simple_form', '4.1.0'
+gem 'simple_form', '5.0.1'
 gem 'mysql2', '0.5.2'
 gem 'dalli', '2.7.10'
 gem 'elasticsearch-model', '6.1.0'
@@ -20,8 +20,7 @@ gem 'net-ldap', '0.16.1'
 gem 'cancancan', '3.0.1'
 gem 'ruby-saml', '1.11.0'
 
-gem 'rubyzip', '~> 1.2.2'
-gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c593a08'
+gem 'caxlsx', '3.0.1'
 gem 'axlsx_rails'
 gem 'delayed_job_active_record', '4.1.3'
 
