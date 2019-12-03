@@ -309,13 +309,13 @@ RSpec.describe Person, type: :model do
 
       expect(person.ssns).to be_empty
       expect(person.dossier_numbers).to be_empty
-      expect(person.special_needs).to be false
+      expect(person.special_needs).to be_nil
       expect(person.residence_permit_at).to be_nil
       expect(person.checked_out_to_our_city).to be_nil
       expect(person.temporary_permit_starts_at).to be_nil
       expect(person.temporary_permit_ends_at).to be_nil
       expect(person.citizenship_at).to be_nil
-      expect(person.transferred).to be false
+      expect(person.transferred).to be_nil
       expect(person.municipality_placement_migrationsverket_at).to be_nil
       expect(person.municipality_placement_comment).to be_nil
       expect(person.deregistered_reason).to be_nil

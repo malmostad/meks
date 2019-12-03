@@ -5,7 +5,7 @@ module Economy
       Person
         .joins(:municipality)
         .where(municipalities: { our_municipality: true })
-        .where.not(transferred: true)
+        .where('transferred = ? or transferred is ?', false, nil)
         .where('municipality_placement_migrationsverket_at between ? and ? ', interval[:from], interval[:to])
     end
 
