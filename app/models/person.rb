@@ -77,13 +77,13 @@ class Person < ApplicationRecord
     ssns.destroy_all
     self.dossier_number = nil
     dossier_numbers.destroy_all
-    self.special_needs = false
+    self.special_needs = nil
     self.residence_permit_at = nil
     self.checked_out_to_our_city = nil
     self.temporary_permit_starts_at = nil
     self.temporary_permit_ends_at = nil
     self.citizenship_at = nil
-    self.transferred = false
+    self.transferred = nil
     self.municipality_placement_migrationsverket_at = nil
     self.municipality_placement_comment = nil
     self.deregistered_reason = nil
