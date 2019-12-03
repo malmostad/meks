@@ -1,7 +1,9 @@
 section.box.show.reports.status {
   .download {
     display: none;
-    &.finished {
+
+    &.finished.true,
+    &.error.true {
       display: block;
     }
   }

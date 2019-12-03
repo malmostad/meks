@@ -30,6 +30,7 @@ class ReportsController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     else
       finished = false
+      failed = job.failed_at ? true : false
       created_at = job.created_at.to_i
       queue_size = Delayed::Job.where(last_error: nil).count
       queue_size = 'du är först i kön' if queue_size.nil? || queue_size <= 1
@@ -39,6 +40,7 @@ class ReportsController < ApplicationController
       file_id: params[:file_id],
       created_at: created_at || 0,
       finished: finished,
+      failed: failed,
       queue_size: queue_size,
       status_url: reports_status_url(params[:job_id], params[:file_id]),
       report_type: params[:report_type]

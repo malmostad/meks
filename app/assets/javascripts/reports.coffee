@@ -30,11 +30,17 @@ $ ->
     poll = setInterval (->
       $.getJSON statusUrl, (status) ->
         $queue.text status.queue_size
-        if status.finished
+        if status.failed
           clearInterval(counter)
           clearInterval(poll)
           $('.reports.status .generating').hide()
-          $('.reports.status .download').addClass('finished')
+          $('.reports.status .download.error').addClass('true')
+
+        else if status.finished
+          clearInterval(counter)
+          clearInterval(poll)
+          $('.reports.status .generating').hide()
+          $('.reports.status .download.finished').addClass('true')
         return
       return
     ), 2000

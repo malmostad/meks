@@ -2,7 +2,7 @@
 %section.box.show.reports.status
   %h1.box-title= h1
   .box-content.basic.form-data
-    - if !@status[:finished]
+    - if !@status[:finished] && !@status[:failed]
       .generating
         %p Det kan ta flera minuter att skapa din rapport. Stanna på denna sida så får du en nedladdningslänk när rapportern är klar.
         %p.queue
@@ -11,6 +11,8 @@
         %p.timer{ 'data': { created_at: @status[:created_at], status_url: @status[:status_url] } }
           Du har väntat:
           %span
-    .download{ class: @status[:finished] ? 'finished' : '' }
+    .download.finished{ class: @status[:finished] ? 'true' : '' }
       %p= link_to 'Ladda ned rapport', reports_download_path(@status[:file_id], @status[:report_type])
       %p.hint Tips: Högerklicka på länken och välj <em>Spara länk som</em> (eller liknande)
+    .download.error{ class: @status[:failed] ? 'true' : '' }
+      %p Något gick fel när rapporten genererades. Kontakta systemförvaltaren.
