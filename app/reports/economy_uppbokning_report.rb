@@ -135,6 +135,8 @@ class EconomyUppbokningReport < ApplicationReport::Base
 
   def sum_days(rates)
     rates.map do |rate|
+      next if rate.is_a? BigDecimal
+
       rate[:days] if days_hash?(rate)
     end.compact.sum
   end
