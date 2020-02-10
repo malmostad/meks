@@ -61,10 +61,6 @@ RSpec.describe 'OneTimePayment calculation' do
     it 'should return one person' do
       person.save
       interval[:from] = '2000-01-01'.to_date
-      p person.municipality
-      p person.transferred
-      p person.municipality_placement_migrationsverket_at
-      puts interval
       expect(Economy::OneTimePayment.all(interval).count).to eq(1)
     end
   end
