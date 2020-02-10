@@ -2,13 +2,12 @@ module Economy
   # Person rates (förväntade intäkter)
   # Comments in Swedish from project specs
   class RatesForPerson < Base
-    RATE_CATEGORIES_AND_RATES = RateCategory.includes(:rates).all
-
     attr_reader :replace_rates
 
     def initialize(person, interval)
       @person = person
       @interval = interval
+      @rate_categories_and_rates = RateCategory.all_cached
     end
 
     # Sum for self and ReplaceRatesWithActualCosts
@@ -38,7 +37,7 @@ module Economy
       return [] unless @person.ekb?
 
       @as_array ||= begin
-        RATE_CATEGORIES_AND_RATES.map do |category|
+        @rate_categories_and_rates.map do |category|
           send(category.qualifier[:meth], category)
         end.flatten.compact
       end
@@ -51,7 +50,7 @@ module Economy
 
       @skip_all_replace = skip_all_replace
 
-      RATE_CATEGORIES_AND_RATES.map do |category|
+      @rate_categories_and_rates.map do |category|
         [category.qualifier.values.join('_'), send(category.qualifier[:meth], category).flatten.compact]
       end.to_h
     end

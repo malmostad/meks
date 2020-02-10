@@ -27,6 +27,14 @@ class RateCategory < ApplicationRecord
     validate_associated_date_overlaps(rates, :amount)
   end
 
+  after_commit do
+    Rails.cache.delete('RateCategory/all')
+  end
+
+  def self.all_cached
+    Rails.cache.fetch('RateCategory/all') { all.includes(:rates).load }
+  end
+
   def age_range
     if from_age && to_age && from_age >= to_age
       errors.add(:from_age, '"Från och med ålder" måste infalla före "till-ålder"')

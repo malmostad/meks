@@ -1,7 +1,7 @@
 # 'Schablonbelopp'
 # Amount for RateCategory
 class Rate < ApplicationRecord
-  belongs_to :rate_category
+  belongs_to :rate_category, touch: true
 
   default_scope { order(:start_date) }
 
