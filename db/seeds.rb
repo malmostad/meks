@@ -70,31 +70,31 @@ end
 locales = Rails.configuration.i18n.available_locales
 (0...1000).each do
   I18n.locale = locales[rand(locales.size)]
-  r = Refugee.create(
+  r = Person.create(
     name: Faker::Name.name.gsub(/(Prof.|Dr.|PhD.|Mgr.|Sr.)/, '').strip,
-    date_of_birth: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s[0..9],
-    ssn_extension: Faker::Number.number(4),
-    dossier_number: Faker::Number.number(10),
+    date_of_birth: Faker::Time.between(from: DateTime.now - 18.year, to: DateTime.now - 4.year).to_s[0..9],
+    ssn_extension: Faker::Number.number(digits: 4),
+    dossier_number: Faker::Number.number(digits: 10),
     gender_id: rand(Gender.count) + 1,
     country_ids: [rand(Country.count) + 1],
     language_ids: [rand(Language.count) + 1],
-    registered: Faker::Date.between(120.days.ago, Date.today),
+    registered: Faker::Date.between(from: 120.days.ago, to: Date.today),
     special_needs: rand(2)
   )
 
   (rand(3)).times do
-    DossierNumber.create(refugee_id: r.id, name: Faker::Number.number(10))
+    DossierNumber.create(person_id: r.id, name: Faker::Number.number(digits: 10))
   end
 
   (rand(3)).times do
     Ssn.create(
-      refugee_id: r.id,
-      date_of_birth: Faker::Time.between(DateTime.now - 18.year, DateTime.now - 4.year).to_s.gsub('-', '')[0..7],
+      person_id: r.id,
+      date_of_birth: Faker::Time.between(from: DateTime.now - 18.year, to: DateTime.now - 4.year).to_s.gsub('-', '')[0..7],
       extension: rand(1000..9999)
       )
   end
 
-  # Assign and deassing refugees to homes
+  # Assign and de-assing people to homes
   moved_out_at = DateTime.now
   rand(0..5).downto(1).each do |t|
     if r.placements.present?
@@ -112,7 +112,7 @@ locales = Rails.configuration.i18n.available_locales
     )
   end
 
-  # Make most refugees still assigned to a home
+  # Make most people still assigned to a home
   if r.id % 4 > 0
     r.placements.create(
       home_id: rand(Home.count) + 1,

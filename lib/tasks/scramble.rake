@@ -9,10 +9,10 @@ namespace :scramble do
       person.name = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
       person.date_of_birth =
         person.date_of_birth.to_s[0..3] +
-        Faker::Time.between(DateTime.now.beginning_of_year, DateTime.now.end_of_year).to_s[4..9]
-      person.ssn_extension = Faker::Number.number(4)
+        Faker::Time.between(from: DateTime.now.beginning_of_year, to: DateTime.now.end_of_year).to_s[4..9]
+      person.ssn_extension = Faker::Number.number(digits: 4)
       person.ssns = []
-      person.dossier_number = Faker::Number.number(10)
+      person.dossier_number = Faker::Number.number(digits: 10)
       person.dossier_numbers = []
       person.procapita = nil
       person.social_worker = ''
