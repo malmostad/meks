@@ -4,9 +4,9 @@ MEKS is a management system for unaccompanied children, their asylum status, log
 ## Dependencies
 
 * nginx (for production)
-* Ruby 2.6.x
+* Ruby managed by rbenv
 * MySQL >= 5.7
-* ElasticSearch 6.x
+* ElasticSearch
 * Memcached
 * [Global Assets](https://github.com/malmostad/global-assets).
 
@@ -34,15 +34,40 @@ Log in to the Vagrant box as the `vagrant` user and start the application in the
 ```shell
 $ vagrant ssh
 $ cd /vagrant
-$ rails s -b 0.0.0.0
+$ bundle exec puma
 ```
 
-Point a browser on your host system to http://127.0.0.1:3035. Editing of the project files on your host system will be reflected when you hit reload in your browser.
+You can use seed files to create dummy data and three users, *a* (administrator) *w* (writer) and *r* (reader). After that you can login with one of the tree roles (no password).
+
+```shell
+$ cd /vagrant
+$ bundle exec rake db:seed
+$ bundle exec rake db:seed_rate_categories
+```
+
+Point a browser on your host system to http://127.0.0.1:3036. Editing of the project files on your host system will be reflected when you hit reload in your browser.
 
 When you run the `vagrant up` command for the first time it creates an Ubuntu 16.04 based Vagrant box with a ready-to-use development environment for the application. This will take some time. Vagrant will launch fast after the first run.
 
 If you get port conflicts in your host system, change `forwarded_port` in the `Vagrantfile` You might also want to edit the value for `vm.hostname` and `puppet.facter` in the same file or do a mapping `localhost` mapping in your hosts `host` file to reflect that value.
 
+## Testing
+Run tests before pushing code to the Git repository and before making a deployment. The application contains unit tests and high level integration/feature tests using RSpec, Capybara and headless Chrome.
+
+Note: Installation of Chrome, ChromeDriver and Selenium are currently not provided by the Puppet provisioning script for the Vagrant box. See `puppet/install_chrome_etc.txt` for installation commands.
+
+Note that the environment used for RSpec currently is `local_test`. Add an entry for that environment in `config/secrets.yml`.
+
+Run the test cases in the projects root directory in your Vagrant box:
+
+```shell
+$ bundle exec rspec
+```
+Currently, if some tests fail, you may want to execute a second test run. This is because an rspec order issue that hasn't been tracked down yet.
+
+```shell
+$ bundle exec rspec --only-failures
+```
 
 ## Server Provisioning
 
@@ -95,25 +120,6 @@ $ bundle exec cap production deploy
 ```
 
 The worker for delayed job that is used for gererating reports is managed by `systemd`. The process is killed after a deployment and `systemd` is starting it automaticaly.
-
-
-## Testing
-Run tests before pushing code to the Git repository and before making a deployment. The application contains unit tests and high level integration/feature tests using RSpec, Capybara and headless Chrome.
-
-Note: Installation of Chrome, ChromeDriver and Selenium are currently not provided by the Puppet provisioning script for the Vagrant box. See `puppet/install_chrome_etc.txt` for installation commands.
-
-Run the test cases in the projects root directory in your Vagrant box:
-
-```shell
-$ bundle exec rspec
-```
-Currently, if some tests fail, you may want to execute a second test run. This is because an rspec order issue that hasn't been tracked down yet.
-
-```shell
-$ bundle exec rspec --only-failures
-```
-
-Note that the environment used for RSpec is `local_test`.
 
 ## License
 Released under AGPL version 3.

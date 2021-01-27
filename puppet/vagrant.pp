@@ -10,7 +10,7 @@ $app_home       = '/vagrant'
 
 class { '::mcommons': }
 
-class { '::mcommons::mysql':
+-> class { '::mcommons::mysql':
   db_password      => '',
   db_root_password => '',
   create_test_db   => true,
@@ -18,34 +18,33 @@ class { '::mcommons::mysql':
   ruby_enable      => true,
 }
 
-class { '::mcommons::elasticsearch':
-  version => '6.x',
+-> class { '::mcommons::elasticsearch':
+  version => '5.x',
   memory  => '200m',
 }
 
-# -> exec {'Create ElasticSearch index':
-#   command => "bundle exec rake environment elasticsearch:reindex RAILS_ENV=development CLASS='Recommendation' ALIAS='recommendations' ; exit 0",
-#   user    => $::runner_name,
-#   path    => $::runner_path,
-#   cwd     => $::app_home,
-# }
-#
-# -> exec {'Create ElasticSearch index for test':
-#   command => "bundle exec rake environment elasticsearch:reindex RAILS_ENV=test CLASS='Recommendation' ALIAS='recommendations' ; exit 0",
-#   user    => $::runner_name,
-#   path    => $::runner_path,
-#   cwd     => $::app_home,
-# }
-
-class { '::mcommons::memcached':
+-> class { '::mcommons::memcached':
   memory => 16,
 }
 
-class { '::mcommons::ruby':
-  version => '2.5.3',
+-> class { '::mcommons::ruby':
+  version => '2.6.3', # Use the version from .ruby-version
 }
 
-class { 'mcommons::ruby::bundle_install': }
-class { 'mcommons::ruby::rails': }
-class { 'mcommons::ruby::rspec_deps': }
-# mcommons::ruby::db_migrate { $::envs: }
+-> exec { 'Update Gem System':
+  command => '/usr/bin/env gem update --system',
+  user    => $::runner_name,
+  path    => $::runner_path,
+  cwd     => $::app_home,
+}
+
+-> class { 'mcommons::ruby::bundle_install': }
+-> class { 'mcommons::ruby::rails': }
+-> class { 'mcommons::ruby::rspec_deps': }
+
+-> exec { "Load schema to database":
+  command => "bundle exec rake db:schema:load",
+  user    => $::runner_name,
+  path    => $::runner_path,
+  cwd     => $::app_home,
+}
