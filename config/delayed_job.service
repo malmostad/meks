@@ -4,15 +4,14 @@ After=mysql.service
 Requires=mysql.service
 
 [Service]
-Type=forking
 PIDFile=/home/app_runner/meks/shared/tmp/pids/delayed_job.pid
 
 User=app_runner
 Group=app_runner
-WorkingDirectory=/home/app_runner/meks/current
 
+WorkingDirectory=/home/app_runner/meks/current
 Environment="RAILS_ENV=production"
-ExecStart=/bin/bash -cl "bin/delayed_job restart"
+ExecStart=/home/app_runner/.rbenv/bin/rbenv exec bundle exec bin/delayed_job start
 
 TimeoutSec=60s
 RestartSec=5s
