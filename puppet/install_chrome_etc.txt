@@ -17,13 +17,8 @@ sudo chmod +x /usr/local/bin/chromedriver
 # Test it
 chromedriver --url-base=/wd/hub
 
-# Uninstall the ChromeDriver RubyGem, if present
-gem list | grep chrome
-gem uninstall chromedriver-helper
-rm /home/vagrant/.rbenv/shims/chromedriver
-rbenv rehash
-
 # Install Selenium
+## Install some version of JDK first if not present.
 wget https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
 sudo mv selenium-server-standalone-3.141.59.jar /usr/local/bin/selenium-server-standalone.jar
 sudo chown root:root /usr/local/bin/selenium-server-standalone.jar
