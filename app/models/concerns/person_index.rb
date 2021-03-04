@@ -9,7 +9,6 @@ module PersonIndex
 
     # Override model name
     index_name "people_#{Rails.env}"
-    document_type 'person'
 
     after_commit -> { __elasticsearch__.index_document  },  on: [:create, :update]
     after_commit -> { __elasticsearch__.delete_document },  on: :destroy

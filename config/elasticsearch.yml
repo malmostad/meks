@@ -21,13 +21,13 @@ analysis:
 
   tokenizer:
     edge_ngram_2:
-      type: edgeNGram
+      type: edge_ngram
       min_gram: 2
       max_gram: 50
       token_chars:
       - letter
     edge_ngram_nmbr_letters:
-      type: edgeNGram
+      type: edge_ngram
       min_gram: 2
       max_gram: 50
       token_chars:
@@ -36,7 +36,7 @@ analysis:
 
   filter:
     nmbr:
-      type: edgeNGram
+      type: edge_ngram
       min_gram: 2
       max_gram: 20
 
