@@ -1,3 +1,10 @@
+https://github.com/rails/execjs
+sudo apt install nodejs
+sudo apt install npm
+
+puppet outdated
+
+
 # MEKS
 MEKS is a management system for unaccompanied children, their asylum status, logistics and placements in homes. The system provides detailed statistics and Excel reports for further data modelling.
 
@@ -5,8 +12,8 @@ MEKS is a management system for unaccompanied children, their asylum status, log
 
 * nginx (for production)
 * Ruby managed by rbenv
-* MySQL >= 5.7
-* ElasticSearch
+* MySQL >= 8.x
+* ElasticSearch 7.x
 * Memcached
 * [Global Assets](https://github.com/malmostad/global-assets).
 

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.4.5'
+gem 'rails', '6.0.3.5'
 gem 'haml-rails', '2.0.1'
 gem 'sassc-rails', '2.1.2'
 gem 'uglifier', '4.2.0'
@@ -26,10 +26,11 @@ gem 'delayed_job_active_record', '4.1.5'
 
 gem 'whenever', '1.0.0', require: false
 gem 'highline', '2.0.3'
-gem 'execjs', '2.7.0'
+# gem 'execjs', '2.7.0'
+gem "webpacker", "5.2.1"
 gem 'faker'
 
-gem 'rails-i18n', '5.1.3'
+gem 'rails-i18n', '6.0.0'
 
 gem 'bcrypt', '3.1.16'
 
@@ -49,7 +50,7 @@ group :development do
   gem 'byebug'
 end
 
-group :local_test do
+group :development, :local_test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
