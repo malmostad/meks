@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_05_114941) do
+ActiveRecord::Schema.define(version: 2021_03_05_152605) do
 
   create_table "costs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|
     t.integer "amount"
@@ -333,7 +333,9 @@ ActiveRecord::Schema.define(version: 2021_03_05_114941) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "human_name"
-    t.integer "qualifier"
+    t.string "qualifier"
+    t.integer "min_age"
+    t.integer "max_age"
   end
 
   create_table "rates", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci", force: :cascade do |t|

@@ -1,20 +1,8 @@
 # 'Schablongrupp'
 class RateCategory < ApplicationRecord
-  # `enum` maps qualifier number in DB to the qualifiers below
-  # `meth` is used for sending qualifiers to a method to select people
-  # `min_age` and `max_age` are used as arguments
-  #
   # Run:
   # rake db:seed_rate_categories
   # to create the rate categories with dummy rates
-  enum qualifier: [
-    { meth: :arrival_0_17,     min_age: 0,  max_age: 17 },
-    { meth: :assigned_0_17,    min_age: 0,  max_age: 17 },
-    { meth: :temporary_permit, min_age: 0,  max_age: 17 },
-    { meth: :temporary_permit, min_age: 18, max_age: 20 },
-    { meth: :residence_permit, min_age: 0,  max_age: 17 },
-    { meth: :residence_permit, min_age: 18, max_age: 20 }
-  ]
 
   has_many :rates, dependent: :destroy
   accepts_nested_attributes_for :rates, allow_destroy: true

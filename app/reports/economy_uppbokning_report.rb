@@ -72,7 +72,7 @@ class EconomyUppbokningReport < ApplicationReport::Base
       rates_for_person = ::Economy::RatesForPerson.new(person, interval)
 
       rates = categories.map do |category|
-        rates_for_person.send(category.qualifier[:meth], category)
+        rates_for_person.send(category.qualifier, category)
       end.flatten.compact
 
       next if rates.empty?

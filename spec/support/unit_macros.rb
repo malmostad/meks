@@ -19,39 +19,39 @@ module UnitMacros
     [
       {
         name: 'arrival_0_17',
-        qualifier: 0,
+        qualifier: 'arrival_0_17',
         human_name: 'Ankomstbarn 0–17 år',
         rate: { amount: RATES[:arrival_0_17], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
 
       {
         name: 'assigned_0_17',
-        qualifier: 1,
+        qualifier: 'assigned_0_17',
         human_name: 'Anvisade barn 0–17 år',
         rate: { amount: RATES[:assigned_0_17], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
 
       {
         name: 'temporary_permit_0_17',
-        qualifier: 2,
+        qualifier: 'temporary_permit',
         human_name: 'TUT-barn 0–17 år',
         rate: { amount: RATES[:temporary_permit_0_17], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
       {
         name: 'temporary_permit_18_20',
-        qualifier: 3,
+        qualifier: 'temporary_permit',
         human_name: 'TUT-barn 18–20 år',
         rate: { amount: RATES[:temporary_permit_18_20], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
       {
         name: 'residence_permit_0_17',
-        qualifier: 4,
+        qualifier: 'residence_permit',
         human_name: 'PUT-barn 0–17 år',
         rate: { amount: RATES[:residence_permit_0_17], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
       {
         name: 'residence_permit_18_20',
-        qualifier: 5,
+        qualifier: 'residence_permit',
         human_name: 'PUT-barn 18–20 år',
         rate: { amount: RATES[:residence_permit_18_20], start_date: '2018-01-01', end_date: '2018-12-31' }
       }

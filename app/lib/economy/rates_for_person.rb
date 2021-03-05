@@ -38,7 +38,7 @@ module Economy
 
       @as_array ||= begin
         @rate_categories_and_rates.map do |category|
-          send(category.qualifier[:meth], category)
+          send(category.qualifier, category)
         end.flatten.compact
       end
     end
@@ -51,7 +51,8 @@ module Economy
       @skip_all_replace = skip_all_replace
 
       @rate_categories_and_rates.map do |category|
-        [category.qualifier.values.join('_'), send(category.qualifier[:meth], category).flatten.compact]
+        # [category.qualifier.values.join('_'), send(category.qualifier, category).flatten.compact]
+        [send(category.qualifier, category).flatten.compact]
       end.to_h
     end
 
@@ -279,7 +280,7 @@ module Economy
       else
         # Special case. date_at_max_age has max age set to 30 june for those of age 20
         # but that must not apply to replacement with actual cost.
-        to = end_date_for_replacement_at_20(rate) if rate.rate_category.qualifier[:max_age] == 20
+        to = end_date_for_replacement_at_20(rate) if rate.rate_category.max_age == 20
 
         @replace_rates = ReplaceRatesWithActualCosts.new(@person, from: from, to: to)
         return @replace_rates.as_array if days.zero?
@@ -309,7 +310,7 @@ module Economy
 
     def shared_from_attr(category, rate)
       [
-        date_at_min_age(@person.date_of_birth, category.qualifier[:min_age]),
+        date_at_min_age(@person.date_of_birth, category.min_age),
         @interval[:from],
         rate[:start_date]
       ]
@@ -317,7 +318,7 @@ module Economy
 
     def shared_to_attr(category, rate)
       [
-        date_at_max_age(@person.date_of_birth, category.qualifier[:max_age]),
+        date_at_max_age(@person.date_of_birth, category.max_age),
         @interval[:to],
         rate[:end_date]
       ]
