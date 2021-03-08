@@ -50,7 +50,7 @@ group :development do
   gem 'byebug'
 end
 
-group :development, :local_test do
+group :local_test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'

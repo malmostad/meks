@@ -1,4 +1,7 @@
 /config/secrets.yml
+/config/secrets.yml.enc
+/config/credentials.yml.enc
+/config/master.key
 /config/database.yml
 /config/deploy/staging.rb
 /config/deploy/production.rb
@@ -31,3 +34,5 @@ config/secrets.yml.enc
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+/config/master.key
