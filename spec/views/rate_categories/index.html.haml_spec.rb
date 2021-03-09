@@ -5,6 +5,6 @@ RSpec.describe 'rate_categories/index', type: :view do
 
   it 'renders a list of rate_categories' do
     render
-    assert_select 'tr>td', text: @rate_categories.first.human_name, count: 1
+    assert_select 'tr>td', text: @rate_categories.first.human_name, count: 2
   end
 end
