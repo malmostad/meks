@@ -1,9 +1,9 @@
 RSpec.describe RateCategory, type: :model do
-  let(:rate_category) { create(:rate_category) }
+  let(:rate_category) { create(:arrival_0_17) }
 
   describe 'create' do
     it 'should be adding one' do
-      expect { create(:rate_category) }.to change(RateCategory, :count).by(+1)
+      expect { create(:arrival_0_17) }.to change(RateCategory, :count).by(+1)
     end
   end
 
@@ -13,13 +13,13 @@ RSpec.describe RateCategory, type: :model do
     end
 
     it 'should require a name' do
-      expect(build(:rate_category, name: nil)).not_to be_valid
+      expect(build(:arrival_0_17, name: nil)).not_to be_valid
     end
   end
 
   describe 'destroy' do
     it 'should destroy a record' do
-      expect { create(:rate_category) }.to change(RateCategory, :count).by(+1)
+      expect { create(:arrival_0_17) }.to change(RateCategory, :count).by(+1)
       expect { RateCategory.last.destroy }.to change(RateCategory, :count).by(-1)
     end
   end

@@ -18,41 +18,53 @@ module UnitMacros
     RateCategory.destroy_all
     [
       {
-        name: 'arrival_0_17',
-        qualifier: 'arrival_0_17',
-        human_name: 'Ankomstbarn 0–17 år',
+        name: "arrival_0_17",
+        human_name: "Ankomstbarn 0–17 år",
+        qualifier: "arrival_0_17",
+        min_age: 0,
+        max_age: 17,
         rate: { amount: RATES[:arrival_0_17], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
 
       {
-        name: 'assigned_0_17',
-        qualifier: 'assigned_0_17',
-        human_name: 'Anvisade barn 0–17 år',
+        name: "assigned_0_17",
+        human_name: "Anvisade barn 0–17 år",
+        qualifier: "assigned_0_17",
+        min_age: 0,
+        max_age: 17,
         rate: { amount: RATES[:assigned_0_17], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
 
       {
-        name: 'temporary_permit_0_17',
-        qualifier: 'temporary_permit',
-        human_name: 'TUT-barn 0–17 år',
+        name: "temporary_permit_0_17",
+        human_name: "TUT-barn 0–17 år",
+        qualifier: "temporary_permit",
+        min_age: 0,
+        max_age: 17,
         rate: { amount: RATES[:temporary_permit_0_17], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
       {
-        name: 'temporary_permit_18_20',
-        qualifier: 'temporary_permit',
-        human_name: 'TUT-barn 18–20 år',
+        name: "temporary_permit_18_20",
+        human_name: "TUT-barn 18–20 år",
+        qualifier: "temporary_permit",
+        min_age: 18,
+        max_age: 20,
         rate: { amount: RATES[:temporary_permit_18_20], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
       {
-        name: 'residence_permit_0_17',
-        qualifier: 'residence_permit',
-        human_name: 'PUT-barn 0–17 år',
+        name: "residence_permit_0_17",
+        human_name: "PUT-barn 0–17 år",
+        qualifier: "residence_permit",
+        min_age: 0,
+        max_age: 17,
         rate: { amount: RATES[:residence_permit_0_17], start_date: '2018-01-01', end_date: '2018-12-31' }
       },
       {
-        name: 'residence_permit_18_20',
-        qualifier: 'residence_permit',
-        human_name: 'PUT-barn 18–20 år',
+        name: "residence_permit_18_20",
+        human_name: "PUT-barn 18–20 år",
+        qualifier: "residence_permit",
+        min_age: 18,
+        max_age: 20,
         rate: { amount: RATES[:residence_permit_18_20], start_date: '2018-01-01', end_date: '2018-12-31' }
       }
     ].each do |rc|
