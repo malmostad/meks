@@ -50,9 +50,8 @@ module Economy
 
       @skip_all_replace = skip_all_replace
 
-      @rate_categories_and_rates.map do |category|
-        # [category.qualifier.values.join('_'), send(category.qualifier, category).flatten.compact]
-        [send(category.qualifier, category).flatten.compact]
+      @rate_categories_and_rates.map do |rc|
+        [[rc.qualifier, rc.min_age, rc.max_age].join('_'), send(rc.qualifier, rc).flatten.compact]
       end.to_h
     end
 
