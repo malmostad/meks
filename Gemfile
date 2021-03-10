@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '6.0.3.5'
+gem 'rails', '6.1.3'
 gem 'haml-rails', '2.0.1'
 gem 'sassc-rails', '2.1.2'
 gem 'uglifier', '4.2.0'
@@ -48,7 +48,7 @@ group :development do
   gem 'listen'
   gem 'rails-erd'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  # gem 'byebug'
 end
 
 group :local_test do
