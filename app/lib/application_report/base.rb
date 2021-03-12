@@ -19,7 +19,7 @@ module ApplicationReport
     end
 
     def generate!
-      @action_view.render template: "report_workbooks/#{view_name}.xlsx.axlsx"
+      ApplicationController.new.render_to_string template: "report_workbooks/#{view_name}", layout: false, assigns: @locals
       @axlsx.serialize File.join(Rails.root, 'reports', @filename)
     end
 
@@ -33,10 +33,8 @@ module ApplicationReport
       helper_class = "#{class_name}Helper"
       helpers << Object.const_get(helper_class) if require_helper(helper_class)
 
-      @action_view.class_eval do
-        helpers.each do |helper|
-          include helper
-        end
+      helpers.each do |helper|
+        ActionView::Base.include helper
       end
     end
 
@@ -47,15 +45,14 @@ module ApplicationReport
       @workbook = @axlsx.workbook
       @style = ApplicationReport::Style.new(@axlsx)
 
-      locals = {
+      @locals = {
         workbook: @workbook,
         style: @style,
         first_sheetname: @sheet_name,
         interval: @interval
       }
-      locals.merge!(@options[:locals]) unless @options[:locals].empty?
 
-      @action_view = ActionView::Base.new(ActionController::Base.view_paths, locals)
+      @locals.merge!(@options[:locals]) unless @options[:locals].nil?
     end
 
     def require_helper(helper_class)

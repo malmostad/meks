@@ -149,6 +149,8 @@ class PaymentImport < ApplicationRecord
       @parsing_errors << "... ytterligare #{number_of_errors - 15} fel hittades."
     end
 
+    return unless @parsing_errors
+
     errors[:parsing] << @parsing_errors
     errors[:parsing].flatten!
     errors[:parsing].reject!(&:nil?)
