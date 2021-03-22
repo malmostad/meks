@@ -15,9 +15,10 @@ Rails.application.configure do
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
 
     # config.cache_store = :memory_store
-    config.cache_store = :dalli_store, '127.0.0.1:11211', { namespace: "meks-#{Rails.env}" }
+    config.cache_store = :mem_cache_store, '127.0.0.1:11211', { namespace: "meks-#{Rails.env}" }
     config.public_file_server.headers = {
       'Cache-Control' => 'public, max-age=172800'
     }
@@ -26,6 +27,9 @@ Rails.application.configure do
 
     config.cache_store = :null_store
   end
+
+  # Store uploaded files on the local file system (see config/storage.yml for options).
+  config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -39,6 +43,8 @@ Rails.application.configure do
   config.active_record.migration_error = :page_load
 
   # config.action_controller.action_on_unpermitted_parameters = :raise
+  # Highlight code that triggered database queries in logs.
+  config.active_record.verbose_query_logs = true
 
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
@@ -68,8 +74,8 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
+  # EventedFileUpdateChecker may not work with Vagrants
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-  config.file_watcher = ActiveSupport::FileUpdateChecker
 
   config.after_initialize do
     Bullet.enable = true

@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.4.5'
+gem 'rails', '6.1.3'
 gem 'haml-rails', '2.0.1'
 gem 'sassc-rails', '2.1.2'
 gem 'uglifier', '4.2.0'
 gem 'coffee-rails', '5.0.0'
+gem 'execjs', '2.7.0'
+gem 'sprockets', '4.0.2'
+gem 'sprockets-rails', '3.2.2', :require => 'sprockets/railtie'
 
 # Version 1.5 that is included in Malmo Global Assets have bugs in the date range selector
 gem 'bootstrap-datepicker-rails', '1.9.0.1'
@@ -26,10 +29,9 @@ gem 'delayed_job_active_record', '4.1.5'
 
 gem 'whenever', '1.0.0', require: false
 gem 'highline', '2.0.3'
-gem 'execjs', '2.7.0'
 gem 'faker'
 
-gem 'rails-i18n', '5.1.3'
+gem 'rails-i18n', '6.0.0'
 
 gem 'bcrypt', '3.1.16'
 
@@ -46,7 +48,7 @@ group :development do
   gem 'listen'
   gem 'rails-erd'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  # gem 'byebug'
 end
 
 group :local_test do

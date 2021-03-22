@@ -1,0 +1,23 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  collation: utf8_swedish_ci
+  host: localhost
+  pool: 20
+  username: meks
+  password:
+  database: meks
+
+development:
+  <<: *default
+
+local_test:
+  <<: *default
+  database: meks_test
+  password:
+
+test:
+  <<: *default
+  <<: *default
+  database: meks_test
+  password:

@@ -8,5 +8,5 @@ Vagrant.configure('2') do |config|
     v.cpus = 2
   end
 
-  config.vm.network 'forwarded_port', guest: 9292, host: 3036
+  config.vm.network 'forwarded_port', guest: 3000, host: 3037
 end
