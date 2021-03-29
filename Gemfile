@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '6.1.3'
+gem 'rails', '6.1.3.1'
 gem 'haml-rails', '2.0.1'
 gem 'sassc-rails', '2.1.2'
 gem 'uglifier', '4.2.0'
@@ -23,7 +23,7 @@ gem 'net-ldap', '0.17.0'
 gem 'cancancan', '3.2.1'
 gem 'ruby-saml', '1.12.0'
 
-gem 'caxlsx', '3.0.4'
+gem 'caxlsx', '3.1.0'
 gem 'caxlsx_rails', '0.6.2'
 gem 'delayed_job_active_record', '4.1.5'
 
