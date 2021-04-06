@@ -47,8 +47,6 @@ Run tests before pushing code to the Git repository and before making a deployme
 
 See the `install_chromium.md` file for installation commands of Chromium.
 
-Note that the environment used for RSpec currently is `local_test`.
-
 Run the test cases in the projects root directory in your Vagrant box:
 
 ```shell

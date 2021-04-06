@@ -11,7 +11,7 @@ default: &default
 development:
   <<: *default
 
-local_test:
+test:
   <<: *default
   database: meks_test
   password:

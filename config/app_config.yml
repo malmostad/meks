@@ -13,17 +13,9 @@ development: &development
   session_time: 1440
   auth_method: stub
 
-local_test:
+test:
   <<: *development
   auth_method: stub
-
-test:
-  <<: *defaults
-  assets_url_base: "//assets.malmo.se/internal/v4-staging/"
-  cache_ttl: 43200
-  max_age: 14400
-  title_suffix: "MEKS (test)"
-  auth_method: saml
 
 production: &production
   <<: *defaults
