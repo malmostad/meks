@@ -21,11 +21,11 @@ gem 'daemons', '1.3.1'
 
 gem 'net-ldap', '0.17.0'
 gem 'cancancan', '3.2.1'
-gem 'ruby-saml', '1.12.0'
+gem 'ruby-saml', '1.12.1'
 
 gem 'caxlsx', '3.1.0'
 gem 'caxlsx_rails', '0.6.2'
-gem 'delayed_job_active_record', '4.1.5'
+gem 'delayed_job_active_record', '4.1.6'
 
 gem 'whenever', '1.0.0', require: false
 gem 'highline', '2.0.3'
@@ -62,8 +62,4 @@ end
 
 group :development, :local_test do
   gem 'puma'
-end
-
-group :test, :production do
-  gem 'unicorn', '5.8.0'
 end
