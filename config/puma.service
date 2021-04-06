@@ -1,0 +1,38 @@
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+# Foreground process (do not use --daemon in ExecStart or config.rb)
+Type=simple
+WatchdogSec=10
+
+# Preferably configure a non-privileged user
+User=app_runner
+Group=app_runner
+Environment="RAILS_ENV=production"
+
+# The path to the your application code root directory
+WorkingDirectory=/home/app_runner/meks/current
+
+# The command to start Puma
+# ExecStart=/home/app_runner/.rbenv/bin/rbenv exec bundle exec bin/puma start
+ExecStart=/home/app_runner/.rbenv/shims/puma -C /home/app_runner/meks/current/config/puma.rb
+
+# The command to stop Puma
+# ExecStart=/home/app_runner/.rbenv/bin/rbenv exec bundle exec bin/puma stop
+ExecStop=/home/app_runner/.rbenv/shims/puma -S /home/app_runner/meks/current/config.puma.rb
+
+# Path to PID file so that systemd knows which is the master process
+PIDFile=/home/app_runner/meks/shared/tmp/pids/puma.pid
+
+# Should systemd restart puma?
+# Use "no" (the default) to ensure no interference when using
+# stop/start/restart via `pumactl`.  The "on-failure" setting might
+# work better for this purpose, but you must test it.
+# Use "always" if only `systemctl` is used for start/stop/restart, and
+# reconsider if you actually need the forking config.
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

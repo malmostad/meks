@@ -8,6 +8,7 @@ gem 'coffee-rails', '5.0.0'
 gem 'execjs', '2.7.0'
 gem 'sprockets', '4.0.2'
 gem 'sprockets-rails', '3.2.2', :require => 'sprockets/railtie'
+gem 'puma'
 
 # Version 1.5 that is included in Malmo Global Assets have bugs in the date range selector
 gem 'bootstrap-datepicker-rails', '1.9.0.1'
@@ -51,15 +52,11 @@ group :development do
   # gem 'byebug'
 end
 
-group :local_test do
+group :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
-end
-
-group :development, :local_test do
-  gem 'puma'
 end
