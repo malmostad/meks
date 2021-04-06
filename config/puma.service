@@ -22,7 +22,7 @@ ExecStart=/home/app_runner/.rbenv/shims/puma -C /home/app_runner/meks/current/co
 
 # The command to stop Puma
 # ExecStart=/home/app_runner/.rbenv/bin/rbenv exec bundle exec bin/puma stop
-ExecStop=/home/app_runner/.rbenv/shims/puma -S /home/app_runner/meks/current/config.puma.rb
+ExecStop=/home/app_runner/.rbenv/shims/puma -S /home/app_runner/meks/current/config/puma.rb
 
 # Path to PID file so that systemd knows which is the master process
 PIDFile=/home/app_runner/meks/shared/tmp/pids/puma.pid

@@ -8,7 +8,8 @@ gem 'coffee-rails', '5.0.0'
 gem 'execjs', '2.7.0'
 gem 'sprockets', '4.0.2'
 gem 'sprockets-rails', '3.2.2', :require => 'sprockets/railtie'
-gem 'puma'
+gem 'puma', '5.2.2'
+gem 'sd_notify', '0.1.1'
 
 # Version 1.5 that is included in Malmo Global Assets have bugs in the date range selector
 gem 'bootstrap-datepicker-rails', '1.9.0.1'

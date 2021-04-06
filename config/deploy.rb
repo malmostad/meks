@@ -32,7 +32,11 @@ namespace :puma do
   desc 'Kill puma service, will be started up again by systemd'
   task :stop do
     on roles(:app) do
-      execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/puma.pid`"
+      begin
+        execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/puma.pid`"
+      rescue
+        puts "Coldn't find #{fetch(:deploy_to)}/shared/tmp/pids/puma.pid"
+      end
     end
   end
 end
@@ -41,7 +45,11 @@ namespace :delayed_job do
   desc 'Kill delayed job daemon, will be started up again by systemd'
   task :stop do
     on roles(:app) do
-      execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
+      begin
+        execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
+      rescue
+        puts "Coldn't find #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
+      end
     end
   end
 end
