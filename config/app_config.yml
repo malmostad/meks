@@ -12,7 +12,7 @@ development: &development
   session_time: 1440
   auth_method: stub
 
-test:
+local_test:
   <<: *development
   auth_method: stub
 
@@ -23,7 +23,7 @@ production: &production
   title_suffix: "MEKS"
   auth_method: saml
 
-staging:
+test:
   <<: *production
-  title_suffix: "MEKS (staging)"
+  title_suffix: "MEKS (test)"
   auth_method: saml

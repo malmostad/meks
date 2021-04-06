@@ -10,7 +10,7 @@ Type=simple
 # Preferably configure a non-privileged user
 User=app_runner
 Group=app_runner
-# Environment="RAILS_ENV=staging"
+# Environment="RAILS_ENV=test"
 Environment="RAILS_ENV=production"
 
 # The path to the your application code root directory
