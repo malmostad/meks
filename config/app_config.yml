@@ -1,12 +1,11 @@
 defaults: &defaults
   base_url: "https://komin.malmo.se/"
-  assets_url_base: "//assets.malmo.se/internal/v4-staging/"
+  assets_url_base: "//assets.malmo.se/internal/v4/"
   auth_method: ldap # saml ldap or stub
   session_time: 30 # minutes
 
 development: &development
   <<: *defaults
-  assets_url_base: "//assets.malmo.se/internal/v4/"
   cache_ttl: 1
   max_age: 0
   title_suffix: "MEKS (utveckling)"
@@ -19,7 +18,6 @@ test:
 
 production: &production
   <<: *defaults
-  assets_url_base: "//assets.malmo.se/internal/v4/"
   cache_ttl: 43200
   max_age: 14400
   title_suffix: "MEKS"
@@ -28,5 +26,4 @@ production: &production
 staging:
   <<: *production
   title_suffix: "MEKS (staging)"
-  assets_url_base: "//assets.malmo.se/internal/v4-staging/"
   auth_method: saml

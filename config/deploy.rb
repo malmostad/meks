@@ -87,7 +87,7 @@ namespace :deploy do
   task :are_you_sure do
     on roles(:app) do |server|
       puts ""
-      puts "Environment:   \033[0;32m#{fetch(:rails_env)}\033[0m"
+      puts "Stage:   \033[0;32m#{fetch(:stage)}\033[0m"
       puts "Remote branch: \033[0;32m#{fetch(:branch)}\033[0m"
       puts "Server:        \033[0;32m#{server.hostname}\033[0m"
       puts ""

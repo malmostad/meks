@@ -10,6 +10,7 @@ User=app_runner
 Group=app_runner
 
 WorkingDirectory=/home/app_runner/meks/current
+# Environment="RAILS_ENV=staging"
 Environment="RAILS_ENV=production"
 ExecStart=/home/app_runner/.rbenv/bin/rbenv exec bundle exec bin/delayed_job start
 
