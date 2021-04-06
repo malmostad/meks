@@ -35,7 +35,7 @@ namespace :puma do
       begin
         execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/puma.pid`"
       rescue
-        puts "Coldn't find #{fetch(:deploy_to)}/shared/tmp/pids/puma.pid"
+        puts "Couldn't find #{fetch(:deploy_to)}/shared/tmp/pids/puma.pid"
       end
     end
   end
@@ -48,7 +48,7 @@ namespace :delayed_job do
       begin
         execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
       rescue
-        puts "Coldn't find #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
+        puts "Couldn't find #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
       end
     end
   end
