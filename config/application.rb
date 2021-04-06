@@ -10,6 +10,7 @@ module Meks
   class Application < Rails::Application
     config.load_defaults 6.1
     config.active_record.belongs_to_required_by_default = false
+    config.autoload_paths << File.join(Rails.root, 'app', 'reports', 'helpers')
     # config.log_formatter = Logger::Formatter.new
     # config.log_tags = [:some_var, :uuid, :remote_ip, lambda { |req| Time.now }]
     # config.log_tags = [ :subdomain, :uuid ]

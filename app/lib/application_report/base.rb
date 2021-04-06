@@ -2,9 +2,6 @@
 # See app/reports for implementation examples
 module ApplicationReport
   class Base
-    HELPERS_PATH = File.join(Rails.root, 'app', 'reports', 'helpers').freeze
-    $LOAD_PATH.unshift(HELPERS_PATH)
-
     def initialize(options)
       @options = options
 
@@ -15,27 +12,11 @@ module ApplicationReport
       @sheet_name = options[:sheet_name] ||= format_sheet_name
 
       create_workbook
-      include_helpers
     end
 
     def generate!
       ApplicationController.new.render_to_string template: "report_workbooks/#{view_name}", layout: false, assigns: @locals
       @axlsx.serialize File.join(Rails.root, 'reports', @filename)
-    end
-
-    protected
-
-    def include_helpers
-      require_helper('ReportHelper')
-      helpers = [ReportHelper]
-
-      class_name = self.class.name
-      helper_class = "#{class_name}Helper"
-      helpers << Object.const_get(helper_class) if require_helper(helper_class)
-
-      helpers.each do |helper|
-        ActionView::Base.include helper
-      end
     end
 
     private
