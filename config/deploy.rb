@@ -33,20 +33,16 @@ namespace :unicorn do
     desc "#{command} unicorn server"
     task command do
       on roles(:app), except: {no_release: true} do
-        execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
+        begin
+          execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
+        rescue
+          # No unicorn running, start it instead
+          execute "/etc/init.d/unicorn_#{fetch(:application)} start"
+        ensure
+          puts "NOTE: Couldn't #{command} Unicorn. Tried to start it instead"
+        end
       end
     end
-  end
-
-  desc "Stop, paus and start the unicorn server"
-  task :stop_start do
-    on roles(:app) do
-    begin
-      execute "/etc/init.d/unicorn_#{fetch(:application)} stop && sleep 5 && /etc/init.d/unicorn_#{fetch(:application)} start"
-    rescue
-      execute "/etc/init.d/unicorn_#{fetch(:application)} start"
-    end
-  end
   end
 end
 
