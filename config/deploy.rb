@@ -28,28 +28,32 @@ set :linked_dirs, %w{log tmp/pids tmp/sockets reports}
 
 set :keep_releases, 5
 
-namespace :puma do
-  desc 'Kill puma service, will be started up again by systemd'
-  task :stop do
-    on roles(:app) do
-      begin
-        execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/puma.pid`"
-      rescue
-        puts "Couldn't find #{fetch(:deploy_to)}/shared/tmp/pids/puma.pid"
+namespace :unicorn do
+  %w[stop start restart upgrade].each do |command|
+    desc "#{command} unicorn server"
+    task command do
+      on roles(:app), except: {no_release: true} do
+        execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
       end
+    end
+  end
+
+  desc "Stop, paus and start the unicorn server"
+  task :stop_start do
+    on roles(:app) do
+      execute "/etc/init.d/unicorn_#{fetch(:application)} stop && sleep 5 && /etc/init.d/unicorn_#{fetch(:application)} start"
     end
   end
 end
 
 namespace :delayed_job do
   desc 'Kill delayed job daemon, will be started up again by systemd'
-  task :stop do
+  task :restart do
     on roles(:app) do
       begin
         execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
       rescue
-        puts "Couldn't find #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
-      end
+        puts "Couldn't find #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid"
     end
   end
 end
@@ -96,7 +100,7 @@ namespace :deploy do
     on roles(:app) do |server|
       puts ""
       puts "Stage:         \033[0;32m#{fetch(:stage)}\033[0m"
-      puts "Rails env:     \033[0;32m#{fetch(:rails_env)}\033[0m"
+      puts "Environment:   \033[0;32m#{fetch(:rails_env)}\033[0m"
       puts "Remote branch: \033[0;32m#{fetch(:branch)}\033[0m"
       puts "Server:        \033[0;32m#{server.hostname}\033[0m"
       puts ""
@@ -114,8 +118,8 @@ namespace :deploy do
   before :starting,       'deploy:are_you_sure'
   before :starting,       'deploy:check_revision'
   before :compile_assets, 'deploy:copy_vendor_statics'
-  after  :publishing,     'puma:stop'
+  after  :publishing,     'unicorn:restart'
   after  :publishing,     'cache:clear'
-  after  :publishing,     'delayed_job:stop'
+  after  :publishing,     'delayed_job:restart'
   after  :finishing,      'deploy:cleanup'
 end

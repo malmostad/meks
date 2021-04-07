@@ -179,6 +179,7 @@ GEM
     htmlentities (4.3.4)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
+    kgio (2.11.3)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -257,6 +258,7 @@ GEM
       rake (>= 0.8.7)
       thor (~> 1.0)
     rainbow (3.0.0)
+    raindrops (0.19.1)
     rake (13.0.3)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
@@ -337,6 +339,9 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (2.0.0)
+    unicorn (6.0.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
     uniform_notifier (1.14.2)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
@@ -378,7 +383,7 @@ DEPENDENCIES
   mysql2 (= 0.5.3)
   net-ldap (= 0.17.0)
   pry-rails
-  puma (= 5.2.2)
+  puma
   rails (= 6.1.3.1)
   rails-controller-testing
   rails-erd
@@ -393,6 +398,7 @@ DEPENDENCIES
   sprockets (= 4.0.2)
   sprockets-rails (= 3.2.2)
   uglifier (= 4.2.0)
+  unicorn (= 6.0.0)
   whenever (= 1.0.0)
 
 BUNDLED WITH
