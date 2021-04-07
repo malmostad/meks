@@ -36,9 +36,6 @@ namespace :unicorn do
         begin
           execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
         rescue
-          # No unicorn running, start it instead
-          execute "/etc/init.d/unicorn_#{fetch(:application)} start"
-        ensure
           puts "NOTE: Couldn't #{command} Unicorn."
           puts "      Try to stop/start it manually instead: /etc/init.d/unicorn_#{fetch(:application)}"
         end
