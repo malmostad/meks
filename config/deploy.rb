@@ -54,6 +54,7 @@ namespace :delayed_job do
         execute "kill `cat #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid`"
       rescue
         puts "Couldn't find #{fetch(:deploy_to)}/shared/tmp/pids/delayed_job.pid"
+      end
     end
   end
 end
