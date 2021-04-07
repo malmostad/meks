@@ -41,8 +41,12 @@ namespace :unicorn do
   desc "Stop, paus and start the unicorn server"
   task :stop_start do
     on roles(:app) do
+    begin
       execute "/etc/init.d/unicorn_#{fetch(:application)} stop && sleep 5 && /etc/init.d/unicorn_#{fetch(:application)} start"
+    rescue
+      execute "/etc/init.d/unicorn_#{fetch(:application)} start"
     end
+  end
   end
 end
 
