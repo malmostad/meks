@@ -39,7 +39,8 @@ namespace :unicorn do
           # No unicorn running, start it instead
           execute "/etc/init.d/unicorn_#{fetch(:application)} start"
         ensure
-          puts "NOTE: Couldn't #{command} Unicorn. Tried to start it instead"
+          puts "NOTE: Couldn't #{command} Unicorn."
+          puts "      Try to stop/start it manually instead: /etc/init.d/unicorn_#{fetch(:application)}"
         end
       end
     end
