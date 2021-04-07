@@ -5,6 +5,7 @@ namespace :elasticsearch do
   desc "Zero downtime re-indexing
   $ RAILS_ENV=development bundle exec rake environment elasticsearch:reindex CLASS='Person' ALIAS='people'
   "
+  # Alt use: Person.all.each { |person| person.touch }
   task reindex: :environment do |task|
     if ENV['CLASS'].blank? || ENV['ALIAS'].blank?
       puts 'USAGE:'
