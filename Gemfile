@@ -14,7 +14,7 @@ gem 'bootstrap-datepicker-rails', '1.9.0.1'
 
 gem 'simple_form', '5.1.0'
 gem 'mysql2', '0.5.3'
-gem 'dalli', '2.7.11'
+gem 'dalli', '3.2.3'
 gem 'elasticsearch-model', '7.1.1'
 gem 'elasticsearch-rails', '7.1.1'
 gem 'daemons', '1.3.1'
